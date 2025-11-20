@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J2EE Architecture - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    
+</head>
+<body class="content-page">
+    <div class="content-container">
+        <h1>🏢 J2EE Architecture: Enterprise Java Platform</h1>
+        
+        <div class="success-box">
+            <strong>📦 Platform:</strong> Java 2 Platform, Enterprise Edition (J2EE)<br>
+            <strong>🎯 Versions:</strong> J2EE 1.2 - 1.5<br>
+            <strong>📅 Period:</strong> 1999 - 2006<br>
+            <strong>🎯 Focus:</strong> Distributed enterprise applications
+        </div>
+
+        <h2>🎯 J2EE Architecture Overview</h2>
+        <p>
+            The <strong>J2EE Architecture</strong> represents the complete structure for developing 
+            enterprise applications in Java, providing a comprehensive set of APIs and services to build 
+            distributed, scalable and robust systems. The architecture was designed to support large-scale applications 
+            with complex business requirements.
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Fundamental Principle:</strong> The J2EE architecture follows the component and container model, 
+            where business components are executed within containers that provide infrastructure services 
+            such as transactions, security, persistence and communication.
+        </div>
+
+        <h2>📦 Main Components of J2EE Architecture</h2>
+        <p>The J2EE architecture is composed of several main components and services:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>🌐 Servlets & JSP</strong><br>
+                Web components for HTTP-based applications
+            </div>
+            <div class="feature-card">
+                <strong>☕ Enterprise JavaBeans (EJB)</strong><br>
+                Transactional and distributed business components
+            </div>
+            <div class="feature-card">
+                <strong>📡 Java Message Service (JMS)</strong><br>
+                Asynchronous messaging system
+            </div>
+            <div class="feature-card">
+                <strong>🗄️ Java Database Connectivity (JDBC)</strong><br>
+                Access to relational databases
+            </div>
+            <div class="feature-card">
+                <strong>🔄 Java Transaction API (JTA)</strong><br>
+                Distributed transaction management
+            </div>
+            <div class="feature-card">
+                <strong>🔐 Java Authentication and Authorization Service (JAAS)</strong><br>
+                Authentication and authorization
+            </div>
+        </div>
+
+        <h2>🏛️ J2EE Architecture Layers</h2>
+        <p>The J2EE architecture follows a layered model (tier architecture):</p>
+
+        <div class="image-placeholder">
+            [Diagram: J2EE Architecture Layers<br>
+            Layer 1: Client (Applets, Desktop Applications, Web Browser)<br>
+            Layer 2: Web (Servlets, JSP, JSTL)<br>
+            Layer 3: Business (EJB, Business Logic)<br>
+            Layer 4: Enterprise Information System (EIS) - Databases, Legacy Systems]
+        </div>
+
+        <h3>1. Client Layer</h3>
+        <p>
+            The client layer interacts with the end user. It may include:
+        </p>
+        <ul>
+            <li>🌐 <strong>Web Clients</strong> - Browsers that access applications via HTTP/HTTPS</li>
+            <li>🖥️ <strong>Applets</strong> - Java applications executed in the browser</li>
+            <li>💻 <strong>Desktop Applications</strong> - Standalone Java applications (Swing, AWT)</li>
+            <li>📱 <strong>Mobile Devices</strong> - Lightweight clients for J2ME systems</li>
+        </ul>
+
+        <h3>2. Web Layer</h3>
+        <p>
+            The web layer processes HTTP requests and generates dynamic responses:
+        </p>
+        <ul>
+            <li>🔄 <strong>Servlets</strong> - Java components that process HTTP requests</li>
+            <li>📄 <strong>JavaServer Pages (JSP)</strong> - Dynamic pages with embedded Java code</li>
+            <li>🏷️ <strong>JSTL</strong> - JavaServer Pages Standard Tag Library</li>
+            <li>🍪 <strong>Filters</strong> - Intercept and process requests/responses</li>
+            <li>📦 <strong>Web Containers</strong> - Tomcat, Jetty, etc.</li>
+        </ul>
+
+        <h3>3. Business Tier</h3>
+        <p>
+            The business tier contains the application business logic:
+        </p>
+        <ul>
+            <li>☕ <strong>Session Beans</strong> - Represent business processes and conversations</li>
+            <li>💾 <strong>Entity Beans</strong> - Represent persistent data (deprecated in favor of JPA)</li>
+            <li>📨 <strong>Message-Driven Beans (MDB)</strong> - Process asynchronous JMS messages</li>
+            <li>🏢 <strong>EJB Container</strong> - Manages the lifecycle and services of EJBs</li>
+        </ul>
+
+        <h3>4. Enterprise Information System (EIS) Layer</h3>
+        <p>
+            The EIS layer integrates with external systems and data resources:
+        </p>
+        <ul>
+            <li>🗄️ <strong>Databases</strong> - Relational database management systems</li>
+            <li>📊 <strong>Legacy Systems</strong> - Integration with existing systems</li>
+            <li>📡 <strong>Enterprise Resource Planning (ERP)</strong> - ERP systems</li>
+            <li>💼 <strong>Customer Relationship Management (CRM)</strong> - CRM systems</li>
+        </ul>
+
+        <h2>🔧 J2EE Components and Specifications</h2>
+        <p>The J2EE platform includes the following main specifications:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Specification</th>
+                    <th>J2EE 1.4 Version</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Servlets</strong></td>
+                    <td>2.4</td>
+                    <td>Web components for processing HTTP requests</td>
+                </tr>
+                <tr>
+                    <td><strong>JSP</strong></td>
+                    <td>2.0</td>
+                    <td>JavaServer Pages for creating dynamic content</td>
+                </tr>
+                <tr>
+                    <td><strong>EJB</strong></td>
+                    <td>2.1</td>
+                    <td>Enterprise JavaBeans for distributed business logic</td>
+                </tr>
+                <tr>
+                    <td><strong>JMS</strong></td>
+                    <td>1.1</td>
+                    <td>Java Message Service for asynchronous messaging</td>
+                </tr>
+                <tr>
+                    <td><strong>JTA</strong></td>
+                    <td>1.0</td>
+                    <td>Java Transaction API for distributed transactions</td>
+                </tr>
+                <tr>
+                    <td><strong>JDBC</strong></td>
+                    <td>3.0</td>
+                    <td>Java Database Connectivity for data access</td>
+                </tr>
+                <tr>
+                    <td><strong>JNDI</strong></td>
+                    <td>1.2</td>
+                    <td>Java Naming and Directory Interface for directory services</td>
+                </tr>
+                <tr>
+                    <td><strong>JavaMail</strong></td>
+                    <td>1.3</td>
+                    <td>API for sending and receiving emails</td>
+                </tr>
+                <tr>
+                    <td><strong>JAX-RPC</strong></td>
+                    <td>1.1</td>
+                    <td>Java API for XML-Based RPC for web services</td>
+                </tr>
+                <tr>
+                    <td><strong>JAXR</strong></td>
+                    <td>1.0</td>
+                    <td>Java API for XML Registries for XML registries</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🏗️ J2EE Container Architecture</h2>
+        <p>The J2EE architecture is based on the concept of containers that provide services to components:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Container</th>
+                    <th>Supported Components</th>
+                    <th>Services Provided</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Web Container</strong></td>
+                    <td>Servlets, JSP, Filtros</td>
+                    <td>HTTP, Sessions, Web Security, Deployment</td>
+                </tr>
+                <tr>
+                    <td><strong>EJB Container</strong></td>
+                    <td>Session Beans, Entity Beans, MDBs</td>
+                    <td>Transactions, Security, Persistence, Naming, Lifecycle</td>
+                </tr>
+                <tr>
+                    <td><strong>Application Client Container</strong></td>
+                    <td>Application Clients</td>
+                    <td>Dependency Injection, Naming</td>
+                </tr>
+                <tr>
+                    <td><strong>Applet Container</strong></td>
+                    <td>Applets</td>
+                    <td>Sandbox, Security</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔄 J2EE Architecture Patterns</h2>
+        <p>The J2EE architecture implements several important design patterns:</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>🏗️ MVC (Model-View-Controller)</strong><br>
+                Separation between business logic, presentation and control
+            </div>
+            <div class="timeline-item">
+                <strong>🏭 Factory Pattern</strong><br>
+                Object creation through factories (EJB Home, Connection Factory)
+            </div>
+            <div class="timeline-item">
+                <strong>🔌 Service Locator</strong><br>
+                Service location through JNDI
+            </div>
+            <div class="timeline-item">
+                <strong>💉 Dependency Injection</strong><br>
+                Dependency injection through annotations and XML
+            </div>
+            <div class="timeline-item">
+                <strong>🔄 Session Facade</strong><br>
+                Abstraction of complexity through Session Beans
+            </div>
+            <div class="timeline-item">
+                <strong>📊 Data Access Object (DAO)</strong><br>
+                Abstraction of data access
+            </div>
+            <div class="timeline-item">
+                <strong>🔄 Transfer Object</strong><br>
+                Efficient data transfer between layers
+            </div>
+        </div>
+
+        <h2>💻 Example: J2EE Application Structure</h2>
+        <p>A typical J2EE application has the following structure:</p>
+
+        <pre><code class="language-xml">&lt;!-- J2EE Directory Structure --&gt;
+my-application/
+├── META-INF/
+│   └── application.xml
+├── WEB-INF/
+│   ├── web.xml
+│   ├── classes/
+│   │   └── com/example/
+│   │       └── MyServlet.java
+│   └── lib/
+│       └── dependencies.jar
+└── index.jsp</code></pre>
+
+        <h2>📦 Deployment Descriptors</h2>
+        <p>J2EE uses XML configuration files (deployment descriptors):</p>
+
+        <pre><code class="language-xml">&lt;!-- web.xml --&gt;
+&lt;web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         version="2.4"&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;com.example.MyServlet&lt;/servlet-class&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/servlet/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</code></pre>
+
+        <h2>🔐 Security in J2EE Architecture</h2>
+        <p>The J2EE architecture provides a comprehensive security model:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Security Component</th>
+                    <th>Description</th>
+                    <th>Uso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Declarative Security</strong></td>
+                    <td>Security declared in deployment descriptors</td>
+                    <td>Roles, constraints, authentication</td>
+                </tr>
+                <tr>
+                    <td><strong>Programmatic Security</strong></td>
+                    <td>Security implemented in code</td>
+                    <td>isUserInRole(), getRemoteUser()</td>
+                </tr>
+                <tr>
+                    <td><strong>JAAS</strong></td>
+                    <td>Java Authentication and Authorization Service</td>
+                    <td>Authentication and authorization</td>
+                </tr>
+                <tr>
+                    <td><strong>SSL/TLS</strong></td>
+                    <td>Encrypted communication</td>
+                    <td>HTTPS, secure sockets</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔄 Transactions in J2EE Architecture</h2>
+        <p>J2EE provides robust support for transactions:</p>
+
+        <ul>
+            <li>⚙️ <strong>Container-Managed Transactions (CMT)</strong> - Managed by the container</li>
+            <li>🔧 <strong>Bean-Managed Transactions (BMT)</strong> - Managed by the bean</li>
+            <li>🌐 <strong>Distributed Transactions</strong> - Distributed transactions via JTA</li>
+            <li>📊 <strong>Transaction Attributes</strong> - REQUIRED, REQUIRES_NEW, SUPPORTS, etc.</li>
+        </ul>
+
+        <h2>📊 Comparison: J2EE vs J2SE</h2>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>J2SE</th>
+                    <th>J2EE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Foco</strong></td>
+                    <td>Desktop and standalone applications</td>
+                    <td>Distributed enterprise applications</td>
+                </tr>
+                <tr>
+                    <td><strong>Componentes</strong></td>
+                    <td>Classes Java, Applets</td>
+                    <td>Servlets, JSP, EJBs, JMS</td>
+                </tr>
+                <tr>
+                    <td><strong>Containers</strong></td>
+                    <td>JVM</td>
+                    <td>Web Container, EJB Container</td>
+                </tr>
+                <tr>
+                    <td><strong>Transações</strong></td>
+                    <td>Limited</td>
+                    <td>Complete (JTA)</td>
+                </tr>
+                <tr>
+                    <td><strong>Persistência</strong></td>
+                    <td>Basic JDBC</td>
+                    <td>JDBC, Entity Beans, JPA (posterior)</td>
+                </tr>
+                <tr>
+                    <td><strong>Mensageria</strong></td>
+                    <td>Not included</td>
+                    <td>Complete JMS</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🚀 Evolution of J2EE Architecture</h2>
+        <p>The J2EE architecture evolved significantly across versions:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Main Architectural Changes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>J2EE 1.2</strong></td>
+                    <td>Platform introduction, EJB 1.0, Servlets 2.2, JSP 1.1</td>
+                </tr>
+                <tr>
+                    <td><strong>J2EE 1.3</strong></td>
+                    <td>EJB 2.0 (CMP, Local Interfaces), JMS 1.0, JTA 1.0</td>
+                </tr>
+                <tr>
+                    <td><strong>J2EE 1.4</strong></td>
+                    <td>EJB 2.1 (Message-Driven Beans), JSP 2.0, Servlets 2.4, JAX-RPC</td>
+                </tr>
+                <tr>
+                    <td><strong>Java EE 5</strong></td>
+                    <td>Annotations, EJB 3.0, JPA, general simplification</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💡 J2EE Architecture Design Principles</h2>
+        <p>The J2EE architecture was designed following several important principles:</p>
+
+        <ul>
+            <li>🏗️ <strong>Component-Based</strong> - Component-based development</li>
+            <li>🔄 <strong>Container Services</strong> - Services provided by the container</li>
+            <li>🌐 <strong>Distributed</strong> - Support for distributed applications</li>
+            <li>🔐 <strong>Secure</strong> - Security integrated in multiple layers</li>
+            <li>⚡ <strong>Scalable</strong> - Scalable architecture for high loads</li>
+            <li>🔄 <strong>Transactional</strong> - Robust transaction support</li>
+            <li>📦 <strong>Portable</strong> - Portability between different servers</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>📊 Statistics:</strong> The J2EE architecture was widely adopted by large companies for 
+            developing critical business applications, establishing Java as the leading platform for 
+            enterprise development.
+        </div>
+
+        <h2>🔍 J2EE Application Servers</h2>
+        <p>Main application servers that implement the J2EE specification:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>🌐 WebLogic</strong><br>
+                Oracle WebLogic Server
+            </div>
+            <div class="feature-card">
+                <strong>🔷 WebSphere</strong><br>
+                IBM WebSphere Application Server
+            </div>
+            <div class="feature-card">
+                <strong>🐱 JBoss</strong><br>
+                JBoss Application Server (now WildFly)
+            </div>
+            <div class="feature-card">
+                <strong>🐟 GlassFish</strong><br>
+                Oracle GlassFish Server
+            </div>
+        </div>
+
+        <h2>📚 References and Further Reading</h2>
+        <ul>
+            <li>📖 "Java Platform, Enterprise Edition Specification" - Official specification</li>
+            <li>📖 "Enterprise JavaBeans Specification" - EJB specification</li>
+            <li>📖 "Java Servlet Specification" - Servlet specification</li>
+            <li>🌐 Official J2EE documentation (archived)</li>
+            <li>📰 Articles about J2EE architecture and design patterns</li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>💭 Reflection:</strong> The J2EE architecture established the foundations for developing 
+            enterprise applications in Java, deeply influencing corporate software development. 
+            Many of the concepts and patterns introduced in J2EE remain relevant in the modern Java EE 
+            platform (now Jakarta EE).
+        </div>
+    </div>
+    <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copy</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Error copying:', err);
+                button.textContent = '❌ Error';
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+
