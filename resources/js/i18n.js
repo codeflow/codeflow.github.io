@@ -16,6 +16,7 @@ const i18n = {
         'Era J2SE, J2EE, J2ME': 'Era J2SE, J2EE, J2ME',
         'Arquitetura J2SE': 'Arquitetura J2SE',
         'Arquitetura J2EE': 'Arquitetura J2EE',
+        'Arquitetura J2ME': 'Arquitetura J2ME',
         'Transição para Oracle': 'Transição para Oracle',
         'OpenJDK e comunidade': 'OpenJDK e comunidade',
         'Evolução (Java 8, 11, 17, 21, 22+)': 'Evolução (Java 8, 11, 17, 21, 22+)'
@@ -35,6 +36,7 @@ const i18n = {
         'Era J2SE, J2EE, J2ME': 'J2SE, J2EE, J2ME Era',
         'Arquitetura J2SE': 'J2SE Architecture',
         'Arquitetura J2EE': 'J2EE Architecture',
+        'Arquitetura J2ME': 'J2ME Architecture',
         'Transição para Oracle': 'Transition to Oracle',
         'OpenJDK e comunidade': 'OpenJDK and Community',
         'Evolução (Java 8, 11, 17, 21, 22+)': 'Evolution (Java 8, 11, 17, 21, 22+)'

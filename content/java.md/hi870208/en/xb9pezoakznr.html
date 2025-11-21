@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDK 1.0 Launch - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    
+</head>
+<body class="content-page">
+    <div class="content-container">
+        <h1>🚀 JDK 1.0 Launch: The Official Birth of Java</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">20/11/2025 22:40:47</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+        <div class="success-box">
+            <strong>📅 Launch Date:</strong> May 23, 1995<br>
+            <strong>🏢 Company:</strong> Sun Microsystems<br>
+            <strong>🎯 Version:</strong> JDK 1.0 (Java Development Kit 1.0)
+        </div>
+
+        <h2>🎉 A Historic Milestone</h2>
+        <p>
+            The launch of <strong>JDK 1.0</strong> on May 23, 1995 marked the moment when Java ceased to be 
+            an internal Sun Microsystems project and became a publicly available programming language. 
+            This was one of the most significant software releases of the 1990s.
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Fun Fact:</strong> The official Java slogan at the time was <strong>"Write Once, Run Anywhere"</strong> (WORA), 
+            emphasizing portability which was the main innovative feature of the language.
+        </div>
+
+        <h2>📦 What Came in JDK 1.0</h2>
+        <p>The first JDK included the following main components:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>☕ Java Compiler</strong><br>
+                javac compiler to transform Java code into bytecode
+            </div>
+            <div class="feature-card">
+                <strong>🖥️ Java Virtual Machine</strong><br>
+                JVM to execute bytecode on different platforms
+            </div>
+            <div class="feature-card">
+                <strong>📚 Java API</strong><br>
+                Standard library with fundamental classes
+            </div>
+            <div class="feature-card">
+                <strong>🌐 Applet Support</strong><br>
+                Support for Java applets in web browsers
+            </div>
+        </div>
+
+        <h2>🔧 Main Technical Components</h2>
+
+        <h3>1. Java Virtual Machine (JVM)</h3>
+        <p>
+            The JVM was the heart of Java, allowing the same bytecode to run on different operating systems:
+        </p>
+        <ul>
+            <li>🪟 <strong>Windows</strong> - Support from the beginning</li>
+            <li>🍎 <strong>Mac OS</strong> - Version for Macintosh</li>
+            <li>🐧 <strong>Unix/Linux</strong> - Support for Unix systems</li>
+            <li>🖥️ <strong>Solaris</strong> - Sun's own operating system</li>
+        </ul>
+
+        <h3>2. Java API (Application Programming Interface)</h3>
+        <p>JDK 1.0 included the following main packages:</p>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Package</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>java.lang</code></td>
+                    <td>Fundamental classes (Object, String, System, etc.)</td>
+                </tr>
+                <tr>
+                    <td><code>java.util</code></td>
+                    <td>Utilities (Date, Vector, Hashtable, etc.)</td>
+                </tr>
+                <tr>
+                    <td><code>java.io</code></td>
+                    <td>Data input and output</td>
+                </tr>
+                <tr>
+                    <td><code>java.net</code></td>
+                    <td>Network and communication</td>
+                </tr>
+                <tr>
+                    <td><code>java.awt</code></td>
+                    <td>Abstract Window Toolkit - Graphical interface</td>
+                </tr>
+                <tr>
+                    <td><code>java.applet</code></td>
+                    <td>Support for Java applets</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3. Applets Java</h3>
+        <p>
+            One of the most revolutionary features of JDK 1.0 was support for <strong>applets</strong> - 
+            small Java programs that could run inside web browsers. This allowed creating 
+            interactive web content before JavaScript became popular.
+        </p>
+
+        <div class="image-placeholder">
+            [Diagram: Web Browser → Loads Java Applet → Executes in Browser's JVM]
+        </div>
+
+        <h2>💻 Java 1.0 Applet Example</h2>
+        <p>A classic JDK 1.0 applet example:</p>
+        <pre><code class="language-java">import java.applet.Applet;
+import java.awt.Graphics;
+
+public class HelloWorldApplet extends Applet {
+    public void paint(Graphics g) {
+        g.drawString("Hello, World!", 50, 25);
+    }
+}</code></pre>
+
+        <p>And the corresponding HTML:</p>
+        <pre><code class="language-html">&lt;applet code="HelloWorldApplet.class" width="200" height="50"&gt;
+&lt;/applet&gt;</code></pre>
+
+        <h2>📊 JDK 1.0 Technical Specifications</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Specification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Language Version</td>
+                    <td>Java 1.0</td>
+                </tr>
+                <tr>
+                    <td>Bytecode Version</td>
+                    <td>45.0</td>
+                </tr>
+                <tr>
+                    <td>Classes in API</td>
+                    <td>~212 classes in 8 packages</td>
+                </tr>
+                <tr>
+                    <td>Download Size</td>
+                    <td>~2.5 MB (very small for the time!)</td>
+                </tr>
+                <tr>
+                    <td>Memory Requirements</td>
+                    <td>Minimum 4 MB RAM</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🌟 Main Characteristics of Java 1.0</h2>
+        <ul>
+            <li>✅ <strong>Object-Oriented</strong> - Pure OOP programming</li>
+            <li>✅ <strong>Portable</strong> - WORA (Write Once, Run Anywhere)</li>
+            <li>✅ <strong>Secure</strong> - Type checking, sandbox for applets</li>
+            <li>✅ <strong>Simple</strong> - Syntax similar to C/C++, but cleaner</li>
+            <li>✅ <strong>Robust</strong> - Automatic memory management</li>
+            <li>✅ <strong>Multithreaded</strong> - Native thread support</li>
+            <li>✅ <strong>Interpreted</strong> - Bytecode executed by JVM</li>
+            <li>✅ <strong>Dynamic</strong> - Dynamic class loading</li>
+        </ul>
+
+        <h2>⏱️ Launch Timeline</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>January 1995</strong> - Public announcement of Java at SunWorld conference
+            </div>
+            <div class="timeline-item">
+                <strong>May 1995</strong> - Official JDK 1.0 release (May 23)
+            </div>
+            <div class="timeline-item">
+                <strong>August 1995</strong> - Netscape Navigator 2.0 includes Java applet support
+            </div>
+            <div class="timeline-item">
+                <strong>1996</strong> - Java becomes one of the most popular languages
+            </div>
+        </div>
+
+        <h2>🌐 Impact on the Web</h2>
+        <p>
+            The launch of JDK 1.0 coincided with the internet boom of the 1990s. <strong>Java applets</strong> 
+            allowed creating interactive web experiences that were not possible with static HTML alone:
+        </p>
+        <ul>
+            <li>🎮 <strong>Online Games</strong> - First interactive games on the web</li>
+            <li>📊 <strong>Visualizations</strong> - Dynamic graphics and animations</li>
+            <li>💼 <strong>Web Applications</strong> - Rich interfaces before AJAX</li>
+            <li>🎨 <strong>Animations</strong> - Interactive visual content</li>
+        </ul>
+
+        <h2>📈 Reception and Adoption</h2>
+        <p>
+            The launch of JDK 1.0 was received with great enthusiasm by the developer community:
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Reaction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Portability</td>
+                    <td>✅ Highly praised - solution for compatibility problems</td>
+                </tr>
+                <tr>
+                    <td>Simplicity</td>
+                    <td>✅ Easy to learn for C/C++ developers</td>
+                </tr>
+                <tr>
+                    <td>Applets</td>
+                    <td>✅ Revolutionary for the web at the time</td>
+                </tr>
+                <tr>
+                    <td>Performance</td>
+                    <td>⚠️ Initially slower than C/C++ (improved with JIT)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔍 Comparison: Java 1.0 vs Languages of the Era</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>C/C++</th>
+                    <th>Java 1.0</th>
+                    <th>Visual Basic</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Portability</td>
+                    <td>❌ Recompilation required</td>
+                    <td>✅ Portable bytecode</td>
+                    <td>❌ Windows only</td>
+                </tr>
+                <tr>
+                    <td>Memory Management</td>
+                    <td>❌ Manual</td>
+                    <td>✅ Automatic (GC)</td>
+                    <td>⚠️ Partial</td>
+                </tr>
+                <tr>
+                    <td>Security</td>
+                    <td>⚠️ Ponteiros perigosos</td>
+                    <td>✅ Sandbox, sem ponteiros</td>
+                    <td>⚠️ Limitada</td>
+                </tr>
+                <tr>
+                    <td>OOP</td>
+                    <td>⚠️ Híbrida</td>
+                    <td>✅ Pura</td>
+                    <td>⚠️ Limitada</td>
+                </tr>
+                <tr>
+                    <td>Web</td>
+                    <td>❌ Não</td>
+                    <td>✅ Applets</td>
+                    <td>❌ Não</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💻 Code Example: First Java Program</h2>
+        <p>The classic "Hello, World!" in Java 1.0:</p>
+        <pre><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.println("Java 1.0 - Write Once, Run Anywhere!");
+    }
+}</code></pre>
+
+        <p>To compile and run on JDK 1.0:</p>
+        <pre><code class="language-bash">javac HelloWorld.java
+java HelloWorld</code></pre>
+
+        <h2>📚 Main Packages of JDK 1.0</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>java.lang</strong><br>
+                Object, String, Integer, System, Thread, Exception
+            </div>
+            <div class="feature-card">
+                <strong>java.util</strong><br>
+                Vector, Hashtable, Date, StringTokenizer, Random
+            </div>
+            <div class="feature-card">
+                <strong>java.io</strong><br>
+                File, InputStream, OutputStream, Reader, Writer
+            </div>
+            <div class="feature-card">
+                <strong>java.awt</strong><br>
+                Component, Button, Frame, Graphics, Color
+            </div>
+            <div class="feature-card">
+                <strong>java.net</strong><br>
+                Socket, URL, URLConnection, InetAddress
+            </div>
+            <div class="feature-card">
+                <strong>java.applet</strong><br>
+                Applet, AppletContext, AudioClip
+            </div>
+        </div>
+
+        <h2>🎯 JDK 1.0 Limitations</h2>
+        <p>As the first version, JDK 1.0 had some limitations that were improved in later versions:</p>
+        <ul>
+            <li>⚠️ <strong>Performance</strong> - Slower than C/C++ (no JIT compiler yet)</li>
+            <li>⚠️ <strong>Limited API</strong> - Only 212 classes (today there are thousands)</li>
+            <li>⚠️ <strong>No Inner Classes</strong> - Added in JDK 1.1</li>
+            <li>⚠️ <strong>No Complete Reflection</strong> - Improved later</li>
+            <li>⚠️ <strong>Basic AWT</strong> - Simple graphical interface</li>
+        </ul>
+
+        <h2>🚀 Post-Launch Evolution</h2>
+        <p>After the launch of JDK 1.0, Java evolved rapidly:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Date</th>
+                    <th>Main Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>JDK 1.0</td>
+                    <td>May 1995</td>
+                    <td>Initial release</td>
+                </tr>
+                <tr>
+                    <td>JDK 1.1</td>
+                    <td>Feb 1997</td>
+                    <td>Inner Classes, Reflection, JDBC</td>
+                </tr>
+                <tr>
+                    <td>JDK 1.2</td>
+                    <td>Dec 1998</td>
+                    <td>Swing, Collections Framework</td>
+                </tr>
+                <tr>
+                    <td>JDK 1.3</td>
+                    <td>May 2000</td>
+                    <td>HotSpot JVM, JavaSound</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🌟 JDK 1.0 Legacy</h2>
+        <p>
+            The launch of JDK 1.0 established the foundations that are still valid today:
+        </p>
+        <ul>
+            <li>🏗️ <strong>JVM Architecture</strong> - Base for all future versions</li>
+            <li>📦 <strong>Package Model</strong> - Organizational structure maintained</li>
+            <li>🔄 <strong>Bytecode</strong> - Format that remains compatible</li>
+            <li>🌐 <strong>WORA Philosophy</strong> - Central principle of Java</li>
+            <li>🛡️ <strong>Security</strong> - Security foundations established</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>📊 Statistics:</strong> In 1996, just one year after the launch, Java already had more than 
+            <strong>200,000 developers</strong> and was being used by more than <strong>10,000 companies</strong> around the world.
+        </div>
+
+        <h2>📚 References e Further Reading</h2>
+        <ul>
+            <li>📖 "The Java Language Specification" - First edition (1996)</li>
+            <li>📖 "Java in a Nutshell" - David Flanagan (first edition)</li>
+            <li>🌐 Official JDK 1.0 documentation (archived)</li>
+            <li>📰 Historical articles about the launch of Java</li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>💭 Reflection:</strong> The launch of JDK 1.0 was not just the release of a programming language, 
+            but rather the beginning of a revolution that transformed software development, especially on the web and in enterprise applications. 
+            The concepts introduced in Java 1.0 profoundly influenced modern software development.
+        </div>
+    </div>
+        <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copy</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Error copying:', err);
+                button.textContent = '❌ Error';
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+

@@ -15,39 +15,39 @@ function convertToNewPath(oldPath, categoryName) {
         return oldPath.replace(/\/(br|en)\//, `/${currentLanguage}/`);
     }
     
-    // Se já está no novo formato com hash mas sem idioma (ex: conteudos/hi870208/arquivo.html)
+    // Se já está no novo formato com hash mas sem idioma (ex: content/hi870208/arquivo.html)
     // Adiciona o idioma
-    // Padrão: conteudos/{hash-categoria}/{hash-topico}.html
-    const hashPattern = /conteudos\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
+    // Padrão: content/{hash-categoria}/{hash-topico}.html
+    const hashPattern = /content\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
     const match = oldPath.match(hashPattern);
     if (match) {
         const categoryHash = match[1];
         const fileName = match[2];
-        return `conteudos/${categoryHash}/${currentLanguage}/${fileName}`;
+        return `content/${categoryHash}/${currentLanguage}/${fileName}`;
     }
     
-    // Se o path tem formato conteudos/java.md/hi870208/arquivo.html
-    // Adiciona o idioma no caminho: conteudos/java.md/hi870208/br/arquivo.html
-    const javaMdPattern = /conteudos\/java\.md\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
+    // Se o path tem formato content/java.md/hi870208/arquivo.html
+    // Adiciona o idioma no caminho: content/java.md/hi870208/br/arquivo.html
+    const javaMdPattern = /content\/java\.md\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
     const javaMdMatch = oldPath.match(javaMdPattern);
     if (javaMdMatch) {
         const hash = javaMdMatch[1];
         const fileName = javaMdMatch[2];
-        return `conteudos/java.md/${hash}/${currentLanguage}/${fileName}`;
+        return `content/java.md/${hash}/${currentLanguage}/${fileName}`;
     }
     
-    // Se o path tem formato conteudos/java.md/arquivo.html (nós de grupo)
-    // Adiciona o idioma no caminho: conteudos/java.md/br/arquivo.html
-    const javaMdGroupPattern = /conteudos\/java\.md\/([a-z0-9]+\.html)$/;
+    // Se o path tem formato content/java.md/arquivo.html (nós de grupo)
+    // Adiciona o idioma no caminho: content/java.md/br/arquivo.html
+    const javaMdGroupPattern = /content\/java\.md\/([a-z0-9]+\.html)$/;
     const javaMdGroupMatch = oldPath.match(javaMdGroupPattern);
     if (javaMdGroupMatch) {
         const fileName = javaMdGroupMatch[1];
-        return `conteudos/java.md/${currentLanguage}/${fileName}`;
+        return `content/java.md/${currentLanguage}/${fileName}`;
     }
     
-    // Se o path antigo tem formato antigo (conteudos/java.md/arquivo.html sem hash)
+    // Se o path antigo tem formato antigo (content/java.md/arquivo.html sem hash)
     // Gera hash do tópico e usa hash da categoria
-    if (oldPath.includes('conteudos/java.md/') && !oldPath.match(/conteudos\/java\.md\/[a-z0-9]+\//)) {
+    if (oldPath.includes('content/java.md/') && !oldPath.match(/content\/java\.md\/[a-z0-9]+\//)) {
         const oldFileName = oldPath.split('/').pop().replace('.html', '');
         // Tenta encontrar o tópico correspondente no menu
         const topicNode = document.querySelector(`[data-html="${oldPath}"]`);
@@ -56,7 +56,7 @@ function convertToNewPath(oldPath, categoryName) {
             const topicName = topicPath.split('/').pop();
             const topicHash = getTopicFileNameHash(topicName);
             const categoryHash = getCategoryHash(categoryName || 'História do Java');
-            return `conteudos/${categoryHash}/${currentLanguage}/${topicHash}.html`;
+            return `content/${categoryHash}/${currentLanguage}/${topicHash}.html`;
         }
     }
     
@@ -67,7 +67,7 @@ function convertToNewPath(oldPath, categoryName) {
     const hash = getCategoryHash(categoryName || 'História do Java');
     
     // Retorna novo path: {hash}/{lang}/{nome}.html
-    return `conteudos/${hash}/${currentLanguage}/${fileName}.html`;
+    return `content/${hash}/${currentLanguage}/${fileName}.html`;
 }
 
 // Função para obter categoria do path
@@ -92,7 +92,7 @@ async function updateContent(path, label, htmlFile, file, lines) {
     if (htmlFile) {
         const category = getCategoryFromPath(path);
         const newPath = convertToNewPath(htmlFile, category);
-        const finalPath = newPath || htmlFile.replace('conteudos/java.md/', `conteudos/${getCategoryHash(category)}/${currentLanguage}/`);
+        const finalPath = newPath || htmlFile.replace('content/java.md/', `content/${getCategoryHash(category)}/${currentLanguage}/`);
         
         // Debug: verificar se o path está correto
         console.log('Carregando conteúdo:', {

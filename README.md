@@ -1,51 +1,48 @@
 # Codeflow
 
-Plataforma de aprendizado estruturado sobre tecnologias de programação, começando com Java.
+Structured learning platform for programming technologies, starting with Java.
 
-## 🌐 Acesso
+## 🌐 Access
 
-Acesse em: [https://codeflow.github.io](https://codeflow.github.io)
+Access at: [https://codeflow.github.io](https://codeflow.github.io)
 
-## 📚 Sobre
+## 📚 About
 
-Codeflow é uma plataforma de aprendizado estruturado que oferece conteúdo completo e organizado sobre tecnologias de programação, começando com Java.
+Codeflow is a structured learning platform that offers complete and organized content about programming technologies.
 
-## 🚀 Tecnologias
+## 🚀 Technologies
 
 - HTML5
 - CSS3 (RichFaces BlueSky Theme)
 - JavaScript (Vanilla)
 - GitHub Pages
 
-## 📖 Estrutura
+## 📖 Structure
 
 ```
 codeflow.github.io/
-├── index.html              # Página principal
-├── ementas/                # Arquivos Markdown com estrutura de conteúdo
-├── conteudos/              # Conteúdo HTML gerado
+├── index.html              # Main page
+├── content/              # Generated HTML content
 ├── resources/
-│   ├── css/                # Estilos
+│   ├── css/                # Styles
 │   ├── js/                 # JavaScript
-│   └── img/                # Imagens
-└── .cursor/                # Comandos do Cursor AI
+│   └── img/                # Images
 ```
 
-## 🌍 Idiomas
+## 🌍 Languages
 
-Todo o conteúdo está disponível em:
-- 🇧🇷 Português (BR)
-- 🇺🇸 Inglês (EN)
+All content is available in:
+- 🇧🇷 Portuguese (BR)
+- 🇺🇸 English (EN)
 
-## 📝 Como Contribuir
+## 📝 How to Contribute
 
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
+1. Fork the repository
+2. Create a branch for your feature (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob licença MIT.
-
+This project is licensed under MIT.

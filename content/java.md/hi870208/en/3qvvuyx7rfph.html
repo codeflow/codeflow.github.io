@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J2SE, J2EE, J2ME Era - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    
+</head>
+<body class="content-page">
+    <div class="content-container">
+        <h1>🏛️ J2SE, J2EE, J2ME Era: The Division of the Java Platform</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">20/11/2025 22:40:47</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+        <div class="success-box">
+            <strong>📅 Period:</strong> 1998 - 2006<br>
+            <strong>🏢 Company:</strong> Sun Microsystems<br>
+            <strong>🎯 Versions:</strong> Java 2 Platform (J2SE 1.2 - 1.5, J2EE 1.2 - 1.5, J2ME 1.0 - 3.0)
+        </div>
+
+        <h2>🎯 What Was the J2 Era?</h2>
+        <p>
+            The <strong>J2SE, J2EE, J2ME Era</strong> marked a crucial moment in Java's history, when Sun Microsystems 
+            reorganized the Java platform into three distinct editions to meet different market needs. 
+            This division occurred with the launch of the <strong>Java 2 Platform</strong> in December 1998.
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Nomenclature Change:</strong> With Java 2, Sun changed the nomenclature from "JDK" to "J2SE" 
+            (Java 2 Platform, Standard Edition), also creating the Enterprise (J2EE) and Micro (J2ME) editions.
+        </div>
+
+        <h2>📦 The Three Editions of the Java 2 Platform</h2>
+        <p>The Java 2 Platform was divided into three main editions:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>🖥️ J2SE</strong><br>
+                Java 2 Platform, Standard Edition<br>
+                For desktop and server applications
+            </div>
+            <div class="feature-card">
+                <strong>🏢 J2EE</strong><br>
+                Java 2 Platform, Enterprise Edition<br>
+                For enterprise and corporate applications
+            </div>
+            <div class="feature-card">
+                <strong>📱 J2ME</strong><br>
+                Java 2 Platform, Micro Edition<br>
+                For embedded and mobile devices
+            </div>
+        </div>
+
+        <h2>🖥️ J2SE - Java 2 Platform, Standard Edition</h2>
+        <p>
+            <strong>J2SE</strong> was the standard edition of the Java platform, intended for developing desktop 
+            applications, applets, and small to medium-sized server applications.
+        </p>
+
+        <h3>Main Characteristics of J2SE</h3>
+        <ul>
+            <li>✅ <strong>Core Java</strong> - Java language and fundamental libraries</li>
+            <li>✅ <strong>Swing</strong> - Graphical interface framework (replaced AWT)</li>
+            <li>✅ <strong>Collections Framework</strong> - Modern data structures</li>
+            <li>✅ <strong>JavaBeans</strong> - Reusable components</li>
+            <li>✅ <strong>JDBC</strong> - Database access</li>
+            <li>✅ <strong>RMI</strong> - Remote method invocation</li>
+            <li>✅ <strong>JNI</strong> - Java Native Interface</li>
+        </ul>
+
+        <h3>J2SE Versions</h3>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Release Date</th>
+                    <th>Main Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>J2SE 1.2</strong></td>
+                    <td>December 1998</td>
+                    <td>Swing, Collections Framework, JavaBeans, JIT Compiler</td>
+                </tr>
+                <tr>
+                    <td><strong>J2SE 1.3</strong></td>
+                    <td>May 2000</td>
+                    <td>HotSpot JVM, JavaSound, RMI over IIOP</td>
+                </tr>
+                <tr>
+                    <td><strong>J2SE 1.4</strong></td>
+                    <td>February 2002</td>
+                    <td>Assertions, Regular Expressions, NIO, Logging API</td>
+                </tr>
+                <tr>
+                    <td><strong>J2SE 5.0</strong></td>
+                    <td>September 2004</td>
+                    <td>Generics, Annotations, Autoboxing, Enhanced for loop</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🏢 J2EE - Java 2 Platform, Enterprise Edition</h2>
+        <p>
+            <strong>J2EE</strong> was designed for developing large-scale enterprise applications, 
+            including application servers, distributed systems, and complex web applications.
+        </p>
+
+        <h3>Main Characteristics of J2EE</h3>
+        <ul>
+            <li>🏗️ <strong>Servlets & JSP</strong> - Web development</li>
+            <li>💼 <strong>EJB (Enterprise JavaBeans)</strong> - Distributed business components</li>
+            <li>📧 <strong>JavaMail</strong> - Email sending and receiving</li>
+            <li>💾 <strong>JMS (Java Message Service)</strong> - Asynchronous messaging</li>
+            <li>🔐 <strong>JTA (Java Transaction API)</strong> - Transaction management</li>
+            <li>🌐 <strong>JNDI (Java Naming and Directory Interface)</strong> - Directory services</li>
+            <li>📡 <strong>RMI-IIOP</strong> - CORBA integration</li>
+            <li>🔌 <strong>JCA (Java Connector Architecture)</strong> - Legacy system integration</li>
+        </ul>
+
+        <h3>J2EE Architecture</h3>
+        <div class="image-placeholder">
+            [Diagram: J2EE Architecture - Client (Applet/Application) → Web Container (Servlets/JSP) → EJB Container (Session/Entity Beans) → Database/External Systems]
+        </div>
+
+        <h3>J2EE Versions</h3>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Release Date</th>
+                    <th>Main Specifications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>J2EE 1.2</strong></td>
+                    <td>December 1999</td>
+                    <td>Servlets 2.2, JSP 1.1, EJB 1.1, JMS 1.0</td>
+                </tr>
+                <tr>
+                    <td><strong>J2EE 1.3</strong></td>
+                    <td>September 2001</td>
+                    <td>Servlets 2.3, JSP 1.2, EJB 2.0, JMS 1.0.2</td>
+                </tr>
+                <tr>
+                    <td><strong>J2EE 1.4</strong></td>
+                    <td>November 2003</td>
+                    <td>Servlets 2.4, JSP 2.0, EJB 2.1, JAX-RPC 1.1</td>
+                </tr>
+                <tr>
+                    <td><strong>J2EE 5.0</strong></td>
+                    <td>May 2006</td>
+                    <td>Servlets 2.5, JSP 2.1, EJB 3.0, JAX-WS 2.0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>J2EE Application Servers</h3>
+        <p>Main application servers that implemented the J2EE specification:</p>
+        <ul>
+            <li>🌐 <strong>BEA WebLogic</strong> - One of the most popular</li>
+            <li>☕ <strong>IBM WebSphere</strong> - IBM's enterprise solution</li>
+            <li>🐱 <strong>Apache Tomcat</strong> - Web container (Servlets/JSP)</li>
+            <li>💀 <strong>JBoss Application Server</strong> - Open source</li>
+            <li>☀️ <strong>Sun Java System Application Server</strong> - Sun's solution</li>
+            <li>🔷 <strong>Oracle Application Server</strong> - Oracle solution</li>
+        </ul>
+
+        <h2>📱 J2ME - Java 2 Platform, Micro Edition</h2>
+        <p>
+            <strong>J2ME</strong> was developed for devices with limited resources, such as cell phones, 
+            PDAs, set-top boxes, and other embedded devices.
+        </p>
+
+        <h3>Main Characteristics of J2ME</h3>
+        <ul>
+            <li>📱 <strong>CLDC (Connected Limited Device Configuration)</strong> - For devices with limited memory</li>
+            <li>📲 <strong>MIDP (Mobile Information Device Profile)</strong> - For cell phones</li>
+            <li>🖥️ <strong>CDC (Connected Device Configuration)</strong> - For devices with more resources</li>
+            <li>🎮 <strong>J2ME Games</strong> - Mobile game development</li>
+            <li>📡 <strong>Wireless APIs</strong> - Wireless communication</li>
+        </ul>
+
+        <h3>J2ME Configurations and Profiles</h3>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Configuration/Profile</th>
+                    <th>Description</th>
+                    <th>Target Devices</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>CLDC</strong></td>
+                    <td>Connected Limited Device Configuration</td>
+                    <td>Cell phones, basic PDAs</td>
+                </tr>
+                <tr>
+                    <td><strong>MIDP</strong></td>
+                    <td>Mobile Information Device Profile</td>
+                    <td>Java cell phones (Java ME)</td>
+                </tr>
+                <tr>
+                    <td><strong>CDC</strong></td>
+                    <td>Connected Device Configuration</td>
+                    <td>Set-top boxes, embedded devices</td>
+                </tr>
+                <tr>
+                    <td><strong>PersonalJava</strong></td>
+                    <td>Profile for personal devices</td>
+                    <td>Advanced PDAs, portable devices</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>J2ME Versions</h3>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Release Date</th>
+                    <th>Main Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>J2ME 1.0</strong></td>
+                    <td>September 2000</td>
+                    <td>CLDC 1.0, MIDP 1.0</td>
+                </tr>
+                <tr>
+                    <td><strong>J2ME 2.0</strong></td>
+                    <td>November 2002</td>
+                    <td>CLDC 1.1, MIDP 2.0, Game APIs</td>
+                </tr>
+                <tr>
+                    <td><strong>J2ME 3.0</strong></td>
+                    <td>July 2005</td>
+                    <td>CLDC 1.1, MIDP 3.0, Advanced APIs</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📊 Comparison: J2SE vs J2EE vs J2ME</h2>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>J2SE</th>
+                    <th>J2EE</th>
+                    <th>J2ME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Focus</strong></td>
+                    <td>Desktop and server</td>
+                    <td>Enterprise applications</td>
+                    <td>Mobile/embedded devices</td>
+                </tr>
+                <tr>
+                    <td><strong>JVM Size</strong></td>
+                    <td>Medium (~10-50 MB)</td>
+                    <td>Large (100+ MB)</td>
+                    <td>Small (~1-5 MB)</td>
+                </tr>
+                <tr>
+                    <td><strong>Memory Required</strong></td>
+                    <td>32-128 MB</td>
+                    <td>256+ MB</td>
+                    <td>1-16 MB</td>
+                </tr>
+                <tr>
+                    <td><strong>Main APIs</strong></td>
+                    <td>Swing, Collections, JDBC</td>
+                    <td>Servlets, JSP, EJB, JMS</td>
+                    <td>MIDP, CLDC, Wireless APIs</td>
+                </tr>
+                <tr>
+                    <td><strong>Use Cases</strong></td>
+                    <td>Desktop apps, applets</td>
+                    <td>Web apps, corporate systems</td>
+                    <td>Mobile games, embedded apps</td>
+                </tr>
+                <tr>
+                    <td><strong>Complexity</strong></td>
+                    <td>Medium</td>
+                    <td>High</td>
+                    <td>Low to Medium</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🎯 Why the Division into Three Editions?</h2>
+        <p>The division of Java into three editions was motivated by several reasons:</p>
+
+        <ul>
+            <li>🎯 <strong>Specific Focus</strong> - Each edition serves a different market</li>
+            <li>📦 <strong>Optimization</strong> - J2ME optimized for devices with limited resources</li>
+            <li>🏢 <strong>Enterprise Market</strong> - J2EE with specific APIs for large corporations</li>
+            <li>💼 <strong>Licensing</strong> - Different licensing models for each edition</li>
+            <li>🔧 <strong>Maintenance</strong> - Facilitates independent evolution of each platform</li>
+        </ul>
+
+        <h2>📈 Market Impact</h2>
+        <p>The J2 era had a significant impact on the development market:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>🏢 Enterprise</strong><br>
+                J2EE dominated the enterprise applications market, competing with .NET
+            </div>
+            <div class="feature-card">
+                <strong>📱 Mobile</strong><br>
+                J2ME was widely adopted on cell phones, especially Nokia and Motorola
+            </div>
+            <div class="feature-card">
+                <strong>🖥️ Desktop</strong><br>
+                J2SE continued to be the foundation for desktop and server development
+            </div>
+        </div>
+
+        <h2>🔄 Transition: From J2 to Java SE/EE/ME</h2>
+        <p>
+            In 2006, Sun Microsystems simplified the nomenclature, removing the "2" from the names:
+        </p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Old Name (J2)</th>
+                    <th>New Name (2006+)</th>
+                    <th>Transition Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>J2SE 5.0</td>
+                    <td>Java SE 5</td>
+                    <td>2004</td>
+                </tr>
+                <tr>
+                    <td>J2SE 6</td>
+                    <td>Java SE 6</td>
+                    <td>2006</td>
+                </tr>
+                <tr>
+                    <td>J2EE 5.0</td>
+                    <td>Java EE 5</td>
+                    <td>2006</td>
+                </tr>
+                <tr>
+                    <td>J2ME</td>
+                    <td>Java ME</td>
+                    <td>2006</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💻 Example: J2EE Development</h2>
+        <p>A basic example of a J2EE Servlet:</p>
+        <pre><code class="language-java">import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+
+public class HelloServlet extends HttpServlet {
+    public void doGet(HttpServletRequest request, 
+                     HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("&lt;html&gt;&lt;body&gt;");
+        out.println("&lt;h1&gt;Hello J2EE World!&lt;/h1&gt;");
+        out.println("&lt;/body&gt;&lt;/html&gt;");
+    }
+}</code></pre>
+
+        <h2>📱 Example: J2ME Development (MIDlet)</h2>
+        <p>A basic example of a J2ME MIDlet:</p>
+        <pre><code class="language-java">import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+
+public class HelloMIDlet extends MIDlet {
+    private Display display;
+    
+    public void startApp() {
+        display = Display.getDisplay(this);
+        Form form = new Form("Hello J2ME");
+        form.append("Hello, Mobile World!");
+        display.setCurrent(form);
+    }
+    
+    public void pauseApp() {}
+    public void destroyApp(boolean unconditional) {}
+}</code></pre>
+
+        <h2>🌟 Legacy of the J2 Era</h2>
+        <p>The J2 era left an important legacy:</p>
+
+        <ul>
+            <li>🏗️ <strong>Enterprise Architecture</strong> - Established standards for corporate applications</li>
+            <li>📱 <strong>Java Mobile</strong> - Popularized Java on mobile devices</li>
+            <li>🌐 <strong>Application Servers</strong> - Created a robust server ecosystem</li>
+            <li>📚 <strong>Specifications</strong> - Established many specifications that are still used today</li>
+            <li>💼 <strong>Market</strong> - Consolidated Java as an enterprise platform</li>
+        </ul>
+
+        <h2>📚 Main Technologies by Edition</h2>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>J2SE</th>
+                    <th>J2EE</th>
+                    <th>J2ME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Swing</td>
+                    <td>Servlets</td>
+                    <td>MIDP</td>
+                </tr>
+                <tr>
+                    <td>Collections Framework</td>
+                    <td>JSP</td>
+                    <td>CLDC</td>
+                </tr>
+                <tr>
+                    <td>JDBC</td>
+                    <td>EJB</td>
+                    <td>Wireless APIs</td>
+                </tr>
+                <tr>
+                    <td>RMI</td>
+                    <td>JMS</td>
+                    <td>Game API</td>
+                </tr>
+                <tr>
+                    <td>JavaBeans</td>
+                    <td>JTA</td>
+                    <td>MMAPI</td>
+                </tr>
+                <tr>
+                    <td>JNI</td>
+                    <td>JNDI</td>
+                    <td>PIM API</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <strong>📊 Statistics:</strong> At the height of the J2 era, J2EE was used by more than 70% of Fortune 500 companies 
+            for enterprise application development, and J2ME was present on more than 1 billion mobile devices.
+        </div>
+
+        <h2>🔄 Post-J2 Evolution</h2>
+        <p>After the J2 era, the platforms evolved:</p>
+
+        <ul>
+            <li>☕ <strong>Java SE</strong> - Continued evolving with new versions (6, 7, 8, 9+)</li>
+            <li>🏢 <strong>Java EE</strong> - Evolved into Jakarta EE (after donation to Eclipse Foundation)</li>
+            <li>📱 <strong>Java ME</strong> - Evolved into Java ME Embedded and other variants</li>
+            <li>☁️ <strong>Cloud</strong> - Modern frameworks emerged like Spring Boot, Quarkus, Micronaut</li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>💭 Reflection:</strong> The J2SE, J2EE, J2ME era was fundamental to establishing Java as a complete 
+            and comprehensive platform, capable of serving everything from mobile devices to large enterprise systems. 
+            This strategic division allowed Java to dominate multiple markets simultaneously.
+        </div>
+
+        <h2>📚 References and Further Reading</h2>
+        <ul>
+            <li>📖 "Java 2 Platform, Enterprise Edition Specification" - Sun Microsystems</li>
+            <li>📖 "Java 2 Platform, Micro Edition Specification" - Sun Microsystems</li>
+            <li>📖 "Java Enterprise in a Nutshell" - David Flanagan</li>
+            <li>🌐 Official J2EE/J2ME documentation (archived)</li>
+            <li>📰 Historical articles about the J2 era</li>
+        </ul>
+    </div>
+        <script>
+        // Initialize highlight.js
+        hljs.highlightAll();
+        
+        // Add line numbers after highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Add copy buttons for all code blocks
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detect language
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Create header with copy button
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copy</button>';
+                
+                // Wrap the pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Function to copy code preserving indentation and line breaks
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Check if highlightjs-line-numbers was applied (table structure)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // If there are code cells, get text from each line preserving formatting
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove the last extra line break
+                text = text.replace(/\n$/, '');
+            } else {
+                // If there's no table structure, use normal textContent
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Error copying:', err);
+                button.textContent = '❌ Error';
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+

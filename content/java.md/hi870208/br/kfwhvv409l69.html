@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitetura J2ME - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    
+</head>
+<body class="content-page">
+    <div class="content-container">
+        <h1>📱 Arquitetura J2ME: Java 2 Micro Edition</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">20/01/2025 23:15:30</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+        <div class="success-box">
+            <strong>📦 Plataforma:</strong> Java 2 Platform, Micro Edition (J2ME)<br>
+            <strong>🎯 Versões:</strong> J2ME 1.0 - 1.4<br>
+            <strong>📅 Período:</strong> 2000 - 2006<br>
+            <strong>🎯 Foco:</strong> Dispositivos móveis e embarcados com recursos limitados
+        </div>
+
+        <h2>🎯 Visão Geral da Arquitetura J2ME</h2>
+        <p>
+            A <strong>Arquitetura J2ME</strong> foi projetada especificamente para dispositivos com recursos limitados, 
+            como telefones celulares, PDAs, pagers e outros dispositivos embarcados. Diferente das plataformas J2SE e J2EE, 
+            a J2ME foi criada com foco em dispositivos com memória, processamento e energia limitados.
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Princípio Fundamental:</strong> A arquitetura J2ME utiliza uma abordagem modular baseada em 
+            configurações e perfis, permitindo que diferentes tipos de dispositivos tenham implementações Java otimizadas 
+            para suas capacidades específicas.
+        </div>
+
+        <h2>📦 Componentes Principais da Arquitetura J2ME</h2>
+        <p>A arquitetura J2ME é organizada em camadas hierárquicas:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Camada</th>
+                    <th>Componente</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Configuração</strong></td>
+                    <td>CLDC</td>
+                    <td>Connected Limited Device Configuration - Para dispositivos com recursos muito limitados</td>
+                </tr>
+                <tr>
+                    <td><strong>Configuração</strong></td>
+                    <td>CDC</td>
+                    <td>Connected Device Configuration - Para dispositivos com mais recursos (set-top boxes, PDAs)</td>
+                </tr>
+                <tr>
+                    <td><strong>Perfil</strong></td>
+                    <td>MIDP</td>
+                    <td>Mobile Information Device Profile - Para telefones celulares e dispositivos móveis</td>
+                </tr>
+                <tr>
+                    <td><strong>Perfil</strong></td>
+                    <td>Foundation Profile</td>
+                    <td>Perfil base para dispositivos CDC sem interface gráfica</td>
+                </tr>
+                <tr>
+                    <td><strong>Perfil</strong></td>
+                    <td>Personal Profile</td>
+                    <td>Perfil para dispositivos CDC com interface gráfica (subconjunto do AWT)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔧 CLDC (Connected Limited Device Configuration)</h2>
+        <p>
+            O <strong>CLDC</strong> é a configuração base para dispositivos com recursos extremamente limitados, 
+            como telefones celulares antigos. Define o conjunto mínimo de APIs Java necessárias.
+        </p>
+
+        <div class="info-box">
+            <strong>📋 Características do CLDC:</strong><br>
+            • Memória mínima: 160-512 KB<br>
+            • Processador de 16 ou 32 bits<br>
+            • Conexão de rede intermitente<br>
+            • Sem suporte a ponto flutuante (opcional)<br>
+            • Subconjunto limitado das classes Java padrão
+        </div>
+
+        <h3>📚 APIs do CLDC</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pacote</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>java.lang</code></td>
+                    <td>Classes fundamentais (Object, String, Thread básico)</td>
+                </tr>
+                <tr>
+                    <td><code>java.util</code></td>
+                    <td>Coleções básicas (Vector, Hashtable)</td>
+                </tr>
+                <tr>
+                    <td><code>java.io</code></td>
+                    <td>I/O básico (InputStream, OutputStream)</td>
+                </tr>
+                <tr>
+                    <td><code>javax.microedition.io</code></td>
+                    <td>Conectividade genérica (Connector, Connection)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📱 MIDP (Mobile Information Device Profile)</h2>
+        <p>
+            O <strong>MIDP</strong> é o perfil mais popular do J2ME, projetado especificamente para telefones celulares 
+            e dispositivos móveis. Define APIs para interface gráfica, armazenamento persistente e comunicação de rede.
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>🖼️ LCDUI</strong><br>
+                Lightweight UI Toolkit para interfaces gráficas simples e eficientes em dispositivos móveis
+            </div>
+            <div class="feature-card">
+                <strong>💾 RMS</strong><br>
+                Record Management System para armazenamento persistente de dados em dispositivos móveis
+            </div>
+            <div class="feature-card">
+                <strong>🌐 Networking</strong><br>
+                Suporte para HTTP, sockets e outras formas de comunicação de rede
+            </div>
+            <div class="feature-card">
+                <strong>📞 MIDlets</strong><br>
+                Aplicações Java para dispositivos móveis, equivalentes aos applets para web
+            </div>
+        </div>
+
+        <h3>📝 Exemplo de MIDlet</h3>
+        <pre><code class="language-java">import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+
+public class HelloMIDlet extends MIDlet {
+    private Display display;
+    private Form form;
+    
+    public void startApp() {
+        display = Display.getDisplay(this);
+        form = new Form("Olá J2ME");
+        form.append("Bem-vindo ao Java 2 Micro Edition!");
+        display.setCurrent(form);
+    }
+    
+    public void pauseApp() {
+        // Pausar aplicação
+    }
+    
+    public void destroyApp(boolean unconditional) {
+        // Limpar recursos
+    }
+}</code></pre>
+
+        <h2>🏗️ Arquitetura em Camadas</h2>
+        <p>A arquitetura J2ME segue uma estrutura em camadas:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Camada</th>
+                    <th>Responsabilidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>MIDlet/Application</strong></td>
+                    <td>Aplicação do usuário (MIDlet para MIDP, Xlet para CDC)</td>
+                </tr>
+                <tr>
+                    <td><strong>Profile</strong></td>
+                    <td>APIs específicas do perfil (MIDP, Foundation, Personal)</td>
+                </tr>
+                <tr>
+                    <td><strong>Configuration</strong></td>
+                    <td>APIs base da configuração (CLDC ou CDC)</td>
+                </tr>
+                <tr>
+                    <td><strong>KVM/CVM</strong></td>
+                    <td>Máquina virtual Java otimizada (KVM para CLDC, CVM para CDC)</td>
+                </tr>
+                <tr>
+                    <td><strong>Host OS</strong></td>
+                    <td>Sistema operacional do dispositivo</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>⚙️ KVM vs CVM</h2>
+        <p>J2ME utiliza duas máquinas virtuais diferentes dependendo da configuração:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>KVM (CLDC)</th>
+                    <th>CVM (CDC)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Dispositivos</strong></td>
+                    <td>Telefones celulares, pagers</td>
+                    <td>Set-top boxes, PDAs avançados</td>
+                </tr>
+                <tr>
+                    <td><strong>Memória</strong></td>
+                    <td>128 KB - 512 KB</td>
+                    <td>2 MB - 16 MB</td>
+                </tr>
+                <tr>
+                    <td><strong>Recursos</strong></td>
+                    <td>Muito limitados</td>
+                    <td>Moderados</td>
+                </tr>
+                <tr>
+                    <td><strong>APIs</strong></td>
+                    <td>Subconjunto mínimo</td>
+                    <td>Subconjunto maior (próximo ao J2SE)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📊 Comparação: J2SE vs J2EE vs J2ME</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>J2SE</th>
+                    <th>J2EE</th>
+                    <th>J2ME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Foco</strong></td>
+                    <td>Desktop e servidor</td>
+                    <td>Aplicações empresariais</td>
+                    <td>Dispositivos móveis</td>
+                </tr>
+                <tr>
+                    <td><strong>Memória</strong></td>
+                    <td>Múltiplos MB</td>
+                    <td>Múltiplos MB/GB</td>
+                    <td>128 KB - 16 MB</td>
+                </tr>
+                <tr>
+                    <td><strong>APIs</strong></td>
+                    <td>Completas</td>
+                    <td>Extensas (enterprise)</td>
+                    <td>Limitadas (subconjunto)</td>
+                </tr>
+                <tr>
+                    <td><strong>Uso</strong></td>
+                    <td>Apps desktop, web apps</td>
+                    <td>Sistemas corporativos</td>
+                    <td>Jogos móveis, apps embarcados</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔮 Evolução e Legado</h2>
+        <p>
+            O J2ME foi fundamental para popularizar Java em dispositivos móveis durante os anos 2000. Com o advento do 
+            Android e iOS, o J2ME perdeu relevância, mas sua arquitetura modular influenciou o design de outras 
+            plataformas móveis.
+        </p>
+
+        <div class="info-box">
+            <strong>📱 Transição:</strong> O J2ME foi gradualmente substituído por:<br>
+            • <strong>Android</strong> - Plataforma móvel moderna baseada em Java<br>
+            • <strong>iOS</strong> - Plataforma da Apple com Objective-C/Swift<br>
+            • <strong>Java ME Embedded</strong> - Evolução moderna para dispositivos IoT
+        </div>
+
+        <h2>📅 Últimas Atualizações</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>Arquitetura J2ME</strong> - Documentação completa sobre a arquitetura Java 2 Micro Edition para dispositivos móveis e embarcados.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copiar</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copiado!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copiar';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Erro ao copiar:', err);
+                button.textContent = '❌ Erro';
+                setTimeout(function() {
+                    button.textContent = '📋 Copiar';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+

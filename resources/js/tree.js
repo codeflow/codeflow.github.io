@@ -3,6 +3,28 @@
 (function() {
     const treeView = document.getElementById('treeView');
 
+    // Expandir todos os nós na inicialização
+    function expandAllNodes() {
+        const allToggles = treeView.querySelectorAll('.app-tree__toggle--collapsed');
+        const allChildren = treeView.querySelectorAll('.app-tree__children');
+        
+        allToggles.forEach(toggle => {
+            toggle.classList.remove('app-tree__toggle--collapsed');
+            toggle.classList.add('app-tree__toggle--expanded');
+        });
+        
+        allChildren.forEach(children => {
+            children.classList.add('app-tree__children--expanded');
+        });
+    }
+
+    // Expandir todos os nós quando o DOM estiver pronto
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', expandAllNodes);
+    } else {
+        expandAllNodes();
+    }
+
     // Expansão/colapso de nós
     treeView.addEventListener('click', function(e) {
         const toggle = e.target.closest('.app-tree__toggle');

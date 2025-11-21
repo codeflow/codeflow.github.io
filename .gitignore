@@ -17,5 +17,8 @@ npm-debug.log*
 *.tmp
 *.temp
 
+# Documentation (não versionado)
+DEPLOY.md
+
 .cursor/*
 ementas/*

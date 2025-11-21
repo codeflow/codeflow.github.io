@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitetura J2SE - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    
+</head>
+<body class="content-page">
+    <div class="content-container">
+        <h1>🏗️ Arquitetura J2SE: Estrutura e Componentes da Plataforma</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">20/11/2025 22:40:47</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+        <div class="success-box">
+            <strong>📦 Plataforma:</strong> Java 2 Platform, Standard Edition (J2SE)<br>
+            <strong>🎯 Versões:</strong> J2SE 1.2 - 1.5<br>
+            <strong>📅 Período:</strong> 1998 - 2006
+        </div>
+
+        <h2>🎯 Visão Geral da Arquitetura J2SE</h2>
+        <p>
+            A <strong>Arquitetura J2SE</strong> representa a estrutura fundamental da plataforma Java 2 Standard Edition, 
+            definindo como os componentes interagem para fornecer um ambiente de desenvolvimento e execução completo. 
+            A arquitetura foi projetada para ser modular, extensível e portável.
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Princípio Fundamental:</strong> A arquitetura J2SE segue o princípio de "Write Once, Run Anywhere" 
+            (WORA), onde o código Java é compilado para bytecode e executado em qualquer plataforma que tenha uma 
+            Java Virtual Machine (JVM) compatível.
+        </div>
+
+        <h2>📦 Componentes Principais da Arquitetura J2SE</h2>
+        <p>A arquitetura J2SE é composta por vários componentes principais:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>☕ Java Language</strong><br>
+                A linguagem de programação Java com sua sintaxe e semântica
+            </div>
+            <div class="feature-card">
+                <strong>🖥️ Java Virtual Machine (JVM)</strong><br>
+                Máquina virtual que executa bytecode Java
+            </div>
+            <div class="feature-card">
+                <strong>📚 Java API</strong><br>
+                Bibliotecas e classes padrão da plataforma
+            </div>
+            <div class="feature-card">
+                <strong>🔧 Java Development Kit (JDK)</strong><br>
+                Ferramentas de desenvolvimento (compilador, debugger, etc.)
+            </div>
+        </div>
+
+        <h2>🏛️ Camadas da Arquitetura J2SE</h2>
+        <p>A arquitetura J2SE pode ser visualizada em camadas:</p>
+
+        <div class="image-placeholder">
+            [Diagrama: Camadas da Arquitetura J2SE<br>
+            Camada 1: Aplicações Java<br>
+            Camada 2: Java API (Swing, Collections, JDBC, etc.)<br>
+            Camada 3: Java Virtual Machine (JVM)<br>
+            Camada 4: Sistema Operacional]
+        </div>
+
+        <h3>1. Camada de Aplicação</h3>
+        <p>
+            A camada superior contém as aplicações Java desenvolvidas pelos programadores. Estas aplicações utilizam 
+            as APIs fornecidas pela plataforma J2SE.
+        </p>
+
+        <h3>2. Camada de API Java</h3>
+        <p>
+            A camada intermediária fornece as bibliotecas padrão do Java, incluindo:
+        </p>
+        <ul>
+            <li>📦 <strong>java.lang</strong> - Classes fundamentais</li>
+            <li>📊 <strong>java.util</strong> - Utilitários e Collections</li>
+            <li>🖼️ <strong>java.awt</strong> - Abstract Window Toolkit</li>
+            <li>🎨 <strong>javax.swing</strong> - Framework de interface gráfica</li>
+            <li>💾 <strong>java.io</strong> - Entrada e saída</li>
+            <li>🌐 <strong>java.net</strong> - Rede e comunicação</li>
+            <li>🗄️ <strong>java.sql</strong> - Acesso a bancos de dados (JDBC)</li>
+        </ul>
+
+        <h3>3. Camada de Java Virtual Machine (JVM)</h3>
+        <p>
+            A JVM é o coração da arquitetura J2SE, responsável por:
+        </p>
+        <ul>
+            <li>⚙️ <strong>Carregamento de Classes</strong> - Classloaders</li>
+            <li>🔍 <strong>Verificação de Bytecode</strong> - Validação de segurança</li>
+            <li>⚡ <strong>Execução</strong> - Interpretação ou compilação JIT</li>
+            <li>🗑️ <strong>Gerenciamento de Memória</strong> - Garbage Collection</li>
+            <li>🔒 <strong>Segurança</strong> - Sandbox e controle de acesso</li>
+        </ul>
+
+        <h3>4. Camada de Sistema Operacional</h3>
+        <p>
+            A camada inferior é o sistema operacional nativo (Windows, Linux, macOS, etc.), que fornece os recursos 
+            de hardware e sistema necessários para a execução da JVM.
+        </p>
+
+        <h2>🔧 Componentes do JDK (Java Development Kit)</h2>
+        <p>O JDK J2SE inclui os seguintes componentes principais:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Componente</th>
+                    <th>Descrição</th>
+                    <th>Função</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>javac</strong></td>
+                    <td>Compilador Java</td>
+                    <td>Compila código-fonte (.java) em bytecode (.class)</td>
+                </tr>
+                <tr>
+                    <td><strong>java</strong></td>
+                    <td>Launcher de aplicações</td>
+                    <td>Inicia a JVM e executa aplicações Java</td>
+                </tr>
+                <tr>
+                    <td><strong>javadoc</strong></td>
+                    <td>Gerador de documentação</td>
+                    <td>Gera documentação HTML a partir de comentários</td>
+                </tr>
+                <tr>
+                    <td><strong>jar</strong></td>
+                    <td>Empacotador</td>
+                    <td>Cria e gerencia arquivos JAR</td>
+                </tr>
+                <tr>
+                    <td><strong>javap</strong></td>
+                    <td>Descompilador</td>
+                    <td>Mostra informações sobre classes compiladas</td>
+                </tr>
+                <tr>
+                    <td><strong>jdb</strong></td>
+                    <td>Debugger</td>
+                    <td>Ferramenta de depuração</td>
+                </tr>
+                <tr>
+                    <td><strong>appletviewer</strong></td>
+                    <td>Visualizador de applets</td>
+                    <td>Executa applets Java sem navegador</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📚 Estrutura de Packages J2SE</h2>
+        <p>A arquitetura J2SE organiza as classes em packages hierárquicos:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Package</th>
+                    <th>Categoria</th>
+                    <th>Principais Classes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>java.lang</code></td>
+                    <td>Fundamental</td>
+                    <td>Object, String, System, Thread, Exception</td>
+                </tr>
+                <tr>
+                    <td><code>java.util</code></td>
+                    <td>Utilitários</td>
+                    <td>Collections, Date, Random, StringTokenizer</td>
+                </tr>
+                <tr>
+                    <td><code>java.io</code></td>
+                    <td>I/O</td>
+                    <td>File, InputStream, OutputStream, Reader, Writer</td>
+                </tr>
+                <tr>
+                    <td><code>java.net</code></td>
+                    <td>Rede</td>
+                    <td>Socket, URL, URLConnection, InetAddress</td>
+                </tr>
+                <tr>
+                    <td><code>java.awt</code></td>
+                    <td>GUI (AWT)</td>
+                    <td>Component, Frame, Button, Graphics</td>
+                </tr>
+                <tr>
+                    <td><code>javax.swing</code></td>
+                    <td>GUI (Swing)</td>
+                    <td>JFrame, JButton, JPanel, JTable</td>
+                </tr>
+                <tr>
+                    <td><code>java.sql</code></td>
+                    <td>Banco de Dados</td>
+                    <td>Connection, Statement, ResultSet, DriverManager</td>
+                </tr>
+                <tr>
+                    <td><code>java.applet</code></td>
+                    <td>Applets</td>
+                    <td>Applet, AppletContext, AudioClip</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔄 Fluxo de Execução J2SE</h2>
+        <p>O fluxo de execução de uma aplicação J2SE segue estas etapas:</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>1. Compilação</strong><br>
+                O código-fonte Java (.java) é compilado pelo javac em bytecode (.class)
+            </div>
+            <div class="timeline-item">
+                <strong>2. Carregamento</strong><br>
+                O ClassLoader carrega as classes necessárias na memória
+            </div>
+            <div class="timeline-item">
+                <strong>3. Verificação</strong><br>
+                A JVM verifica o bytecode para garantir segurança e correção
+            </div>
+            <div class="timeline-item">
+                <strong>4. Preparação</strong><br>
+                A JVM prepara as estruturas de dados necessárias
+            </div>
+            <div class="timeline-item">
+                <strong>5. Resolução</strong><br>
+                Referências simbólicas são resolvidas em referências diretas
+            </div>
+            <div class="timeline-item">
+                <strong>6. Inicialização</strong><br>
+                Classes estáticas são inicializadas
+            </div>
+            <div class="timeline-item">
+                <strong>7. Execução</strong><br>
+                O método main() é executado e a aplicação roda
+            </div>
+        </div>
+
+        <h2>💻 Exemplo: Estrutura de uma Aplicação J2SE</h2>
+        <p>Uma aplicação J2SE típica tem a seguinte estrutura:</p>
+
+        <pre><code class="language-java">// Arquivo: HelloWorld.java
+package com.exemplo;
+
+import java.awt.*;
+import javax.swing.*;
+
+public class HelloWorld extends JFrame {
+    public HelloWorld() {
+        setTitle("Hello J2SE");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 200);
+        
+        JLabel label = new JLabel("Hello, J2SE World!", JLabel.CENTER);
+        add(label);
+        
+        setVisible(true);
+    }
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new HelloWorld();
+            }
+        });
+    }
+}</code></pre>
+
+        <h2>🏗️ Arquitetura de Memória J2SE</h2>
+        <p>A JVM J2SE organiza a memória em várias áreas:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Área de Memória</th>
+                    <th>Descrição</th>
+                    <th>Características</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Method Area</strong></td>
+                    <td>Armazena código de métodos e estruturas de classe</td>
+                    <td>Compartilhada entre threads</td>
+                </tr>
+                <tr>
+                    <td><strong>Heap</strong></td>
+                    <td>Armazena objetos criados pela aplicação</td>
+                    <td>Gerenciado pelo Garbage Collector</td>
+                </tr>
+                <tr>
+                    <td><strong>Stack</strong></td>
+                    <td>Armazena variáveis locais e frames de método</td>
+                    <td>Uma por thread</td>
+                </tr>
+                <tr>
+                    <td><strong>PC Register</strong></td>
+                    <td>Contador de programa para cada thread</td>
+                    <td>Indica a instrução atual</td>
+                </tr>
+                <tr>
+                    <td><strong>Native Method Stack</strong></td>
+                    <td>Suporta métodos nativos (JNI)</td>
+                    <td>Uma por thread</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔐 Arquitetura de Segurança J2SE</h2>
+        <p>A arquitetura J2SE inclui um modelo de segurança robusto:</p>
+
+        <ul>
+            <li>🛡️ <strong>Sandbox</strong> - Ambiente isolado para código não confiável</li>
+            <li>🔑 <strong>Security Manager</strong> - Controla acesso a recursos do sistema</li>
+            <li>📜 <strong>Policy Files</strong> - Define permissões para código</li>
+            <li>✅ <strong>Verificação de Bytecode</strong> - Valida código antes da execução</li>
+            <li>🔐 <strong>ClassLoader Seguro</strong> - Previne carregamento de classes maliciosas</li>
+            <li>📝 <strong>Assinatura Digital</strong> - Verifica autenticidade de código</li>
+        </ul>
+
+        <h2>📊 Comparação: J2SE vs Outras Plataformas</h2>
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>J2SE</th>
+                    <th>.NET Framework</th>
+                    <th>C/C++</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Linguagem</strong></td>
+                    <td>Java</td>
+                    <td>C#, VB.NET, F#</td>
+                    <td>C, C++</td>
+                </tr>
+                <tr>
+                    <td><strong>Runtime</strong></td>
+                    <td>JVM</td>
+                    <td>CLR</td>
+                    <td>Nativo</td>
+                </tr>
+                <tr>
+                    <td><strong>Portabilidade</strong></td>
+                    <td>✅ Alto (WORA)</td>
+                    <td>⚠️ Limitada (principalmente Windows)</td>
+                    <td>❌ Baixa (recompilação necessária)</td>
+                </tr>
+                <tr>
+                    <td><strong>Gerenciamento de Memória</strong></td>
+                    <td>✅ Automático (GC)</td>
+                    <td>✅ Automático (GC)</td>
+                    <td>❌ Manual</td>
+                </tr>
+                <tr>
+                    <td><strong>Segurança</strong></td>
+                    <td>✅ Sandbox, verificação de bytecode</td>
+                    <td>✅ Code Access Security</td>
+                    <td>⚠️ Limitada</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🚀 Evolução da Arquitetura J2SE</h2>
+        <p>A arquitetura J2SE evoluiu significativamente ao longo das versões:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Versão</th>
+                    <th>Principais Mudanças Arquiteturais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>J2SE 1.2</strong></td>
+                    <td>Introdução do Collections Framework, Swing, JavaBeans</td>
+                </tr>
+                <tr>
+                    <td><strong>J2SE 1.3</strong></td>
+                    <td>HotSpot JVM, JavaSound, melhorias em RMI</td>
+                </tr>
+                <tr>
+                    <td><strong>J2SE 1.4</strong></td>
+                    <td>Assertions, Regular Expressions, NIO, Logging API</td>
+                </tr>
+                <tr>
+                    <td><strong>J2SE 5.0</strong></td>
+                    <td>Generics, Annotations, Autoboxing, Enhanced for loop</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💡 Princípios de Design da Arquitetura J2SE</h2>
+        <p>A arquitetura J2SE foi projetada seguindo vários princípios importantes:</p>
+
+        <ul>
+            <li>🎯 <strong>Simplicidade</strong> - Fácil de aprender e usar</li>
+            <li>🌐 <strong>Portabilidade</strong> - WORA (Write Once, Run Anywhere)</li>
+            <li>🛡️ <strong>Segurança</strong> - Múltiplas camadas de proteção</li>
+            <li>⚡ <strong>Performance</strong> - Otimizações JIT e GC eficiente</li>
+            <li>🔧 <strong>Robustez</strong> - Tratamento de erros e exceções</li>
+            <li>📦 <strong>Modularidade</strong> - Packages e organização clara</li>
+            <li>🔄 <strong>Extensibilidade</strong> - Fácil adicionar novas funcionalidades</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>📊 Estatísticas:</strong> A arquitetura J2SE foi projetada para suportar milhões de desenvolvedores 
+            e bilhões de dispositivos, estabelecendo Java como uma das plataformas de desenvolvimento mais populares 
+            do mundo.
+        </div>
+
+        <h2>🔍 Componentes Avançados da Arquitetura</h2>
+        <p>Além dos componentes básicos, a arquitetura J2SE inclui:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>🔄 RMI</strong><br>
+                Remote Method Invocation - Invocação remota de métodos
+            </div>
+            <div class="feature-card">
+                <strong>🔌 JNI</strong><br>
+                Java Native Interface - Integração com código nativo
+            </div>
+            <div class="feature-card">
+                <strong>📦 JavaBeans</strong><br>
+                Componentes reutilizáveis
+            </div>
+            <div class="feature-card">
+                <strong>🌐 Applets</strong><br>
+                Aplicações Java executadas em navegadores
+            </div>
+        </div>
+
+        <h2>📚 Referências e Leitura Adicional</h2>
+        <ul>
+            <li>📖 "The Java Language Specification" - Especificação oficial</li>
+            <li>📖 "The Java Virtual Machine Specification" - Especificação da JVM</li>
+            <li>📖 "Java Platform Architecture" - Documentação oficial Sun/Oracle</li>
+            <li>🌐 Documentação oficial do J2SE (arquivada)</li>
+            <li>📰 Artigos sobre arquitetura Java</li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>💭 Reflexão:</strong> A arquitetura J2SE estabeleceu os fundamentos que ainda são válidos na plataforma 
+            Java moderna. Os princípios de portabilidade, segurança e modularidade continuam sendo pilares da plataforma, 
+            mesmo após a evolução para Java SE e as versões mais recentes.
+        </div>
+    </div>
+        <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copiar</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copiado!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copiar';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Erro ao copiar:', err);
+                button.textContent = '❌ Erro';
+                setTimeout(function() {
+                    button.textContent = '📋 Copiar';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+

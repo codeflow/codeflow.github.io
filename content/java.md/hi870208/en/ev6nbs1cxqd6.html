@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDK 1.0 Compiler (javac) - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    
+</head>
+<body class="content-page">
+    <div class="content-container">
+        <h1>⚙️ JDK 1.0 Compiler (javac): Transforming Java into Bytecode</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">20/11/2025 22:40:47</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+        <div class="success-box">
+            <strong>🔧 Tool:</strong> javac (Java Compiler)<br>
+            <strong>📦 Version:</strong> JDK 1.0<br>
+            <strong>🎯 Function:</strong> Compile Java source code (.java) into bytecode (.class)
+        </div>
+
+        <h2>🎯 What Is javac?</h2>
+        <p>
+            <strong>javac</strong> is the official Java compiler, a command-line tool that is part of the 
+            Java Development Kit (JDK). In JDK 1.0, javac was one of the fundamental tools that allowed 
+            developers to transform Java source code into bytecode, which can be executed on any platform 
+            that has a Java Virtual Machine (JVM).
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Fundamental Concept:</strong> javac does not compile to native machine code, but rather to 
+            <strong>bytecode</strong>, an intermediate representation that is interpreted by the JVM. This is what makes 
+            Java "Write Once, Run Anywhere" (WORA).
+        </div>
+
+        <h2>📋 javac Characteristics in JDK 1.0</h2>
+        <p>The JDK 1.0 javac compiler included the following main characteristics:</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>✅ Type Checking</strong><br>
+                Static type checking at compile time
+            </div>
+            <div class="feature-card">
+                <strong>🔍 Syntactic Analysis</strong><br>
+                Complete parsing of Java syntax
+            </div>
+            <div class="feature-card">
+                <strong>📦 Bytecode Generation</strong><br>
+                Conversion of Java code to JVM bytecode
+            </div>
+            <div class="feature-card">
+                <strong>⚠️ Error Detection</strong><br>
+                Error identification before execution
+            </div>
+        </div>
+
+        <h2>💻 Basic javac Usage</h2>
+        <p>The simplest use of javac in JDK 1.0:</p>
+        <pre><code class="language-bash">javac HelloWorld.java</code></pre>
+
+        <p>This command compiles the file <code>HelloWorld.java</code> and generates the file <code>HelloWorld.class</code> 
+        containing the bytecode.</p>
+
+        <h2>📊 Compilation Process</h2>
+        <p>javac performs several steps during compilation:</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>1. Lexical Analysis</strong><br>
+                Source code is divided into tokens (keywords, identifiers, operators, etc.)
+            </div>
+            <div class="timeline-item">
+                <strong>2. Syntactic Analysis</strong><br>
+                Tokens are organized into an abstract syntax tree (AST)
+            </div>
+            <div class="timeline-item">
+                <strong>3. Semantic Analysis</strong><br>
+                Type checking, variable scope, and language rules
+            </div>
+            <div class="timeline-item">
+                <strong>4. Bytecode Generation</strong><br>
+                Conversion of AST into JVM bytecode instructions
+            </div>
+            <div class="timeline-item">
+                <strong>5. Writing .class File</strong><br>
+                Bytecode is saved in a binary .class file
+            </div>
+        </div>
+
+        <div class="image-placeholder">
+            [Diagram: Java Code (.java) → javac → Bytecode (.class) → JVM → Execution]
+        </div>
+
+        <h2>🔧 javac Command Line Options (JDK 1.0)</h2>
+        <p>JDK 1.0 javac supported several command line options:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>-classpath</code> or <code>-cp</code></td>
+                    <td>Specifies the path to find classes and .jar files</td>
+                </tr>
+                <tr>
+                    <td><code>-d</code></td>
+                    <td>Specifies the destination directory for generated .class files</td>
+                </tr>
+                <tr>
+                    <td><code>-sourcepath</code></td>
+                    <td>Specifies the path to find source files</td>
+                </tr>
+                <tr>
+                    <td><code>-verbose</code></td>
+                    <td>Displays detailed messages about what is being done</td>
+                </tr>
+                <tr>
+                    <td><code>-deprecation</code></td>
+                    <td>Displays warnings about use of obsolete features</td>
+                </tr>
+                <tr>
+                    <td><code>-g</code></td>
+                    <td>Generates debug information (local variables, file names, line numbers)</td>
+                </tr>
+                <tr>
+                    <td><code>-nowarn</code></td>
+                    <td>Suppresses all warnings</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📝 Practical Example: Compiling a Java Program</h2>
+        <p>Let's see a complete compilation example:</p>
+
+        <h3>1. Source Code (HelloWorld.java)</h3>
+        <pre><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.println("Compiled with javac from JDK 1.0");
+    }
+}</code></pre>
+
+        <h3>2. Compilation Command</h3>
+        <pre><code class="language-bash">javac HelloWorld.java</code></pre>
+
+        <h3>3. Result</h3>
+        <p>javac generates the file <code>HelloWorld.class</code> containing the bytecode.</p>
+
+        <h3>4. Execution</h3>
+        <pre><code class="language-bash">java HelloWorld</code></pre>
+
+        <p><strong>Output:</strong></p>
+        <pre><code>Hello, World!
+Compiled with javac from JDK 1.0</code></pre>
+
+        <h2>🏗️ Structure of Generated .class File</h2>
+        <p>javac generates .class files that follow a specific structure:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Magic Number</strong></td>
+                    <td>0xCAFEBABE - identifies the file as Java bytecode</td>
+                </tr>
+                <tr>
+                    <td><strong>Version</strong></td>
+                    <td>Bytecode version (45.0 for JDK 1.0)</td>
+                </tr>
+                <tr>
+                    <td><strong>Constant Pool</strong></td>
+                    <td>Constants table (strings, numbers, class/method references)</td>
+                </tr>
+                <tr>
+                    <td><strong>Access Flags</strong></td>
+                    <td>Class modifiers (public, final, abstract, etc.)</td>
+                </tr>
+                <tr>
+                    <td><strong>This Class</strong></td>
+                    <td>Reference to the current class name</td>
+                </tr>
+                <tr>
+                    <td><strong>Super Class</strong></td>
+                    <td>Reference to parent class (Object for classes without explicit inheritance)</td>
+                </tr>
+                <tr>
+                    <td><strong>Interfaces</strong></td>
+                    <td>List of implemented interfaces</td>
+                </tr>
+                <tr>
+                    <td><strong>Fields</strong></td>
+                    <td>Information about class fields (variables)</td>
+                </tr>
+                <tr>
+                    <td><strong>Methods</strong></td>
+                    <td>Information about methods, including bytecode</td>
+                </tr>
+                <tr>
+                    <td><strong>Attributes</strong></td>
+                    <td>Additional attributes (source code, debug, etc.)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔍 Checks Performed by javac</h2>
+        <p>The javac compiler performs several important checks:</p>
+
+        <ul>
+            <li>✅ <strong>Type Checking</strong> - Ensures types are compatible</li>
+            <li>✅ <strong>Scope Checking</strong> - Verifies variables are accessible</li>
+            <li>✅ <strong>Syntax Checking</strong> - Ensures code follows Java grammar</li>
+            <li>✅ <strong>Accessibility Checking</strong> - Verifies access modifiers (public, private, protected)</li>
+            <li>✅ <strong>Inheritance Checking</strong> - Ensures classes and methods are inherited correctly</li>
+            <li>✅ <strong>Interface Checking</strong> - Ensures all interface methods are implemented</li>
+        </ul>
+
+        <h2>⚠️ Common Compilation Errors in JDK 1.0</h2>
+        <p>Some common errors that javac detected:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Error Type</th>
+                    <th>Example</th>
+                    <th>javac Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Syntax Error</strong></td>
+                    <td>Missing semicolon</td>
+                    <td><code>';' expected</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Type Error</strong></td>
+                    <td>Incompatible assignment</td>
+                    <td><code>incompatible types</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Scope Error</strong></td>
+                    <td>Undeclared variable</td>
+                    <td><code>cannot find symbol</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Access Error</strong></td>
+                    <td>Access to private member</td>
+                    <td><code>has private access</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Class Error</strong></td>
+                    <td>Class not found</td>
+                    <td><code>cannot find symbol: class</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📦 Compiling Multiple Files</h2>
+        <p>javac can compile multiple files at once:</p>
+
+        <h3>Compiling Individual Files</h3>
+        <pre><code class="language-bash">javac File1.java File2.java File3.java</code></pre>
+
+        <h3>Compiling All .java Files in a Directory</h3>
+        <pre><code class="language-bash">javac *.java</code></pre>
+
+        <h3>Compiling with Dependencies</h3>
+        <pre><code class="language-bash">javac -classpath lib/*.jar src/*.java</code></pre>
+
+        <h2>🔗 Integration with Other JDK 1.0 Tools</h2>
+        <p>javac works together with other JDK tools:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Function</th>
+                    <th>Integration with javac</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>java</code></td>
+                    <td>Bytecode interpreter</td>
+                    <td>Executes .class files generated by javac</td>
+                </tr>
+                <tr>
+                    <td><code>javadoc</code></td>
+                    <td>Documentation generator</td>
+                    <td>Reads Javadoc comments from compiled source code</td>
+                </tr>
+                <tr>
+                    <td><code>jar</code></td>
+                    <td>File packager</td>
+                    <td>Packages .class files into .jar files</td>
+                </tr>
+                <tr>
+                    <td><code>javap</code></td>
+                    <td>Bytecode disassembler</td>
+                    <td>Shows the content of generated .class files</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📊 Comparison: javac vs Other Compilers</h2>
+        <p>How javac compares to other compilers of the era:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>javac (JDK 1.0)</th>
+                    <th>gcc (C/C++)</th>
+                    <th>Visual Basic Compiler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Output</strong></td>
+                    <td>Bytecode (.class)</td>
+                    <td>Native machine code</td>
+                    <td>Native machine code</td>
+                </tr>
+                <tr>
+                    <td><strong>Portability</strong></td>
+                    <td>✅ High (WORA)</td>
+                    <td>❌ Low (recompilation required)</td>
+                    <td>❌ Windows only</td>
+                </tr>
+                <tr>
+                    <td><strong>Type Checking</strong></td>
+                    <td>✅ Static at compile time</td>
+                    <td>⚠️ Partial (C) / ✅ Complete (C++)</td>
+                    <td>⚠️ Limited</td>
+                </tr>
+                <tr>
+                    <td><strong>Memory Management</strong></td>
+                    <td>✅ Automatic (GC)</td>
+                    <td>❌ Manual</td>
+                    <td>⚠️ Partial</td>
+                </tr>
+                <tr>
+                    <td><strong>Optimizations</strong></td>
+                    <td>⚠️ Basic (JDK 1.0)</td>
+                    <td>✅ Advanced</td>
+                    <td>⚠️ Limited</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>⚡ javac Performance in JDK 1.0</h2>
+        <p>Performance characteristics of the original compiler:</p>
+
+        <ul>
+            <li>⚡ <strong>Fast Compilation</strong> - javac was designed to compile quickly</li>
+            <li>📦 <strong>Efficient Bytecode Generation</strong> - Bytecode optimized for JVM interpretation</li>
+            <li>🔍 <strong>Efficient Checks</strong> - Fast static analysis</li>
+            <li>💾 <strong>Low Memory Usage</strong> - Lightweight and efficient compiler</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>📊 Statistics:</strong> In JDK 1.0, javac could compile medium-sized programs 
+            (up to a few hundred lines) in a matter of seconds, even on hardware of the era (486/Pentium 
+            processors with few MB of RAM).
+        </div>
+
+        <h2>🔧 Advanced Example: Compiling Multiple Classes</h2>
+        <p>Example of compiling a program with multiple classes:</p>
+
+        <h3>File: Person.java</h3>
+        <pre><code class="language-java">public class Person {
+    private String name;
+    
+    public Person(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
+    }
+}</code></pre>
+
+        <h3>File: Main.java</h3>
+        <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        Person person = new Person("Java Developer");
+        System.out.println("Hello, " + person.getName());
+    }
+}</code></pre>
+
+        <h3>Compilation</h3>
+        <pre><code class="language-bash">javac Person.java Main.java</code></pre>
+
+        <p>Or simply:</p>
+        <pre><code class="language-bash">javac *.java</code></pre>
+
+        <h2>📚 javac Limitations in JDK 1.0</h2>
+        <p>As the first version, javac had some limitations:</p>
+
+        <ul>
+            <li>⚠️ <strong>Limited Optimizations</strong> - Few code optimizations</li>
+            <li>⚠️ <strong>Basic Error Messages</strong> - Less descriptive messages than modern versions</li>
+            <li>⚠️ <strong>No Incremental Compilation</strong> - Always recompiled everything</li>
+            <li>⚠️ <strong>No Annotation Processing</strong> - Annotations didn't exist yet</li>
+            <li>⚠️ <strong>No Generics</strong> - Generics were added in Java 5</li>
+        </ul>
+
+        <h2>🚀 javac Evolution</h2>
+        <p>javac evolved significantly since JDK 1.0:</p>
+
+        <!-- Tabela no estilo RichFaces BlueSky - estilos aplicados automaticamente pelo theme.css -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Main Improvements</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>JDK 1.0</strong></td>
+                    <td>Initial version, basic compilation</td>
+                </tr>
+                <tr>
+                    <td><strong>JDK 1.1</strong></td>
+                    <td>Error message improvements</td>
+                </tr>
+                <tr>
+                    <td><strong>JDK 1.2</strong></td>
+                    <td>Additional optimizations</td>
+                </tr>
+                <tr>
+                    <td><strong>JDK 1.3</strong></td>
+                    <td>Faster compilation</td>
+                </tr>
+                <tr>
+                    <td><strong>JDK 1.4</strong></td>
+                    <td>Assertions, better error handling</td>
+                </tr>
+                <tr>
+                    <td><strong>JDK 5.0</strong></td>
+                    <td>Generics, annotations, varargs</td>
+                </tr>
+                <tr>
+                    <td><strong>JDK 6+</strong></td>
+                    <td>Annotation processing, continuous improvements</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💡 javac Usage Tips (JDK 1.0)</h2>
+        <ul>
+            <li>💡 <strong>Use <code>-d</code> to organize</strong> - Separate source code from bytecode</li>
+            <li>💡 <strong>Use <code>-classpath</code> correctly</strong> - Organize dependencies</li>
+            <li>💡 <strong>Check error messages</strong> - They indicate real problems</li>
+            <li>💡 <strong>Compile dependencies first</strong> - Resolve dependencies in the correct order</li>
+            <li>💡 <strong>Use <code>-verbose</code> for debug</strong> - Understand what the compiler is doing</li>
+        </ul>
+
+        <h2>🎯 Importance of javac in the Java Ecosystem</h2>
+        <p>
+            javac was fundamental to Java's success because:
+        </p>
+        <ul>
+            <li>🏗️ <strong>Platform Foundation</strong> - Without a compiler, there is no Java</li>
+            <li>🌐 <strong>WORA Enabler</strong> - Portable bytecode is generated by javac</li>
+            <li>🛡️ <strong>Security Guarantee</strong> - Static checks prevent errors</li>
+            <li>📚 <strong>Industry Standard</strong> - Established how to compile Java</li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>💭 Reflection:</strong> javac from JDK 1.0 established the foundations that are still valid today. 
+            Although it has evolved greatly, the basic principles of Java compilation remain the same: 
+            type checking, bytecode generation, and integration with the JVM.
+        </div>
+
+        <h2>📚 References and Further Reading</h2>
+        <ul>
+            <li>📖 "The Java Language Specification" - First edition (1996)</li>
+            <li>📖 "The Java Virtual Machine Specification" - Bytecode specification</li>
+            <li>🔧 Official javac documentation (JDK 1.0)</li>
+            <li>📰 Articles about Java compilation</li>
+        </ul>
+    </div>
+        <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copy</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Error copying:', err);
+                button.textContent = '❌ Error';
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+
