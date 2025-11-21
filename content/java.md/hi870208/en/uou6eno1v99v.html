@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolution (Java 8, 11, 17, 21, 22+) - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <style>
+        /* Estilos de tabela no estilo RichFaces BlueSky */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #C0C0C0;
+            margin-bottom: 1rem;
+            table-layout: auto;
+        }
+        table th {
+            background-color: #BED6F8 !important;
+            color: #0B356C !important;
+            font-weight: bold;
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            text-align: left !important;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table td {
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table tbody tr:nth-child(even) td {
+            background-color: #ECF4FE !important;
+        }
+        table tbody tr:nth-child(odd) td {
+            background-color: #FFFFFF !important;
+        }
+        table tfoot td {
+            background-color: #cccccc;
+        }
+        /* Container de código com botão de copiar */
+        .code-block-wrapper {
+            position: relative;
+            margin: 1.5rem 0;
+        }
+        .code-block-header {
+            background-color: #BED6F8;
+            color: #0B356C;
+            padding: 0.5rem 1rem;
+            border: 1px solid #BED6F8;
+            border-bottom: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .code-block-header .language-label {
+            text-transform: uppercase;
+        }
+        .copy-code-btn {
+            background-color: #ECF4FE;
+            border: 1px solid #BED6F8;
+            color: #0B356C;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-size: 10px;
+            font-family: Arial, Verdana, sans-serif;
+            transition: background-color 0.15s ease;
+        }
+        .copy-code-btn:hover {
+            background-color: #D6E6FB;
+        }
+        .copy-code-btn:active {
+            background-color: #BED6F8;
+        }
+        .copy-code-btn.copied {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+        pre {
+            background-color: #F8F8F8;
+            border: 1px solid #BED6F8;
+            padding: 0;
+            overflow-x: auto;
+            border-radius: 0;
+            margin: 0;
+            position: relative;
+        }
+        pre code {
+            display: block;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        .hljs-ln-numbers {
+            text-align: right;
+            color: #999;
+            border-right: 1px solid #F0F0F0;
+            padding-right: 1rem;
+            padding-left: 0.75rem;
+            margin-right: 1rem !important;
+            user-select: none;
+        }
+        .hljs-ln-code {
+            padding-left: 1rem !important;
+        }
+        code:not(pre code) {
+            background-color: #ECF4FE;
+            border: 1px solid #BED6F8;
+            padding: 0.15rem 0.3rem;
+            border-radius: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 10px;
+            color: #0B356C;
+        }
+    </style>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Menu Lateral -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <img src="../../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <li class="app-tree__item">
+                        <div class="app-tree__node app-tree__node--has-children" data-path="Java" data-html="content/java.md/1xrfm11lm1.html">
+                            <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                            <span class="app-tree__icon">📁</span>
+                            <span class="app-tree__label" data-i18n-key="java">Java</span>
+                        </div>
+                        <ul class="app-tree__children">
+                            <li class="app-tree__item">
+                                <div class="app-tree__node app-tree__node--has-children" data-path="Java/História do Java" data-html="content/java.md/ee3l86y9j0cd.html">
+                                    <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                                    <span class="app-tree__icon">📁</span>
+                                    <span class="app-tree__label" data-i18n-key="História do Java">História do Java</span>
+                                </div>
+                                <ul class="app-tree__children">
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/Concepção (Sun, James Gosling)" data-html="content/java.md/hi870208/363ba4sngb4e.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="Concepção (Sun, James Gosling)">Concepção (Sun, James Gosling)</span>
+                                        </div>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node app-tree__node--has-children" data-path="Java/História do Java/JDK 1.0" data-html="content/java.md/1o4a4w7aov.html">
+                                            <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                                            <span class="app-tree__icon">📁</span>
+                                            <span class="app-tree__label" data-i18n-key="JDK 1.0">JDK 1.0</span>
+                                        </div>
+                                        <ul class="app-tree__children">
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/JDK 1.0/Lançamento do JDK 1.0" data-html="content/java.md/hi870208/xb9pezoakznr.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Lançamento do JDK 1.0">Lançamento do JDK 1.0</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/JDK 1.0/Compilador JDK 1.0" data-html="content/java.md/hi870208/ev6nbs1cxqd6.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Compilador JDK 1.0">Compilador JDK 1.0</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node app-tree__node--has-children" data-path="Java/História do Java/Plataforma" data-html="content/java.md/u8n8srtc79q8.html">
+                                            <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                                            <span class="app-tree__icon">📁</span>
+                                            <span class="app-tree__label" data-i18n-key="Plataforma">Plataforma</span>
+                                        </div>
+                                        <ul class="app-tree__children">
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Era J2SE, J2EE, J2ME" data-html="content/java.md/hi870208/3qvvuyx7rfph.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Era J2SE, J2EE, J2ME">Era J2SE, J2EE, J2ME</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Arquitetura J2SE" data-html="content/java.md/hi870208/kfwhqp409kpx.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Arquitetura J2SE">Arquitetura J2SE</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Arquitetura J2EE" data-html="content/java.md/hi870208/kfwi2r409ls1.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Arquitetura J2EE">Arquitetura J2EE</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Arquitetura J2ME" data-html="content/java.md/hi870208/kfwhvv409l69.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Arquitetura J2ME">Arquitetura J2ME</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/Transição para Oracle" data-html="content/java.md/hi870208/3z28jy2onq8u.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="Transição para Oracle">Transição para Oracle</span>
+                                        </div>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/OpenJDK e comunidade" data-html="content/java.md/hi870208/lfr7klwpxix9.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="OpenJDK e comunidade">OpenJDK e comunidade</span>
+                                        </div>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/Evolução (Java 8, 11, 17, 21, 22+)" data-html="content/java.md/hi870208/uou6eno1v99v.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="Evolução (Java 8, 11, 17, 21, 22+)">Evolução (Java 8, 11, 17, 21, 22+)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Área de Conteúdo -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <img src="../../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
+                    <span id="contentHeader">🚀 Java Evolution: Java 8, 11, 17, 21, 22+</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="br">🇧🇷 Português</option>
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+
+        <h1>🚀 Java Evolution: Java 8, 11, 17, 21, 22+</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">21/11/2025 13:23:58</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Java's evolution since Java 8 represents one of the most significant transformations in the language's history. 
+            This topic explores the main LTS (Long Term Support) versions and the revolutionary features that shaped modern Java.
+        </div>
+
+        <h2>🎯 Evolution Overview</h2>
+        <p>
+            Since the release of <strong>Java 8</strong> in 2014, Java has undergone a profound transformation, introducing modern features 
+            that revolutionized Java development. The LTS versions (Java 8, 11, 17, 21) marked important milestones in the language's evolution, 
+            each bringing innovative features and significant performance improvements.
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Importance:</strong> Java LTS versions are fundamental for enterprise development, offering long-term support, 
+            stability, and features that define the state of the art in Java programming.
+        </div>
+
+        <h2>📊 LTS Versions Timeline</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Release Date</th>
+                    <th>Support Until</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Java 8</strong></td>
+                    <td>March 18, 2014</td>
+                    <td>December 2030 (Oracle)</td>
+                    <td>Active LTS</td>
+                </tr>
+                <tr>
+                    <td><strong>Java 11</strong></td>
+                    <td>September 25, 2018</td>
+                    <td>September 2026</td>
+                    <td>Active LTS</td>
+                </tr>
+                <tr>
+                    <td><strong>Java 17</strong></td>
+                    <td>September 14, 2021</td>
+                    <td>September 2029</td>
+                    <td>Active LTS (Recommended)</td>
+                </tr>
+                <tr>
+                    <td><strong>Java 21</strong></td>
+                    <td>September 19, 2023</td>
+                    <td>September 2031</td>
+                    <td>Active LTS (Latest)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>☕ Java 8: The Functional Revolution</h2>
+        <p>
+            <strong>Java 8</strong> was released in March 2014 and represented one of the biggest changes in Java's history, introducing 
+            functional programming to the language.
+        </p>
+
+        <h3>🔑 Main Java 8 Features</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Lambda Expressions</strong></td>
+                    <td>Lambda expressions for functional programming</td>
+                    <td>Enabled more concise and expressive code</td>
+                </tr>
+                <tr>
+                    <td><strong>Streams API</strong></td>
+                    <td>API for functional collection processing</td>
+                    <td>Revolutionized data processing in Java</td>
+                </tr>
+                <tr>
+                    <td><strong>Optional</strong></td>
+                    <td>Class to represent optional values</td>
+                    <td>Reduced NullPointerException and improved safety</td>
+                </tr>
+                <tr>
+                    <td><strong>Date/Time API</strong></td>
+                    <td>New API for date and time manipulation</td>
+                    <td>Replaced problematic Date and Calendar classes</td>
+                </tr>
+                <tr>
+                    <td><strong>Default Methods</strong></td>
+                    <td>Default methods in interfaces</td>
+                    <td>Allowed interface evolution without breaking compatibility</td>
+                </tr>
+                <tr>
+                    <td><strong>Method References</strong></td>
+                    <td>Method references as values</td>
+                    <td>Simplified lambda usage</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>💻 Java 8 Code Example</h3>
+        <pre><code class="language-java">// Before Java 8
+List&lt;String&gt; filtered = new ArrayList&lt;&gt;();
+for (String s : list) {
+    if (s.startsWith("A")) {
+        filtered.add(s.toUpperCase());
+    }
+}
+
+// With Java 8 - Streams and Lambdas
+List&lt;String&gt; filtered = list.stream()
+    .filter(s -&gt; s.startsWith("A"))
+    .map(String::toUpperCase)
+    .collect(Collectors.toList());</code></pre>
+
+        <h2>🔟 Java 11: Modernization and Removals</h2>
+        <p>
+            <strong>Java 11</strong>, released in September 2018, was the first LTS version after the new 6-month release model. 
+            It brought significant modernization and some important removals.
+        </p>
+
+        <h3>🔑 Main Java 11 Features</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                    <th>Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>var (Local Variable Type Inference)</strong></td>
+                    <td>Type inference for local variables</td>
+                    <td>Cleaner and more readable code</td>
+                </tr>
+                <tr>
+                    <td><strong>HTTP Client (java.net.http)</strong></td>
+                    <td>Modern and asynchronous HTTP client</td>
+                    <td>Replaced HttpURLConnection with modern API</td>
+                </tr>
+                <tr>
+                    <td><strong>String Methods</strong></td>
+                    <td>New methods: isBlank(), lines(), strip(), etc.</td>
+                    <td>Easier string manipulation</td>
+                </tr>
+                <tr>
+                    <td><strong>Files.readString() / writeString()</strong></td>
+                    <td>Methods to read/write files as string</td>
+                    <td>Simplified file I/O</td>
+                </tr>
+                <tr>
+                    <td><strong>Module Removals</strong></td>
+                    <td>JavaFX, Java EE, CORBA removed from JDK</td>
+                    <td>Lighter and more focused JDK</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>💻 Java 11 Code Example</h3>
+        <pre><code class="language-java">// var - Type inference
+var list = new ArrayList&lt;String&gt;();
+var map = Map.of("key1", "value1", "key2", "value2");
+
+// HTTP Client
+HttpClient client = HttpClient.newHttpClient();
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://api.example.com/data"))
+    .build();
+HttpResponse&lt;String&gt; response = client.send(request, 
+    HttpResponse.BodyHandlers.ofString());</code></pre>
+
+        <h2>🔷 Java 17: The Recommended LTS</h2>
+        <p>
+            <strong>Java 17</strong>, released in September 2021, is currently the LTS version recommended by Oracle and the community. 
+            It consolidates many features introduced in previous versions and adds important new features.
+        </p>
+
+        <h3>🔑 Main Java 17 Features</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                    <th>Version Introduced</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Sealed Classes</strong></td>
+                    <td>Classes that restrict which classes can extend them</td>
+                    <td>Java 15 (preview), 17 (final)</td>
+                </tr>
+                <tr>
+                    <td><strong>Pattern Matching for instanceof</strong></td>
+                    <td>Simplifies type checking and casting</td>
+                    <td>Java 16 (final)</td>
+                </tr>
+                <tr>
+                    <td><strong>Records</strong></td>
+                    <td>Immutable classes for data</td>
+                    <td>Java 14 (preview), 16 (final)</td>
+                </tr>
+                <tr>
+                    <td><strong>Text Blocks</strong></td>
+                    <td>More readable multiline strings</td>
+                    <td>Java 13 (preview), 15 (final)</td>
+                </tr>
+                <tr>
+                    <td><strong>Switch Expressions</strong></td>
+                    <td>Switch as expression with yield</td>
+                    <td>Java 14 (final)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>💻 Java 17 Code Example</h3>
+        <pre><code class="language-java">// Records
+public record Person(String name, int age) {}
+
+// Sealed Classes
+public sealed class Shape permits Circle, Rectangle {}
+public final class Circle extends Shape { }
+public final class Rectangle extends Shape { }
+
+// Pattern Matching
+if (obj instanceof String s && s.length() &gt; 5) {
+    System.out.println(s.toUpperCase());
+}
+
+// Text Blocks
+String json = """
+    {
+        "name": "John",
+        "age": 30
+    }
+    """;</code></pre>
+
+        <h2>🔷 Java 21: The Latest LTS</h2>
+        <p>
+            <strong>Java 21</strong>, released in September 2023, is the latest LTS version and brings revolutionary features, 
+            especially in concurrency and performance.
+        </p>
+
+        <h3>🔑 Main Java 21 Features</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Virtual Threads (Project Loom)</strong></td>
+                    <td>Lightweight threads managed by the JVM</td>
+                    <td>Enables millions of simultaneous threads</td>
+                </tr>
+                <tr>
+                    <td><strong>Pattern Matching for switch</strong></td>
+                    <td>Complete pattern matching in switch</td>
+                    <td>More expressive and safer code</td>
+                </tr>
+                <tr>
+                    <td><strong>Sequenced Collections</strong></td>
+                    <td>New interfaces for ordered collections</td>
+                    <td>Better API for working with order</td>
+                </tr>
+                <tr>
+                    <td><strong>String Templates (Preview)</strong></td>
+                    <td>String templates with interpolation</td>
+                    <td>Replaces concatenation and format()</td>
+                </tr>
+                <tr>
+                    <td><strong>Generational ZGC</strong></td>
+                    <td>Improved garbage collector</td>
+                    <td>Lower latency and better throughput</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>💻 Java 21 Code Example</h3>
+        <pre><code class="language-java">// Virtual Threads
+try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    IntStream.range(0, 10_000)
+        .forEach(i -&gt; executor.submit(() -&gt; {
+            Thread.sleep(Duration.ofSeconds(1));
+            return i;
+        }));
+}
+
+// Pattern Matching for switch
+String result = switch (obj) {
+    case Integer i -&gt; "Integer: " + i;
+    case String s when s.length() &gt; 5 -&gt; "Long string: " + s;
+    case String s -&gt; "String: " + s;
+    case null -&gt; "null";
+    default -&gt; "Unknown";
+};</code></pre>
+
+        <h2>📈 LTS Versions Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Java 8</th>
+                    <th>Java 11</th>
+                    <th>Java 17</th>
+                    <th>Java 21</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Lambdas</strong></td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td><strong>Streams API</strong></td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td><strong>var</strong></td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td><strong>Records</strong></td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td><strong>Sealed Classes</strong></td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td><strong>Virtual Threads</strong></td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td><strong>Pattern Matching</strong></td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔄 Migration Between Versions</h2>
+        <p>
+            Migrating between Java LTS versions requires careful planning:
+        </p>
+
+        <h3>📋 Migration Guide</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>Java 6/7 → Java 8</strong><br>
+                Focus on adapting code to use lambdas and streams. Check library compatibility.
+            </div>
+            <div class="timeline-item">
+                <strong>Java 8 → Java 11</strong><br>
+                Remove dependencies on removed modules (JavaFX, Java EE). Update to use var and new String methods.
+            </div>
+            <div class="timeline-item">
+                <strong>Java 11 → Java 17</strong><br>
+                Adopt records, sealed classes, and pattern matching. Check deprecation warnings.
+            </div>
+            <div class="timeline-item">
+                <strong>Java 17 → Java 21</strong><br>
+                Explore virtual threads to improve concurrency. Adopt new pattern matching features.
+            </div>
+        </div>
+
+        <h2>🚀 Java 22 and Beyond</h2>
+        <p>
+            Java continues to evolve rapidly, with releases every 6 months. Some features under development include:
+        </p>
+
+        <ul>
+            <li>✅ <strong>String Templates</strong> - Finalization of string template feature</li>
+            <li>✅ <strong>Value Objects (Project Valhalla)</strong> - Value objects for better performance</li>
+            <li>✅ <strong>Foreign Function & Memory API (Project Panama)</strong> - Improved native interoperability</li>
+            <li>✅ <strong>Structured Concurrency</strong> - Improvements in structured concurrency</li>
+            <li>✅ <strong>Scoped Values</strong> - Modern alternative to ThreadLocal</li>
+        </ul>
+
+        <h2>📊 Evolution Impact</h2>
+        <p>
+            Java's evolution since Java 8 has had a profound impact on development:
+        </p>
+
+        <div class="icon-section">
+            <span class="emoji-large">⚡</span>
+            <div>
+                <h3>Improved Performance</h3>
+                <p>
+                    Each LTS version brought significant performance improvements, with new garbage collectors, 
+                    JVM optimizations, and better resource usage.
+                </p>
+            </div>
+        </div>
+
+        <div class="icon-section">
+            <span class="emoji-large">🎨</span>
+            <div>
+                <h3>More Modern Code</h3>
+                <p>
+                    Features like lambdas, records, pattern matching, and virtual threads enable more expressive, 
+                    safe, and efficient code.
+                </p>
+            </div>
+        </div>
+
+        <div class="icon-section">
+            <span class="emoji-large">🔒</span>
+            <div>
+                <h3>Security and Stability</h3>
+                <p>
+                    LTS versions offer long-term support, ensuring security and stability for enterprise applications.
+                </p>
+            </div>
+        </div>
+
+        <div class="icon-section">
+            <span class="emoji-large">🌐</span>
+            <div>
+                <h3>Vibrant Ecosystem</h3>
+                <p>
+                    Constant evolution keeps Java relevant and competitive, with an active community and a rich 
+                    ecosystem of tools and frameworks.
+                </p>
+            </div>
+        </div>
+
+
+        <h2>📅 Latest Updates</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>Evolution (Java 8, 11, 17, 21, 22+)</strong> - Complete documentation about Java's evolution since Java 8, including all LTS versions and their main features.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copy</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Error copying:', err);
+                button.textContent = '❌ Error';
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                }, 2000);
+            });
+        }
+    </script>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay para Mobile -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- JavaScript externo -->
+    <script src="../../../../resources/js/hash.js"></script>
+    <script src="../../../../resources/js/i18n.js"></script>
+    <script src="../../../../resources/js/sidebar.js"></script>
+    <script src="../../../../resources/js/content.js"></script>
+    <script src="../../../../resources/js/tree.js"></script>
+    <script src="../../../../resources/js/main.js"></script>
+    <script src="../../../../resources/js/search.js"></script>
+    <script>
+        // Inicializa highlight.js quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenJDK and Community - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <style>
+        /* Estilos de tabela no estilo RichFaces BlueSky */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #C0C0C0;
+            margin-bottom: 1rem;
+            table-layout: auto;
+        }
+        table th {
+            background-color: #BED6F8 !important;
+            color: #0B356C !important;
+            font-weight: bold;
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            text-align: left !important;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table td {
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table tbody tr:nth-child(even) td {
+            background-color: #ECF4FE !important;
+        }
+        table tbody tr:nth-child(odd) td {
+            background-color: #FFFFFF !important;
+        }
+        table tfoot td {
+            background-color: #cccccc;
+        }
+        /* Container de código com botão de copiar */
+        .code-block-wrapper {
+            position: relative;
+            margin: 1.5rem 0;
+        }
+        .code-block-header {
+            background-color: #BED6F8;
+            color: #0B356C;
+            padding: 0.5rem 1rem;
+            border: 1px solid #BED6F8;
+            border-bottom: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .code-block-header .language-label {
+            text-transform: uppercase;
+        }
+        .copy-code-btn {
+            background-color: #ECF4FE;
+            border: 1px solid #BED6F8;
+            color: #0B356C;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-size: 10px;
+            font-family: Arial, Verdana, sans-serif;
+            transition: background-color 0.15s ease;
+        }
+        .copy-code-btn:hover {
+            background-color: #D6E6FB;
+        }
+        .copy-code-btn:active {
+            background-color: #BED6F8;
+        }
+        .copy-code-btn.copied {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+        pre {
+            background-color: #F8F8F8;
+            border: 1px solid #BED6F8;
+            padding: 0;
+            overflow-x: auto;
+            border-radius: 0;
+            margin: 0;
+            position: relative;
+        }
+        pre code {
+            display: block;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        .hljs-ln-numbers {
+            text-align: right;
+            color: #999;
+            border-right: 1px solid #F0F0F0;
+            padding-right: 1rem;
+            padding-left: 0.75rem;
+            margin-right: 1rem !important;
+            user-select: none;
+        }
+        .hljs-ln-code {
+            padding-left: 1rem !important;
+        }
+        code:not(pre code) {
+            background-color: #ECF4FE;
+            border: 1px solid #BED6F8;
+            padding: 0.15rem 0.3rem;
+            border-radius: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 10px;
+            color: #0B356C;
+        }
+    </style>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Menu Lateral -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <img src="../../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <li class="app-tree__item">
+                        <div class="app-tree__node app-tree__node--has-children" data-path="Java" data-html="content/java.md/1xrfm11lm1.html">
+                            <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                            <span class="app-tree__icon">📁</span>
+                            <span class="app-tree__label" data-i18n-key="java">Java</span>
+                        </div>
+                        <ul class="app-tree__children">
+                            <li class="app-tree__item">
+                                <div class="app-tree__node app-tree__node--has-children" data-path="Java/História do Java" data-html="content/java.md/ee3l86y9j0cd.html">
+                                    <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                                    <span class="app-tree__icon">📁</span>
+                                    <span class="app-tree__label" data-i18n-key="História do Java">História do Java</span>
+                                </div>
+                                <ul class="app-tree__children">
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/Concepção (Sun, James Gosling)" data-html="content/java.md/hi870208/363ba4sngb4e.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="Concepção (Sun, James Gosling)">Concepção (Sun, James Gosling)</span>
+                                        </div>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node app-tree__node--has-children" data-path="Java/História do Java/JDK 1.0" data-html="content/java.md/1o4a4w7aov.html">
+                                            <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                                            <span class="app-tree__icon">📁</span>
+                                            <span class="app-tree__label" data-i18n-key="JDK 1.0">JDK 1.0</span>
+                                        </div>
+                                        <ul class="app-tree__children">
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/JDK 1.0/Lançamento do JDK 1.0" data-html="content/java.md/hi870208/xb9pezoakznr.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Lançamento do JDK 1.0">Lançamento do JDK 1.0</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/JDK 1.0/Compilador JDK 1.0" data-html="content/java.md/hi870208/ev6nbs1cxqd6.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Compilador JDK 1.0">Compilador JDK 1.0</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node app-tree__node--has-children" data-path="Java/História do Java/Plataforma" data-html="content/java.md/u8n8srtc79q8.html">
+                                            <span class="app-tree__toggle app-tree__toggle--collapsed"></span>
+                                            <span class="app-tree__icon">📁</span>
+                                            <span class="app-tree__label" data-i18n-key="Plataforma">Plataforma</span>
+                                        </div>
+                                        <ul class="app-tree__children">
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Era J2SE, J2EE, J2ME" data-html="content/java.md/hi870208/3qvvuyx7rfph.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Era J2SE, J2EE, J2ME">Era J2SE, J2EE, J2ME</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Arquitetura J2SE" data-html="content/java.md/hi870208/kfwhqp409kpx.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Arquitetura J2SE">Arquitetura J2SE</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Arquitetura J2EE" data-html="content/java.md/hi870208/kfwi2r409ls1.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Arquitetura J2EE">Arquitetura J2EE</span>
+                                                </div>
+                                            </li>
+                                            <li class="app-tree__item">
+                                                <div class="app-tree__node" data-path="Java/História do Java/Plataforma/Arquitetura J2ME" data-html="content/java.md/hi870208/kfwhvv409l69.html">
+                                                    <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                                    <span class="app-tree__label" data-i18n-key="Arquitetura J2ME">Arquitetura J2ME</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/Transição para Oracle" data-html="content/java.md/hi870208/3z28jy2onq8u.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="Transição para Oracle">Transição para Oracle</span>
+                                        </div>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/OpenJDK e comunidade" data-html="content/java.md/hi870208/lfr7klwpxix9.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="OpenJDK e comunidade">OpenJDK e comunidade</span>
+                                        </div>
+                                    </li>
+                                    <li class="app-tree__item">
+                                        <div class="app-tree__node" data-path="Java/História do Java/Evolução (Java 8, 11, 17, 21, 22+)" data-html="content/java.md/hi870208/uou6eno1v99v.html">
+                                            <span class="app-tree__icon app-tree__icon--file">📖</span>
+                                            <span class="app-tree__label" data-i18n-key="Evolução (Java 8, 11, 17, 21, 22+)">Evolução (Java 8, 11, 17, 21, 22+)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Área de Conteúdo -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <img src="../../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
+                    <span id="contentHeader">🔓 OpenJDK and Community: Open Java</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="br">🇧🇷 Português</option>
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+
+        <h1>🔓 OpenJDK and Community: Open Java</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">21/11/2025 12:32:10</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> OpenJDK (Open Java Development Kit) is the reference implementation of the Java Platform, Standard Edition (Java SE), 
+            developed as an open source project. This topic explores the history, structure, governance, and impact of OpenJDK on the Java community.
+        </div>
+
+        <h2>🎯 What is OpenJDK?</h2>
+        <p>
+            <strong>OpenJDK</strong> is the official open source implementation of Java SE, released by Sun Microsystems in 2007. 
+            Since then, it has become the foundation for virtually all Java distributions, including Oracle JDK, Amazon Corretto, 
+            Azul Zulu, AdoptOpenJDK (now Eclipse Temurin), and many others.
+        </p>
+
+        <div class="highlight-box">
+            <strong>💡 Importance:</strong> OpenJDK represents the democratization of Java, allowing anyone to 
+            contribute, audit, and distribute Java implementations, ensuring transparency and continuous innovation.
+        </div>
+
+        <h2>📅 History of OpenJDK</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Event</th>
+                    <th>Significance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>November 13, 2006</strong></td>
+                    <td>OpenJDK Announcement</td>
+                    <td>Sun Microsystems announces that Java will be open source under the GPL v2 license</td>
+                </tr>
+                <tr>
+                    <td><strong>May 8, 2007</strong></td>
+                    <td>OpenJDK Release</td>
+                    <td>First version of OpenJDK is publicly released</td>
+                </tr>
+                <tr>
+                    <td><strong>2010</strong></td>
+                    <td>Oracle Acquires Sun</td>
+                    <td>Oracle assumes leadership of the OpenJDK project</td>
+                </tr>
+                <tr>
+                    <td><strong>2017</strong></td>
+                    <td>Java 9 and Modularization</td>
+                    <td>OpenJDK 9 introduces the Java Platform Module System (JPMS)</td>
+                </tr>
+                <tr>
+                    <td><strong>2018</strong></td>
+                    <td>New Release Model</td>
+                    <td>Oracle announces releases every 6 months with LTS versions every 3 years</td>
+                </tr>
+                <tr>
+                    <td><strong>2021</strong></td>
+                    <td>Java 17 LTS</td>
+                    <td>OpenJDK 17 becomes the latest LTS version, with support until 2029</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🏗️ Architecture and Structure of OpenJDK</h2>
+        <p>
+            OpenJDK is composed of several main projects and components:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Description</th>
+                    <th>Responsibility</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>JDK (Java Development Kit)</strong></td>
+                    <td>Complete development kit</td>
+                    <td>Compiler, tools, libraries, and runtime</td>
+                </tr>
+                <tr>
+                    <td><strong>JVM (Java Virtual Machine)</strong></td>
+                    <td>Java virtual machine</td>
+                    <td>Bytecode execution, memory management, optimizations</td>
+                </tr>
+                <tr>
+                    <td><strong>HotSpot</strong></td>
+                    <td>Reference JVM</td>
+                    <td>Standard JVM implementation with JIT compiler</td>
+                </tr>
+                <tr>
+                    <td><strong>javac</strong></td>
+                    <td>Java compiler</td>
+                    <td>Compilation of Java source code to bytecode</td>
+                </tr>
+                <tr>
+                    <td><strong>Core Libraries</strong></td>
+                    <td>java.lang, java.util, etc.</td>
+                    <td>Fundamental APIs of the Java platform</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>👥 Governance and Community</h2>
+        <p>
+            OpenJDK is governed by a collaborative process involving multiple organizations and individuals:
+        </p>
+
+        <h3>📋 Java Community Process (JCP)</h3>
+        <div class="info-box">
+            <strong>What it is:</strong> The JCP is the formal process for developing and reviewing Java technical specifications. 
+            Anyone or any organization can participate through JCP membership.
+        </div>
+
+        <h3>🔧 Java Specification Requests (JSRs)</h3>
+        <p>
+            Changes to Java are proposed through JSRs, which go through a public review process before being 
+            approved and implemented in OpenJDK.
+        </p>
+
+        <h3>👨‍💻 Contributors</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Organization/Individual</th>
+                    <th>Main Contributions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Oracle</strong></td>
+                    <td>Project leadership, main development, maintenance</td>
+                </tr>
+                <tr>
+                    <td><strong>Red Hat</strong></td>
+                    <td>Significant contributions to JVM, security, performance</td>
+                </tr>
+                <tr>
+                    <td><strong>IBM</strong></td>
+                    <td>Performance optimizations, JVM contributions</td>
+                </tr>
+                <tr>
+                    <td><strong>Azul Systems</strong></td>
+                    <td>Garbage collectors (ZGC, C4), performance improvements</td>
+                </tr>
+                <tr>
+                    <td><strong>Amazon</strong></td>
+                    <td>Amazon Corretto, security and performance improvements</td>
+                </tr>
+                <tr>
+                    <td><strong>Eclipse Foundation</strong></td>
+                    <td>Eclipse Temurin (AdoptOpenJDK), infrastructure</td>
+                </tr>
+                <tr>
+                    <td><strong>Individual Community</strong></td>
+                    <td>Bug fixes, improvements, documentation</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔓 Licensing</h2>
+        <p>
+            OpenJDK is licensed under the <strong>GNU General Public License version 2 (GPL v2)</strong> with the 
+            "Classpath" exception, which allows the use of OpenJDK libraries in proprietary projects without requiring 
+            the entire project to be GPL.
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <strong>📜 GPL v2</strong><br>
+                Main license of OpenJDK, ensuring freedom of use, modification, and distribution
+            </div>
+            <div class="feature-card">
+                <strong>🔗 Classpath Exception</strong><br>
+                Allows use of OpenJDK libraries in proprietary projects without requiring GPL
+            </div>
+            <div class="feature-card">
+                <strong>✅ Compatible</strong><br>
+                Compatible with commercial and open source licenses
+            </div>
+        </div>
+
+        <h2>📦 OpenJDK Distributions</h2>
+        <p>
+            Various organizations create and maintain their own OpenJDK distributions, each with specific characteristics:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Distribution</th>
+                    <th>Organization</th>
+                    <th>Characteristics</th>
+                    <th>Support</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Oracle JDK</strong></td>
+                    <td>Oracle</td>
+                    <td>Official implementation, commercial features, premium support</td>
+                    <td>LTS and regular releases</td>
+                </tr>
+                <tr>
+                    <td><strong>Eclipse Temurin</strong></td>
+                    <td>Eclipse Foundation</td>
+                    <td>Previously AdoptOpenJDK, free and open source distribution</td>
+                    <td>LTS and regular releases</td>
+                </tr>
+                <tr>
+                    <td><strong>Amazon Corretto</strong></td>
+                    <td>Amazon</td>
+                    <td>AWS-optimized, free distribution</td>
+                    <td>LTS with extended support</td>
+                </tr>
+                <tr>
+                    <td><strong>Azul Zulu</strong></td>
+                    <td>Azul Systems</td>
+                    <td>Free and commercial distribution, performance optimizations</td>
+                    <td>LTS and regular releases</td>
+                </tr>
+                <tr>
+                    <td><strong>Microsoft Build of OpenJDK</strong></td>
+                    <td>Microsoft</td>
+                    <td>Azure and Windows optimized</td>
+                    <td>LTS and regular releases</td>
+                </tr>
+                <tr>
+                    <td><strong>Red Hat OpenJDK</strong></td>
+                    <td>Red Hat</td>
+                    <td>Integrated with Red Hat products, commercial support</td>
+                    <td>LTS with extended support</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔄 OpenJDK Release Cycle</h2>
+        <p>
+            Since Java 9, OpenJDK follows a new release model:
+        </p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>Releases every 6 months</strong><br>
+                New Java versions are released in March and September of each year
+            </div>
+            <div class="timeline-item">
+                <strong>LTS (Long Term Support) versions</strong><br>
+                Every 3 years, a version receives long-term support (up to 8 years)
+            </div>
+            <div class="timeline-item">
+                <strong>Intermediate versions</strong><br>
+                Non-LTS versions receive support until the next release (6 months)
+            </div>
+        </div>
+
+        <h3>📅 Historical LTS Versions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Release Date</th>
+                    <th>Support Until</th>
+                    <th>Main Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Java 8</strong></td>
+                    <td>March 2014</td>
+                    <td>December 2030 (commercial)</td>
+                    <td>Lambdas, Streams API, Optional, Date/Time API</td>
+                </tr>
+                <tr>
+                    <td><strong>Java 11</strong></td>
+                    <td>September 2018</td>
+                    <td>September 2026</td>
+                    <td>Var, HTTP Client, String methods, removals</td>
+                </tr>
+                <tr>
+                    <td><strong>Java 17</strong></td>
+                    <td>September 2021</td>
+                    <td>September 2029</td>
+                    <td>Sealed classes, pattern matching, records</td>
+                </tr>
+                <tr>
+                    <td><strong>Java 21</strong></td>
+                    <td>September 2023</td>
+                    <td>September 2031</td>
+                    <td>Virtual threads, advanced pattern matching, generational ZGC</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🌍 Impact on the Java Community</h2>
+        <p>
+            OpenJDK has had a transformative impact on the Java community:
+        </p>
+
+        <div class="icon-section">
+            <span class="emoji-large">🔓</span>
+            <div>
+                <h3>Total Transparency</h3>
+                <p>
+                    Anyone can view, audit, and contribute to Java's source code, ensuring transparency 
+                    and security.
+                </p>
+            </div>
+        </div>
+
+        <div class="icon-section">
+            <span class="emoji-large">🚀</span>
+            <div>
+                <h3>Accelerated Innovation</h3>
+                <p>
+                    The open source model allows for faster innovations, with contributions from developers 
+                    around the world.
+                </p>
+            </div>
+        </div>
+
+        <div class="icon-section">
+            <span class="emoji-large">💼</span>
+            <div>
+                <h3>Choice and Flexibility</h3>
+                <p>
+                    Organizations can choose from multiple distributions, each optimized for their specific 
+                    needs.
+                </p>
+            </div>
+        </div>
+
+        <div class="icon-section">
+            <span class="emoji-large">🛡️</span>
+            <div>
+                <h3>Improved Security</h3>
+                <p>
+                    With open source code, vulnerabilities are discovered and fixed more quickly by the community.
+                </p>
+            </div>
+        </div>
+
+        <h2>🔧 How to Contribute to OpenJDK</h2>
+        <p>
+            Contributing to OpenJDK is more accessible than many think:
+        </p>
+
+        <h3>📝 Contribution Process</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>1. Find an Issue</strong><br>
+                Explore the OpenJDK bug database or improvement proposals (JEPs)
+            </div>
+            <div class="timeline-item">
+                <strong>2. Read the Code</strong><br>
+                Clone the OpenJDK repository and understand the code structure
+            </div>
+            <div class="timeline-item">
+                <strong>3. Make Changes</strong><br>
+                Implement fixes or improvements following project guidelines
+            </div>
+            <div class="timeline-item">
+                <strong>4. Submit Review</strong><br>
+                Send a patch or pull request for community review
+            </div>
+            <div class="timeline-item">
+                <strong>5. Integration</strong><br>
+                After approval, your changes are integrated into OpenJDK
+            </div>
+        </div>
+
+        <h3>📚 Resources for Contributors</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Resource</th>
+                    <th>Description</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>OpenJDK Website</strong></td>
+                    <td>Official project website</td>
+                    <td>openjdk.java.net</td>
+                </tr>
+                <tr>
+                    <td><strong>Bug Database</strong></td>
+                    <td>Bug tracking system</td>
+                    <td>bugs.openjdk.java.net</td>
+                </tr>
+                <tr>
+                    <td><strong>Mailing Lists</strong></td>
+                    <td>Community discussion lists</td>
+                    <td>mail.openjdk.java.net</td>
+                </tr>
+                <tr>
+                    <td><strong>Code Review</strong></td>
+                    <td>Code review system</td>
+                    <td>github.com/openjdk</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>✅ Benefits of OpenJDK</h2>
+        <p>
+            The open source model of OpenJDK offers various benefits:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Benefit</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Free</strong></td>
+                    <td>Use, modification, and distribution without licensing costs</td>
+                </tr>
+                <tr>
+                    <td><strong>Transparent</strong></td>
+                    <td>Source code available for audit and inspection</td>
+                </tr>
+                <tr>
+                    <td><strong>Community-driven</strong></td>
+                    <td>Collaborative development with global contributions</td>
+                </tr>
+                <tr>
+                    <td><strong>Flexible</strong></td>
+                    <td>Multiple distributions for different needs</td>
+                </tr>
+                <tr>
+                    <td><strong>Secure</strong></td>
+                    <td>Quick vulnerability fixes by the community</td>
+                </tr>
+                <tr>
+                    <td><strong>Innovative</strong></td>
+                    <td>Continuous new features and improvements</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔮 Future of OpenJDK</h2>
+        <p>
+            The future of OpenJDK continues to be bright, with several initiatives underway:
+        </p>
+
+        <ul>
+            <li>✅ <strong>Project Loom</strong> - Virtual threads for massive concurrency</li>
+            <li>✅ <strong>Project Panama</strong> - Improved interoperability with native code</li>
+            <li>✅ <strong>Project Valhalla</strong> - Value types and performance improvements</li>
+            <li>✅ <strong>GraalVM</strong> - Ahead-of-time compiler and polyglot runtime</li>
+            <li>✅ <strong>Continuous Improvements</strong> - Performance, security, and usability</li>
+        </ul>
+
+        <h2>📅 Latest Updates</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>OpenJDK and Community</strong> - Complete documentation about OpenJDK, its history, governance, distributions, and impact on the Java community.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copy</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Error copying:', err);
+                button.textContent = '❌ Error';
+                setTimeout(function() {
+                    button.textContent = '📋 Copy';
+                }, 2000);
+            });
+        }
+    </script>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay para Mobile -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- JavaScript externo -->
+    <script src="../../../../resources/js/hash.js"></script>
+    <script src="../../../../resources/js/i18n.js"></script>
+    <script src="../../../../resources/js/sidebar.js"></script>
+    <script src="../../../../resources/js/content.js"></script>
+    <script src="../../../../resources/js/tree.js"></script>
+    <script src="../../../../resources/js/main.js"></script>
+    <script src="../../../../resources/js/search.js"></script>
+    <script>
+        // Inicializa highlight.js quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

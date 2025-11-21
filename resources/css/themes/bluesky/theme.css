@@ -24,7 +24,7 @@
     font-size: 11px;
     color: #000000;
     background-color: #FFFFFF;
-    padding: 0 0 1.5rem;
+    padding: 0;
   }
   
   .app-link,
@@ -538,6 +538,64 @@ body.content-page table tfoot td {
     background-color: #FFFFFF;
 }
 
+/* Campo de Busca */
+.app-search-box {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.app-search-input {
+    flex: 1;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #C0C0C0;
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+    color: #000000;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    line-height: 1.2;
+    height: 24px;
+    margin: 0;
+}
+
+.app-search-input:focus {
+    outline: none;
+    border-color: #0078D0;
+    box-shadow: 0 0 0 1px #0078D0;
+}
+
+.app-search-button {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid #BED6F8;
+    background-color: #ECF4FE;
+    color: #0B356C;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: Arial, Verdana, sans-serif;
+    transition: background-color 0.15s ease;
+    white-space: nowrap;
+    box-sizing: border-box;
+    line-height: 1.2;
+    height: 24px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: auto;
+}
+
+.app-search-button:hover {
+    background-color: #D6E6FB;
+}
+
+.app-search-button:active {
+    background-color: #BED6F8;
+}
+
 /* Resizer do Sidebar */
 .app-sidebar__resizer {
     width: 4px;
@@ -692,6 +750,7 @@ body.content-page table tfoot td {
     flex-direction: column;
     overflow: hidden;
     background-color: #FFFFFF;
+    min-height: 0; /* Necessário para que o overflow funcione em flex containers */
 }
 
 .app-content__header {
@@ -742,6 +801,7 @@ body.content-page table tfoot td {
     overflow-x: hidden;
     padding: 1rem;
     background-color: #FFFFFF;
+    min-height: 0; /* Necessário para que o overflow funcione em flex containers */
 }
 
 /* ===== Scrollbar Personalizado ===== */
@@ -786,7 +846,8 @@ body.content-page {
 /* Estilos para elementos dentro de content-page - maior especificidade */
 body.content-page h1,
 body.content-page .content-container h1,
-.content-page h1 {
+.content-page h1,
+.app-page .content-container h1 {
     font-size: 18px !important;
     color: #0B356C !important;
     border-bottom: 2px solid #BED6F8 !important;
@@ -798,7 +859,8 @@ body.content-page .content-container h1,
 
 body.content-page h2,
 body.content-page .content-container h2,
-.content-page h2 {
+.content-page h2,
+.app-page .content-container h2 {
     font-size: 14px !important;
     color: #0B356C !important;
     margin-top: 2rem !important;
@@ -810,7 +872,8 @@ body.content-page .content-container h2,
 
 body.content-page h3,
 body.content-page .content-container h3,
-.content-page h3 {
+.content-page h3,
+.app-page .content-container h3 {
     font-size: 12px !important;
     color: #0B356C !important;
     margin-top: 1.5rem !important;
@@ -987,14 +1050,20 @@ body.content-page code:not(pre code) {
 .timeline-item {
     margin-bottom: 1.5rem;
     position: relative;
+    padding-left: 0.5rem;
+    line-height: 2.6;
+    min-height: 2.6em;
 }
 
 .timeline-item::before {
     content: '●';
     position: absolute;
     left: -1.75rem;
+    top: 0.2em;
     color: #0078D0;
     font-size: 1.2rem;
+    line-height: 1;
+    display: inline-block;
 }
 
 .content-page ul,
@@ -1140,6 +1209,25 @@ body.content-page li {
     .app-content {
         width: 100%;
     }
+    
+    .app-layout {
+        min-height: 100vh;
+        height: auto;
+        overflow: visible;
+    }
+    
+    html, body {
+        height: auto;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .app-page {
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
 
     .app-sidebar__resizer {
         display: none;
@@ -1158,8 +1246,21 @@ body.content-page li {
 
     .app-content__body {
         -webkit-overflow-scrolling: touch;
-        overflow-y: auto;
+        overflow-y: auto !important;
         overflow-x: hidden;
+        min-height: 0; /* Garante que o scroll funcione corretamente no mobile */
+        /* Garante que o padding inferior seja visível ao fazer scroll */
+        padding-bottom: 2rem;
+        height: auto !important;
+        max-height: none !important;
+    }
+    
+    .app-content {
+        overflow: visible !important;
+    }
+    
+    .app-layout {
+        overflow: visible !important;
     }
 }
   

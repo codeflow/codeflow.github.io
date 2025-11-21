@@ -72,28 +72,49 @@
     // Definir idioma inicial
     updateLanguage(currentLanguage);
     
-    // Carregar página inicial se não houver seleção
-    const selectedNode = document.querySelector('.app-tree__node--selected');
-    if (!selectedNode) {
-        // Carrega a página inicial (home/index)
-        const homePath = 'content/java.md/1nqriq7eql.html';
-        const translations = i18n[currentLanguage];
-        const welcomeLabel = translations.welcome || 'Bem-vindo';
-        const contentHeader = document.getElementById('contentHeader');
-        if (contentHeader) {
-            contentHeader.textContent = welcomeLabel;
-        }
-        updateContent('Home', welcomeLabel, homePath, null, null);
+    // Não precisa carregar conteúdo no index.html - ele redireciona automaticamente
+    // O código abaixo só executa em páginas que já têm conteúdo (não no index.html)
+    const currentPath = window.location.pathname;
+    const currentFileName = currentPath.split('/').pop();
+    
+    // Se estamos no index.html ou home.html, não faz nada (já redirecionou)
+    if (currentFileName === 'index.html' || currentFileName === 'home.html') {
+        return;
     }
     
     // Listener para mudança de idioma
     languageSelector.addEventListener('change', function(e) {
         const newLang = e.target.value;
+        const oldLang = currentLanguage;
         
         // Atualiza o idioma primeiro (isso atualiza currentLanguage)
         updateLanguage(newLang);
         
-        // Recarregar conteúdo atual se houver
+        // Detecta a página atual pela URL
+        const currentPath = window.location.pathname;
+        const currentFileName = currentPath.split('/').pop();
+        
+        // Se estamos em uma página HTML de conteúdo (não index.html ou home.html)
+        if (currentFileName && currentFileName !== 'index.html' && currentFileName !== 'home.html' && currentPath.includes('content/')) {
+            // Troca o idioma no caminho atual - substitui /br/ ou /en/ pelo novo idioma
+            let newPath = currentPath.replace(/\/(br|en)\//, `/${newLang}/`);
+            
+            // Se não encontrou o padrão (página sem idioma no caminho), adiciona o idioma
+            if (newPath === currentPath) {
+                const pathParts = currentPath.split('/');
+                const fileName = pathParts[pathParts.length - 1];
+                const dirs = pathParts.slice(0, -1);
+                newPath = dirs.join('/') + '/' + newLang + '/' + fileName;
+            }
+            
+            // Navega para a nova página com o idioma correto
+            console.log('Mudando idioma de', oldLang, 'para', newLang);
+            console.log('Navegando de', currentPath, 'para', newPath);
+            window.location.href = newPath;
+            return;
+        }
+        
+        // Recarregar conteúdo atual se houver (para quando estamos no index.html)
         const selectedNode = document.querySelector('.app-tree__node--selected');
         if (selectedNode && selectedNode.getAttribute('data-html')) {
             const path = selectedNode.getAttribute('data-path');

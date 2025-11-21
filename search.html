@@ -3,22 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>História do Java - Visão Geral</title>
-    <link rel="stylesheet" href="../../../resources/css/themes/bluesky/theme.css">
+    <title>Resultados da Busca - Codeflow</title>
+    <link rel="stylesheet" href="resources/css/themes/bluesky/theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <style>
+        .search-results {
+            margin-top: 1rem;
+        }
+        .search-result-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #BED6F8;
+            background-color: #FFFFFF;
+            border-left: 4px solid #0078D0;
+        }
+        .search-result-item:hover {
+            background-color: #ECF4FE;
+            border-left-color: #0090FF;
+        }
+        .search-result-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #0B356C;
+            margin-bottom: 0.5rem;
+        }
+        .search-result-title a {
+            color: #0078D0;
+            text-decoration: none;
+        }
+        .search-result-title a:hover {
+            color: #0090FF;
+            text-decoration: underline;
+        }
+        .search-result-path {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        .search-result-description {
+            font-size: 11px;
+            color: #000000;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+        .search-result-snippet {
+            font-size: 10px;
+            color: #666;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        .search-no-results {
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+        .search-loading {
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+        .search-stats {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #BED6F8;
+        }
+    </style>
 </head>
 <body class="app-page">
     <div class="app-layout">
         <!-- Menu Lateral -->
         <aside class="app-sidebar" id="sidebar">
             <div class="app-sidebar__header">
-                <img src="../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
+                <img src="resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
                 <span>CODEFLOW</span>
             </div>
             <div class="app-sidebar__content">
-                                <div class="app-search-box">
+                <div class="app-search-box">
                     <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
                     <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
                 </div>
@@ -133,8 +198,8 @@
                         <span></span>
                         <span></span>
                     </button>
-                    <img src="../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
-                    <span id="contentHeader">História do Java</span>
+                    <img src="resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
+                    <span id="contentHeader">🔍 Resultados da Busca</span>
                 </div>
                 <div class="language-selector">
                     <select id="languageSelector">
@@ -145,143 +210,11 @@
             </div>
             <div class="app-content__body" id="contentBody">
                 <div class="content-container">
-<h1>📜 História do Java</h1>
-        
-        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
-            <span style="display: inline-flex; align-items: center;">🕐</span>
-            <span style="display: inline-flex; align-items: center;">20/11/2025 22:40:47</span>
-            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
-            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
-        </div>
-        <div class="info-box">
-            <strong>📚 Sobre:</strong> Esta seção explora a rica história do Java, desde sua concepção na Sun Microsystems até sua evolução como uma das linguagens de programação mais importantes do mundo.
-        </div>
-
-        <h2>🎯 Visão Geral</h2>
-        <p>
-            A história do Java é uma jornada fascinante que começou no início dos anos 1990 na Sun Microsystems. 
-            Esta seção cobre os principais marcos, eventos e transformações que moldaram o Java ao longo dos anos.
-        </p>
-
-        <h2>📋 Tópicos Abordados</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Tópico</th>
-                    <th>Descrição</th>
-                    <th>Período</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Concepção (Sun, James Gosling)</strong></td>
-                    <td>As origens do Java e o papel de James Gosling na criação da linguagem</td>
-                    <td>Início dos anos 1990</td>
-                </tr>
-                <tr>
-                    <td><strong>Lançamento do JDK 1.0</strong></td>
-                    <td>O lançamento oficial da primeira versão do Java Development Kit</td>
-                    <td>1996</td>
-                </tr>
-                <tr>
-                    <td><strong>Compilador JDK 1.0 (javac)</strong></td>
-                    <td>O compilador javac e sua importância no ecossistema Java</td>
-                    <td>1996</td>
-                </tr>
-                <tr>
-                    <td><strong>Era J2SE, J2EE, J2ME</strong></td>
-                    <td>A divisão da plataforma Java em três edições distintas</td>
-                    <td>1998-2005</td>
-                </tr>
-                <tr>
-                    <td><strong>Arquitetura J2SE</strong></td>
-                    <td>A arquitetura da plataforma Java 2 Standard Edition</td>
-                    <td>1998-2005</td>
-                </tr>
-                <tr>
-                    <td><strong>Transição para Oracle</strong></td>
-                    <td>A aquisição da Sun Microsystems pela Oracle e suas implicações</td>
-                    <td>2010</td>
-                </tr>
-                <tr>
-                    <td><strong>OpenJDK e comunidade</strong></td>
-                    <td>O movimento open source e o crescimento da comunidade Java</td>
-                    <td>2006-presente</td>
-                </tr>
-                <tr>
-                    <td><strong>Evolução (Java 8, 11, 17, 21, 22+)</strong></td>
-                    <td>As principais versões LTS e inovações do Java moderno</td>
-                    <td>2014-presente</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>🔑 Marcos Importantes</h2>
-        <div class="icon-section">
-            <span class="emoji-large">🌱</span>
-            <div>
-                <h3>Concepção e Desenvolvimento Inicial</h3>
-                <p>O projeto Green na Sun Microsystems, liderado por James Gosling, que resultou na criação do Java. Originalmente chamado de "Oak", a linguagem foi renomeada para Java e lançada publicamente em 1995.</p>
-            </div>
-        </div>
-
-        <div class="icon-section">
-            <span class="emoji-large">🚀</span>
-            <div>
-                <h3>Lançamento e Popularização</h3>
-                <p>O lançamento do JDK 1.0 em 1996 marcou o início da era Java. A promessa de "escreva uma vez, execute em qualquer lugar" revolucionou o desenvolvimento de software.</p>
-            </div>
-        </div>
-
-        <div class="icon-section">
-            <span class="emoji-large">🏢</span>
-            <div>
-                <h3>Era Empresarial</h3>
-                <p>A divisão em J2SE, J2EE e J2ME permitiu que o Java atendesse diferentes necessidades: desktop, servidor e dispositivos móveis/embarcados.</p>
-            </div>
-        </div>
-
-        <div class="icon-section">
-            <span class="emoji-large">🔄</span>
-            <div>
-                <h3>Modernização e Evolução</h3>
-                <p>Com o ciclo de lançamento acelerado e versões LTS, o Java continua evoluindo com novos recursos como lambdas, streams, módulos e muito mais.</p>
-            </div>
-        </div>
-
-        <h2>📅 Últimas Atualizações</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <strong>Evolução (Java 8, 11, 17, 21, 22+)</strong> - Documentação completa sobre a evolução do Java desde o Java 8, incluindo todas as versões LTS e seus principais recursos.
-            </div>
-            <div class="timeline-item">
-                <strong>OpenJDK e comunidade</strong> - Documentação completa sobre o OpenJDK, sua história, governança, distribuições e impacto na comunidade Java.
-            </div>
-            <div class="timeline-item">
-                <strong>Transição para Oracle</strong> - Documentação completa sobre a aquisição da Sun Microsystems pela Oracle em 2010 e seu impacto no ecossistema Java.
-            </div>
-            <div class="timeline-item">
-                <strong>Concepção (Sun, James Gosling)</strong> - Conteúdo adicionado sobre as origens do Java e o papel de James Gosling.
-            </div>
-            <div class="timeline-item">
-                <strong>JDK 1.0</strong> - Seção criada com páginas de resumo sobre o lançamento do JDK 1.0 e o compilador javac.
-            </div>
-            <div class="timeline-item">
-                <strong>Lançamento do JDK 1.0</strong> - Documentação sobre o lançamento oficial do JDK 1.0 em 1996.
-            </div>
-            <div class="timeline-item">
-                <strong>Compilador JDK 1.0 (javac)</strong> - Detalhes sobre o compilador javac e sua importância.
-            </div>
-            <div class="timeline-item">
-                <strong>Plataforma</strong> - Seção criada com páginas de resumo sobre a era J2SE, J2EE, J2ME e arquitetura J2SE.
-            </div>
-            <div class="timeline-item">
-                <strong>Era J2SE, J2EE, J2ME</strong> - Conteúdo sobre a divisão da plataforma Java em três edições.
-            </div>
-            <div class="timeline-item">
-                <strong>Arquitetura J2SE</strong> - Documentação sobre a arquitetura da plataforma J2SE.
-            </div>
-        </div>
+                    <h1>🔍 Resultados da Busca</h1>
+                    
+                    <div id="searchResultsContainer">
+                        <div class="search-loading">⏳ Carregando resultados...</div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -291,25 +224,111 @@
     <div class="app-mobile-overlay" id="mobileOverlay"></div>
 
     <!-- JavaScript externo -->
-    <script src="../../../resources/js/hash.js"></script>
-    <script src="../../../resources/js/i18n.js"></script>
-    <script src="../../../resources/js/sidebar.js"></script>
-    <script src="../../../resources/js/content.js"></script>
-    <script src="../../../resources/js/tree.js"></script>
-    <script src="../../../resources/js/main.js"></script>
-    <script src="../../../resources/js/search.js"></script>
+    <script src="resources/js/hash.js"></script>
+    <script src="resources/js/i18n.js"></script>
+    <script src="resources/js/sidebar.js"></script>
+    <script src="resources/js/tree.js"></script>
+    <script src="resources/js/main.js"></script>
+    <script src="resources/js/search.js"></script>
     <script>
-        // Inicializa highlight.js quando a página carrega
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof hljs !== 'undefined') {
-                document.querySelectorAll('pre code').forEach((block) => {
-                    hljs.highlightElement(block);
-                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
-                        hljs.lineNumbersBlock(block);
-                    }
-                });
+        // Processa os resultados da busca
+        (async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q') || '';
+            const lang = urlParams.get('lang') || localStorage.getItem('codeflow-language') || 'br';
+            
+            // Atualiza o idioma
+            localStorage.setItem('codeflow-language', lang);
+            if (document.getElementById('languageSelector')) {
+                document.getElementById('languageSelector').value = lang;
             }
-        });
+            
+            // Atualiza placeholder do campo de busca
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.value = query;
+                searchInput.placeholder = lang === 'en' ? '🔍 Search content...' : '🔍 Buscar conteúdo...';
+            }
+            
+            const resultsContainer = document.getElementById('searchResultsContainer');
+            
+            if (!query || query.trim().length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="search-no-results">
+                        <h2>${lang === 'en' ? 'No search query' : 'Nenhuma busca realizada'}</h2>
+                        <p>${lang === 'en' ? 'Please enter a search term in the search box above.' : 'Por favor, digite um termo de busca no campo acima.'}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            try {
+                console.log('Search: Construindo índice de busca...');
+                // Constrói o índice de busca
+                const index = await buildSearchIndex();
+                console.log('Search: Índice construído com', index ? index.length : 0, 'páginas');
+                
+                // Realiza a busca
+                console.log('Search: Buscando por:', query);
+                const results = searchContent(query, index);
+                console.log('Search: Encontrados', results.length, 'resultados');
+                
+                // Exibe os resultados
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="search-stats">
+                            ${lang === 'en' ? `No results found for "${query}"` : `Nenhum resultado encontrado para "${query}"`}
+                        </div>
+                        <div class="search-no-results">
+                            <h2>${lang === 'en' ? 'No results found' : 'Nenhum resultado encontrado'}</h2>
+                            <p>${lang === 'en' ? 'Try different keywords or check the spelling.' : 'Tente palavras-chave diferentes ou verifique a ortografia.'}</p>
+                        </div>
+                    `;
+                } else {
+                    let html = `
+                        <div class="search-stats">
+                            ${lang === 'en' 
+                                ? `Found ${results.length} result${results.length > 1 ? 's' : ''} for "${query}"`
+                                : `Encontrado${results.length > 1 ? 's' : ''} ${results.length} resultado${results.length > 1 ? 's' : ''} para "${query}"`}
+                        </div>
+                        <div class="search-results">
+                    `;
+                    
+                    results.forEach(result => {
+                        // Calcula caminho relativo
+                        let relativeUrl = result.url;
+                        if (relativeUrl.startsWith('content/')) {
+                            relativeUrl = './' + relativeUrl;
+                        }
+                        
+                        html += `
+                            <div class="search-result-item">
+                                <div class="search-result-title">
+                                    <a href="${relativeUrl}">📖 ${result.title}</a>
+                                </div>
+                                ${result.path ? `<div class="search-result-path">📍 ${result.path}</div>` : ''}
+                                <div class="search-result-description">
+                                    ${result.description}
+                                </div>
+                                ${result.snippet ? `<div class="search-result-snippet">${result.snippet}</div>` : ''}
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                    resultsContainer.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Erro ao realizar busca:', error);
+                resultsContainer.innerHTML = `
+                    <div class="search-no-results">
+                        <h2>${lang === 'en' ? 'Search Error' : 'Erro na Busca'}</h2>
+                        <p>${lang === 'en' ? 'An error occurred while searching. Please try again.' : 'Ocorreu um erro ao realizar a busca. Por favor, tente novamente.'}</p>
+                    </div>
+                `;
+            }
+        })();
     </script>
 </body>
 </html>
+
