@@ -165,6 +165,17 @@ async function buildSearchIndex() {
             { path: 'content/java.md/hi870208/en/lfr7klwpxix9.html', lang: 'en' },
             { path: 'content/java.md/hi870208/br/uou6eno1v99v.html', lang: 'br' },
             { path: 'content/java.md/hi870208/en/uou6eno1v99v.html', lang: 'en' },
+            // Páginas principais - Golang
+            { path: 'content/golang.md/br/1nqriq7eql.html', lang: 'br' },
+            { path: 'content/golang.md/en/1nqriq7eql.html', lang: 'en' },
+            { path: 'content/golang.md/br/kigsa21few3.html', lang: 'br' },
+            { path: 'content/golang.md/en/kigsa21few3.html', lang: 'en' },
+            // Páginas de resumo - História e Filosofia do Go
+            { path: 'content/golang.md/hi111630/br/igmd7ry7yy2z.html', lang: 'br' },
+            { path: 'content/golang.md/hi111630/en/igmd7ry7yy2z.html', lang: 'en' },
+            // Páginas de conteúdo - História e Filosofia do Go
+            { path: 'content/golang.md/hi111630/br/yd7hc8hvimk7.html', lang: 'br' },
+            { path: 'content/golang.md/hi111630/en/yd7hc8hvimk7.html', lang: 'en' },
         ];
         
         // Indexa apenas páginas do idioma atual

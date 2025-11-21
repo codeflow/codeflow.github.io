@@ -1,0 +1,187 @@
+{
+  "menu": [
+    {
+      "path": "Java",
+      "i18n": {
+        "br": "Java",
+        "en": "Java"
+      },
+      "icon": "📁",
+      "type": "folder",
+      "html": "content/java.md/1xrfm11lm1.html",
+      "children": [
+        {
+          "path": "Java/História do Java",
+          "i18n": {
+            "br": "História do Java",
+            "en": "Java History"
+          },
+          "icon": "📁",
+          "type": "folder",
+          "html": "content/java.md/ee3l86y9j0cd.html",
+          "children": [
+            {
+              "path": "Java/História do Java/Concepção (Sun, James Gosling)",
+              "i18n": {
+                "br": "Concepção (Sun, James Gosling)",
+                "en": "Conception (Sun, James Gosling)"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/java.md/hi870208/363ba4sngb4e.html"
+            },
+            {
+              "path": "Java/História do Java/JDK 1.0",
+              "i18n": {
+                "br": "JDK 1.0",
+                "en": "JDK 1.0"
+              },
+              "icon": "📁",
+              "type": "folder",
+              "html": "content/java.md/1o4a4w7aov.html",
+              "children": [
+                {
+                  "path": "Java/História do Java/JDK 1.0/Lançamento do JDK 1.0",
+                  "i18n": {
+                    "br": "Lançamento do JDK 1.0",
+                    "en": "JDK 1.0 Launch"
+                  },
+                  "icon": "📖",
+                  "type": "file",
+                  "html": "content/java.md/hi870208/xb9pezoakznr.html"
+                },
+                {
+                  "path": "Java/História do Java/JDK 1.0/Compilador JDK 1.0",
+                  "i18n": {
+                    "br": "Compilador JDK 1.0",
+                    "en": "JDK 1.0 Compiler"
+                  },
+                  "icon": "📖",
+                  "type": "file",
+                  "html": "content/java.md/hi870208/ev6nbs1cxqd6.html"
+                }
+              ]
+            },
+            {
+              "path": "Java/História do Java/Plataforma",
+              "i18n": {
+                "br": "Plataforma",
+                "en": "Platform"
+              },
+              "icon": "📁",
+              "type": "folder",
+              "html": "content/java.md/u8n8srtc79q8.html",
+              "children": [
+                {
+                  "path": "Java/História do Java/Plataforma/Era J2SE, J2EE, J2ME",
+                  "i18n": {
+                    "br": "Era J2SE, J2EE, J2ME",
+                    "en": "J2SE, J2EE, J2ME Era"
+                  },
+                  "icon": "📖",
+                  "type": "file",
+                  "html": "content/java.md/hi870208/3qvvuyx7rfph.html"
+                },
+                {
+                  "path": "Java/História do Java/Plataforma/Arquitetura J2SE",
+                  "i18n": {
+                    "br": "Arquitetura J2SE",
+                    "en": "J2SE Architecture"
+                  },
+                  "icon": "📖",
+                  "type": "file",
+                  "html": "content/java.md/hi870208/kfwhqp409kpx.html"
+                },
+                {
+                  "path": "Java/História do Java/Plataforma/Arquitetura J2EE",
+                  "i18n": {
+                    "br": "Arquitetura J2EE",
+                    "en": "J2EE Architecture"
+                  },
+                  "icon": "📖",
+                  "type": "file",
+                  "html": "content/java.md/hi870208/kfwi2r409ls1.html"
+                },
+                {
+                  "path": "Java/História do Java/Plataforma/Arquitetura J2ME",
+                  "i18n": {
+                    "br": "Arquitetura J2ME",
+                    "en": "J2ME Architecture"
+                  },
+                  "icon": "📖",
+                  "type": "file",
+                  "html": "content/java.md/hi870208/kfwhvv409l69.html"
+                }
+              ]
+            },
+            {
+              "path": "Java/História do Java/Transição para Oracle",
+              "i18n": {
+                "br": "Transição para Oracle",
+                "en": "Transition to Oracle"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/java.md/hi870208/3z28jy2onq8u.html"
+            },
+            {
+              "path": "Java/História do Java/OpenJDK e comunidade",
+              "i18n": {
+                "br": "OpenJDK e comunidade",
+                "en": "OpenJDK and Community"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/java.md/hi870208/lfr7klwpxix9.html"
+            },
+            {
+              "path": "Java/História do Java/Evolução (Java 8, 11, 17, 21, 22+)",
+              "i18n": {
+                "br": "Evolução (Java 8, 11, 17, 21, 22+)",
+                "en": "Evolution (Java 8, 11, 17, 21, 22+)"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/java.md/hi870208/uou6eno1v99v.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Golang",
+      "i18n": {
+        "br": "Golang",
+        "en": "Golang"
+      },
+      "icon": "📁",
+      "type": "folder",
+      "html": "content/golang.md/kigsa21few3.html",
+      "children": [
+        {
+          "path": "Golang/História e Filosofia do Go",
+          "i18n": {
+            "br": "História e Filosofia do Go",
+            "en": "Go History and Philosophy"
+          },
+          "icon": "📁",
+          "type": "folder",
+          "html": "content/golang.md/hi111630/igmd7ry7yy2z.html",
+          "children": [
+            {
+              "path": "Golang/História e Filosofia do Go/Origem e criação (Google, Rob Pike, Ken Thompson, Robert Griesemer)",
+              "i18n": {
+                "br": "Origem e criação (Google, Rob Pike, Ken Thompson, Robert Griesemer)",
+                "en": "Origin and creation (Google, Rob Pike, Ken Thompson, Robert Griesemer)"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/golang.md/hi111630/yd7hc8hvimk7.html"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

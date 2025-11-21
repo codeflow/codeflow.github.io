@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📜 História e Filosofia do Go</title>
+    <link rel="stylesheet" href="../../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <style>
+        /* Estilos de tabela no estilo RichFaces BlueSky */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #C0C0C0;
+            margin-bottom: 1rem;
+            table-layout: auto;
+        }
+        table th {
+            background-color: #BED6F8 !important;
+            color: #0B356C !important;
+            font-weight: bold;
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            text-align: left !important;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table td {
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table tbody tr:nth-child(even) td {
+            background-color: #ECF4FE !important;
+        }
+        table tbody tr:nth-child(odd) td {
+            background-color: #FFFFFF !important;
+        }
+        table tfoot td {
+            background-color: #cccccc;
+        }
+        .info-box {
+            background-color: #ECF4FE;
+            border: 1px solid #BED6F8;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #0078D0;
+        }
+        .timeline {
+            margin: 1.5rem 0;
+        }
+        .timeline-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background-color: #F8F8F8;
+            border-left: 3px solid #0078D0;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <img src="../../../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu será construído dinamicamente pelo menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <img src="../../../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
+                    <span id="contentHeader">📜 História e Filosofia do Go</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="br" selected>🇧🇷 Português</option>
+                        <option value="en" >🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📜 História e Filosofia do Go</h1>
+                    <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+                        <span style="display: inline-flex; align-items: center;">🕐</span>
+                        <span style="display: inline-flex; align-items: center;">21/11/2025 16:49:49</span>
+                        <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+                        <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+                    </div>
+                    <div class="info-box">
+                        <strong>📚 Sobre:</strong> Esta seção explora a história do Go desde sua criação na Google até sua evolução como uma das linguagens mais importantes para desenvolvimento de sistemas modernos.
+                    </div>
+                    <h2>🎯 Visão Geral</h2>
+                    <p>Esta seção explora a história do Go desde sua criação na Google até sua evolução como uma das linguagens mais importantes para desenvolvimento de sistemas modernos.</p>
+                    <h2>📋 Tópicos Abordados</h2>
+                    <table>
+    <thead>
+        <tr>
+            <th>Tópico</th>
+            <th>Descrição</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Origem e criação (Google, Rob Pike, Ken Thompson, Robert Griesemer)</strong></td>
+            <td>As origens do Go e o papel dos criadores na concepção da linguagem</td>
+        </tr>
+        <tr>
+            <td><strong>Design principles e filosofia da linguagem</strong></td>
+            <td>Os princípios fundamentais que guiam o design do Go</td>
+        </tr>
+        <tr>
+            <td><strong>Evolução das versões (1.0 até atual)</strong></td>
+            <td>Histórico de lançamentos e melhorias do Go</td>
+        </tr>
+        <tr>
+            <td><strong>Comunidade e ecossistema</strong></td>
+            <td>O crescimento da comunidade Go e seu ecossistema</td>
+        </tr>
+        <tr>
+            <td><strong>Casos de uso e adoção na indústria</strong></td>
+            <td>Como o Go é usado em produção por empresas</td>
+        </tr>
+    </tbody>
+</table>
+                    <h2>📅 Últimas Atualizações</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Origem e criação do Go</strong> - Documentação completa sobre a origem do Go, criadores (Rob Pike, Ken Thompson, Robert Griesemer) e contexto histórico.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+    <script src="../../../../../resources/js/hash.js"></script>
+    <script src="../../../../../resources/js/i18n.js"></script>
+    <script src="../../../../../resources/js/menu.js"></script>
+    <script src="../../../../../resources/js/sidebar.js"></script>
+    <script src="../../../../../resources/js/content.js"></script>
+    <script src="../../../../../resources/js/tree.js"></script>
+    <script src="../../../../../resources/js/main.js"></script>
+    <script src="../../../../../resources/js/search.js"></script>
+</body>
+</html>

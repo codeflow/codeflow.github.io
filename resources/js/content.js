@@ -12,19 +12,26 @@ function normalizePath(path) {
     
     let normalized = path;
     
-    // Remove qualquer duplicação de content/java.md/ (pode haver múltiplas)
+    // Remove qualquer duplicação de content/java.md/ ou content/golang.md/ (pode haver múltiplas)
     while (normalized.includes('content/java.md/content/java.md/')) {
         normalized = normalized.replace(/content\/java\.md\/content\/java\.md\//g, 'content/java.md/');
+    }
+    while (normalized.includes('content/golang.md/content/golang.md/')) {
+        normalized = normalized.replace(/content\/golang\.md\/content\/golang\.md\//g, 'content/golang.md/');
     }
     
     // Remove duplicação no início (caso especial)
     if (normalized.startsWith('content/java.md/content/java.md/')) {
         normalized = normalized.replace(/^content\/java\.md\/content\/java\.md\//, 'content/java.md/');
     }
+    if (normalized.startsWith('content/golang.md/content/golang.md/')) {
+        normalized = normalized.replace(/^content\/golang\.md\/content\/golang\.md\//, 'content/golang.md/');
+    }
     
-    // Verificação adicional: se o caminho tem content/java.md/ repetido em qualquer lugar
+    // Verificação adicional: se o caminho tem content/java.md/ ou content/golang.md/ repetido em qualquer lugar
     // Remove todas as ocorrências consecutivas
     normalized = normalized.replace(/(content\/java\.md\/)+/g, 'content/java.md/');
+    normalized = normalized.replace(/(content\/golang\.md\/)+/g, 'content/golang.md/');
     
     return normalized;
 }
@@ -54,10 +61,13 @@ function convertToNewPath(oldPath, categoryName) {
         return result;
     }
     
-    // Se o path tem formato content/java.md/hi870208/arquivo.html
-    // Adiciona o idioma no caminho: content/java.md/hi870208/br/arquivo.html
+    // Se o path tem formato content/java.md/hi870208/arquivo.html ou content/golang.md/hi111630/arquivo.html
+    // Adiciona o idioma no caminho: content/java.md/hi870208/br/arquivo.html ou content/golang.md/hi111630/br/arquivo.html
     const javaMdPattern = /content\/java\.md\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
+    const golangMdPattern = /content\/golang\.md\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
     const javaMdMatch = oldPath.match(javaMdPattern);
+    const golangMdMatch = oldPath.match(golangMdPattern);
+    
     if (javaMdMatch) {
         const hash = javaMdMatch[1];
         const fileName = javaMdMatch[2];
@@ -77,16 +87,43 @@ function convertToNewPath(oldPath, categoryName) {
         return normalizedResult;
     }
     
-    // Se o path tem formato content/java.md/arquivo.html (nós de grupo)
-    // Adiciona o idioma no caminho: content/java.md/br/arquivo.html
+    if (golangMdMatch) {
+        const hash = golangMdMatch[1];
+        const fileName = golangMdMatch[2];
+        // Verifica se já tem idioma no caminho (br/ ou en/)
+        if (oldPath.includes('/br/') || oldPath.includes('/en/')) {
+            // Já tem idioma, apenas atualiza se necessário
+            if (oldPath.includes(`/${currentLanguage}/`)) {
+                return oldPath;
+            } else {
+                // Atualiza o idioma
+                const result = oldPath.replace(/\/(br|en)\//, `/${currentLanguage}/`);
+                return result;
+            }
+        }
+        const result = `content/golang.md/${hash}/${currentLanguage}/${fileName}`;
+        const normalizedResult = normalizePath(result);
+        return normalizedResult;
+    }
+    
+    // Se o path tem formato content/java.md/arquivo.html ou content/golang.md/arquivo.html (nós de grupo)
+    // Adiciona o idioma no caminho: content/java.md/br/arquivo.html ou content/golang.md/br/arquivo.html
     const javaMdGroupPattern = /content\/java\.md\/([a-z0-9]+\.html)$/;
+    const golangMdGroupPattern = /content\/golang\.md\/([a-z0-9]+\.html)$/;
     const javaMdGroupMatch = oldPath.match(javaMdGroupPattern);
+    const golangMdGroupMatch = oldPath.match(golangMdGroupPattern);
+    
     if (javaMdGroupMatch) {
         const fileName = javaMdGroupMatch[1];
         return `content/java.md/${currentLanguage}/${fileName}`;
     }
     
-    // Se o path antigo tem formato antigo (content/java.md/arquivo.html sem hash)
+    if (golangMdGroupMatch) {
+        const fileName = golangMdGroupMatch[1];
+        return `content/golang.md/${currentLanguage}/${fileName}`;
+    }
+    
+    // Se o path antigo tem formato antigo (content/java.md/arquivo.html ou content/golang.md/arquivo.html sem hash)
     // Gera hash do tópico e usa hash da categoria
     if (oldPath.includes('content/java.md/') && !oldPath.match(/content\/java\.md\/[a-z0-9]+\//)) {
         const oldFileName = oldPath.split('/').pop().replace('.html', '');
@@ -97,7 +134,20 @@ function convertToNewPath(oldPath, categoryName) {
             const topicName = topicPath.split('/').pop();
             const topicHash = getTopicFileNameHash(topicName);
             const categoryHash = getCategoryHash(categoryName || 'História do Java');
-            return `content/${categoryHash}/${currentLanguage}/${topicHash}.html`;
+            return `content/java.md/${categoryHash}/${currentLanguage}/${topicHash}.html`;
+        }
+    }
+    
+    if (oldPath.includes('content/golang.md/') && !oldPath.match(/content\/golang\.md\/[a-z0-9]+\//)) {
+        const oldFileName = oldPath.split('/').pop().replace('.html', '');
+        // Tenta encontrar o tópico correspondente no menu
+        const topicNode = document.querySelector(`[data-html="${oldPath}"]`);
+        if (topicNode) {
+            const topicPath = topicNode.getAttribute('data-path');
+            const topicName = topicPath.split('/').pop();
+            const topicHash = getTopicFileNameHash(topicName);
+            const categoryHash = getCategoryHash(categoryName || 'História e Filosofia do Go');
+            return `content/golang.md/${categoryHash}/${currentLanguage}/${topicHash}.html`;
         }
     }
     

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐹 Golang: Linguagem de Programação Moderna</title>
+    <link rel="stylesheet" href="../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <img src="../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu será construído dinamicamente pelo menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <img src="../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
+                    <span id="contentHeader">Golang: Linguagem de Programação Moderna</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="br" selected>🇧🇷 Português</option>
+                        <option value="en" >🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>🐹 Golang: Linguagem de Programação Moderna</h1>
+                    <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+                        <span style="display: inline-flex; align-items: center;">🕐</span>
+                        <span style="display: inline-flex; align-items: center;">21/11/2025 16:51:07</span>
+                        <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+                        <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+                    </div>
+                    <div class="info-box">
+                        <strong>📚 Sobre:</strong> Go (também conhecido como Golang) é uma linguagem de programação de código aberto desenvolvida pela Google, projetada para ser simples, eficiente e com suporte nativo para concorrência.
+                    </div>
+                    <h2>🎯 Visão Geral</h2>
+                    <p>Go é uma linguagem de programação compilada, estaticamente tipada, criada na Google em 2007 e lançada publicamente em 2009. 
+            A linguagem foi projetada por Rob Pike, Ken Thompson e Robert Griesemer para resolver problemas de desenvolvimento em larga escala, 
+            combinando a eficiência de linguagens compiladas com a simplicidade de linguagens modernas.</p>
+                    <h2>📋 Estrutura do Curso</h2>
+                    <p>Este curso está organizado em várias faculdades temáticas:</p>
+                    <table>
+            <thead>
+                <tr>
+                    <th>Faculdade</th>
+                    <th>Descrição</th>
+                    <th>Tópicos Principais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Fundamentos da Linguagem Go</strong></td>
+                    <td>Base sólida da linguagem e seus conceitos fundamentais</td>
+                    <td>História, Sintaxe, Tipos, Pacotes</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Concorrência e Paralelismo</strong></td>
+                    <td>Programação concorrente nativa do Go</td>
+                    <td>Goroutines, Channels, Sync, Context</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Desenvolvimento Backend</strong></td>
+                    <td>APIs REST, microserviços e arquitetura</td>
+                    <td>net/http, Frameworks, gRPC, Message Queues</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Persistência de Dados</strong></td>
+                    <td>Bancos de dados e armazenamento</td>
+                    <td>SQL, NoSQL, ORMs, Caching</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Testes e Qualidade</strong></td>
+                    <td>Testes e ferramentas de qualidade</td>
+                    <td>Testing Package, Testes Avançados, CI/CD</td>
+                </tr>
+                <tr>
+                    <td><strong>6. Performance e Otimização</strong></td>
+                    <td>Otimização e análise de performance</td>
+                    <td>Profiling, Otimização, Observabilidade</td>
+                </tr>
+                <tr>
+                    <td><strong>7. Cloud e DevOps</strong></td>
+                    <td>Containerização e orquestração</td>
+                    <td>Docker, Kubernetes, Cloud Providers</td>
+                </tr>
+                <tr>
+                    <td><strong>8. Padrões e Arquitetura</strong></td>
+                    <td>Design patterns e arquitetura limpa</td>
+                    <td>Design Patterns, Clean Architecture, Error Handling</td>
+                </tr>
+                <tr>
+                    <td><strong>9. Segurança</strong></td>
+                    <td>Segurança em aplicações Go</td>
+                    <td>Segurança, Cryptography, Best Practices</td>
+                </tr>
+                <tr>
+                    <td><strong>10. Ferramentas e Ecossistema</strong></td>
+                    <td>Ferramentas de desenvolvimento</td>
+                    <td>Build, Code Generation, Development Tools</td>
+                </tr>
+                <tr>
+                    <td><strong>11. Casos de Uso Específicos</strong></td>
+                    <td>Aplicações práticas do Go</td>
+                    <td>CLI Tools, System Programming, Data Processing</td>
+                </tr>
+                <tr>
+                    <td><strong>12. Boas Práticas e Idioms</strong></td>
+                    <td>Idiomatic Go e melhores práticas</td>
+                    <td>Idiomatic Go, Code Review, Documentation</td>
+                </tr>
+            </tbody>
+        </table>
+                    <h2>🔑 Características Principais</h2>
+                    <div class="icon-section">
+            <span class="emoji-large">⚡</span>
+            <div>
+                <h3>Simplicidade</h3>
+                <p>Go foi projetada para ser simples de aprender e usar, com sintaxe limpa e poucas palavras-chave (apenas 25).</p>
+            </div>
+        </div>
+        <div class="icon-section">
+            <span class="emoji-large">🚀</span>
+            <div>
+                <h3>Performance</h3>
+                <p>Compilação rápida e execução eficiente, comparável a C/C++, com garbage collector otimizado.</p>
+            </div>
+        </div>
+        <div class="icon-section">
+            <span class="emoji-large">🔄</span>
+            <div>
+                <h3>Concorrência Nativa</h3>
+                <p>Suporte nativo para programação concorrente com goroutines e channels, facilitando o desenvolvimento de sistemas paralelos.</p>
+            </div>
+        </div>
+        <div class="icon-section">
+            <span class="emoji-large">📦</span>
+            <div>
+                <h3>Gerenciamento de Dependências</h3>
+                <p>Sistema moderno de módulos (Go Modules) para gerenciamento de dependências e versionamento.</p>
+            </div>
+        </div>
+                    <h2>📅 Últimas Atualizações</h2>
+                    <div class="timeline">
+            <div class="timeline-item">
+                <strong>Origem e criação do Go</strong> - Documentação completa sobre a origem do Go, criadores (Rob Pike, Ken Thompson, Robert Griesemer) e contexto histórico.
+            </div>
+        </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+    <script src="../../../resources/js/hash.js"></script>
+    <script src="../../../resources/js/i18n.js"></script>
+    <script src="../../../resources/js/menu.js"></script>
+    <script src="../../../resources/js/sidebar.js"></script>
+    <script src="../../../resources/js/content.js"></script>
+    <script src="../../../resources/js/tree.js"></script>
+    <script src="../../../resources/js/main.js"></script>
+    <script src="../../../resources/js/search.js"></script>
+</body>
+</html>

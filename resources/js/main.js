@@ -90,6 +90,11 @@
         // Atualiza o idioma primeiro (isso atualiza currentLanguage)
         updateLanguage(newLang);
         
+        // Reconstrói o menu com o novo idioma (menu.js usa traduções do menu.json)
+        if (typeof buildMenu !== 'undefined') {
+            buildMenu(false); // false = não força recarregamento do JSON, apenas reconstrói com novo idioma
+        }
+        
         // Detecta a página atual pela URL
         const currentPath = window.location.pathname;
         const currentFileName = currentPath.split('/').pop();
@@ -119,16 +124,15 @@
         if (selectedNode && selectedNode.getAttribute('data-html')) {
             const path = selectedNode.getAttribute('data-path');
             const labelElement = selectedNode.querySelector('.app-tree__label');
-            // Pega a chave i18n original, não o texto já traduzido
-            const i18nKey = labelElement.getAttribute('data-i18n-key');
-            const originalLabel = i18nKey ? (i18n.br[i18nKey] || labelElement.textContent) : labelElement.textContent;
+            // O label já está traduzido pelo menu.json, então usa diretamente
+            const label = labelElement.textContent;
             const htmlFile = selectedNode.getAttribute('data-html');
             const file = selectedNode.getAttribute('data-file');
             const lines = selectedNode.getAttribute('data-lines');
             
             // Recarregar conteúdo imediatamente - currentLanguage já foi atualizado por updateLanguage
             console.log('Recarregando conteúdo com idioma:', currentLanguage, 'para path:', path);
-            updateContent(path, originalLabel, htmlFile, file, lines);
+            updateContent(path, label, htmlFile, file, lines);
         } else {
             // Se não houver seleção, recarrega a página inicial
             const homePath = 'content/java.md/1nqriq7eql.html';
