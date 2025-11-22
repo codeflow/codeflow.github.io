@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="../../../resources/img/codeflow.png">
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...">
-    <meta name="keywords" content="welcome, codeflow, java, golang, go programming">
+    <meta name="keywords" content="welcome, codeflow, java, golang, go programming, generics, java generics">
     <meta name="author" content="Rafael Santos">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://codeflow.github.io/content/java.md/en/1nqriq7eql.html">
+    <link rel="canonical" href="https://codeflow.github.io/content/en/welcome.html">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://codeflow.github.io/content/java.md/en/1nqriq7eql.html">
+    <meta property="og:url" content="https://codeflow.github.io/content/en/welcome.html">
     <meta property="og:title" content="Welcome to Codeflow">
     <meta property="og:description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...">
     <meta property="og:image" content="https://codeflow.github.io/resources/img/codeflow.png">
@@ -22,19 +22,19 @@
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://codeflow.github.io/content/java.md/en/1nqriq7eql.html">
+    <meta name="twitter:url" content="https://codeflow.github.io/content/en/welcome.html">
     <meta name="twitter:title" content="Welcome to Codeflow">
     <meta name="twitter:description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...">
     <meta name="twitter:image" content="https://codeflow.github.io/resources/img/codeflow.png">
     
 
     <title>Codeflow - Welcome</title>
-    <link rel="stylesheet" href="../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <style>
-        /* Estilos de tabela no estilo RichFaces BlueSky */
+        /* Table styles in RichFaces BlueSky theme */
         table {
             border-collapse: collapse;
             width: 100%;
@@ -87,16 +87,7 @@
             margin: 1rem 0;
             border-left: 4px solid #FFA500;
         }
-        .timeline {
-            margin: 1.5rem 0;
-        }
-        .timeline-item {
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            background-color: #F8F8F8;
-            border-left: 3px solid #0078D0;
-            font-size: 11px;
-        }
+        /* DO NOT INCLUDE STYLES FOR .timeline and .timeline-item - use default theme.css styles */
         .icon-section {
             display: flex;
             align-items: flex-start;
@@ -111,48 +102,39 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Welcome to Codeflow",
+  "@type": "WebSite",
+  "name": "Codeflow",
+  "url": "https://codeflow.github.io",
   "description": "Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...",
-  "url": "https://codeflow.github.io/content/java.md/en/1nqriq7eql.html",
-  "datePublished": "20/11/2025",
-  "author": {
-    "@type": "Person",
-    "name": "Rafael Santos",
-    "url": "https://github.com/rafaelsantos"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Codeflow",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://codeflow.github.io/resources/img/codeflow.png"
-    }
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://codeflow.github.io/search.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
   }
 }
     </script>
 </head>
 <body class="app-page">
     <div class="app-layout">
-        <!-- Menu Lateral -->
+        <!-- Sidebar -->
         <aside class="app-sidebar" id="sidebar">
             <div class="app-sidebar__header">
-                <a href="../../../index.html"><img src="../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
                 <span>CODEFLOW</span>
             </div>
             <div class="app-sidebar__content">
-                                <div class="app-search-box">
-                    <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
-                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
                 </div>
                 <ul class="app-tree" id="treeView">
-                    <!-- Menu será construído dinamicamente pelo menu.js -->
+                    <!-- Menu will be built dynamically by menu.js -->
                 </ul>
             </div>
             <div class="app-sidebar__resizer" id="resizer"></div>
         </aside>
 
-        <!-- Área de Conteúdo -->
+        <!-- Content Area -->
         <main class="app-content">
             <div class="app-content__header">
                 <div class="app-content__header-left">
@@ -161,7 +143,7 @@
                         <span></span>
                         <span></span>
                     </button>
-                    <a href="../../../index.html"><img src="../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
                     <span id="contentHeader">Welcome to Codeflow</span>
                 </div>
                 <div class="language-selector">
@@ -195,31 +177,29 @@
         <table>
             <thead>
                 <tr>
-                    <th>Category</th>
+                    <th>Technology</th>
+                    <th>Categories</th>
                     <th>Available Topics</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Java History</strong></td>
+                    <td rowspan="2"><strong>Java</strong></td>
+                    <td>Java History</td>
                     <td>6 contents</td>
                     <td>✅ In development</td>
                 </tr>
                 <tr>
-                    <td><strong>Syntax & Basic Structures</strong></td>
-                    <td>0 contents</td>
-                    <td>⏳ Planned</td>
+                    <td>Advanced Features</td>
+                    <td>1 content</td>
+                    <td>✅ In development</td>
                 </tr>
                 <tr>
-                    <td><strong>OOP in Java</strong></td>
-                    <td>0 contents</td>
-                    <td>⏳ Planned</td>
-                </tr>
-                <tr>
-                    <td><strong>Advanced Features</strong></td>
-                    <td>0 contents</td>
-                    <td>⏳ Planned</td>
+                    <td><strong>Golang</strong></td>
+                    <td>Go History and Philosophy</td>
+                    <td>1 content</td>
+                    <td>✅ In development</td>
                 </tr>
             </tbody>
         </table>
@@ -259,6 +239,12 @@
 
         <h2>📅 Latest Updates</h2>
         <div class="timeline">
+            <div class="timeline-item">
+                <strong>Java - Advanced Features - Section Created</strong> - Section created with summary page about Java's advanced features, including Generics, Collections Framework, Annotations, Reflection, Lambda Expressions, Streams API, and Concurrency.
+            </div>
+            <div class="timeline-item">
+                <strong>Java - Generics</strong> - Complete documentation on Java Generics, including type parameters, wildcards, bounded types, type erasure, practical examples, and best practices.
+            </div>
             <div class="timeline-item">
                 <strong>Golang - Origin and creation of Go</strong> - Complete documentation about the origin of Go, creators (Rob Pike, Ken Thompson, Robert Griesemer), historical context at Google, motivations for creation, design principles, and industry impact.
             </div>
@@ -308,8 +294,7 @@
 
         <h2>🚀 Getting Started</h2>
         <div class="highlight-box">
-            <p><strong>💡 Tip:</strong> Start by exploring the "Java History" section in the side menu to understand the origins and evolution of the Java language. 
-            Then, navigate through different topics according to your learning needs.</p>
+            <p><strong>💡 Tip:</strong> Start by exploring the different technologies available in the side menu. Navigate through different topics according to your learning needs.</p>
         </div>
                 
         <!-- Giscus Comments -->
@@ -317,26 +302,26 @@
             <h2>💬 Comments</h2>
             <div id="giscus-container"></div>
         </div>
-                </div></div>
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- Overlay para Mobile -->
+    <!-- Mobile Overlay -->
     <div class="app-mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- JavaScript externo -->
-    <script src="../../../resources/js/hash.js"></script>
-    <script src="../../../resources/js/i18n.js"></script>
-    <script src="../../../resources/js/menu.js"></script>
-    <script src="../../../resources/js/sidebar.js"></script>
-    <script src="../../../resources/js/content.js"></script>
-    <script src="../../../resources/js/tree.js"></script>
-    <script src="../../../resources/js/main.js"></script>
-    <script src="../../../resources/js/search.js"></script>
-    <script src="../../../../../../../../../../resources/js/giscus.js"></script>
+    <!-- External JavaScript -->
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script src="../../resources/js/giscus.js"></script>
     <script>
-        // Inicializa highlight.js quando a página carrega
+        // Initialize highlight.js when page loads
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof hljs !== 'undefined') {
                 document.querySelectorAll('pre code').forEach((block) => {
@@ -350,3 +335,4 @@
     </script>
 </body>
 </html>
+

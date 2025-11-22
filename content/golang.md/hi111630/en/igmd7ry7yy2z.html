@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="../../../../resources/img/codeflow.png">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This section explores the history of Go from its creation at Google to its evolution as one of the most important languages for modern systems development.">
+    <meta name="keywords" content="history, philosophy, golang, go programming">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.github.io/content/golang.md/hi111630/en/igmd7ry7yy2z.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://codeflow.github.io/content/golang.md/hi111630/en/igmd7ry7yy2z.html">
+    <meta property="og:title" content="📜 Go History and Philosophy">
+    <meta property="og:description" content="This section explores the history of Go from its creation at Google to its evolution as one of the most important languages for modern systems development.">
+    <meta property="og:image" content="https://codeflow.github.io/resources/img/codeflow.png">
+    <meta property="og:site_name" content="Codeflow">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://codeflow.github.io/content/golang.md/hi111630/en/igmd7ry7yy2z.html">
+    <meta name="twitter:title" content="📜 Go History and Philosophy">
+    <meta name="twitter:description" content="This section explores the history of Go from its creation at Google to its evolution as one of the most important languages for modern systems development.">
+    <meta name="twitter:image" content="https://codeflow.github.io/resources/img/codeflow.png">
+    
+
     <title>📜 Go History and Philosophy</title>
     <link rel="stylesheet" href="../../../../../resources/css/themes/bluesky/theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <style>
-        /* Estilos de tabela no estilo RichFaces BlueSky */
+        /* Table styles in RichFaces BlueSky theme */
         table {
             border-collapse: collapse;
             width: 100%;
@@ -55,32 +80,45 @@
             margin: 1rem 0;
             border-left: 4px solid #0078D0;
         }
-        .timeline {
-            margin: 1.5rem 0;
-        }
-        .timeline-item {
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            background-color: #F8F8F8;
-            border-left: 3px solid #0078D0;
-            font-size: 11px;
-        }
     </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "📜 Go History and Philosophy",
+  "description": "This section explores the history of Go from its creation at Google to its evolution as one of the most important languages for modern systems development.",
+  "url": "https://codeflow.github.io/content/golang.md/hi111630/en/igmd7ry7yy2z.html",
+  "datePublished": "21/11/2025",
+  "author": {
+    "@type": "Person",
+    "name": "Rafael Santos",
+    "url": "https://github.com/rafaelsantos"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Codeflow",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://codeflow.github.io/resources/img/codeflow.png"
+    }
+  }
+}
+    </script>
 </head>
 <body class="app-page">
     <div class="app-layout">
         <aside class="app-sidebar" id="sidebar">
             <div class="app-sidebar__header">
-                <img src="../../../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
+                <a href="../../../../../index.html"><img src="../../../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
                 <span>CODEFLOW</span>
             </div>
             <div class="app-sidebar__content">
                 <div class="app-search-box">
                     <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
-                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
                 </div>
                 <ul class="app-tree" id="treeView">
-                    <!-- Menu será construído dinamicamente pelo menu.js -->
+                    <!-- Menu will be built dynamically by menu.js -->
                 </ul>
             </div>
             <div class="app-sidebar__resizer" id="resizer"></div>
@@ -91,7 +129,7 @@
                     <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
                         <span></span><span></span><span></span>
                     </button>
-                    <img src="../../../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
+                    <a href="../../../../../index.html"><img src="../../../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
                     <span id="contentHeader">📜 Go History and Philosophy</span>
                 </div>
                 <div class="language-selector">
@@ -111,11 +149,11 @@
                         <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
                     </div>
                     <div class="info-box">
-                        <strong>📚 Sobre:</strong> This section explores the history of Go from its creation at Google to its evolution as one of the most important languages for modern systems development.
+                        <strong>📚 About:</strong> This section explores the history of Go from its creation at Google to its evolution as one of the most important languages for modern systems development.
                     </div>
-                    <h2>🎯 Visão Geral</h2>
+                    <h2>🎯 Overview</h2>
                     <p>This section explores the history of Go from its creation at Google to its evolution as one of the most important languages for modern systems development.</p>
-                    <h2>📋 Tópicos Abordados</h2>
+                    <h2>📋 Topics Covered</h2>
                     <table>
     <thead>
         <tr>
@@ -146,13 +184,19 @@
         </tr>
     </tbody>
 </table>
-                    <h2>📅 Últimas Atualizações</h2>
+                    <h2>📅 Latest Updates</h2>
                     <div class="timeline">
                         <div class="timeline-item">
-                            <strong>Origem e criação do Go</strong> - Documentação completa sobre a origem do Go, criadores (Rob Pike, Ken Thompson, Robert Griesemer) e contexto histórico.
+                            <strong>Origin and creation of Go</strong> - Complete documentation about the origin of Go, creators (Rob Pike, Ken Thompson, Robert Griesemer), and historical context.
                         </div>
                     </div>
-                </div>
+                
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+                </div></div>
             </div>
         </main>
     </div>
@@ -165,5 +209,6 @@
     <script src="../../../../../resources/js/tree.js"></script>
     <script src="../../../../../resources/js/main.js"></script>
     <script src="../../../../../resources/js/search.js"></script>
+    <script src="../../../../../resources/js/giscus.js"></script>
 </body>
 </html>

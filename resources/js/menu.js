@@ -40,8 +40,10 @@ function getMenuJsonPath() {
     } else {
         // Para http/https
         if (currentPath.includes('/content/')) {
-            const pathParts = currentPath.split('/').filter(p => p);
-            const depth = pathParts.length - 1;
+            const pathParts = currentPath.split('/').filter(p => p && p !== 'index.html' && !p.endsWith('.html'));
+            // Para content/br/welcome.html, pathParts seria ['content', 'br']
+            // Precisamos subir 2 níveis: ../../templates/menu.json
+            const depth = pathParts.length;
             return '../'.repeat(depth) + 'templates/menu.json';
         } else {
             return './templates/menu.json';

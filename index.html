@@ -1,17 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <link rel="icon" type="image/png" href="./resources/img/codeflow.png">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="java, golang, go programming">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.github.io/index.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://codeflow.github.io/index.html">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://codeflow.github.io/resources/img/codeflow.png">
+    <meta property="og:site_name" content="Codeflow">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://codeflow.github.io/index.html">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="https://codeflow.github.io/resources/img/codeflow.png">
+    
+
     <title>Codeflow</title>
     <link rel="stylesheet" href="resources/css/themes/bluesky/theme.css">
     <script>
         // Redireciona imediatamente para a página inicial
         (function() {
             const lang = localStorage.getItem('codeflow-language') || (navigator.language.startsWith('en') ? 'en' : 'br');
-            const homePath = `content/java.md/${lang}/1nqriq7eql.html`;
+            const homePath = `content/${lang}/welcome.html`;
             window.location.href = homePath;
         })();
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "",
+  "description": "",
+  "url": "https://codeflow.github.io/index.html",
+  "datePublished": "22/11/2025",
+  "author": {
+    "@type": "Person",
+    "name": "Rafael Santos",
+    "url": "https://github.com/rafaelsantos"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Codeflow",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://codeflow.github.io/resources/img/codeflow.png"
+    }
+  }
+}
     </script>
 </head>
 <body class="app-page">
@@ -19,7 +67,7 @@
         <!-- Menu Lateral -->
         <aside class="app-sidebar" id="sidebar">
             <div class="app-sidebar__header">
-                <img src="resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo">
+                <a href="index.html"><img src="resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
                 <span>CODEFLOW</span>
             </div>
             <div class="app-sidebar__content">
@@ -43,7 +91,7 @@
                         <span></span>
                         <span></span>
                     </button>
-                    <img src="resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile">
+                    <a href="index.html"><img src="resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
                     <span id="contentHeader">Bem-vindo</span>
                 </div>
                 <div class="language-selector">

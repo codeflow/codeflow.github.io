@@ -144,6 +144,9 @@ async function buildSearchIndex() {
             { path: 'content/java.md/en/1o4a4w7aov.html', lang: 'en' },
             { path: 'content/java.md/br/u8n8srtc79q8.html', lang: 'br' },
             { path: 'content/java.md/en/u8n8srtc79q8.html', lang: 'en' },
+            // Páginas de resumo - Recursos Avançados
+            { path: 'content/java.md/br/npowyzyv1zxzy68985b9.html', lang: 'br' },
+            { path: 'content/java.md/en/npowyzyv1zxzy68985b9.html', lang: 'en' },
             // Páginas de conteúdo
             { path: 'content/java.md/hi870208/br/363ba4sngb4e.html', lang: 'br' },
             { path: 'content/java.md/hi870208/en/363ba4sngb4e.html', lang: 'en' },
@@ -165,6 +168,9 @@ async function buildSearchIndex() {
             { path: 'content/java.md/hi870208/en/lfr7klwpxix9.html', lang: 'en' },
             { path: 'content/java.md/hi870208/br/uou6eno1v99v.html', lang: 'br' },
             { path: 'content/java.md/hi870208/en/uou6eno1v99v.html', lang: 'en' },
+            // Páginas de conteúdo - Recursos Avançados
+            { path: 'content/java.md/re120788/br/nvppty1uxxx5zz38b477.html', lang: 'br' },
+            { path: 'content/java.md/re120788/en/nvppty1uxxx5zz38b477.html', lang: 'en' },
             // Páginas principais - Golang
             { path: 'content/golang.md/br/1nqriq7eql.html', lang: 'br' },
             { path: 'content/golang.md/en/1nqriq7eql.html', lang: 'en' },

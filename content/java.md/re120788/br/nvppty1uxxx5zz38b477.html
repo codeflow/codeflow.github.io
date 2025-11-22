@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generics são um recurso poderoso do Java que permite criar classes, interfaces e métodos que trabalham com tipos como parâmetros. Isso proporciona maior segu...">
+    <meta name="keywords" content="generics, java, java, golang, go programming, generics, java generics">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.github.io/content/java.md/re120788/br/nvppty1uxxx5zz38b477.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://codeflow.github.io/content/java.md/re120788/br/nvppty1uxxx5zz38b477.html">
+    <meta property="og:title" content="Generics em Java">
+    <meta property="og:description" content="Generics são um recurso poderoso do Java que permite criar classes, interfaces e métodos que trabalham com tipos como parâmetros. Isso proporciona maior segu...">
+    <meta property="og:image" content="https://codeflow.github.io/resources/img/codeflow.png">
+    <meta property="og:site_name" content="Codeflow">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://codeflow.github.io/content/java.md/re120788/br/nvppty1uxxx5zz38b477.html">
+    <meta name="twitter:title" content="Generics em Java">
+    <meta name="twitter:description" content="Generics são um recurso poderoso do Java que permite criar classes, interfaces e métodos que trabalham com tipos como parâmetros. Isso proporciona maior segu...">
+    <meta name="twitter:image" content="https://codeflow.github.io/resources/img/codeflow.png">
+    
+
+    <title>Generics - Java</title>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <style>
+        /* Estilos de tabela no estilo RichFaces BlueSky */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #C0C0C0;
+            margin-bottom: 1rem;
+            table-layout: auto;
+        }
+        table th {
+            background-color: #BED6F8 !important;
+            color: #0B356C !important;
+            font-weight: bold;
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            text-align: left !important;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table td {
+            padding: 0.5rem;
+            border: 1px solid #C0C0C0;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        table tbody tr:nth-child(even) td {
+            background-color: #ECF4FE !important;
+        }
+        table tbody tr:nth-child(odd) td {
+            background-color: #FFFFFF !important;
+        }
+        table tfoot td {
+            background-color: #cccccc;
+        }
+        .info-box {
+            background-color: #ECF4FE;
+            border: 1px solid #BED6F8;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #0078D0;
+        }
+        .highlight-box {
+            background-color: #FFF9E6;
+            border: 1px solid #FFD700;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #FFA500;
+        }
+        .icon-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .emoji-large {
+            font-size: 4rem;
+            line-height: 1;
+        }
+    </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Generics em Java",
+  "description": "Generics são um recurso poderoso do Java que permite criar classes, interfaces e métodos que trabalham com tipos como parâmetros. Isso proporciona maior segu...",
+  "url": "https://codeflow.github.io/content/java.md/re120788/br/nvppty1uxxx5zz38b477.html",
+  "datePublished": "22/11/2025",
+  "author": {
+    "@type": "Person",
+    "name": "Rafael Santos",
+    "url": "https://github.com/rafaelsantos"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Codeflow",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://codeflow.github.io/resources/img/codeflow.png"
+    }
+  }
+}
+    </script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Menu Lateral -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../../../index.html"><img src="../../../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu será construído dinamicamente pelo menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Área de Conteúdo -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../../../index.html"><img src="../../../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Generics em Java</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="br" selected>🇧🇷 Português</option>
+                        <option value="en">🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>🔷 Generics em Java</h1>
+                    
+                    <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+                        <span style="display: inline-flex; align-items: center;">🕐</span>
+                        <span style="display: inline-flex; align-items: center;">22/11/2025 09:09:25</span>
+                        <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+                        <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+                    </div>
+                    
+                    <div class="info-box">
+                        <strong>📅 Introduzido em:</strong> Java 5 (J2SE 5.0)<br>
+                        <strong>🎯 Objetivo:</strong> Fornecer type safety em tempo de compilação e eliminar a necessidade de casts explícitos<br>
+                        <strong>💡 Conceito:</strong> Permite que classes, interfaces e métodos operem com tipos como parâmetros
+                    </div>
+
+                    <h2>🎯 O que são Generics?</h2>
+                    <p>
+                        <strong>Generics</strong> são um recurso poderoso do Java que permite criar classes, interfaces e métodos que trabalham com 
+                        <strong>tipos como parâmetros</strong>. Isso proporciona maior segurança de tipos em tempo de compilação e elimina a necessidade 
+                        de fazer <em>casts</em> explícitos, tornando o código mais legível e menos propenso a erros.
+                    </p>
+
+                    <div class="icon-section">
+                        <span class="emoji-large">🔷</span>
+                        <div>
+                            <h3>Benefícios dos Generics</h3>
+                            <ul>
+                                <li>✅ <strong>Type Safety:</strong> Erros de tipo são detectados em tempo de compilação</li>
+                                <li>✅ <strong>Eliminação de Casts:</strong> Não é necessário fazer conversões explícitas</li>
+                                <li>✅ <strong>Melhor Legibilidade:</strong> Código mais claro e expressivo</li>
+                                <li>✅ <strong>Reutilização:</strong> Um único código pode trabalhar com diferentes tipos</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h2>📚 Conceitos Fundamentais</h2>
+
+                    <h3>1. 🔤 Type Parameters (Parâmetros de Tipo)</h3>
+                    <p>
+                        Parâmetros de tipo são identificadores que representam tipos genéricos. Por convenção, são nomeados com letras maiúsculas:
+                    </p>
+                    <ul>
+                        <li><code>E</code> - Element (usado em Collections)</li>
+                        <li><code>T</code> - Type (tipo genérico)</li>
+                        <li><code>K</code> - Key (chave em Maps)</li>
+                        <li><code>V</code> - Value (valor em Maps)</li>
+                        <li><code>N</code> - Number (números)</li>
+                        <li><code>S, U, V</code> - Segundos, terceiros, quartos tipos</li>
+                    </ul>
+
+                    <h3>2. 📦 Classes Genéricas</h3>
+                    <p>Exemplo de uma classe genérica simples:</p>
+                    <pre><code class="language-java">// Classe genérica para uma caixa que pode armazenar qualquer tipo
+public class Caixa&lt;T&gt; {
+    private T conteudo;
+    
+    public void setConteudo(T conteudo) {
+        this.conteudo = conteudo;
+    }
+    
+    public T getConteudo() {
+        return conteudo;
+    }
+}
+
+// Uso:
+Caixa&lt;String&gt; caixaString = new Caixa&lt;&gt;();
+caixaString.setConteudo("Olá, Generics!");
+String texto = caixaString.getConteudo(); // Sem cast necessário
+
+Caixa&lt;Integer&gt; caixaInt = new Caixa&lt;&gt;();
+caixaInt.setConteudo(42);
+Integer numero = caixaInt.getConteudo(); // Sem cast necessário
+</code></pre>
+
+                    <h3>3. 🔗 Interfaces Genéricas</h3>
+                    <p>Interfaces também podem ser genéricas:</p>
+                    <pre><code class="language-java">// Interface genérica para comparar objetos
+public interface Comparador&lt;T&gt; {
+    int comparar(T a, T b);
+}
+
+// Implementação
+public class ComparadorString implements Comparador&lt;String&gt; {
+    @Override
+    public int comparar(String a, String b) {
+        return a.compareTo(b);
+    }
+}
+</code></pre>
+
+                    <h3>4. ⚙️ Métodos Genéricos</h3>
+                    <p>Métodos podem ser genéricos mesmo em classes não-genéricas:</p>
+                    <pre><code class="language-java">public class Utilidades {
+    // Método genérico estático
+    public static &lt;T&gt; void trocar(T[] array, int i, int j) {
+        T temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    
+    // Uso:
+    // String[] palavras = {"a", "b", "c"};
+    // Utilidades.trocar(palavras, 0, 2);
+}
+</code></pre>
+
+                    <h2>🎭 Wildcards (Curingas)</h2>
+                    <p>
+                        Wildcards permitem maior flexibilidade ao trabalhar com tipos genéricos, especialmente em hierarquias de classes.
+                    </p>
+
+                    <h3>1. 🔵 Unbounded Wildcard (?)</h3>
+                    <p>Representa um tipo desconhecido:</p>
+                    <pre><code class="language-java">// Aceita qualquer tipo de List
+public void imprimirLista(List&lt;?&gt; lista) {
+    for (Object item : lista) {
+        System.out.println(item);
+    }
+}
+</code></pre>
+
+                    <h3>2. ⬆️ Upper Bounded Wildcard (? extends T)</h3>
+                    <p>Restringe a um tipo ou seus subtipos:</p>
+                    <pre><code class="language-java">// Aceita List de Number ou seus subtipos (Integer, Double, etc.)
+public double somar(List&lt;? extends Number&gt; numeros) {
+    double soma = 0.0;
+    for (Number num : numeros) {
+        soma += num.doubleValue();
+    }
+    return soma;
+}
+</code></pre>
+
+                    <h3>3. ⬇️ Lower Bounded Wildcard (? super T)</h3>
+                    <p>Restringe a um tipo ou seus supertipos:</p>
+                    <pre><code class="language-java">// Aceita List de Integer ou seus supertipos (Number, Object)
+public void adicionarNumeros(List&lt;? super Integer&gt; lista) {
+    lista.add(1);
+    lista.add(2);
+    lista.add(3);
+}
+</code></pre>
+
+                    <h2>🔒 Bounded Type Parameters</h2>
+                    <p>Você pode restringir os tipos que podem ser usados como parâmetros de tipo:</p>
+                    <pre><code class="language-java">// Classe genérica com bounded type parameter
+public class Calculadora&lt;T extends Number&gt; {
+    private T numero;
+    
+    public Calculadora(T numero) {
+        this.numero = numero;
+    }
+    
+    public double obterValorDouble() {
+        return numero.doubleValue();
+    }
+}
+
+// Uso válido:
+Calculadora&lt;Integer&gt; calcInt = new Calculadora&lt;&gt;(10);
+Calculadora&lt;Double&gt; calcDouble = new Calculadora&lt;&gt;(10.5);
+
+// Uso inválido (não compila):
+// Calculadora&lt;String&gt; calcString = new Calculadora&lt;&gt;("10"); // Erro!
+</code></pre>
+
+                    <h2>🗑️ Type Erasure</h2>
+                    <p>
+                        O Java implementa generics através de <strong>Type Erasure</strong>. Em tempo de execução, as informações de tipo genérico são 
+                        removidas (erased) e substituídas por seus limites ou Object.
+                    </p>
+
+                    <div class="highlight-box">
+                        <strong>⚠️ Importante:</strong> Devido ao Type Erasure, você não pode:
+                        <ul>
+                            <li>❌ Criar arrays de tipos genéricos: <code>new T[10]</code></li>
+                            <li>❌ Usar <code>instanceof</code> com tipos genéricos: <code>obj instanceof List&lt;String&gt;</code></li>
+                            <li>❌ Criar instâncias de tipos genéricos: <code>new T()</code></li>
+                            <li>❌ Usar tipos primitivos como parâmetros: <code>List&lt;int&gt;</code> (use <code>List&lt;Integer&gt;</code>)</li>
+                        </ul>
+                    </div>
+
+                    <h2>📊 Tabela de Comparação: Antes e Depois dos Generics</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>Antes (Java 1.4)</th>
+                                <th>Depois (Java 5+)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Type Safety</strong></td>
+                                <td>Erros em tempo de execução</td>
+                                <td>Erros em tempo de compilação</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Casts</strong></td>
+                                <td>Necessários e propensos a erros</td>
+                                <td>Eliminados automaticamente</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Legibilidade</strong></td>
+                                <td>Código menos claro</td>
+                                <td>Código mais expressivo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reutilização</strong></td>
+                                <td>Código duplicado</td>
+                                <td>Um código para múltiplos tipos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>💡 Exemplos Práticos</h2>
+
+                    <h3>Exemplo 1: Stack Genérico</h3>
+                    <pre><code class="language-java">public class Pilha&lt;T&gt; {
+    private List&lt;T&gt; elementos = new ArrayList&lt;&gt;();
+    
+    public void empilhar(T elemento) {
+        elementos.add(elemento);
+    }
+    
+    public T desempilhar() {
+        if (elementos.isEmpty()) {
+            throw new IllegalStateException("Pilha vazia");
+        }
+        return elementos.remove(elementos.size() - 1);
+    }
+    
+    public boolean estaVazia() {
+        return elementos.isEmpty();
+    }
+}
+
+// Uso:
+Pilha&lt;String&gt; pilhaString = new Pilha&lt;&gt;();
+pilhaString.empilhar("Primeiro");
+pilhaString.empilhar("Segundo");
+String topo = pilhaString.desempilhar(); // "Segundo"
+</code></pre>
+
+                    <h3>Exemplo 2: Par Genérico</h3>
+                    <pre><code class="language-java">public class Par&lt;K, V&gt; {
+    private K chave;
+    private V valor;
+    
+    public Par(K chave, V valor) {
+        this.chave = chave;
+        this.valor = valor;
+    }
+    
+    public K getChave() { return chave; }
+    public V getValor() { return valor; }
+    
+    public void setChave(K chave) { this.chave = chave; }
+    public void setValor(V valor) { this.valor = valor; }
+}
+
+// Uso:
+Par&lt;String, Integer&gt; par = new Par&lt;&gt;("idade", 30);
+String chave = par.getChave(); // "idade"
+Integer valor = par.getValor(); // 30
+</code></pre>
+
+                    <h2>✅ Boas Práticas</h2>
+                    <ul>
+                        <li>✅ Use nomes descritivos para type parameters (<code>T</code>, <code>E</code>, <code>K</code>, <code>V</code>)</li>
+                        <li>✅ Prefira wildcards quando possível para maior flexibilidade</li>
+                        <li>✅ Use bounded type parameters quando precisar restringir tipos</li>
+                        <li>✅ Evite usar <code>raw types</code> (tipos sem parâmetros genéricos)</li>
+                        <li>✅ Documente bem classes e métodos genéricos complexos</li>
+                    </ul>
+
+                    <h2>📚 Recursos Adicionais</h2>
+                    <ul>
+                        <li>📖 "Effective Java" - Joshua Bloch (Item 26-33 sobre Generics)</li>
+                        <li>📖 "Java Generics and Collections" - Maurice Naftalin & Philip Wadler</li>
+                        <li>🌐 Documentação oficial do Java sobre Generics</li>
+                        <li>🎓 Java Language Specification - Seção sobre Generics</li>
+                    </ul>
+
+                    <!-- Comentários Giscus -->
+                    <div class="giscus-container">
+                        <h2>💬 Comentários</h2>
+                        <div id="giscus-container"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay para Mobile -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- JavaScript externo -->
+    <script src="../../../../resources/js/hash.js"></script>
+    <script src="../../../../resources/js/i18n.js"></script>
+    <script src="../../../../resources/js/menu.js"></script>
+    <script src="../../../../resources/js/sidebar.js"></script>
+    <script src="../../../../resources/js/content.js"></script>
+    <script src="../../../../resources/js/tree.js"></script>
+    <script src="../../../../resources/js/main.js"></script>
+    <script src="../../../../resources/js/search.js"></script>
+    <script src="../../../../resources/js/giscus.js"></script>
+    <script>
+        // Inicializa highlight.js
+        hljs.highlightAll();
+        
+        // Adiciona números de linha após o highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach(function(block) {
+                hljs.lineNumbersBlock(block);
+            });
+            
+            // Adiciona botões de copiar para todos os blocos de código
+            document.querySelectorAll('pre code').forEach(function(block) {
+                const pre = block.parentElement;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Detecta a linguagem
+                const language = block.className.match(/language-(\w+)/);
+                const langLabel = language ? language[1] : 'code';
+                
+                // Cria header com botão de copiar
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = '<span class="language-label">' + langLabel + '</span>' +
+                    '<button class="copy-code-btn" onclick="copyCode(this)">📋 Copiar</button>';
+                
+                // Envolve o pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(header);
+                wrapper.appendChild(pre);
+            });
+        });
+        
+        // Função para copiar código preservando indentação e quebras de linha
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            let text = '';
+            
+            // Verifica se o highlightjs-line-numbers foi aplicado (estrutura de tabela)
+            const codeRows = codeBlock.querySelectorAll('.hljs-ln-code');
+            if (codeRows.length > 0) {
+                // Se houver células de código, pega o texto de cada linha preservando formatação
+                codeRows.forEach(function(row) {
+                    const lineText = row.textContent || row.innerText;
+                    text += lineText + '\n';
+                });
+                // Remove a última quebra de linha extra
+                text = text.replace(/\n$/, '');
+            } else {
+                // Se não houver estrutura de tabela, usa o textContent normal
+                text = codeBlock.textContent || codeBlock.innerText;
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                button.textContent = '✓ Copiado!';
+                button.classList.add('copied');
+                setTimeout(function() {
+                    button.textContent = '📋 Copiar';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Erro ao copiar:', err);
+                button.textContent = '❌ Erro';
+                setTimeout(function() {
+                    button.textContent = '📋 Copiar';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+

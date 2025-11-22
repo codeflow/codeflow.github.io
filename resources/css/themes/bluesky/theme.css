@@ -843,6 +843,52 @@ body.content-page {
     margin: 0 auto;
 }
 
+/* ===== Estilos para Comentários Giscus ===== */
+.giscus-container {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #BED6F8;
+}
+
+.giscus-container h2 {
+    font-size: 14px !important;
+    color: #0B356C !important;
+    margin-bottom: 1.5rem !important;
+    border-left: 4px solid #BED6F8 !important;
+    padding-left: 0.75rem !important;
+}
+
+/* Ajustes para o iframe do Giscus */
+.giscus-container iframe {
+    max-width: 100%;
+}
+
+/* Estilos para o container de aviso de configuração */
+.giscus-container .giscus-warning {
+    padding: 1rem;
+    background: #ECF4FE;
+    border: 1px solid #BED6F8;
+    border-radius: 0;
+    color: #0B356C;
+    margin-bottom: 1rem;
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+}
+
+.giscus-container .giscus-warning a {
+    color: #0078D0;
+    text-decoration: underline;
+}
+
+.giscus-container .giscus-warning a:hover {
+    color: #0090FF;
+}
+
+/* Tema customizado BlueSky para Giscus */
+/* O Giscus é carregado via iframe, então usamos CSS customizado */
+/* Para aplicar um tema customizado, você precisa criar um arquivo CSS e referenciá-lo no data-theme */
+/* Exemplo: data-theme="https://seu-dominio.com/themes/bluesky-giscus.css" */
+
 /* Estilos para elementos dentro de content-page - maior especificidade */
 body.content-page h1,
 body.content-page .content-container h1,
@@ -977,7 +1023,9 @@ body.content-page em {
 }
 
 .content-page pre,
-body.content-page pre {
+body.content-page pre,
+.app-page pre,
+body.app-page pre {
     background-color: #F8F8F8;
     border: 1px solid #BED6F8;
     padding: 0;
@@ -1027,6 +1075,17 @@ body.content-page pre.hljs {
 .hljs-ln-numbers td,
 .hljs-ln-code td {
     line-height: 1.0 !important;
+    border: 0 !important; /* Remove borda das tabelas do syntax highlight */
+}
+
+/* Remove borda de todas as tabelas dentro de blocos de código */
+pre code table td,
+pre.hljs table td,
+.hljs table td,
+pre code table,
+pre.hljs table,
+.hljs table {
+    border: 0 !important;
 }
 
 /* Estilo inline para código dentro de parágrafos */

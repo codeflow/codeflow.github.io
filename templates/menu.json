@@ -145,6 +145,28 @@
               "html": "content/java.md/hi870208/uou6eno1v99v.html"
             }
           ]
+        },
+        {
+          "path": "Java/Recursos Avançados",
+          "i18n": {
+            "br": "Recursos Avançados",
+            "en": "Advanced Features"
+          },
+          "icon": "📁",
+          "type": "folder",
+          "html": "content/java.md/npowyzyv1zxzy68985b9.html",
+          "children": [
+            {
+              "path": "Java/Recursos Avançados/Generics",
+              "i18n": {
+                "br": "Generics",
+                "en": "Generics"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/java.md/re120788/br/nvppty1uxxx5zz38b477.html"
+            }
+          ]
         }
       ]
     },
