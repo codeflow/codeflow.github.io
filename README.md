@@ -4,7 +4,7 @@ Structured learning platform for programming technologies, starting with Java.
 
 ## 🌐 Access
 
-Access at: [https://codeflow.github.io](https://codeflow.github.io)
+Access at: [https://codeflow.com.br](https://codeflow.com.br)
 
 ## 📚 About
 
