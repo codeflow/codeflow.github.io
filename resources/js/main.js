@@ -1,149 +1,253 @@
-// Inicialização principal da aplicação
+// Main application initialization
 
 (function() {
-    // Inicializar menu mobile
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const mobileOverlay = document.getElementById('mobileOverlay');
+    // Function to initialize when DOM is ready
+    function init() {
+        // Initialize mobile menu
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mobileOverlay = document.getElementById('mobileOverlay');
 
-    function openMobileMenu() {
-        if (window.innerWidth <= 768) {
-            sidebar.classList.add('mobile-open');
-            mobileOverlay.classList.add('active');
-            mobileMenuToggle.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        function openMobileMenu() {
+            if (window.innerWidth <= 768) {
+                if (sidebar) sidebar.classList.add('mobile-open');
+                if (mobileOverlay) mobileOverlay.classList.add('active');
+                if (mobileMenuToggle) mobileMenuToggle.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
-    }
 
-    function closeMobileMenu() {
-        sidebar.classList.remove('mobile-open');
-        mobileOverlay.classList.remove('active');
-        mobileMenuToggle.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+        function closeMobileMenu() {
+            if (sidebar) sidebar.classList.remove('mobile-open');
+            if (mobileOverlay) mobileOverlay.classList.remove('active');
+            if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-    if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (sidebar.classList.contains('mobile-open')) {
+        // Mobile menu initialization is handled in index.html
+        // This prevents conflicts with multiple initialization attempts
+        // The menu toggle is initialized in ensureMobileMenuWorks() in index.html
+
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', closeMobileMenu);
+        }
+
+        // Close menu when clicking a tree view item (mobile)
+        const treeView = document.getElementById('treeView');
+        if (treeView) {
+            treeView.addEventListener('click', function(e) {
+                const node = e.target.closest('.app-tree__node');
+                if (node && window.innerWidth <= 768) {
+                    // Small delay to allow content to be loaded
+                    setTimeout(closeMobileMenu, 300);
+                }
+            });
+        }
+
+        // Close menu when resizing to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
                 closeMobileMenu();
             } else {
-                openMobileMenu();
+                // Ensure scroll works when menu is closed
+                if (sidebar && !sidebar.classList.contains('mobile-open')) {
+                    document.body.style.overflow = '';
+                }
             }
         });
-    }
 
-    if (mobileOverlay) {
-        mobileOverlay.addEventListener('click', closeMobileMenu);
-    }
-
-    // Fechar menu ao clicar em um item do tree view (mobile)
-    const treeView = document.getElementById('treeView');
-    if (treeView) {
-        treeView.addEventListener('click', function(e) {
-            const node = e.target.closest('.app-tree__node');
-            if (node && window.innerWidth <= 768) {
-                // Pequeno delay para permitir que o conteúdo seja carregado
-                setTimeout(closeMobileMenu, 300);
-            }
-        });
-    }
-
-    // Fechar menu ao redimensionar para desktop
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            closeMobileMenu();
-        } else {
-            // Garantir que o scroll funcione quando o menu está fechado
-            if (!sidebar.classList.contains('mobile-open')) {
-                document.body.style.overflow = '';
-            }
+        // Ensure scroll works when page loads
+        if (window.innerWidth <= 768 && sidebar && !sidebar.classList.contains('mobile-open')) {
+            document.body.style.overflow = '';
         }
-    });
 
-    // Garantir que o scroll funcione quando a página carrega
-    if (window.innerWidth <= 768 && !sidebar.classList.contains('mobile-open')) {
-        document.body.style.overflow = '';
-    }
-
-    // Inicializar idioma e seletor
-    const languageSelector = document.getElementById('languageSelector');
-    
-    // Definir idioma inicial
-    updateLanguage(currentLanguage);
-    
-    // Não precisa carregar conteúdo no index.html - ele redireciona automaticamente
-    // O código abaixo só executa em páginas que já têm conteúdo (não no index.html)
-    const currentPath = window.location.pathname;
-    const currentFileName = currentPath.split('/').pop();
-    
-    // Se estamos no index.html ou home.html, não faz nada (já redirecionou)
-    if (currentFileName === 'index.html' || currentFileName === 'home.html') {
-        return;
-    }
-    
-    // Listener para mudança de idioma
-    languageSelector.addEventListener('change', function(e) {
-        const newLang = e.target.value;
-        const oldLang = currentLanguage;
+        // Initialize language and selector
+        const languageSelector = document.getElementById('languageSelector');
         
-        // Atualiza o idioma primeiro (isso atualiza currentLanguage)
-        updateLanguage(newLang);
+        // Set initial language
+        updateLanguage(currentLanguage);
         
-        // Reconstrói o menu com o novo idioma (menu.js usa traduções do menu.json)
-        if (typeof buildMenu !== 'undefined') {
-            buildMenu(false); // false = não força recarregamento do JSON, apenas reconstrói com novo idioma
-        }
-        
-        // Detecta a página atual pela URL
+        // No need to load content in index.html - it redirects automatically
+        // The code below only executes on pages that already have content (not in index.html)
         const currentPath = window.location.pathname;
         const currentFileName = currentPath.split('/').pop();
         
-        // Se estamos em uma página HTML de conteúdo (não index.html ou home.html)
-        if (currentFileName && currentFileName !== 'index.html' && currentFileName !== 'home.html' && currentPath.includes('content/')) {
-            // Troca o idioma no caminho atual - substitui /br/ ou /en/ pelo novo idioma
-            let newPath = currentPath.replace(/\/(br|en)\//, `/${newLang}/`);
+        // Listener for language change (should work on all pages, including index.html)
+        if (languageSelector) {
+            languageSelector.addEventListener('change', function(e) {
+            const newLang = e.target.value;
+            const oldLang = currentLanguage;
             
-            // Se não encontrou o padrão (página sem idioma no caminho), adiciona o idioma
-            if (newPath === currentPath) {
-                const pathParts = currentPath.split('/');
-                const fileName = pathParts[pathParts.length - 1];
-                const dirs = pathParts.slice(0, -1);
-                newPath = dirs.join('/') + '/' + newLang + '/' + fileName;
+            // Updates language first (this updates currentLanguage)
+            updateLanguage(newLang);
+            
+            // Rebuilds menu with new language (menu.js uses translations from menu.json)
+            if (typeof buildMenu !== 'undefined') {
+                buildMenu(false); // false = does not force JSON reload, just rebuilds with new language
             }
             
-            // Navega para a nova página com o idioma correto
-            console.log('Mudando idioma de', oldLang, 'para', newLang);
-            console.log('Navegando de', currentPath, 'para', newPath);
-            window.location.href = newPath;
-            return;
-        }
-        
-        // Recarregar conteúdo atual se houver (para quando estamos no index.html)
-        const selectedNode = document.querySelector('.app-tree__node--selected');
-        if (selectedNode && selectedNode.getAttribute('data-html')) {
-            const path = selectedNode.getAttribute('data-path');
-            const labelElement = selectedNode.querySelector('.app-tree__label');
-            // O label já está traduzido pelo menu.json, então usa diretamente
-            const label = labelElement.textContent;
-            const htmlFile = selectedNode.getAttribute('data-html');
-            const file = selectedNode.getAttribute('data-file');
-            const lines = selectedNode.getAttribute('data-lines');
-            
-            // Recarregar conteúdo imediatamente - currentLanguage já foi atualizado por updateLanguage
-            console.log('Recarregando conteúdo com idioma:', currentLanguage, 'para path:', path);
-            updateContent(path, label, htmlFile, file, lines);
-        } else {
-            // Se não houver seleção, recarrega a página inicial
-            const homePath = 'content/java.md/1nqriq7eql.html';
-            const translations = i18n[currentLanguage];
-            const welcomeLabel = translations.welcome || 'Bem-vindo';
-            const contentHeader = document.getElementById('contentHeader');
-            if (contentHeader) {
-                contentHeader.textContent = welcomeLabel;
+            // If we are on index.html, just updates menu and returns (does not navigate)
+            if (currentFileName === 'index.html') {
+                return;
             }
-            updateContent('Home', welcomeLabel, homePath, null, null);
+            
+            // Detects current page by URL
+            const currentPath = window.location.pathname;
+            const currentFileName = currentPath.split('/').pop();
+            
+            // If we are on an HTML content page (not index.html)
+            if (currentFileName && currentFileName !== 'index.html' && currentPath.includes('content/')) {
+                // Swaps language in current path - replaces any 2-letter language code with new language
+                // Generic pattern: detects any 2-letter lowercase language code (br, en, es, fr, pt-BR, etc.)
+                // Also supports codes with region (pt-BR, en-US, es-ES) but only takes the first part
+                let newPath = currentPath.replace(/\/([a-z]{2})(-[A-Z]{2})?\//, `/${newLang}/`);
+                
+                // If pattern not found (page without language in path), adds language
+                if (newPath === currentPath) {
+                    const pathParts = currentPath.split('/');
+                    const fileName = pathParts[pathParts.length - 1];
+                    const dirs = pathParts.slice(0, -1);
+                    newPath = dirs.join('/') + '/' + newLang + '/' + fileName;
+                }
+                
+                // Prepares path for verification (must be absolute, starting with /)
+                let pathToCheck = newPath;
+                // Ensures it starts with / to be an absolute path
+                if (!pathToCheck.startsWith('/')) {
+                    pathToCheck = '/' + pathToCheck;
+                }
+                
+                // Checks if page exists before navigating
+                // checkPageExists function should be available from content.js
+                if (typeof checkPageExists === 'undefined') {
+                    console.warn('checkPageExists is not available, navigating without verification');
+                    // Navigates with relative path
+                    let relativePath = newPath;
+                    if (relativePath.startsWith('/')) {
+                        relativePath = relativePath.substring(1);
+                    }
+                    if (!relativePath.startsWith('./') && !relativePath.startsWith('../')) {
+                        relativePath = './' + relativePath;
+                    }
+                    window.location.href = relativePath;
+                    return;
+                }
+                
+                checkPageExists(pathToCheck).then(pageExists => {
+                    if (!pageExists) {
+                        // Page does not exist in selected language, redirects to warning page
+                        // Calculates relative path to warning page
+                        let currentDir = currentPath.substring(0, currentPath.lastIndexOf('/'));
+                        // Removes initial slash if exists
+                        if (currentDir.startsWith('/')) {
+                            currentDir = currentDir.substring(1);
+                        }
+                        const currentDirParts = currentDir ? currentDir.split('/').filter(p => p) : [];
+                        
+                        // The target path is content/{language}/not-translated.html
+                        const targetDir = `content/${newLang}`;
+                        const targetDirParts = targetDir.split('/').filter(p => p);
+                        
+                        // Finds common point between paths
+                        let commonDepth = 0;
+                        for (let i = 0; i < Math.min(currentDirParts.length, targetDirParts.length); i++) {
+                            if (currentDirParts[i] === targetDirParts[i]) {
+                                commonDepth++;
+                            } else {
+                                break;
+                            }
+                        }
+                        
+                        // Calculates how many levels to go back
+                        const levelsToGoUp = currentDirParts.length - commonDepth;
+                        
+                        // Builds relative path
+                        let relativeNotTranslatedPath;
+                        if (levelsToGoUp > 0) {
+                            // Needs to go back some levels to common directory
+                            const remainingPath = targetDirParts.slice(commonDepth).join('/');
+                            const fileName = 'not-translated.html';
+                            if (remainingPath) {
+                                relativeNotTranslatedPath = '../'.repeat(levelsToGoUp) + remainingPath + '/' + fileName;
+                            } else {
+                                relativeNotTranslatedPath = '../'.repeat(levelsToGoUp) + fileName;
+                            }
+                        } else {
+                            // We are at same level or closer
+                            const remainingPath = targetDirParts.slice(commonDepth).join('/');
+                            const fileName = 'not-translated.html';
+                            if (remainingPath) {
+                                relativeNotTranslatedPath = remainingPath + '/' + fileName;
+                            } else {
+                                relativeNotTranslatedPath = fileName;
+                            }
+                            // Adds ./ if necessary
+                            if (!relativeNotTranslatedPath.startsWith('./') && !relativeNotTranslatedPath.startsWith('../')) {
+                                relativeNotTranslatedPath = './' + relativeNotTranslatedPath;
+                            }
+                        }
+                        
+                        console.log('Page does not exist in language', newLang, '- redirecting to', relativeNotTranslatedPath);
+                        window.location.href = relativeNotTranslatedPath;
+                    } else {
+                        // Page exists, navigates normally
+                        // Ensures path is relative (without initial slash)
+                        let relativePath = newPath;
+                        if (relativePath.startsWith('/')) {
+                            relativePath = relativePath.substring(1);
+                        }
+                        // If it does not start with ./ or ../, adds ./
+                        if (!relativePath.startsWith('./') && !relativePath.startsWith('../')) {
+                            relativePath = './' + relativePath;
+                        }
+                        console.log('Changing language from', oldLang, 'to', newLang);
+                        console.log('Navigating from', currentPath, 'to', relativePath);
+                        window.location.href = relativePath;
+                    }
+                }).catch(error => {
+                    // In case of error in verification, tries to navigate normally
+                    console.warn('Error verifying page existence:', error);
+                    console.log('Navigating from', currentPath, 'to', newPath);
+                    window.location.href = newPath;
+                });
+                return;
+            }
+            
+            // Reload current content if available (for when we are on index.html)
+            const selectedNode = document.querySelector('.app-tree__node--selected');
+            if (selectedNode && selectedNode.getAttribute('data-html')) {
+                const path = selectedNode.getAttribute('data-path');
+                const labelElement = selectedNode.querySelector('.app-tree__label');
+                // The label is already translated by menu.json, so uses directly
+                const label = labelElement.textContent;
+                const htmlFile = selectedNode.getAttribute('data-html');
+                const file = selectedNode.getAttribute('data-file');
+                const lines = selectedNode.getAttribute('data-lines');
+                
+                // Reload content immediately - currentLanguage already updated by updateLanguage
+                console.log('Reloading content with language:', currentLanguage, 'for path:', path);
+                updateContent(path, label, htmlFile, file, lines);
+            } else {
+                // If no selection, reloads home page
+                const homePath = 'content/java.md/1nqriq7eql.html';
+                const translations = i18n[currentLanguage];
+                const welcomeLabel = translations.welcome || 'Welcome';
+                const contentHeader = document.getElementById('contentHeader');
+                if (contentHeader) {
+                    contentHeader.textContent = welcomeLabel;
+                }
+                updateContent('Home', welcomeLabel, homePath, null, null);
+            }
+        });
         }
-    });
+    }
+    
+    // Executes when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        // DOM is already ready
+        init();
+    }
 })();
 

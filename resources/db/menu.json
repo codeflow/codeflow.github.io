@@ -1,0 +1,104 @@
+{
+  "menu": [
+    {
+      "path": "OS",
+      "i18n": {
+        "en": "Operating Systems"
+      },
+      "icon": "📁",
+      "type": "folder",
+      "children": [
+        {
+          "path": "OS/Fundamentos de Sistemas Operacionais",
+          "i18n": {
+            "en": "Operating Systems Fundamentals"
+          },
+          "icon": "📁",
+          "type": "folder",
+          "children": [
+            {
+              "path": "OS/Fundamentos de Sistemas Operacionais/Introdução e Conceitos Básicos",
+              "i18n": {
+                "en": "Introduction and Basic Concepts"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/fu404767/en/rh75u8pohlrq.html",
+              "children": []
+            },
+            {
+              "path": "OS/Fundamentos de Sistemas Operacionais/História e Evolução",
+              "i18n": {
+                "en": "History and Evolution"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/fu404767/en/77is6qwvtqsg.html",
+              "children": []
+            },
+            {
+              "path": "OS/Fundamentos de Sistemas Operacionais/Tipos de Sistemas Operacionais",
+              "i18n": {
+                "en": "Types of Operating Systems"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/fu404767/en/odpwasg36kub.html",
+              "children": []
+            },
+            {
+              "path": "OS/Fundamentos de Sistemas Operacionais/Arquitetura de Sistemas Operacionais",
+              "i18n": {
+                "en": "Operating System Architecture"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/fu404767/en/ma8nve52m7ou.html",
+              "children": []
+            }
+          ]
+        },
+        {
+          "path": "OS/Gerenciamento de Processos",
+          "i18n": {
+            "en": "Process Management"
+          },
+          "icon": "📁",
+          "type": "folder",
+          "children": [
+            {
+              "path": "OS/Gerenciamento de Processos/Conceitos de Processos",
+              "i18n": {
+                "en": "Process Concepts"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/grtoipl87g2n.html",
+              "children": []
+            },
+            {
+              "path": "OS/Gerenciamento de Processos/Estados e Ciclo de Vida",
+              "i18n": {
+                "en": "States and Lifecycle"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/h85v095nna5m.html",
+              "children": []
+            },
+            {
+              "path": "OS/Gerenciamento de Processos/Scheduling",
+              "i18n": {
+                "en": "Scheduling"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/h613ph8ljjmn.html",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

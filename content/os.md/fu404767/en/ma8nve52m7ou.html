@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+        
+        // copyCode: fallback for standalone access (index.html already defines it globally)
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>📌 Operating System Architecture</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">18/02/2026 21:30:38</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Kernel space vs user space, system calls, libraries, drivers, OS layers.
+        </div>
+
+        <h2>🟢 📚 Overview</h2>
+        <p>
+            Operating system architecture defines how the OS is structured internally, how components interact, and how the system provides services to applications. Understanding OS architecture is fundamental to comprehending how modern operating systems work.
+        </p>
+
+        <h2>🟡 📚 Kernel Space vs User Space</h2>
+        <p>
+            Modern operating systems divide memory into two distinct regions: <strong>kernel space</strong> and <strong>user space</strong>. This separation is crucial for system stability and security.
+        </p>
+
+        <h3>🟢 Kernel Space</h3>
+        <p>
+            <strong>Kernel space</strong> is the protected memory area where the operating system kernel runs. It has privileged access to hardware and system resources.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Privileged Mode:</strong> Runs in supervisor/kernel mode with full hardware access</li>
+            <li><strong>Protected Memory:</strong> User applications cannot directly access kernel space</li>
+            <li><strong>Critical Components:</strong> Contains kernel code, device drivers, interrupt handlers</li>
+            <li><strong>System Stability:</strong> Bugs in kernel space can crash the entire system</li>
+            <li><strong>Direct Hardware Access:</strong> Can directly interact with CPU, memory, I/O devices</li>
+        </ul>
+        <p>
+            The kernel space is where the core operating system functions execute, including process management, memory management, file system operations, and device driver code.
+        </p>
+
+        <h3>🟢 User Space</h3>
+        <p>
+            <strong>User space</strong> is the memory area where user applications and most system services run. It operates in unprivileged mode with restricted access to hardware.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Unprivileged Mode:</strong> Runs in user mode with limited hardware access</li>
+            <li><strong>Isolated Memory:</strong> Each process has its own protected memory space</li>
+            <li><strong>Application Code:</strong> Contains user applications, libraries, system services</li>
+            <li><strong>System Calls Required:</strong> Must use system calls to access kernel services</li>
+            <li><strong>Process Isolation:</strong> Processes cannot directly access each other's memory</li>
+        </ul>
+        <p>
+            User space applications must request kernel services through system calls, which provide a controlled interface to kernel functionality.
+        </p>
+
+        <h2>🟡 📚 System Calls</h2>
+        <p>
+            <strong>System calls</strong> are the interface between user space applications and the kernel. They allow applications to request services from the operating system in a controlled and secure manner.
+        </p>
+        <p>
+            <strong>How System Calls Work:</strong>
+        </p>
+        <ol>
+            <li><strong>Application Request:</strong> User program calls a library function (e.g., <code>read()</code>, <code>write()</code>)</li>
+            <li><strong>Library Wrapper:</strong> Library function prepares parameters and invokes the system call</li>
+            <li><strong>Mode Switch:</strong> CPU switches from user mode to kernel mode (trap/interrupt)</li>
+            <li><strong>Kernel Execution:</strong> Kernel validates the request and performs the operation</li>
+            <li><strong>Return to User Mode:</strong> Kernel returns result and switches back to user mode</li>
+            <li><strong>Application Continues:</strong> Library function returns result to the application</li>
+        </ol>
+        
+        <h2>🟡 🛠️ System Call Examples</h2>
+        <p>
+            The following examples demonstrate common system calls used in Unix/Linux systems:
+        </p>
+        
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdio.h&gt;
+
+int main() {
+    // File Management System Calls
+    int fd = open("example.txt", O_RDONLY);
+    if (fd == -1) {
+        perror("open");
+        return 1;
+    }
+    
+    char buffer[1024];
+    ssize_t bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+    if (bytes_read == -1) {
+        perror("read");
+        close(fd);
+        return 1;
+    }
+    
+    buffer[bytes_read] = '\0';
+    printf("Read %zd bytes: %s\n", bytes_read, buffer);
+    
+    close(fd);
+    
+    // Process Control System Calls
+    pid_t pid = getpid();
+    pid_t ppid = getppid();
+    printf("Process ID: %d\n", pid);
+    printf("Parent Process ID: %d\n", ppid);
+    
+    return 0;
+}</code></pre>
+        </div>
+        
+        <h3>Code Breakdown</h3>
+        
+        <h4>Part 1: File Management System Calls</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">int fd = open("example.txt", O_RDONLY);
+if (fd == -1) {
+    perror("open");
+    return 1;
+}</code></pre>
+        </div>
+        <p>
+            The <code>open()</code> system call opens a file and returns a file descriptor. <code>O_RDONLY</code> specifies read-only mode. If the call fails, it returns -1 and sets <code>errno</code> to indicate the error. <code>perror()</code> prints a descriptive error message.
+        </p>
+        
+        <h4>Part 2: Reading from File</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">char buffer[1024];
+ssize_t bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+if (bytes_read == -1) {
+    perror("read");
+    close(fd);
+    return 1;
+}</code></pre>
+        </div>
+        <p>
+            The <code>read()</code> system call reads data from the file descriptor into the buffer. It returns the number of bytes read, or -1 on error. The buffer size is reduced by 1 to leave space for the null terminator.
+        </p>
+        
+        <h4>Part 3: Process Information System Calls</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">pid_t pid = getpid();
+pid_t ppid = getppid();
+printf("Process ID: %d\n", pid);
+printf("Parent Process ID: %d\n", ppid);</code></pre>
+        </div>
+        <p>
+            <code>getpid()</code> returns the process ID of the calling process, while <code>getppid()</code> returns the parent process ID. These system calls are commonly used for process identification and hierarchy management.
+        </p>
+        
+        <p>
+            <strong>Common System Call Categories:</strong>
+        </p>
+        <ul>
+            <li><strong>Process Control:</strong> <code>fork()</code>, <code>exec()</code>, <code>exit()</code>, <code>wait()</code></li>
+            <li><strong>File Management:</strong> <code>open()</code>, <code>read()</code>, <code>write()</code>, <code>close()</code></li>
+            <li><strong>Device Management:</strong> <code>ioctl()</code>, <code>read()</code>, <code>write()</code></li>
+            <li><strong>Information Maintenance:</strong> <code>getpid()</code>, <code>gettimeofday()</code>, <code>sysinfo()</code></li>
+            <li><strong>Communication:</strong> <code>pipe()</code>, <code>shmget()</code>, <code>msgget()</code></li>
+        </ul>
+        <p>
+            System calls provide a secure, controlled way for applications to access kernel services without directly accessing kernel memory or hardware.
+        </p>
+
+        <h2>🟡 📚 Libraries</h2>
+        <p>
+            <strong>Libraries</strong> are collections of precompiled functions that provide common functionality to applications. They serve as an abstraction layer between applications and system calls.
+        </p>
+        <p>
+            <strong>Types of Libraries:</strong>
+        </p>
+        <ul>
+            <li><strong>Static Libraries:</strong> Linked at compile time, code included in executable</li>
+            <li><strong>Dynamic/Shared Libraries:</strong> Linked at runtime, shared among multiple processes</li>
+            <li><strong>System Libraries:</strong> Provided by the OS (e.g., libc, libm)</li>
+            <li><strong>Application Libraries:</strong> Third-party or application-specific libraries</li>
+        </ul>
+        <p>
+            <strong>Standard C Library (libc):</strong>
+        </p>
+        <ul>
+            <li>Provides wrapper functions for system calls</li>
+            <li>Offers higher-level abstractions (e.g., <code>printf()</code>, <code>malloc()</code>)</li>
+            <li>Handles error checking and parameter validation</li>
+            <li>Provides portable interface across different systems</li>
+        </ul>
+        <p>
+            Libraries simplify application development by providing reusable, well-tested functions and abstracting away low-level system call details.
+        </p>
+
+        <h2>🟡 📚 Device Drivers</h2>
+        <p>
+            <strong>Device drivers</strong> are kernel modules that provide an interface between the operating system and hardware devices. They translate generic OS requests into device-specific commands.
+        </p>
+        <p>
+            <strong>Driver Functions:</strong>
+        </p>
+        <ul>
+            <li><strong>Hardware Abstraction:</strong> Hide device-specific details from the OS</li>
+            <li><strong>Device Initialization:</strong> Configure and initialize hardware devices</li>
+            <li><strong>I/O Operations:</strong> Handle read/write operations to devices</li>
+            <li><strong>Interrupt Handling:</strong> Process hardware interrupts from devices</li>
+            <li><strong>Error Handling:</strong> Detect and handle device errors</li>
+        </ul>
+        <p>
+            <strong>Driver Types:</strong>
+        </p>
+        <ul>
+            <li><strong>Character Drivers:</strong> Handle character-by-character I/O (keyboards, serial ports)</li>
+            <li><strong>Block Drivers:</strong> Handle block-based I/O (hard disks, SSDs)</li>
+            <li><strong>Network Drivers:</strong> Handle network interface cards</li>
+            <li><strong>USB Drivers:</strong> Handle USB devices</li>
+        </ul>
+        <p>
+            Drivers run in kernel space and have direct access to hardware, making them critical for system functionality and potential points of failure.
+        </p>
+
+        <h2>🟡 📚 Operating System Layers</h2>
+        <p>
+            Operating systems are typically organized in layers, with each layer providing services to the layer above and using services from the layer below.
+        </p>
+        
+        <div class="arch-diagram">
+            <div class="arch-diagram__inner">
+                <div class="arch-diagram__stack">
+                    <div class="arch-diagram__box arch-diagram__box--accent">Application Layer</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">Libraries Layer (libc, libm)</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">System Call Interface</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">Kernel Layer</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box arch-diagram__box--accent">Hardware Layer</div>
+                </div>
+                <div class="arch-diagram__caption">Operating System Architecture</div>
+            </div>
+        </div>
+        
+        <p>
+            <strong>Typical OS Layer Structure:</strong>
+        </p>
+        <ol>
+            <li><strong>Hardware Layer:</strong> Physical components (CPU, memory, I/O devices)</li>
+            <li><strong>Kernel Layer:</strong> Core OS functions (process management, memory management, I/O management)</li>
+            <li><strong>System Call Interface:</strong> Interface between user space and kernel</li>
+            <li><strong>Libraries Layer:</strong> System libraries (libc, libm, etc.)</li>
+            <li><strong>Application Layer:</strong> User applications and programs</li>
+        </ol>
+        <p>
+            <strong>Benefits of Layered Architecture:</strong>
+        </p>
+        <ul>
+            <li><strong>Modularity:</strong> Each layer has a well-defined interface</li>
+            <li><strong>Maintainability:</strong> Changes in one layer don't affect others</li>
+            <li><strong>Portability:</strong> Upper layers can be ported to different hardware</li>
+            <li><strong>Abstraction:</strong> Higher layers don't need to know lower layer details</li>
+            <li><strong>Security:</strong> Controlled interfaces between layers</li>
+        </ul>
+
+        <h2>🟡 📚 Memory Protection and Privilege Levels</h2>
+        <p>
+            Modern CPUs provide hardware support for memory protection and privilege levels, which operating systems use to enforce the kernel/user space separation.
+        </p>
+        <p>
+            <strong>Privilege Rings (x86 Architecture):</strong>
+        </p>
+
+        <div class="memory-layers">
+            <div class="memory-layers__inner">
+                <div class="memory-layers__layer memory-layers__layer--accent">
+                    <div class="memory-layers__layer-header">Ring 0 (Kernel Mode)</div>
+                    <div class="memory-layers__layer-content">Highest privilege, kernel runs here</div>
+                </div>
+                <div class="memory-layers__layer">
+                    <div class="memory-layers__layer-header">Ring 1-2</div>
+                    <div class="memory-layers__layer-content">Rarely used in modern systems</div>
+                </div>
+                <div class="memory-layers__layer memory-layers__layer--accent">
+                    <div class="memory-layers__layer-header">Ring 3 (User Mode)</div>
+                    <div class="memory-layers__layer-content">Lowest privilege, applications run here</div>
+                </div>
+                <div class="memory-layers__caption">Privilege Rings</div>
+            </div>
+        </div>
+        <p>
+            <strong>Memory Protection Mechanisms:</strong>
+        </p>
+        <ul>
+            <li><strong>Memory Management Unit (MMU):</strong> Translates virtual addresses to physical addresses</li>
+            <li><strong>Page Tables:</strong> Define which memory pages are accessible and with what permissions</li>
+            <li><strong>Segmentation:</strong> Divides memory into segments with different access rights</li>
+            <li><strong>Access Control Bits:</strong> Read, write, execute permissions for memory pages</li>
+        </ul>
+        <p>
+            These hardware mechanisms ensure that user applications cannot access kernel memory or interfere with system operation.
+        </p>
+
+        <h2>🟡 📚 Interrupts and Exceptions</h2>
+        <p>
+            <strong>Interrupts</strong> and <strong>exceptions</strong> are mechanisms that allow the CPU to handle asynchronous events and errors, enabling the OS to respond to hardware events and system errors.
+        </p>
+        <p>
+            <strong>Types of Interrupts:</strong>
+        </p>
+        <ul>
+            <li><strong>Hardware Interrupts:</strong> Generated by hardware devices (keyboard, network card, timer)</li>
+            <li><strong>Software Interrupts:</strong> Generated by software (system calls, exceptions)</li>
+            <li><strong>Exceptions:</strong> Generated by CPU for errors (division by zero, page fault, invalid instruction)</li>
+        </ul>
+        <p>
+            <strong>Interrupt Handling Process:</strong>
+        </p>
+        <ol>
+            <li>CPU receives interrupt signal</li>
+            <li>CPU saves current context (registers, program counter)</li>
+            <li>CPU switches to kernel mode</li>
+            <li>Kernel interrupt handler executes</li>
+            <li>Handler processes the interrupt</li>
+            <li>CPU restores saved context</li>
+            <li>CPU returns to interrupted code</li>
+        </ol>
+        <p>
+            Interrupts are essential for responsive systems, allowing the OS to handle I/O completion, timer events, and errors without polling.
+        </p>
+
+        <h2>🟡 📚 Process and Thread Management</h2>
+        <p>
+            The operating system manages processes and threads, providing the abstraction of concurrent execution.
+        </p>
+        <p>
+            <strong>Process Management:</strong>
+        </p>
+        <ul>
+            <li><strong>Process Creation:</strong> <code>fork()</code>, <code>exec()</code> system calls</li>
+            <li><strong>Process Scheduling:</strong> CPU time allocation among processes</li>
+            <li><strong>Context Switching:</strong> Saving and restoring process state</li>
+            <li><strong>Process Termination:</strong> Cleanup and resource deallocation</li>
+        </ul>
+        <p>
+            <strong>Thread Management:</strong>
+        </p>
+        <ul>
+            <li><strong>Thread Creation:</strong> Lightweight processes sharing address space</li>
+            <li><strong>Thread Synchronization:</strong> Mutexes, semaphores, condition variables</li>
+            <li><strong>Thread Scheduling:</strong> User-level and kernel-level threads</li>
+        </ul>
+        <p>
+            Process and thread management is a core kernel function, requiring careful coordination to ensure fairness, responsiveness, and correctness.
+        </p>
+
+        <h2>🟡 📚 File System Architecture</h2>
+        <p>
+            The file system provides persistent storage abstraction, organizing data into files and directories.
+        </p>
+        <p>
+            <strong>File System Components:</strong>
+        </p>
+        <ul>
+            <li><strong>File System Interface:</strong> System calls for file operations (<code>open()</code>, <code>read()</code>, <code>write()</code>)</li>
+            <li><strong>Virtual File System (VFS):</strong> Abstraction layer for different file system types</li>
+            <li><strong>File System Implementation:</strong> Specific file system code (ext4, NTFS, FAT32)</li>
+            <li><strong>Block Device Layer:</strong> Interface to storage devices</li>
+            <li><strong>Device Drivers:</strong> Hardware-specific storage drivers</li>
+        </ul>
+        <p>
+            The VFS allows the OS to support multiple file system types simultaneously, providing a unified interface to applications.
+        </p>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)" target="_blank" rel="noopener noreferrer">Kernel (Operating System) - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_architecture.htm" target="_blank" rel="noopener noreferrer">Operating System Architecture - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/system-calls-in-operating-system/" target="_blank" rel="noopener noreferrer">System Calls in Operating System - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/user-space-and-kernel-space/" target="_blank" rel="noopener noreferrer">User Space and Kernel Space - GeeksforGeeks</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

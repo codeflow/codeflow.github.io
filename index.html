@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <link rel="icon" type="image/png" href="./resources/img/codeflow.png">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="java, golang, go programming">
+    <meta name="description" content="Codeflow">
+    <meta name="keywords" content="java, golang, go programming, gtk">
     <meta name="author" content="Rafael Santos">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://codeflow.com.br/index.html">
@@ -14,75 +14,75 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://codeflow.com.br/index.html">
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
+    <meta property="og:title" content="Codeflow">
+    <meta property="og:description" content="Codeflow">
     <meta property="og:image" content="https://codeflow.com.br/resources/img/codeflow.png">
     <meta property="og:site_name" content="Codeflow">
-    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale" content="en_US">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://codeflow.com.br/index.html">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Codeflow">
+    <meta name="twitter:description" content="Codeflow">
     <meta name="twitter:image" content="https://codeflow.com.br/resources/img/codeflow.png">
     
 
     <title>Codeflow</title>
     <link rel="stylesheet" href="resources/css/themes/bluesky/theme.css">
-    <script>
-        // Redireciona imediatamente para a página inicial
-        (function() {
-            const lang = localStorage.getItem('codeflow-language') || (navigator.language.startsWith('en') ? 'en' : 'br');
-            const homePath = `content/${lang}/welcome.html`;
-            window.location.href = homePath;
-        })();
-    </script>
+    <link rel="stylesheet" href="resources/css/index.css">
+    <link rel="stylesheet" href="resources/css/search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "",
-  "description": "",
-  "url": "https://codeflow.com.br/index.html",
-  "datePublished": "22/11/2025",
-  "author": {
-    "@type": "Person",
-    "name": "Rafael Santos",
-    "url": "https://github.com/rafaelsantos"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Codeflow",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://codeflow.com.br/resources/img/codeflow.png"
-    }
-  }
-}
+        {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "headline": "Codeflow",
+        "description": "Codeflow",
+        "url": "https://codeflow.com.br/index.html",
+        "datePublished": "2025-01-22",
+        "author": {
+            "@type": "Person",
+            "name": "Rafael Santos",
+            "url": "https://github.com/rafaelsantos"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Codeflow",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "https://codeflow.com.br/resources/img/codeflow.png"
+            }
+        }
+        }
     </script>
 </head>
 <body class="app-page">
     <div class="app-layout">
-        <!-- Menu Lateral -->
+        <!-- Sidebar Menu -->
         <aside class="app-sidebar" id="sidebar">
             <div class="app-sidebar__header">
                 <a href="index.html"><img src="resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
-                <span>CODEFLOW</span>
+                <div class="app-sidebar__header-text">
+                    <span>CODEFLOW</span>
+                    <span class="version-badge" id="versionBadge" title="Loading version...">-</span>
+                </div>
             </div>
             <div class="app-sidebar__content">
                 <div class="app-search-box">
-                    <input type="text" id="searchInput" placeholder="🔍 Buscar conteúdo..." class="app-search-input">
-                    <button id="searchButton" class="app-search-button" title="Buscar">🔍</button>
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
                 </div>
                 <ul class="app-tree" id="treeView">
-                    <!-- Menu será construído dinamicamente pelo menu.js -->
+                    <!-- Menu will be built dynamically by menu.js -->
                 </ul>
             </div>
             <div class="app-sidebar__resizer" id="resizer"></div>
         </aside>
 
-        <!-- Área de Conteúdo -->
+        <!-- Content Area -->
         <main class="app-content">
             <div class="app-content__header">
                 <div class="app-content__header-left">
@@ -92,32 +92,35 @@
                         <span></span>
                     </button>
                     <a href="index.html"><img src="resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
-                    <span id="contentHeader">Bem-vindo</span>
+                    <span id="contentHeader">Home</span>
                 </div>
                 <div class="language-selector">
                     <select id="languageSelector">
-                        <option value="br">🇧🇷 Português</option>
-                        <option value="en">🇺🇸 English</option>
+                        <option value="en" selected>🇺🇸 English</option>
                     </select>
                 </div>
             </div>
             <div class="app-content__body" id="contentBody">
-                <!-- Conteúdo será carregado dinamicamente pelo JavaScript -->
+                <!-- Content will be loaded dynamically when a menu item is clicked -->
             </div>
         </main>
     </div>
 
-    <!-- Overlay para Mobile -->
+    <!-- Mobile Overlay -->
     <div class="app-mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- JavaScript externo -->
+    <!-- External JavaScript files -->
     <script src="resources/js/hash.js"></script>
     <script src="resources/js/i18n.js"></script>
-    <script src="resources/js/menu.js"></script>
+    <script src="resources/js/menu.js?v=2"></script>
     <script src="resources/js/sidebar.js"></script>
     <script src="resources/js/content.js"></script>
     <script src="resources/js/tree.js"></script>
-    <script src="resources/js/main.js"></script>
     <script src="resources/js/search.js"></script>
+    <script src="resources/js/giscus.js"></script>
+    <script src="resources/js/main.js"></script>
+    <script src="resources/js/welcome-data.js"></script>
+    <script src="resources/js/index-page.js"></script>
+    <script src="resources/js/version.js"></script>
 </body>
 </html>

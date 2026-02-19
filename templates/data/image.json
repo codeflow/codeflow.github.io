@@ -1,0 +1,59 @@
+{
+  "component": "image",
+  "name": "Image (Figure)",
+  "description": "Image with caption and source (figure/figcaption) to insert into content sections.",
+  "version": "1.0.0",
+  "cssClasses": {
+    "figure": "content-figure",
+    "image": "content-image",
+    "caption": "content-figcaption",
+    "source": "content-figcaption__source"
+  },
+  "structure": {
+    "html": "<figure class=\"content-figure\">\n  <img class=\"content-image\" src=\"{IMAGE_URL}\" alt=\"{ALT_TEXT}\" loading=\"lazy\" decoding=\"async\" referrerpolicy=\"no-referrer\">\n  <figcaption class=\"content-figcaption\">\n    {CAPTION_TEXT}\n    <span class=\"content-figcaption__source\">Source: <a href=\"{SOURCE_PAGE_URL}\" target=\"_blank\" rel=\"noopener noreferrer\">{SOURCE_LABEL}</a></span>\n  </figcaption>\n</figure>",
+    "required": ["IMAGE_URL", "ALT_TEXT"],
+    "optional": ["CAPTION_TEXT", "SOURCE_PAGE_URL", "SOURCE_LABEL"]
+  },
+  "properties": {
+    "IMAGE_URL": {
+      "type": "string",
+      "description": "Direct image URL (preferably https and stable).",
+      "required": true
+    },
+    "ALT_TEXT": {
+      "type": "string",
+      "description": "Descriptive alternative text (accessibility).",
+      "required": true
+    },
+    "CAPTION_TEXT": {
+      "type": "string",
+      "description": "Short and factual caption.",
+      "required": false
+    },
+    "SOURCE_PAGE_URL": {
+      "type": "string",
+      "description": "Source page URL (does not need to be the direct image link).",
+      "required": false
+    },
+    "SOURCE_LABEL": {
+      "type": "string",
+      "description": "Short source name (e.g., Wikimedia Commons, GTK Docs).",
+      "required": false
+    }
+  },
+  "example": {
+    "IMAGE_URL": "https://upload.wikimedia.org/.../example.png",
+    "ALT_TEXT": "Diagram of GTK architecture layers",
+    "CAPTION_TEXT": "Main GTK layers and base libraries.",
+    "SOURCE_PAGE_URL": "https://commons.wikimedia.org/wiki/File:Example.png",
+    "SOURCE_LABEL": "Wikimedia Commons"
+  },
+  "renderedHtml": "<figure class=\"content-figure\">\n  <img class=\"content-image\" src=\"https://upload.wikimedia.org/.../example.png\" alt=\"Diagram of GTK architecture layers\" loading=\"lazy\" decoding=\"async\" referrerpolicy=\"no-referrer\">\n  <figcaption class=\"content-figcaption\">\n    Main GTK layers and base libraries.\n    <span class=\"content-figcaption__source\">Source: <a href=\"https://commons.wikimedia.org/wiki/File:Example.png\" target=\"_blank\" rel=\"noopener noreferrer\">Wikimedia Commons</a></span>\n  </figcaption>\n</figure>",
+  "features": [
+    "Standardized caption and source",
+    "Responsive (image adjusts to container)",
+    "Lazy-loading and async decoding"
+  ],
+  "notes": "Use in sections where the image improves understanding. Always validate the image URL (HTTP 200 + Content-Type image/*) before inserting."
+}
+

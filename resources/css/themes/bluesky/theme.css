@@ -507,7 +507,7 @@ body.content-page table tfoot td {
 }
 
 .app-sidebar__header {
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 0.75rem;
     background: linear-gradient(to bottom, #BED6F8 0%, #F2F7FF 100%);
     background-color: #BED6F8;
     border-bottom: 1px solid #BED6F8;
@@ -518,14 +518,46 @@ body.content-page table tfoot td {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    min-height: 40px;
+    height: 48px;
+    min-height: 48px;
     box-sizing: border-box;
+    line-height: 1;
+}
+
+.app-sidebar__header-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+}
+
+.app-sidebar__header-text > span:first-child {
+    line-height: 1.2;
+}
+
+.version-badge {
+    display: inline-block !important;
+    background-color: #0078D0;
+    color: #FFFFFF;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    cursor: default;
+    line-height: 1.2;
+    font-family: Arial, Verdana, sans-serif;
+    white-space: nowrap;
+    visibility: visible;
+    opacity: 1;
 }
 
 .app-sidebar__logo {
-    height: 40px;
+    height: 36px;
     width: auto;
-    max-width: 40px;
+    max-width: 36px;
     object-fit: contain;
     flex-shrink: 0;
 }
@@ -684,14 +716,25 @@ body.content-page table tfoot td {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 7px;
+    font-weight: bold;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
 }
 
 .app-tree__toggle--collapsed::before {
     content: '+';
-    line-height: 1;
+    line-height: 1.2;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 8px;
+    font-weight: bold;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+    transform: scaleY(1.1) translateY(0.5px);
 }
 
 .app-tree__icon {
@@ -754,12 +797,13 @@ body.content-page table tfoot td {
 }
 
 .app-content__header {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 0.75rem;
     background: linear-gradient(to bottom, #BED6F8 0%, #F2F7FF 100%);
     background-color: #BED6F8;
     border-bottom: 1px solid #BED6F8;
     font-weight: bold;
-    min-height: 40px;
+    height: 48px;
+    min-height: 48px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -767,23 +811,36 @@ body.content-page table tfoot td {
     font-size: 11px;
     font-family: Arial, Verdana, sans-serif;
     color: #000000;
+    line-height: 1;
 }
 
 .language-selector {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
+    position: relative;
 }
 
 .language-selector select {
     background-color: #ECF4FE;
     border: 1px solid #BED6F8;
     color: #0B356C;
-    padding: 0.25rem 0.5rem;
+    padding: 0.4rem 2rem 0.4rem 0.5rem;
     font-size: 11px;
     font-family: Arial, Verdana, sans-serif;
     cursor: pointer;
     border-radius: 0;
+    line-height: 1;
+    box-sizing: border-box;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230B356C' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 10px;
 }
 
 .language-selector select:hover {
@@ -1101,28 +1158,97 @@ body.content-page code:not(pre code) {
 }
 
 .timeline {
-    border-left: 3px solid #BED6F8;
-    padding-left: 1.5rem;
-    margin: 1.5rem 0;
+    position: relative;
+    padding-left: 2.5rem;
+    margin: 2rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #BED6F8 0%, #D6E6FB 50%, #BED6F8 100%);
+    border-radius: 1px;
 }
 
 .timeline-item {
-    margin-bottom: 1.5rem;
     position: relative;
-    padding-left: 0.5rem;
-    line-height: 2.6;
-    min-height: 2.6em;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background-color: #FFFFFF;
+    border: 1px solid #BED6F8;
+    border-left: 3px solid #0078D0;
+    border-radius: 0;
+    box-shadow: 0 1px 3px rgba(190, 214, 248, 0.2);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.timeline-item:hover {
+    box-shadow: 0 2px 6px rgba(190, 214, 248, 0.3);
+    transform: translateX(2px);
 }
 
 .timeline-item::before {
-    content: '●';
+    content: '';
     position: absolute;
-    left: -1.75rem;
-    top: 0.2em;
-    color: #0078D0;
-    font-size: 1.2rem;
-    line-height: 1;
-    display: inline-block;
+    left: -2.5rem;
+    top: 1.25rem;
+    width: 12px;
+    height: 12px;
+    background-color: #0078D0;
+    border: 3px solid #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #BED6F8, 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 1.25rem;
+    width: 12px;
+    height: 12px;
+    background-color: #0078D0;
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item strong {
+    display: block;
+    color: #0B356C;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.timeline-item p {
+    margin: 0.5rem 0 0 0;
+    line-height: 1.6;
+}
+
+.timeline-item p:first-of-type {
+    margin-top: 0;
 }
 
 .content-page ul,
@@ -1148,6 +1274,477 @@ body.content-page li {
     font-style: italic;
 }
 
+/* ===== Content Images (Figure) ===== */
+.content-figure {
+    margin: 1rem 0 1.25rem 0;
+    padding: 0.75rem;
+    background-color: #ECF4FE;
+    border: 1px solid #BED6F8;
+}
+
+.content-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #BED6F8;
+    background-color: #FFFFFF;
+}
+
+.content-figcaption {
+    margin-top: 0.5rem;
+    font-size: 11px;
+    color: #0B356C;
+    font-family: Arial, Verdana, sans-serif;
+    line-height: 1.4;
+}
+
+.content-figcaption__source {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 10px;
+    color: #666;
+}
+
+/* ===== Progress Bar ===== */
+.progress-bar-container {
+    width: 100%;
+    background-color: #ECF4FE;
+    border: 1px solid #BED6F8;
+    border-radius: 0;
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, #0078D0 0%, #0090FF 100%);
+    background-color: #0078D0;
+    border-radius: 0;
+    transition: width 0.3s ease;
+    min-width: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.5rem;
+}
+
+/* Percentage text - hidden by default, shown in tooltip on hover */
+.progress-bar-text {
+    display: none;
+    visibility: hidden;
+}
+
+/* Tooltip for progress bar (desktop only) */
+@media (min-width: 769px) {
+    .progress-bar-container {
+        cursor: pointer;
+    }
+
+    .progress-bar-container::after {
+        content: attr(data-percentage);
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #000000;
+        color: #FFFFFF;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-family: Arial, Verdana, sans-serif;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .progress-bar-container:hover::after {
+        opacity: 1;
+    }
+    
+    /* Arrow for tooltip */
+    .progress-bar-container::before {
+        content: '';
+        position: absolute;
+        bottom: calc(100% + 2px);
+        left: 50%;
+        transform: translateX(-50%);
+        border: 4px solid transparent;
+        border-top-color: #000000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 1001;
+    }
+
+    .progress-bar-container:hover::before {
+        opacity: 1;
+    }
+}
+
+.progress-bar-label {
+    font-size: 10px;
+    font-family: Arial, Verdana, sans-serif;
+    color: #0B356C;
+    margin-top: 0.25rem;
+    text-align: center;
+}
+
+.progress-bar-wrapper {
+    width: 100%;
+    max-width: 200px;
+}
+
+/* ===== Circular Progress Bar for Mobile ===== */
+@media (max-width: 768px) {
+    .progress-bar-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        max-width: none;
+    }
+    
+    .progress-bar-container {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        max-width: 16px !important;
+        min-height: 16px !important;
+        max-height: 16px !important;
+        border-radius: 50% !important;
+        background: conic-gradient(from 0deg, #0078D0 0deg, #0078D0 var(--progress-angle, 0deg), #ECF4FE var(--progress-angle, 0deg), #ECF4FE 360deg);
+        border: 2px solid #D0D0D0 !important;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 16px !important;
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        overflow: visible;
+        aspect-ratio: 1 / 1 !important;
+    }
+    
+    /* Inner white circle for text readability */
+    .progress-bar-container::before {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #FFFFFF;
+        z-index: 0;
+    }
+    
+    .progress-bar-fill {
+        position: absolute !important;
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Hide text inside circle (too small) - percentage is shown in label */
+    .progress-bar-container .progress-bar-text {
+        display: none !important;
+    }
+    
+    .progress-bar-label {
+        font-size: 12px;
+        color: #0B356C;
+        margin-top: 0;
+    }
+}
+
+/* ===== Architecture Diagram (Layer Boxes + Arrows) ===== */
+.arch-diagram {
+    width: 100%;
+}
+
+.arch-diagram__inner {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    border: 2px solid #BED6F8;
+    border-radius: 4px;
+    background: linear-gradient(to bottom, #F9FCFF 0%, #F5F9FF 100%);
+    box-shadow: 0 2px 4px rgba(0, 120, 208, 0.1);
+}
+
+.arch-diagram__stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+.arch-diagram__stack > .arch-diagram__box {
+    margin: 0.25rem 0;
+}
+
+.arch-diagram__box {
+    background: linear-gradient(to bottom, #F2F7FF 0%, #E8F4FD 100%);
+    border: 2px solid #BED6F8;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    min-width: 200px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 120, 208, 0.1);
+    color: #0B356C;
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.arch-diagram__box--accent {
+    background: linear-gradient(to bottom, #E8F4FD 0%, #D0E9FB 100%);
+    border-color: #0078D0;
+}
+
+.arch-diagram__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0.5rem 0;
+    min-height: 20px;
+    height: 20px;
+    position: relative;
+    flex-shrink: 0;
+    overflow: visible;
+}
+
+.arch-diagram__arrow-line {
+    display: block;
+    width: 4px;
+    height: 12px;
+    background-color: #0078D0;
+    position: relative;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+.arch-diagram__arrow-line::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid #0078D0;
+}
+
+.arch-diagram__caption {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.25rem;
+    font-size: 11px;
+    color: #666;
+    font-family: Arial, Verdana, sans-serif;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+/* Horizontal Architecture Diagram */
+.arch-diagram--horizontal .arch-diagram__inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.arch-diagram__stack--horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.arch-diagram__stack--horizontal > .arch-diagram__box {
+    margin: 0 0.25rem;
+    flex-shrink: 0;
+    min-width: 120px;
+    max-width: 180px;
+    width: auto;
+    padding: 0.5rem 0.75rem;
+}
+
+.arch-diagram__arrow--horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0 0.75rem;
+    min-width: 30px;
+    width: 30px;
+    position: relative;
+    flex-shrink: 0;
+    overflow: visible;
+}
+
+.arch-diagram__arrow-line--horizontal {
+    display: block;
+    width: 12px;
+    height: 4px;
+    background-color: #0078D0;
+    position: relative;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+.arch-diagram__arrow-line--horizontal::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid #0078D0;
+}
+
+/* Memory Layers (Stacked Layers) */
+.memory-layers {
+    width: 100%;
+}
+
+.memory-layers__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    border: 2px solid #BED6F8;
+    border-radius: 4px;
+    background: linear-gradient(to bottom, #F9FCFF 0%, #F5F9FF 100%);
+    box-shadow: 0 2px 4px rgba(0, 120, 208, 0.1);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.memory-layers__layer {
+    background: linear-gradient(to bottom, #F2F7FF 0%, #E8F4FD 100%);
+    border: 2px solid #BED6F8;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.1rem;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(0, 120, 208, 0.1);
+}
+
+.memory-layers__layer:last-child {
+    margin-bottom: 0;
+}
+
+.memory-layers__layer--accent {
+    background: linear-gradient(to bottom, #E8F4FD 0%, #D0E9FB 100%);
+    border-color: #0078D0;
+}
+
+.memory-layers__layer-header {
+    font-size: 12px;
+    font-family: Arial, Verdana, sans-serif;
+    font-weight: bold;
+    color: #0B356C;
+    margin-bottom: 0.25rem;
+}
+
+.memory-layers__layer-content {
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+    color: #0B356C;
+    opacity: 0.8;
+}
+
+.memory-layers__caption {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.25rem;
+    font-size: 11px;
+    color: #666;
+    font-family: Arial, Verdana, sans-serif;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .arch-diagram__inner {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0.75rem;
+    }
+    .arch-diagram__stack {
+        width: 100%;
+    }
+    .arch-diagram__stack--horizontal {
+        flex-direction: column;
+        width: 100%;
+    }
+    .arch-diagram__stack--horizontal > .arch-diagram__box {
+        margin: 0.25rem 0;
+    }
+    .arch-diagram__arrow--horizontal {
+        margin: 0.75rem 0;
+        min-width: 100%;
+        width: 100%;
+    }
+    .arch-diagram__arrow-line--horizontal {
+        width: 24px;
+        height: 4px;
+    }
+    .arch-diagram__arrow-line--horizontal::after {
+        right: -12px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .arch-diagram__box {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+    .arch-diagram__section-vertical .arch-diagram__stack {
+        width: 100%;
+        max-width: 100%;
+    }
+    .arch-diagram__section-horizontal .arch-diagram__stack--horizontal {
+        flex-direction: column;
+    }
+    .memory-layers__inner {
+        padding: 0.75rem;
+    }
+    .memory-layers__layer {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -1168,7 +1765,7 @@ body.content-page li {
 
 /* ===== Mobile Menu Toggle Button ===== */
 .app-mobile-menu-toggle {
-    display: none !important;
+    display: none !important; /* Hidden by default on desktop */
     flex-direction: column;
     justify-content: space-around;
     width: 24px;
@@ -1176,19 +1773,34 @@ body.content-page li {
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 3px;
     z-index: 1002;
     position: relative;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    visibility: hidden;
+    opacity: 0;
 }
 
+/* Show button only on mobile */
+@media (max-width: 768px) {
+    .app-mobile-menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+
 .app-mobile-menu-toggle span {
-    width: 100%;
-    height: 1.5px;
-    background-color: #000000;
+    width: 85%;
+    height: 2px;
+    background-color: #0B356C;
     border-radius: 1px;
     transition: all 0.3s ease;
     transform-origin: center;
     flex-shrink: 0;
+    margin: 0 auto;
 }
 
 .app-mobile-menu-toggle.active span:nth-child(1) {
@@ -1197,7 +1809,7 @@ body.content-page li {
 
 .app-mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
-    height: 1.5px;
+    height: 2px;
 }
 
 .app-mobile-menu-toggle.active span:nth-child(3) {
@@ -1226,19 +1838,45 @@ body.content-page li {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 998;
+    z-index: 1001; /* Above sidebar (1002), below header (1007) */
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .app-mobile-overlay.active {
     opacity: 1;
+    pointer-events: auto; /* Allow clicks to close menu */
+    display: block !important;
+}
+
+/* Ensure header and menu button are always above overlay */
+.app-content__header {
+    position: relative;
+    z-index: 1004 !important;
+}
+
+.app-content__header-left {
+    position: relative;
+    z-index: 1005 !important;
 }
 
 /* ===== Mobile Styles ===== */
 @media (max-width: 768px) {
     .app-mobile-menu-toggle {
         display: flex !important;
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ensure button stays visible even when menu is open */
+    .app-mobile-menu-toggle.active {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .app-content__logo-mobile {
@@ -1252,21 +1890,132 @@ body.content-page li {
         bottom: 0;
         width: 280px;
         max-width: 85vw;
-        z-index: 999;
+        z-index: 1000;
         transition: left 0.3s ease;
         box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+        background-color: #FFFFFF;
     }
 
     .app-sidebar.mobile-open {
-        left: 0;
+        left: 0 !important;
+        z-index: 1002 !important; /* Above overlay, below header */
+        /* Ensure sidebar doesn't cover the header */
+        top: 0 !important;
+    }
+    
+    /* Ensure header and button are always above sidebar */
+    .app-content {
+        position: relative !important;
+        background-color: #FFFFFF !important; /* Ensure it has a background */
+    }
+    
+    /* Header sempre fixo no mobile para ficar visível ao rolar */
+    .app-content__header {
+        z-index: 1007 !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background-color: #FFFFFF !important;
+        isolation: isolate; /* Create new stacking context */
+    }
+    
+    .app-content__header-left {
+        z-index: 1008 !important;
+        position: relative !important;
+        isolation: isolate; /* Create new stacking context */
+    }
+    
+    .app-mobile-menu-toggle {
+        z-index: 1009 !important;
+        position: relative !important;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        isolation: isolate; /* Create new stacking context */
+        transform: translateZ(0); /* Force hardware acceleration and new stacking context */
+        will-change: transform; /* Hint browser for optimization */
+    }
+    
+    /* Ensure button stays visible when menu is open - use fixed positioning to guarantee it's above everything */
+    .app-mobile-menu-toggle.active {
+        z-index: 1009 !important;
+        position: fixed !important; /* Fixed to ensure it's above everything */
+        top: 0.75rem !important; /* Position from top */
+        left: 0.75rem !important; /* Position from left */
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        isolation: isolate; /* Create new stacking context */
+        transform: translateZ(0) !important; /* Force hardware acceleration and new stacking context */
+        will-change: transform !important; /* Hint browser for optimization */
+        background-color: #FFFFFF !important; /* Ensure it has a background */
+        padding: 3px !important;
+        width: 24px !important;
+        height: 24px !important;
     }
 
     .app-mobile-overlay {
         display: block;
     }
+    
+    /* Ensure content and header are above overlay */
+    .app-content {
+        position: relative;
+    }
+    
+    .app-content__header,
+    .app-content__body {
+        position: relative;
+        z-index: 1000;
+    }
+    
+    /* Removed duplicate rule - header is already fixed above */
+    
+    .app-content__header-left {
+        z-index: 1008 !important;
+        position: relative !important;
+    }
+    
+    .app-mobile-menu-toggle {
+        z-index: 1009 !important;
+        display: flex !important;
+        position: relative !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ensure button stays visible when menu is open */
+    .app-mobile-menu-toggle.active {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 1009 !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+    }
 
     .app-content {
         width: 100%;
+        position: relative;
+    }
+    
+    .app-content__body {
+        position: relative;
+        z-index: 1001;
+        padding-top: 60px !important; /* Compensa o espaço do header fixo (48px altura) + espaço extra para o título */
+    }
+    
+    /* Ensure interactive elements in content are clickable even when overlay is active */
+    .app-content__body a,
+    .app-content__body button:not(.app-mobile-menu-toggle),
+    .app-content__body input,
+    .app-content__body select,
+    .app-content__body textarea {
+        position: relative;
+        z-index: 1002;
+        pointer-events: auto !important;
     }
     
     .app-layout {
@@ -1292,15 +2041,55 @@ body.content-page li {
         display: none;
     }
 
-    .app-content__header {
-        padding: 0.5rem 0.75rem;
-        position: relative;
-        z-index: 1001;
+    /* Ensure version badge is visible on mobile */
+    .app-sidebar__header {
+        height: auto;
+        min-height: 48px;
+        padding: 0.75rem;
     }
+
+    .app-sidebar__header-text {
+        gap: 0.15rem;
+    }
+
+    .version-badge {
+        font-size: 8px;
+        padding: 0.1rem 0.35rem;
+    }
+
+    /* Header padding já definido acima com position fixed */
 
     .app-content__header-left {
         position: relative;
-        z-index: 1002;
+        z-index: 1004;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .app-mobile-menu-toggle {
+        position: relative !important;
+        z-index: 1005 !important;
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        padding: 3px !important;
+        display: flex !important;
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1) !important;
+        background: transparent !important;
+        border: none !important;
+        cursor: pointer !important;
+    }
+    
+    .app-mobile-menu-toggle span {
+        pointer-events: none !important;
+    }
+    
+    .app-mobile-menu-toggle:active {
+        opacity: 0.7;
     }
 
     .app-content__body {
@@ -1320,6 +2109,121 @@ body.content-page li {
     
     .app-layout {
         overflow: visible !important;
+    }
+    
+    /* Timeline responsiva para mobile */
+    .timeline {
+        padding-left: 2rem;
+    }
+    
+    .timeline::before {
+        left: 0.5rem;
+    }
+    
+    .timeline-item {
+        padding: 0.75rem 1rem;
+    }
+    
+    .timeline-item::before,
+    .timeline-item::after {
+        left: -2rem;
+        width: 10px;
+        height: 10px;
+    }
+    
+    .timeline-item::before {
+        border-width: 2px;
+    }
+}
+
+/* ===== Code Tabs Component ===== */
+.code-tabs-container {
+    margin: 1.5rem 0;
+    border: 1px solid #BED6F8;
+    border-radius: 0;
+}
+
+.code-tabs-header {
+    display: flex;
+    background: linear-gradient(to bottom, #BED6F8 0%, #F2F7FF 100%);
+    background-color: #BED6F8;
+    border-bottom: 1px solid #BED6F8;
+    overflow-x: auto;
+}
+
+.code-tab-button {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    border-right: 1px solid #BED6F8;
+    cursor: pointer;
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+    color: #000000;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+    position: relative;
+}
+
+.code-tab-button:hover {
+    background-color: rgba(242, 247, 255, 0.5);
+}
+
+.code-tab-button.active {
+    background-color: #FFFFFF;
+    color: #0078D0;
+    font-weight: bold;
+}
+
+.code-tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #0078D0;
+}
+
+.code-tab-content {
+    display: none;
+}
+
+.code-tab-content.active {
+    display: block;
+}
+
+.code-tab-content .code-block-wrapper {
+    margin: 0;
+    border: none;
+}
+
+.code-tab-content .code-block-header {
+    border-top: none;
+}
+
+@media (max-width: 768px) {
+    .code-tabs-header {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .code-tab-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 10px;
+        min-width: auto;
+    }
+}
+
+/* Hide button on desktop - must be after all mobile rules */
+@media (min-width: 769px) {
+    .app-mobile-menu-toggle,
+    .app-mobile-menu-toggle.active {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }
 }
   

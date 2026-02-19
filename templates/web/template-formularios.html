@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Forms template with all available components in Codeflow">
+    <meta name="keywords" content="template, forms, codeflow, example">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-formularios.html">
+    
+    <title>Codeflow - Forms Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView"></ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Forms Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📝 Forms Template</h1>
+                    
+                    <p>This template demonstrates all form components available in the Codeflow BlueSky theme.</p>
+
+                    <h2>📋 Basic Form</h2>
+                    <form class="app-form">
+                        <div>
+                            <label for="nome" class="app-label">Name:</label>
+                            <input type="text" id="nome" name="nome" class="app-input" placeholder="Enter your name">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="app-label">E-mail:</label>
+                            <input type="email" id="email" name="email" class="app-input" placeholder="seu@email.com">
+                        </div>
+                        
+                        <div>
+                            <label for="senha" class="app-label">Password:</label>
+                            <input type="password" id="senha" name="senha" class="app-input" placeholder="Enter your password">
+                        </div>
+                        
+                        <div>
+                            <label for="pais" class="app-label">Country:</label>
+                            <select id="pais" name="pais" class="app-select">
+                                <option value="">Select a country</option>
+                                <option value="br">Brazil</option>
+                                <option value="us">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="ca">Canada</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="mensagem" class="app-label">Message:</label>
+                            <textarea id="mensagem" name="mensagem" class="app-textarea" rows="5" placeholder="Enter your message here..."></textarea>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="app-button">Submit</button>
+                            <button type="reset" class="app-button">Clear</button>
+                            <button type="button" class="app-button">Cancel</button>
+                        </div>
+                    </form>
+
+                    <h2>☑️ Checkboxes and Radio Buttons</h2>
+                    <form class="app-form">
+                        <fieldset>
+                            <legend>Notification Preferences</legend>
+                            
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="notificacoes" value="email">
+                                    Receive notifications by email
+                                </label>
+                            </div>
+                            
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="notificacoes" value="sms">
+                                    Receive notifications by SMS
+                                </label>
+                            </div>
+                            
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="notificacoes" value="push">
+                                    Receive push notifications
+                                </label>
+                            </div>
+                        </fieldset>
+                        
+                        <fieldset>
+                            <legend>Payment Method</legend>
+                            
+                            <div>
+                                <label>
+                                    <input type="radio" name="pagamento" value="credito" checked>
+                                    Credit Card
+                                </label>
+                            </div>
+                            
+                            <div>
+                                <label>
+                                    <input type="radio" name="pagamento" value="debito">
+                                    Debit Card
+                                </label>
+                            </div>
+                            
+                            <div>
+                                <label>
+                                    <input type="radio" name="pagamento" value="pix">
+                                    PIX
+                                </label>
+                            </div>
+                            
+                            <div>
+                                <label>
+                                    <input type="radio" name="pagamento" value="boleto">
+                                    Bank Slip
+                                </label>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                    <h2>🔒 Disabled Fields</h2>
+                    <form class="app-form">
+                        <div>
+                            <label for="usuario" class="app-label">User (read-only):</label>
+                            <input type="text" id="usuario" name="usuario" class="app-input" value="admin" readonly>
+                        </div>
+                        
+                        <div>
+                            <label for="codigo" class="app-label">Code (disabled):</label>
+                            <input type="text" id="codigo" name="codigo" class="app-input" value="ABC123" disabled>
+                        </div>
+                        
+                        <div>
+                            <label for="status" class="app-label">Status (disabled):</label>
+                            <select id="status" name="status" class="app-select" disabled>
+                                <option value="ativo" selected>Ativo</option>
+                                <option value="inativo">Inativo</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <button type="button" class="app-button" disabled>Disabled Button</button>
+                        </div>
+                    </form>
+
+                    <h2>📅 Date and Time Fields</h2>
+                    <form class="app-form">
+                        <div>
+                            <label for="data" class="app-label">Date:</label>
+                            <input type="date" id="data" name="data" class="app-input">
+                        </div>
+                        
+                        <div>
+                            <label for="hora" class="app-label">Time:</label>
+                            <input type="time" id="hora" name="hora" class="app-input">
+                        </div>
+                        
+                        <div>
+                            <label for="datetime" class="app-label">Data e Time:</label>
+                            <input type="datetime-local" id="datetime" name="datetime" class="app-input">
+                        </div>
+                        
+                        <div>
+                            <label for="mes" class="app-label">Month:</label>
+                            <input type="month" id="mes" name="mes" class="app-input">
+                        </div>
+                        
+                        <div>
+                            <label for="semana" class="app-label">Week:</label>
+                            <input type="week" id="semana" name="semana" class="app-input">
+                        </div>
+                    </form>
+
+                    <h2>🔢 Numeric Fields</h2>
+                    <form class="app-form">
+                        <div>
+                            <label for="idade" class="app-label">Age:</label>
+                            <input type="number" id="idade" name="idade" class="app-input" min="0" max="120" placeholder="Enter sua idade">
+                        </div>
+                        
+                        <div>
+                            <label for="preco" class="app-label">Price:</label>
+                            <input type="number" id="preco" name="preco" class="app-input" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        
+                        <div>
+                            <label for="quantidade" class="app-label">Quantity:</label>
+                            <input type="number" id="quantidade" name="quantidade" class="app-input" min="1" max="100" value="1">
+                        </div>
+                        
+                        <div>
+                            <label for="range" class="app-label">Satisfaction Level (0-100):</label>
+                            <input type="range" id="range" name="range" class="app-input" min="0" max="100" value="50">
+                        </div>
+                    </form>
+
+                    <h2>🎨 Button States</h2>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+                        <button type="button" class="app-button">Normal Button</button>
+                        <button type="button" class="app-button" disabled>Disabled Button</button>
+                        <input type="submit" class="app-button" value="Input Submit">
+                        <input type="button" class="app-button" value="Input Button">
+                    </div>
+
+                    <h2>📝 Example de Code HTML</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">HTML</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-html">&lt;form class="app-form"&gt;
+    &lt;div&gt;
+        &lt;label for="nome" class="app-label"&gt;Name:&lt;/label&gt;
+        &lt;input type="text" id="nome" name="nome" class="app-input" placeholder="Enter your name"&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;label for="pais" class="app-label"&gt;Country:&lt;/label&gt;
+        &lt;select id="pais" name="pais" class="app-select"&gt;
+            &lt;option value=""&gt;Select a country&lt;/option&gt;
+            &lt;option value="br"&gt;Brazil&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;button type="submit" class="app-button"&gt;Submit&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/form&gt;</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> All form components follow the BlueSky theme and are automatically styled when you use the classes <code>.app-form</code>, <code>.app-label</code>, <code>.app-input</code>, <code>.app-select</code>, <code>.app-textarea</code> e <code>.app-button</code>.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

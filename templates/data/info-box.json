@@ -1,0 +1,85 @@
+{
+  "component": "info-box",
+  "name": "Info Box",
+  "description": "Informative boxes to highlight information, tips, warnings or success messages",
+  "version": "1.0.0",
+  "cssClasses": {
+    "info": "info-box",
+    "highlight": "highlight-box",
+    "success": "success-box"
+  },
+  "types": {
+    "info": {
+      "name": "Info Box",
+      "description": "Informative box with light blue background",
+      "color": "#ECF4FE",
+      "borderColor": "#BED6F8",
+      "borderLeftColor": "#0078D0"
+    },
+    "highlight": {
+      "name": "Highlight Box",
+      "description": "Highlight box with yellow background",
+      "color": "#FFF3CD",
+      "borderColor": "#FFC107",
+      "borderLeftColor": "#FFA500"
+    },
+    "success": {
+      "name": "Success Box",
+      "description": "Success box with green background",
+      "color": "#D4EDDA",
+      "borderColor": "#C3E6CB"
+    }
+  },
+  "structure": {
+    "html": "<div class=\"info-box\">\n  <strong>ℹ️ Information:</strong> Informative text here.\n</div>",
+    "required": ["container"],
+    "optional": ["strong", "p", "ul", "ol", "a", "code"]
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Box type",
+      "required": true,
+      "enum": ["info", "highlight", "success"],
+      "default": "info"
+    },
+    "title": {
+      "type": "string",
+      "description": "Box title or label (usually in bold)",
+      "required": false
+    },
+    "content": {
+      "type": "string|array",
+      "description": "Box content. Can be string or array of paragraphs",
+      "required": true
+    }
+  },
+  "example": {
+    "type": "info",
+    "title": "ℹ️ Information:",
+    "content": "This is an informative box. Use to highlight important information or useful tips."
+  },
+  "exampleHighlight": {
+    "type": "highlight",
+    "title": "💡 Highlight:",
+    "content": "This is a highlight box. Use to draw attention to special information."
+  },
+  "exampleSuccess": {
+    "type": "success",
+    "title": "✅ Success:",
+    "content": "This is a success box. Use to show success messages or confirmations."
+  },
+  "renderedHtml": {
+    "info": "<div class=\"info-box\">\n  <strong>ℹ️ Information:</strong> This is an informative box. Use to highlight important information or useful tips.\n</div>",
+    "highlight": "<div class=\"highlight-box\">\n  <strong>💡 Highlight:</strong> This is a highlight box. Use to draw attention to special information.\n</div>",
+    "success": "<div class=\"success-box\">\n  <strong>✅ Success:</strong> This is a success box. Use to show success messages or confirmations.\n</div>"
+  },
+  "features": [
+    "Three types: info, highlight and success",
+    "Highlighted left border (info only)",
+    "Internal padding of 1rem",
+    "Automatic margin",
+    "Accepts internal HTML"
+  ],
+  "notes": "Boxes are useful for highlighting important information. Use info for general information, highlight for warnings/tips and success for confirmations."
+}

@@ -1,4 +1,4 @@
-// Funcionalidade de redimensionamento do menu lateral
+// Sidebar menu resizing functionality
 
 (function() {
     const sidebar = document.getElementById('sidebar');

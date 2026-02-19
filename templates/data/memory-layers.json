@@ -1,0 +1,92 @@
+{
+  "component": "memory-layers",
+  "name": "Memory Layers",
+  "description": "Stacked layers diagram representing memory regions, stack layers, or hierarchical structures. Boxes are stacked vertically without arrows, showing different memory regions or layers.",
+  "version": "1.0.0",
+  "cssClasses": {
+    "container": "memory-layers",
+    "inner": "memory-layers__inner",
+    "layer": "memory-layers__layer",
+    "layerHeader": "memory-layers__layer-header",
+    "layerContent": "memory-layers__layer-content",
+    "layerAccent": "memory-layers__layer--accent",
+    "caption": "memory-layers__caption"
+  },
+  "structure": {
+    "basic": "<div class=\"memory-layers\">\n  <div class=\"memory-layers__inner\">\n    <div class=\"memory-layers__layer memory-layers__layer--accent\">\n      <div class=\"memory-layers__layer-header\">{LAYER_1_HEADER}</div>\n      <div class=\"memory-layers__layer-content\">{LAYER_1_CONTENT}</div>\n    </div>\n    <div class=\"memory-layers__layer\">\n      <div class=\"memory-layers__layer-header\">{LAYER_2_HEADER}</div>\n      <div class=\"memory-layers__layer-content\">{LAYER_2_CONTENT}</div>\n    </div>\n    <div class=\"memory-layers__layer\">\n      <div class=\"memory-layers__layer-header\">{LAYER_3_HEADER}</div>\n      <div class=\"memory-layers__layer-content\">{LAYER_3_CONTENT}</div>\n    </div>\n    <div class=\"memory-layers__layer memory-layers__layer--accent\">\n      <div class=\"memory-layers__layer-header\">{LAYER_4_HEADER}</div>\n      <div class=\"memory-layers__layer-content\">{LAYER_4_CONTENT}</div>\n    </div>\n    <div class=\"memory-layers__caption\">{CAPTION}</div>\n  </div>\n</div>",
+    "required": ["CAPTION"],
+    "optional": ["LAYER_1_HEADER", "LAYER_1_CONTENT", "LAYER_2_HEADER", "LAYER_2_CONTENT", "LAYER_3_HEADER", "LAYER_3_CONTENT", "LAYER_4_HEADER", "LAYER_4_CONTENT"]
+  },
+  "properties": {
+    "CAPTION": {
+      "type": "string",
+      "description": "Caption text displayed at bottom-right of the outer box.",
+      "required": true
+    },
+    "LAYER_1_HEADER": {
+      "type": "string",
+      "description": "Header text for first layer (top) - use accent class for emphasis.",
+      "required": false
+    },
+    "LAYER_1_CONTENT": {
+      "type": "string",
+      "description": "Content text for first layer.",
+      "required": false
+    },
+    "LAYER_2_HEADER": {
+      "type": "string",
+      "description": "Header text for second layer.",
+      "required": false
+    },
+    "LAYER_2_CONTENT": {
+      "type": "string",
+      "description": "Content text for second layer.",
+      "required": false
+    },
+    "LAYER_3_HEADER": {
+      "type": "string",
+      "description": "Header text for third layer.",
+      "required": false
+    },
+    "LAYER_3_CONTENT": {
+      "type": "string",
+      "description": "Content text for third layer.",
+      "required": false
+    },
+    "LAYER_4_HEADER": {
+      "type": "string",
+      "description": "Header text for last layer (bottom) - use accent class for emphasis.",
+      "required": false
+    },
+    "LAYER_4_CONTENT": {
+      "type": "string",
+      "description": "Content text for last layer.",
+      "required": false
+    }
+  },
+  "example": {
+    "basic": {
+      "LAYER_1_HEADER": "Stack (High Memory)",
+      "LAYER_1_CONTENT": "Local variables, function calls",
+      "LAYER_2_HEADER": "Heap",
+      "LAYER_2_CONTENT": "Dynamic memory allocation",
+      "LAYER_3_HEADER": "Data Segment",
+      "LAYER_3_CONTENT": "Global and static variables",
+      "LAYER_4_HEADER": "Code Segment (Low Memory)",
+      "LAYER_4_CONTENT": "Program instructions",
+      "CAPTION": "Memory Layout"
+    }
+  },
+  "renderedHtml": {
+    "basic": "<div class=\"memory-layers\">\n  <div class=\"memory-layers__inner\">\n    <div class=\"memory-layers__layer memory-layers__layer--accent\">\n      <div class=\"memory-layers__layer-header\">Stack (High Memory)</div>\n      <div class=\"memory-layers__layer-content\">Local variables, function calls</div>\n    </div>\n    <div class=\"memory-layers__layer\">\n      <div class=\"memory-layers__layer-header\">Heap</div>\n      <div class=\"memory-layers__layer-content\">Dynamic memory allocation</div>\n    </div>\n    <div class=\"memory-layers__layer\">\n      <div class=\"memory-layers__layer-header\">Data Segment</div>\n      <div class=\"memory-layers__layer-content\">Global and static variables</div>\n    </div>\n    <div class=\"memory-layers__layer memory-layers__layer--accent\">\n      <div class=\"memory-layers__layer-header\">Code Segment (Low Memory)</div>\n      <div class=\"memory-layers__layer-content\">Program instructions</div>\n    </div>\n    <div class=\"memory-layers__caption\">Memory Layout</div>\n  </div>\n</div>"
+  },
+  "features": [
+    "Stacked layers without arrows (like memory regions)",
+    "Each layer has a header and optional content",
+    "Outer box with border and background (provided by memory-layers__inner)",
+    "Accent layers for emphasis (first/last layers)",
+    "Caption positioned at bottom-right",
+    "Responsive (adapts on mobile)"
+  ],
+  "notes": "Use this component to represent memory regions, stack layers, or any hierarchical structure where boxes are simply stacked without arrows. Do NOT wrap in .app-card - the .memory-layers__inner already provides the outer box."
+}

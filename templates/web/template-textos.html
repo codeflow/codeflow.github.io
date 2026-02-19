@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Template de tipos de textos e formatação disponíveis no Codeflow">
+    <meta name="keywords" content="template, texts, formatting, codeflow, example">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-textos.html">
+    
+    <title>Codeflow - Template de Textos</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView"></ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Text Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📝 Text and Formatting Template</h1>
+                    
+                    <p>This template demonstrates all text types and formatting available in the Codeflow BlueSky theme.</p>
+
+                    <h2>📑 Titles and Headings</h2>
+                    
+                    <h1>H1 - Main Title (18px, color #0B356C, bottom border)</h1>
+                    <p>The H1 title is used for the main page title. It has a blue bottom border and highlighted color.</p>
+                    
+                    <h2>H2 - Subtitle (14px, color #0B356C, left border)</h2>
+                    <p>The H2 title is used for main sections. It has a 4px blue left border.</p>
+                    
+                    <h3>H3 - Smaller Subtitle (12px, color #0B356C)</h3>
+                    <p>The H3 title is used for subsections within an H2 section.</p>
+
+                    <h2>📄 Paragraphs and Text</h2>
+                    
+                    <p>This is a normal paragraph. The text uses Arial, Verdana, sans-serif font with size 11px and black color (#000000). Line spacing is 1.6 for better readability.</p>
+                    
+                    <p>This is another paragraph to demonstrate spacing between paragraphs. Each paragraph has top and bottom margin of 1rem.</p>
+
+                    <h2>💪 Bold and Italic Text</h2>
+                    
+                    <p>This text contains <strong>bold words</strong> using the <code>&lt;strong&gt;</code> tag.</p>
+                    
+                    <p>This text contains <em>italic words</em> using the <code>&lt;em&gt;</code> tag.</p>
+                    
+                    <p>This text contains <strong><em>bold and italic words</em></strong> combined.</p>
+
+                    <h2>🔗 Links</h2>
+                    
+                    <p>This is a <a href="#exemplo">normal link</a> with color #0078D0.</p>
+                    
+                    <p>This is a <a href="#exemplo">visited link</a> with color #0090FF.</p>
+                    
+                    <p>This is an <a href="https://codeflow.com.br" target="_blank" rel="noopener noreferrer">external link</a> that opens in a new tab.</p>
+
+                    <h2>📋 Lists</h2>
+                    
+                    <h3>Unordered List (ul)</h3>
+                    <ul>
+                        <li>First list item</li>
+                        <li>Second list item</li>
+                        <li>Third list item
+                            <ul>
+                                <li>Subitem 1</li>
+                                <li>Subitem 2</li>
+                            </ul>
+                        </li>
+                        <li>Fourth list item</li>
+                    </ul>
+                    
+                    <h3>Ordered List (ol)</h3>
+                    <ol>
+                        <li>First step</li>
+                        <li>Second step</li>
+                        <li>Third step
+                            <ol>
+                                <li>Substep 1</li>
+                                <li>Substep 2</li>
+                            </ol>
+                        </li>
+                        <li>Fourth step</li>
+                    </ol>
+                    
+                    <h3>Definition List (dl)</h3>
+                    <dl>
+                        <dt>Term 1</dt>
+                        <dd>Definition of term 1. This is a more detailed description.</dd>
+                        
+                        <dt>Term 2</dt>
+                        <dd>Definition of term 2. This is another description.</dd>
+                        
+                        <dt>Term 3</dt>
+                        <dd>Definition of term 3. Another description for example.</dd>
+                    </dl>
+
+                    <h2>💻 Code</h2>
+                    
+                    <h3>Inline Code</h3>
+                    <p>Use <code>code</code> for inline code. For example: <code>const x = 10;</code> or <code>function example() {}</code>.</p>
+                    
+                    <h3>Code Block</h3>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">JAVASCRIPT</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">function example() {
+    const name = 'Codeflow';
+    console.log(`Welcome to ${name}!`);
+    
+    return {
+        success: true,
+        message: 'Operation completed'
+    };
+}</code></pre>
+                    </div>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">JAVA</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-java">public class Example {
+    private String name;
+    
+    public Example(String name) {
+        this.name = name;
+    }
+    
+    public void print() {
+        System.out.println("Name: " + name);
+    }
+}</code></pre>
+                    </div>
+
+                    <h2>📊 Quotes</h2>
+                    
+                    <blockquote style="border-left: 4px solid #BED6F8; padding-left: 1rem; margin: 1rem 0; font-style: italic; color: #666;">
+                        "This is an example quote. Use blockquote to highlight important quotes or references."
+                    </blockquote>
+
+                    <h2>📏 Pre-formatted Text</h2>
+                    
+                    <pre style="background-color: #F8F8F8; border: 1px solid #BED6F8; padding: 1rem; overflow-x: auto;"><code>This is pre-formatted text.
+It preserves spaces    and line breaks.
+Useful for showing code or formatted text.
+
+    Indentation is also preserved.
+        Multiple levels work.</code></pre>
+
+                    <h2>🎨 Text with Highlights</h2>
+                    
+                    <p><mark style="background-color: #FFF3CD; padding: 0.2rem 0.4rem;">Marked text</mark> to highlight important information.</p>
+                    
+                    <p><small>Small text</small> for secondary information or notes.</p>
+                    
+                    <p><del>Deleted text</del> to show removed information.</p>
+                    
+                    <p><ins>Inserted text</ins> to show added information.</p>
+                    
+                    <p>Text with <sub>subscript</sub> and <sup>superscript</sup>.</p>
+
+                    <h2>📐 Separators</h2>
+                    
+                    <p>Text before separator.</p>
+                    <hr>
+                    <p>Text after separator.</p>
+
+                    <h2>📝 HTML Code Example</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">HTML</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-html">&lt;h1&gt;Main Title&lt;/h1&gt;
+&lt;h2&gt;Subtitle&lt;/h2&gt;
+&lt;p&gt;Paragraph with &lt;strong&gt;bold text&lt;/strong&gt; and &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Inline code: &lt;code&gt;const x = 10;&lt;/code&gt;&lt;/p&gt;</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> All text styles automatically follow the BlueSky theme. Use appropriate semantic HTML tags for better accessibility and SEO.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

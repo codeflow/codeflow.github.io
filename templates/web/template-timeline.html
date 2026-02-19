@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Timeline template available in Codeflow">
+    <meta name="keywords" content="template, timeline, chronology, codeflow, example">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-timeline.html">
+    
+    <title>Codeflow - Timeline Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView"></ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Timeline Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📅 Timeline Template</h1>
+                    
+                    <p>This template demonstrates how to use the timeline component in the Codeflow BlueSky theme. The timeline is ideal for showing chronological events, version history, updates or any temporal sequence.</p>
+                    
+                    <div class="info-box">
+                        <strong>✨ New Design:</strong> The timeline now has a modern design with cards for each event, animated circles as markers and hover effect for better interactivity.
+                    </div>
+
+                    <h2>📋 Basic Timeline</h2>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Event 1 - January 2025</strong>
+                            <p>First timeline event. This is an example of how to add content to each timeline item. Each item is now displayed as a card with border and subtle shadow.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Event 2 - February 2025</strong>
+                            <p>Second timeline event. Each item can contain formatted text, links and other HTML elements. The modern design makes the timeline more visually attractive.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Event 3 - March 2025</strong>
+                            <p>Third timeline event. The timeline uses a vertical line on the left with animated circles as markers for each event, creating a richer visual experience.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Event 4 - April 2025</strong>
+                            <p>Fourth timeline event. Spacing between items is automatic and responsive. Hover over items to see the hover effect.</p>
+                        </div>
+                    </div>
+
+                    <h2>📊 Timeline with Version History</h2>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Version 1.0.0 - Initial Release</strong>
+                            <p>First product version with basic features implemented. This version established the project foundations.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Version 1.1.0 - Improvements</strong>
+                            <p>Added performance improvements and minor bug fixes. Focus on stability and optimization.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Version 1.2.0 - New Features</strong>
+                            <p>Implemented new features requested by users, including search system and advanced filters.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Version 2.0.0 - Complete Refactoring</strong>
+                            <p>Complete code refactoring with new technologies and improved architecture. Breaking changes documented.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Version 2.1.0 - Security Update</strong>
+                            <p>Critical security fixes and dependency updates. Recommended to update immediately.</p>
+                        </div>
+                    </div>
+
+                    <h2>🔄 Updates Timeline</h2>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Update - 15/01/2025</strong>
+                            <p>Complete documentation on Generics in Java, including type parameters, wildcards, bounded types, type erasure, practical examples and best practices.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Update - 10/01/2025</strong>
+                            <p>Section created with summary page on Java advanced features, including Generics, Collections Framework, Annotations, Reflection, Lambda Expressions, Streams API and Concurrency.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Update - 05/01/2025</strong>
+                            <p>Complete documentation on Java evolution since Java 8, including all LTS versions and their main features.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Update - 01/01/2025</strong>
+                            <p>Complete documentation on OpenJDK, its history, governance, distributions and impact on the Java community.</p>
+                        </div>
+                    </div>
+
+                    <h2>📚 Timeline with Links and Formatting</h2>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>JDK 1.0 Release</strong>
+                            <p>Complete documentation on the <a href="#exemplo">official JDK 1.0 release</a> in 1996. This event marked the beginning of the Java platform and revolutionized software development.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>JDK 1.0 Compiler (javac)</strong>
+                            <p>Details about the <code>javac</code> compiler and its importance in the Java ecosystem. The compiler was a fundamental piece for the language's success.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>J2SE, J2EE, J2ME Era</strong>
+                            <p>Content about the division of the Java platform into three distinct editions: <strong>J2SE</strong> (Standard Edition), <strong>J2EE</strong> (Enterprise Edition) and <strong>J2ME</strong> (Micro Edition).</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Transition to Oracle</strong>
+                            <p>Complete documentation on Oracle's acquisition of Sun Microsystems in 2010, including chronology, impacts and changes in the Java ecosystem.</p>
+                        </div>
+                    </div>
+
+                    <h2>🎯 Timeline with Multiple Paragraphs</h2>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Conception (Sun, James Gosling)</strong>
+                            <p>Content added about Java's origins and James Gosling's role in creating the language.</p>
+                            <p>The project began in 1991 when Sun Microsystems started developing a programming language for consumer electronic devices.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>JDK 1.0 - Section Created</strong>
+                            <p>Section created with summary pages on JDK 1.0 release and the javac compiler.</p>
+                            <p>This section includes detailed information about JDK 1.0's main components and its architecture.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Platform - Section Created</strong>
+                            <p>Section created with summary pages on J2SE, J2EE, J2ME era and J2SE architecture.</p>
+                            <p>This section documents the evolution of the Java platform and its different editions for different types of applications.</p>
+                        </div>
+                    </div>
+
+                    <h2>📝 Example de Code HTML</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">HTML</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-html">&lt;div class="timeline"&gt;
+    &lt;div class="timeline-item"&gt;
+        &lt;strong&gt;Event 1 - January 2025&lt;/strong&gt;
+        &lt;p&gt;First event description. Use paragraphs for longer content.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="timeline-item"&gt;
+        &lt;strong&gt;Event 2 - February 2025&lt;/strong&gt;
+        &lt;p&gt;Second event description. Each item is displayed as a styled card.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="timeline-item"&gt;
+        &lt;strong&gt;Event 3 - March 2025&lt;/strong&gt;
+        &lt;p&gt;Third event description. The modern design includes animated circles and hover effect.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> The timeline uses the classes <code>.timeline</code> e <code>.timeline-item</code> from the BlueSky theme. Each timeline item is automatically styled as a card with:
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li>Animated circle as marker on the vertical line</li>
+                            <li>Blue left border for highlight</li>
+                            <li>Subtle shadow for depth</li>
+                            <li>Hover effect for interactivity</li>
+                            <li>Animação de pulso nos marcadores</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>⚠️ Important:</strong> The timeline is ideal for showing events in chronological order. The most recent events usually appear at the top or bottom, depending on the desired order.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

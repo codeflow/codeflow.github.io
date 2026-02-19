@@ -1,9 +1,9 @@
-// Menu Builder - Constrói o menu dinamicamente a partir de menu.json
+// Menu Builder - Builds menu dynamically from menu.json
 
 let menuData = null;
 let menuDataPromise = null;
 
-// Função para calcular caminho relativo para o menu.json
+// Function to calculate relative path to menu.json
 function getMenuJsonPath() {
     const currentPath = window.location.pathname;
     const currentHref = window.location.href;
@@ -16,15 +16,15 @@ function getMenuJsonPath() {
             
             if (projectIndex !== -1) {
                 const projectRoot = pathname.substring(0, projectIndex + '/codeflow.github.io'.length);
-                return `file://${projectRoot}/templates/menu.json`;
+                return `file://${projectRoot}/resources/db/menu.json`;
             } else {
-                // Fallback: calcula caminho relativo
+                // Fallback: calculates relative path
                 if (pathname.includes('/content/')) {
                     const pathParts = pathname.split('/').filter(p => p);
                     const depth = pathParts.length - 1;
-                    return '../'.repeat(depth) + 'templates/menu.json';
+                    return '../'.repeat(depth) + 'resources/db/menu.json';
                 } else {
-                    return './templates/menu.json';
+                    return './resources/db/menu.json';
                 }
             }
         } catch (e) {
@@ -32,32 +32,32 @@ function getMenuJsonPath() {
             if (currentPath.includes('/content/')) {
                 const pathParts = currentPath.split('/').filter(p => p);
                 const depth = pathParts.length - 1;
-                return '../'.repeat(depth) + 'templates/menu.json';
+                return '../'.repeat(depth) + 'resources/db/menu.json';
             } else {
-                return './templates/menu.json';
+                return './resources/db/menu.json';
             }
         }
     } else {
-        // Para http/https
+        // For http/https
         if (currentPath.includes('/content/')) {
             const pathParts = currentPath.split('/').filter(p => p && p !== 'index.html' && !p.endsWith('.html'));
-            // Para content/br/welcome.html, pathParts seria ['content', 'br']
-            // Precisamos subir 2 níveis: ../../templates/menu.json
+            // For content/br/welcome.html, pathParts would be ['content', 'br']
+            // We need to go up 2 levels: ../../resources/db/menu.json
             const depth = pathParts.length;
-            return '../'.repeat(depth) + 'templates/menu.json';
+            return '../'.repeat(depth) + 'resources/db/menu.json';
         } else {
-            return './templates/menu.json';
+            return './resources/db/menu.json';
         }
     }
 }
 
-// Função para carregar o menu.json
+// Function to load menu.json
 async function loadMenuData(forceReload = false) {
-    // Se não forçar recarregamento e já tiver dados, retorna cache
+    // If not forcing reload and data already exists, returns cache
     if (!forceReload && menuData) return menuData;
     if (!forceReload && menuDataPromise) return menuDataPromise;
     
-    // Limpa cache se forçar recarregamento
+    // Clears cache if forcing reload
     if (forceReload) {
         menuData = null;
         menuDataPromise = null;
@@ -65,17 +65,17 @@ async function loadMenuData(forceReload = false) {
     
     menuDataPromise = (async () => {
         const menuJsonPath = getMenuJsonPath();
-        // Adiciona timestamp para evitar cache do navegador
+        // Adds timestamp to avoid browser cache
         const separator = menuJsonPath.includes('?') ? '&' : '?';
         const cacheBuster = `${separator}_t=${Date.now()}`;
         const menuJsonPathWithCache = menuJsonPath + cacheBuster;
         
-        console.log('Menu: Carregando menu.json de:', menuJsonPath);
+        console.log('Menu: Loading menu.json from:', menuJsonPath);
         
         try {
             let response;
             if (menuJsonPath.startsWith('file://')) {
-                // Para file://, usa XMLHttpRequest (sem cache buster, pois não funciona com file://)
+                // For file://, uses XMLHttpRequest (without cache buster, as it doesn't work with file://)
                 const data = await new Promise((resolve, reject) => {
                     const xhr = new XMLHttpRequest();
                     xhr.open('GET', menuJsonPath, true);
@@ -95,7 +95,7 @@ async function loadMenuData(forceReload = false) {
                 });
                 menuData = JSON.parse(data);
             } else {
-                // Para http/https, usa fetch com cache buster
+                // For http/https, uses fetch with cache buster
                 response = await fetch(menuJsonPathWithCache, { cache: 'no-store' });
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
@@ -103,10 +103,10 @@ async function loadMenuData(forceReload = false) {
                 menuData = await response.json();
             }
             
-            console.log('Menu: Menu carregado com sucesso');
+            console.log('Menu: Menu loaded successfully');
             return menuData;
         } catch (error) {
-            console.error('Menu: Erro ao carregar menu.json:', error);
+            console.error('Menu: Error loading menu.json:', error);
             return null;
         }
     })();
@@ -114,18 +114,18 @@ async function loadMenuData(forceReload = false) {
     return menuDataPromise;
 }
 
-// Função para construir um item do menu recursivamente
+// Function to build a menu item recursively
 function buildMenuItem(item, lang) {
     const hasChildren = item.children && item.children.length > 0;
     const isFolder = item.type === 'folder' || hasChildren;
-    // Obtém o label traduzido diretamente do menu.json (não depende do i18n.js)
+    // Gets translated label directly from menu.json (doesn't depend on i18n.js)
     const label = item.i18n && item.i18n[lang] ? item.i18n[lang] : item.path.split('/').pop();
     
     let html = '<li class="app-tree__item">';
     html += `<div class="app-tree__node${hasChildren ? ' app-tree__node--has-children' : ''}"`;
     html += ` data-path="${item.path}"`;
     if (item.html) {
-        // Usa o caminho do JSON diretamente, o content.js fará a conversão relativa
+        // Uses JSON path directly, content.js will do relative conversion
         html += ` data-html="${item.html}"`;
     }
     html += '>';
@@ -135,8 +135,8 @@ function buildMenuItem(item, lang) {
     }
     
     html += `<span class="app-tree__icon${isFolder ? '' : ' app-tree__icon--file'}">${item.icon || (isFolder ? '📁' : '📖')}</span>`;
-    // Usa o label diretamente do menu.json, sem depender do i18n.js
-    // O data-i18n-key armazena o label em português para referência, mas não é usado para tradução
+    // Uses label directly from menu.json, without depending on i18n.js
+    // data-i18n-key stores the label in Portuguese for reference, but is not used for translation
     const brLabel = item.i18n && item.i18n['br'] ? item.i18n['br'] : item.path.split('/').pop();
     html += `<span class="app-tree__label" data-i18n-key="${brLabel}">${label}</span>`;
     html += '</div>';
@@ -153,19 +153,19 @@ function buildMenuItem(item, lang) {
     return html;
 }
 
-// Função para construir o menu completo
+// Function to build the complete menu
 async function buildMenu(forceReload = false) {
     const treeView = document.getElementById('treeView');
     if (!treeView) {
-        console.error('Menu: Elemento #treeView não encontrado');
+        console.error('Menu: Element #treeView not found');
         return;
     }
     
-    const lang = localStorage.getItem('codeflow-language') || 'br';
+    const lang = localStorage.getItem('codeflow-language') || 'en';
     const menuData = await loadMenuData(forceReload);
     
     if (!menuData || !menuData.menu) {
-        console.error('Menu: Dados do menu não disponíveis');
+        console.error('Menu: Menu data not available');
         return;
     }
     
@@ -176,28 +176,28 @@ async function buildMenu(forceReload = false) {
     
     treeView.innerHTML = menuHtml;
     
-    // Aguarda um pouco para garantir que o DOM foi atualizado
+    // Waits a bit to ensure DOM was updated
     setTimeout(() => {
-        // Dispara evento customizado para que tree.js possa reanexar listeners se necessário
+        // Dispatches custom event so tree.js can reattach listeners if needed
         const event = new CustomEvent('menuBuilt', { detail: { lang: lang } });
         document.dispatchEvent(event);
         
-        // O menu já usa as traduções do menu.json diretamente, então não precisa do i18n.js
-        // Mas atualiza outros elementos da interface (como header) se o i18n estiver disponível
+        // Menu already uses translations from menu.json directly, so doesn't need i18n.js
+        // But updates other interface elements (like header) if i18n is available
         if (typeof updateLanguage !== 'undefined') {
             updateLanguage(lang);
         }
         
-        console.log('Menu: Menu construído com sucesso');
+        console.log('Menu: Menu built successfully');
     }, 50);
 }
 
-// Função para reconstruir o menu quando o idioma muda
+// Function to rebuild menu when language changes
 function rebuildMenuOnLanguageChange(newLang) {
-    buildMenu(false); // false = não força recarregamento do JSON, apenas reconstrói com novo idioma
+    buildMenu(false); // false = doesn't force JSON reload, just rebuilds with new language
 }
 
-// Inicialização automática
+// Automatic initialization
 (function() {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', buildMenu);
@@ -206,7 +206,7 @@ function rebuildMenuOnLanguageChange(newLang) {
     }
 })();
 
-// Exporta funções para uso externo
+// Exports functions for external use
 if (typeof window !== 'undefined') {
     window.buildMenu = buildMenu;
     window.loadMenuData = loadMenuData;

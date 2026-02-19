@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Basic template for creating new HTML pages in Codeflow">
+    <meta name="keywords" content="template, codeflow, example">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-basico.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://codeflow.com.br/templates/web/template-basico.html">
+    <meta property="og:title" content="Basic Template - Codeflow">
+    <meta property="og:description" content="Basic template for creating new HTML pages in Codeflow">
+    <meta property="og:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+    <meta property="og:site_name" content="Codeflow">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://codeflow.com.br/templates/web/template-basico.html">
+    <meta name="twitter:title" content="Basic Template - Codeflow">
+    <meta name="twitter:description" content="Basic template for creating new HTML pages in Codeflow">
+    <meta name="twitter:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+    
+
+    <title>Codeflow - Basic Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Basic Template - Codeflow",
+  "description": "Basic template for creating new HTML pages in Codeflow",
+  "url": "https://codeflow.com.br/templates/web/template-basico.html",
+  "datePublished": "2025-01-01",
+  "author": {
+    "@type": "Person",
+    "name": "Rafael Santos",
+    "url": "https://github.com/rafaelsantos"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Codeflow",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://codeflow.com.br/resources/img/codeflow.png"
+    }
+  }
+}
+    </script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Sidebar Menu -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu will be built dynamically by menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Basic Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📄 Basic Template</h1>
+                    
+                    <!-- Page metadata (optional) -->
+                    <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+                        <span style="display: inline-flex; align-items: center;">🕐</span>
+                        <span style="display: inline-flex; align-items: center;">01/01/2025 12:00:00</span>
+                        <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+                        <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+                    </div>
+
+                    <h2>📋 Basic Structure</h2>
+                    <p>
+                        This is a basic template that demonstrates the minimum structure needed to create a new HTML page in Codeflow.
+                        All pages should follow this structure to maintain visual and functional consistency.
+                    </p>
+
+                    <h2>🔧 Included Components</h2>
+                    <ul>
+                        <li><strong>Sidebar Menu:</strong> Navigation menu with search and content tree</li>
+                        <li><strong>Header:</strong> Header with page title and language selector</li>
+                        <li><strong>Content Area:</strong> Main area where page content is displayed</li>
+                        <li><strong>Scripts:</strong> All scripts necessary for full functionality</li>
+                    </ul>
+
+                    <h2>📝 How to Use</h2>
+                    <ol>
+                        <li>Copy this template to create a new page</li>
+                        <li>Update metadata (title, description, etc.)</li>
+                        <li>Add your content inside the <code>.content-container</code> div</li>
+                        <li>Adjust relative paths of resources (CSS, JS, images) as needed</li>
+                    </ol>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> Always maintain the layout structure (sidebar, header, content) to ensure the menu and other functionalities work correctly.
+                    </div>
+
+                    <!-- Giscus Comments (optional) -->
+                    <div class="giscus-container">
+                        <h2>💬 Comments</h2>
+                        <div id="giscus-container"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- External JavaScript -->
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script src="../../resources/js/giscus.js"></script>
+    <script>
+        // Initialize highlight.js when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

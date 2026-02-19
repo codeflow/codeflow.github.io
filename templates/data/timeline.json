@@ -1,0 +1,84 @@
+{
+  "component": "timeline",
+  "name": "Timeline",
+  "description": "Component to display chronological events, version history or updates in temporal order",
+  "version": "2.0.0",
+  "cssClasses": {
+    "container": "timeline",
+    "item": "timeline-item"
+  },
+  "structure": {
+    "html": "<div class=\"timeline\">\n  <div class=\"timeline-item\">\n    <strong>Event Title</strong>\n    <p>Event description here.</p>\n  </div>\n</div>",
+    "required": ["container", "item"],
+    "optional": ["strong", "p", "a", "code", "ul", "ol"]
+  },
+  "properties": {
+    "items": {
+      "type": "array",
+      "description": "Array of timeline events",
+      "required": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Event title (displayed in bold)",
+            "required": true
+          },
+          "content": {
+            "type": "string|array",
+            "description": "Event content. Can be simple string or array of paragraphs",
+            "required": true
+          },
+          "links": {
+            "type": "array",
+            "description": "Optional array of links within content",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": "string",
+                "url": "string",
+                "target": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "items": [
+      {
+        "title": "Event 1 - January 2025",
+        "content": "First timeline event. This is an example of how to add content to each item."
+      },
+      {
+        "title": "Event 2 - February 2025",
+        "content": [
+          "Second timeline event.",
+          "Each item can contain multiple paragraphs."
+        ]
+      },
+      {
+        "title": "Version 1.0.0 - Release",
+        "content": "First product version with basic features implemented.",
+        "links": [
+          {
+            "text": "view details",
+            "url": "#exemplo",
+            "target": "_self"
+          }
+        ]
+      }
+    ]
+  },
+  "renderedHtml": "<div class=\"timeline\">\n  <div class=\"timeline-item\">\n    <strong>Event 1 - January 2025</strong>\n    <p>First timeline event. This is an example of how to add content to each item.</p>\n  </div>\n  <div class=\"timeline-item\">\n    <strong>Event 2 - February 2025</strong>\n    <p>Second timeline event.</p>\n    <p>Each item can contain multiple paragraphs.</p>\n  </div>\n  <div class=\"timeline-item\">\n    <strong>Version 1.0.0 - Release</strong>\n    <p>First product version with basic features implemented. <a href=\"#exemplo\">view details</a></p>\n  </div>\n</div>",
+  "features": [
+    "Modern design with cards for each event",
+    "Animated circles as markers",
+    "Vertical line with gradient",
+    "Hover effect on items",
+    "Mobile responsive"
+  ],
+  "notes": "The timeline component automatically styles each item as a card with blue left border, subtle shadow and pulse animation on markers."
+}

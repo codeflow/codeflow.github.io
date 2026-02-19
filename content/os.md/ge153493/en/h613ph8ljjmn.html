@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+        
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>⏱️ Scheduling</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">19/02/2026 19:43:21</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> CPU scheduling is the process of selecting which process should run next on the CPU. Scheduling algorithms determine how processes are allocated CPU time, affecting system performance, response time, and resource utilization.
+        </div>
+
+        <h2>🟢 📚 What is CPU Scheduling?</h2>
+        <p>
+            CPU scheduling is a fundamental function of the operating system that decides which process in the ready queue should be executed next by the CPU. When multiple processes are ready to run, the scheduler must choose one based on a scheduling algorithm.
+        </p>
+        <p>
+            The main goals of CPU scheduling are:
+        </p>
+        <ul>
+            <li><strong>Maximize CPU utilization:</strong> Keep the CPU busy as much as possible</li>
+            <li><strong>Maximize throughput:</strong> Complete as many processes as possible per unit time</li>
+            <li><strong>Minimize turnaround time:</strong> Reduce the time from process submission to completion</li>
+            <li><strong>Minimize waiting time:</strong> Reduce the time processes spend waiting in the ready queue</li>
+            <li><strong>Minimize response time:</strong> Reduce the time from request submission to first response</li>
+        </ul>
+
+        <h2>🟢 📚 Scheduling Criteria</h2>
+        <p>
+            Different scheduling algorithms optimize for different criteria:
+        </p>
+        <ul>
+            <li><strong>CPU Utilization:</strong> Percentage of time the CPU is busy</li>
+            <li><strong>Throughput:</strong> Number of processes completed per unit time</li>
+            <li><strong>Turnaround Time:</strong> Time from submission to completion (waiting + execution)</li>
+            <li><strong>Waiting Time:</strong> Total time spent waiting in the ready queue</li>
+            <li><strong>Response Time:</strong> Time from submission to first response (important for interactive systems)</li>
+        </ul>
+
+        <h2>🟡 📚 Preemptive vs Non-Preemptive Scheduling</h2>
+        <p>
+            Scheduling algorithms can be classified based on whether they allow preemption:
+        </p>
+
+        <h3>Non-Preemptive Scheduling</h3>
+        <p>
+            Once a process is allocated the CPU, it runs until it completes or voluntarily gives up the CPU (e.g., waiting for I/O). The process cannot be interrupted by the scheduler.
+        </p>
+        <ul>
+            <li><strong>Advantages:</strong> Simple to implement, low overhead, predictable behavior</li>
+            <li><strong>Disadvantages:</strong> Poor response time for interactive systems, can lead to starvation</li>
+            <li><strong>Examples:</strong> First-Come-First-Served (FCFS), Shortest Job First (SJF) non-preemptive</li>
+        </ul>
+
+        <h3>Preemptive Scheduling</h3>
+        <p>
+            The scheduler can interrupt a running process and allocate the CPU to another process. This allows the system to respond quickly to high-priority processes or time-critical events.
+        </p>
+        <ul>
+            <li><strong>Advantages:</strong> Better response time, prevents starvation, suitable for time-sharing systems</li>
+            <li><strong>Disadvantages:</strong> More complex, higher overhead due to context switching</li>
+            <li><strong>Examples:</strong> Round-Robin (RR), Shortest Remaining Time First (SRTF), Priority preemptive</li>
+        </ul>
+
+        <h2>🟡 📚 Scheduling Algorithms</h2>
+        <p>
+            Different scheduling algorithms use different strategies to select the next process:
+        </p>
+
+        <h3>1. First-Come-First-Served (FCFS)</h3>
+        <p>
+            Processes are executed in the order they arrive. It's a simple non-preemptive algorithm that uses a FIFO (First-In-First-Out) queue.
+        </p>
+        <ul>
+            <li><strong>Type:</strong> Non-preemptive</li>
+            <li><strong>Advantages:</strong> Simple, fair, easy to implement</li>
+            <li><strong>Disadvantages:</strong> Poor average waiting time, convoy effect (short processes wait behind long ones)</li>
+        </ul>
+
+        <h4>Example:</h4>
+        <p>
+            Processes arrive in order: P1 (burst time: 24ms), P2 (burst time: 3ms), P3 (burst time: 3ms)
+        </p>
+        <ul>
+            <li>P1 runs for 24ms (waiting: 0ms)</li>
+            <li>P2 runs for 3ms (waiting: 24ms)</li>
+            <li>P3 runs for 3ms (waiting: 27ms)</li>
+            <li>Average waiting time: (0 + 24 + 27) / 3 = 17ms</li>
+        </ul>
+
+        <h3>2. Shortest Job First (SJF)</h3>
+        <p>
+            The process with the shortest burst time is executed first. This minimizes average waiting time.
+        </p>
+        <ul>
+            <li><strong>Type:</strong> Can be preemptive (SRTF) or non-preemptive</li>
+            <li><strong>Advantages:</strong> Optimal for minimizing average waiting time (non-preemptive version)</li>
+            <li><strong>Disadvantages:</strong> Requires knowledge of burst times (difficult to predict), can cause starvation of long processes</li>
+        </ul>
+
+        <h4>Example (Non-Preemptive SJF):</h4>
+        <p>
+            Processes: P1 (burst: 6ms), P2 (burst: 8ms), P3 (burst: 7ms), P4 (burst: 3ms)
+        </p>
+        <ul>
+            <li>Execution order: P4 (3ms) → P1 (6ms) → P3 (7ms) → P2 (8ms)</li>
+            <li>Average waiting time: (0 + 3 + 9 + 16) / 4 = 7ms</li>
+        </ul>
+
+        <h3>3. Priority Scheduling</h3>
+        <p>
+            Each process is assigned a priority, and the process with the highest priority is executed first. Priorities can be static (fixed) or dynamic (change over time).
+        </p>
+        <ul>
+            <li><strong>Type:</strong> Can be preemptive or non-preemptive</li>
+            <li><strong>Advantages:</strong> Flexible, can prioritize important processes</li>
+            <li><strong>Disadvantages:</strong> Can cause starvation of low-priority processes, priority inversion problem</li>
+        </ul>
+
+        <h3>4. Round-Robin (RR)</h3>
+        <p>
+            Each process is assigned a fixed time quantum (time slice). Processes are executed in a circular order, and if a process doesn't complete within its time quantum, it's preempted and moved to the end of the queue.
+        </p>
+        <ul>
+            <li><strong>Type:</strong> Preemptive</li>
+            <li><strong>Advantages:</strong> Fair, good response time, prevents starvation</li>
+            <li><strong>Disadvantages:</strong> Performance depends on time quantum size (too small: high overhead, too large: approaches FCFS)</li>
+        </ul>
+
+        <h4>Example:</h4>
+        <p>
+            Processes: P1 (burst: 10ms), P2 (burst: 5ms), P3 (burst: 8ms), Time quantum: 3ms
+        </p>
+        <ul>
+            <li>P1: 3ms (remaining: 7ms)</li>
+            <li>P2: 3ms (remaining: 2ms)</li>
+            <li>P3: 3ms (remaining: 5ms)</li>
+            <li>P1: 3ms (remaining: 4ms)</li>
+            <li>P2: 2ms (completed)</li>
+            <li>P3: 3ms (remaining: 2ms)</li>
+            <li>P1: 3ms (remaining: 1ms)</li>
+            <li>P3: 2ms (completed)</li>
+            <li>P1: 1ms (completed)</li>
+        </ul>
+
+        <h3>5. Multilevel Queue (MLQ)</h3>
+        <p>
+            Processes are classified into different queues based on their characteristics (e.g., foreground/background, priority). Each queue has its own scheduling algorithm.
+        </p>
+        <ul>
+            <li><strong>Type:</strong> Can be preemptive or non-preemptive</li>
+            <li><strong>Advantages:</strong> Flexible, can optimize for different process types</li>
+            <li><strong>Disadvantages:</strong> Complex, can cause starvation if queues are not properly balanced</li>
+        </ul>
+
+        <h3>6. Multilevel Feedback Queue (MLFQ)</h3>
+        <p>
+            Similar to MLQ, but processes can move between queues based on their behavior. Processes that use too much CPU time are moved to lower-priority queues, while I/O-bound processes may be moved to higher-priority queues.
+        </p>
+        <ul>
+            <li><strong>Type:</strong> Preemptive</li>
+            <li><strong>Advantages:</strong> Adapts to process behavior, balances between response time and throughput</li>
+            <li><strong>Disadvantages:</strong> Complex to implement and tune</li>
+        </ul>
+
+        <h2>🟡 🛠️ Scheduling Algorithm Implementation Example</h2>
+        <p>
+            The following complete example demonstrates a simple Round-Robin scheduler implementation:
+        </p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PYTHON</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-python">class Process:
+    def __init__(self, pid, burst_time, arrival_time=0):
+        self.pid = pid
+        self.burst_time = burst_time
+        self.remaining_time = burst_time
+        self.arrival_time = arrival_time
+        self.waiting_time = 0
+        self.turnaround_time = 0
+        self.completion_time = 0
+
+def round_robin_scheduler(processes, time_quantum):
+    """
+    Round-Robin scheduling algorithm implementation.
+    
+    Args:
+        processes: List of Process objects
+        time_quantum: Time slice allocated to each process
+    
+    Returns:
+        Dictionary with scheduling results
+    """
+    ready_queue = processes.copy()
+    current_time = 0
+    completed_processes = []
+    gantt_chart = []
+    
+    while ready_queue:
+        process = ready_queue.pop(0)
+        
+        # Execute process for time quantum or until completion
+        if process.remaining_time <= time_quantum:
+            execution_time = process.remaining_time
+            process.remaining_time = 0
+            process.completion_time = current_time + execution_time
+            completed_processes.append(process)
+        else:
+            execution_time = time_quantum
+            process.remaining_time -= time_quantum
+            ready_queue.append(process)  # Add back to queue
+        
+        gantt_chart.append({
+            'pid': process.pid,
+            'start': current_time,
+            'end': current_time + execution_time
+        })
+        
+        current_time += execution_time
+    
+    # Calculate waiting and turnaround times
+    for process in completed_processes:
+        process.turnaround_time = process.completion_time - process.arrival_time
+        process.waiting_time = process.turnaround_time - process.burst_time
+    
+    return {
+        'processes': completed_processes,
+        'gantt_chart': gantt_chart,
+        'avg_waiting_time': sum(p.waiting_time for p in completed_processes) / len(completed_processes),
+        'avg_turnaround_time': sum(p.turnaround_time for p in completed_processes) / len(completed_processes)
+    }
+
+# Example usage
+if __name__ == "__main__":
+    processes = [
+        Process(1, 10, 0),
+        Process(2, 5, 0),
+        Process(3, 8, 0)
+    ]
+    
+    results = round_robin_scheduler(processes, 3)
+    
+    print("Process Execution Order:")
+    for entry in results['gantt_chart']:
+        print(f"P{entry['pid']}: {entry['start']}ms - {entry['end']}ms")
+    
+    print("\nProcess Details:")
+    for process in results['processes']:
+        print(f"P{process.pid}: Waiting={process.waiting_time}ms, "
+              f"Turnaround={process.turnaround_time}ms")
+    
+    print(f"\nAverage Waiting Time: {results['avg_waiting_time']:.2f}ms")
+    print(f"Average Turnaround Time: {results['avg_turnaround_time']:.2f}ms")</code></pre>
+        </div>
+
+        <h4>Code Breakdown</h4>
+
+        <h4>Part 1: Process Class Definition</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PYTHON</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-python">class Process:
+    def __init__(self, pid, burst_time, arrival_time=0):
+        self.pid = pid
+        self.burst_time = burst_time
+        self.remaining_time = burst_time
+        self.arrival_time = arrival_time
+        self.waiting_time = 0
+        self.turnaround_time = 0
+        self.completion_time = 0</code></pre>
+        </div>
+        <p>
+            The <code>Process</code> class represents a process with its attributes. The <code>pid</code> is the process identifier, <code>burst_time</code> is the total CPU time needed, <code>remaining_time</code> tracks how much CPU time is still needed, and timing attributes track performance metrics. This structure allows the scheduler to manage process state and calculate performance metrics.
+        </p>
+
+        <h4>Part 2: Round-Robin Scheduling Logic</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PYTHON</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-python">while ready_queue:
+    process = ready_queue.pop(0)
+    
+    # Execute process for time quantum or until completion
+    if process.remaining_time <= time_quantum:
+        execution_time = process.remaining_time
+        process.remaining_time = 0
+        process.completion_time = current_time + execution_time
+        completed_processes.append(process)
+    else:
+        execution_time = time_quantum
+        process.remaining_time -= time_quantum
+        ready_queue.append(process)  # Add back to queue</code></pre>
+        </div>
+        <p>
+            This is the core Round-Robin logic. The scheduler takes the first process from the ready queue and executes it for the time quantum. If the process completes within the quantum, it's marked as completed. Otherwise, it's preempted and added back to the end of the queue. This ensures fair CPU allocation and prevents any process from monopolizing the CPU.
+        </p>
+
+        <h4>Part 3: Performance Metrics Calculation</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PYTHON</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-python">for process in completed_processes:
+    process.turnaround_time = process.completion_time - process.arrival_time
+    process.waiting_time = process.turnaround_time - process.burst_time</code></pre>
+        </div>
+        <p>
+            After all processes complete, we calculate performance metrics. Turnaround time is the total time from arrival to completion (includes waiting and execution). Waiting time is the turnaround time minus the actual execution time (burst time). These metrics help evaluate the effectiveness of the scheduling algorithm.
+        </p>
+
+        <h2>🔴 📚 Advanced Scheduling Concepts</h2>
+        <p>
+            Modern operating systems use sophisticated scheduling techniques:
+        </p>
+
+        <h3>Completely Fair Scheduler (CFS) - Linux</h3>
+        <p>
+            Linux uses the Completely Fair Scheduler, which aims to provide fair CPU time allocation. It uses a red-black tree to track processes and calculates virtual runtime to ensure fairness.
+        </p>
+        <ul>
+            <li><strong>Virtual Runtime:</strong> Normalized execution time based on process priority</li>
+            <li><strong>Fairness:</strong> Ensures all processes get proportional CPU time</li>
+            <li><strong>Dynamic Priority:</strong> Adjusts process priority based on behavior</li>
+        </ul>
+
+        <h3>Windows Scheduler</h3>
+        <p>
+            Windows uses a priority-based preemptive scheduler with multiple priority classes and levels. It supports:
+        </p>
+        <ul>
+            <li><strong>Priority Classes:</strong> Real-time, High, Above Normal, Normal, Below Normal, Idle</li>
+            <li><strong>Priority Levels:</strong> 0-31 within each class</li>
+            <li><strong>Dynamic Priority Boost:</strong> Temporarily increases priority for interactive processes</li>
+        </ul>
+
+        <h3>Real-Time Scheduling</h3>
+        <p>
+            Real-time systems require deterministic scheduling to meet deadlines:
+        </p>
+        <ul>
+            <li><strong>Rate Monotonic Scheduling (RMS):</strong> Assigns priorities based on task periods</li>
+            <li><strong>Earliest Deadline First (EDF):</strong> Schedules tasks with earliest deadlines first</li>
+            <li><strong>Hard Real-Time:</strong> Missing deadlines causes system failure</li>
+            <li><strong>Soft Real-Time:</strong> Missing deadlines degrades performance but doesn't cause failure</li>
+        </ul>
+
+        <h2>🟡 🛠️ Checking Scheduling Policy in Linux</h2>
+        <p>
+            The following example shows how to check and modify process scheduling policies in Linux:
+        </p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">BASH</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-bash">#!/bin/bash
+
+# Check current scheduling policy and priority
+chrt -p &lt;PID&gt;
+
+# View scheduling policies for all processes
+ps -eo pid,class,rtprio,ni,cmd | head -20
+
+# Set process to SCHED_FIFO (real-time FIFO) with priority 50
+chrt -f -p 50 &lt;PID&gt;
+
+# Set process to SCHED_RR (real-time round-robin) with priority 50
+chrt -r -p 50 &lt;PID&gt;
+
+# Set process to SCHED_OTHER (normal scheduling) with nice value -10
+chrt -o -p 0 &lt;PID&gt;
+nice -n -10 &lt;command&gt;
+
+# View scheduling statistics
+cat /proc/&lt;PID&gt;/sched
+
+# Common scheduling classes:
+# SCHED_NORMAL (SCHED_OTHER): Default time-sharing scheduling
+# SCHED_FIFO: Real-time FIFO (first-in-first-out)
+# SCHED_RR: Real-time round-robin
+# SCHED_BATCH: Batch processing (lower priority)
+# SCHED_IDLE: Idle priority (lowest priority)</code></pre>
+        </div>
+
+        <h4>Part 1: Checking Current Scheduling Policy</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">BASH</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-bash"># Check current scheduling policy and priority
+chrt -p &lt;PID&gt;</code></pre>
+        </div>
+        <p>
+            The <code>chrt -p</code> command displays the current scheduling policy and priority of a process. This is useful for understanding how a process is currently being scheduled and whether it's using real-time or normal scheduling.
+        </p>
+
+        <h4>Part 2: Setting Real-Time Scheduling</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">BASH</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-bash"># Set process to SCHED_FIFO (real-time FIFO) with priority 50
+chrt -f -p 50 &lt;PID&gt;
+
+# Set process to SCHED_RR (real-time round-robin) with priority 50
+chrt -r -p 50 &lt;PID&gt;</code></pre>
+        </div>
+        <p>
+            Real-time scheduling policies (<code>SCHED_FIFO</code> and <code>SCHED_RR</code>) are used for time-critical processes. <code>SCHED_FIFO</code> uses first-in-first-out scheduling within the same priority, while <code>SCHED_RR</code> uses round-robin with time slices. Both require root privileges and can starve normal processes if not used carefully.
+        </p>
+
+        <h4>Part 3: Understanding Scheduling Classes</h4>
+        <p>
+            Linux supports multiple scheduling classes:
+        </p>
+        <ul>
+            <li><strong>SCHED_NORMAL (SCHED_OTHER):</strong> Default time-sharing scheduling used by most processes. Uses CFS (Completely Fair Scheduler) in modern Linux kernels.</li>
+            <li><strong>SCHED_FIFO:</strong> Real-time FIFO scheduling. Processes run until they complete or voluntarily yield. Higher priority processes preempt lower priority ones.</li>
+            <li><strong>SCHED_RR:</strong> Real-time round-robin scheduling. Similar to SCHED_FIFO but with time slices, allowing fair sharing among processes of the same priority.</li>
+            <li><strong>SCHED_BATCH:</strong> Designed for batch jobs. Processes have lower priority and are scheduled less frequently to reduce overhead.</li>
+            <li><strong>SCHED_IDLE:</strong> Lowest priority scheduling. Used for background tasks that should only run when the system is idle.</li>
+        </ul>
+
+        <h2>📊 Scheduling Performance Comparison</h2>
+        <p>
+            Different algorithms perform differently based on workload characteristics:
+        </p>
+
+        <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+            <thead>
+                <tr style="background-color: #f0f0f0;">
+                    <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: left;">Algorithm</th>
+                    <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: left;">Best For</th>
+                    <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: left;">Average Waiting Time</th>
+                    <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: left;">Response Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">FCFS</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Simple systems, batch processing</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">High (convoy effect)</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Poor</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">SJF (Non-preemptive)</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Known burst times, batch systems</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Optimal (minimum)</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Poor</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">SRTF (Preemptive SJF)</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Interactive systems with predictable jobs</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Very good</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Good</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Round-Robin</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Time-sharing, interactive systems</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Moderate (depends on quantum)</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Excellent</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Priority</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Systems with priority requirements</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Varies</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Good (for high priority)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">MLFQ</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Mixed workloads (CPU and I/O bound)</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Good</td>
+                    <td style="padding: 0.75rem; border: 1px solid #ddd;">Excellent</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📝 Summary</h2>
+        <p>
+            CPU scheduling is a critical component of operating systems that determines system performance and responsiveness. Key points:
+        </p>
+        <ul>
+            <li>Scheduling algorithms balance multiple criteria: CPU utilization, throughput, waiting time, and response time</li>
+            <li>Preemptive scheduling provides better responsiveness but has higher overhead</li>
+            <li>Different algorithms are suited for different workloads (batch, interactive, real-time)</li>
+            <li>Modern operating systems use sophisticated schedulers (CFS, MLFQ) that adapt to process behavior</li>
+            <li>Real-time systems require deterministic scheduling to meet deadlines</li>
+        </ul>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Scheduling_(computing)" target="_blank" rel="noopener noreferrer">CPU Scheduling - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_process_scheduling.htm" target="_blank" rel="noopener noreferrer">Operating System - Process Scheduling - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/cpu-scheduling-in-operating-systems/" target="_blank" rel="noopener noreferrer">CPU Scheduling in Operating Systems - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/difference-between-preemptive-and-non-preemptive-cpu-scheduling/" target="_blank" rel="noopener noreferrer">Difference Between Preemptive and Non-Preemptive CPU Scheduling - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.javatpoint.com/os-cpu-scheduling" target="_blank" rel="noopener noreferrer">OS CPU Scheduling - JavaTpoint</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

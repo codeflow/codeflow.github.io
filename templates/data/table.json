@@ -1,0 +1,86 @@
+{
+  "component": "table",
+  "name": "Table",
+  "description": "Table with BlueSky theme styles, including header, body and footer",
+  "version": "1.0.0",
+  "cssClasses": {
+    "table": "table",
+    "thead": "thead",
+    "tbody": "tbody",
+    "tfoot": "tfoot",
+    "th": "th",
+    "td": "td"
+  },
+  "structure": {
+    "html": "<table>\n  <thead>\n    <tr>\n      <th>Column 1</th>\n      <th>Column 2</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Data 1</td>\n      <td>Data 2</td>\n    </tr>\n  </tbody>\n</table>",
+    "required": ["table"],
+    "optional": ["thead", "tbody", "tfoot"]
+  },
+  "properties": {
+    "headers": {
+      "type": "array",
+      "description": "Array of column headers",
+      "required": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "rows": {
+      "type": "array",
+      "description": "Array of table rows",
+      "required": true,
+      "items": {
+        "type": "array",
+          "description": "Array of row cells",
+        "items": {
+          "type": "string|object",
+          "description": "Cell can be simple string or object with special properties"
+        }
+      }
+    },
+    "footer": {
+      "type": "array",
+      "description": "Optional array of footer cells",
+      "required": false
+    },
+    "colspan": {
+      "type": "object",
+      "description": "Set colspan for specific cells",
+      "format": "{\"rowIndex\": {\"cellIndex\": colspanValue}}"
+    },
+    "rowspan": {
+      "type": "object",
+      "description": "Set rowspan for specific cells",
+      "format": "{\"rowIndex\": {\"cellIndex\": rowspanValue}}"
+    }
+  },
+  "example": {
+    "headers": ["Name", "Age", "City", "Status"],
+    "rows": [
+      ["John Silva", "30", "São Paulo", "Active"],
+      ["Mary Santos", "25", "Rio de Janeiro", "Active"],
+      ["Peter Oliveira", "35", "Belo Horizonte", "Inactive"]
+    ]
+  },
+  "exampleWithColspan": {
+    "headers": ["Product", "Quantity", "Unit Price", "Total"],
+    "rows": [
+      ["Notebook", "2", "$ 2,500.00", "$ 5,000.00"],
+      ["Mouse", "5", "$ 50.00", "$ 250.00"]
+    ],
+    "footer": [
+      {"text": "Grand Total", "colspan": 3},
+      "$ 5,250.00"
+    ]
+  },
+  "renderedHtml": "<table>\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Age</th>\n      <th>City</th>\n      <th>Status</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>John Silva</td>\n      <td>30</td>\n      <td>São Paulo</td>\n      <td>Active</td>\n    </tr>\n    <tr>\n      <td>Mary Santos</td>\n      <td>25</td>\n      <td>Rio de Janeiro</td>\n      <td>Active</td>\n    </tr>\n    <tr>\n      <td>Peter Oliveira</td>\n      <td>35</td>\n      <td>Belo Horizonte</td>\n      <td>Inactive</td>\n    </tr>\n  </tbody>\n</table>",
+  "features": [
+    "Header with blue background (#BED6F8)",
+    "Alternating rows (zebra striping)",
+    "Support for colspan and rowspan",
+    "Optional footer",
+    "Consistent borders",
+    "Responsive"
+  ],
+  "notes": "Tables have automatic BlueSky theme styles. Even rows have #ECF4FE background and odd rows have white background. Header has #0B356C text color."
+}

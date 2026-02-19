@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Template de diagrama de arquitetura horizontal com caixas e setas (BlueSky theme)">
+    <meta name="keywords" content="template, architecture diagram, horizontal, codeflow, bluesky">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-architecture-diagram-horizontal.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://codeflow.com.br/templates/web/template-architecture-diagram-horizontal.html">
+    <meta property="og:title" content="Architecture Diagram Horizontal Template - Codeflow">
+    <meta property="og:description" content="Template de diagrama de arquitetura horizontal com caixas e setas (BlueSky theme)">
+    <meta property="og:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+    <meta property="og:site_name" content="Codeflow">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://codeflow.com.br/templates/web/template-architecture-diagram-horizontal.html">
+    <meta name="twitter:title" content="Architecture Diagram Horizontal Template - Codeflow">
+    <meta name="twitter:description" content="Template de diagrama de arquitetura horizontal com caixas e setas (BlueSky theme)">
+    <meta name="twitter:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+
+    <title>Codeflow - Architecture Diagram Horizontal Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Sidebar Menu -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu will be built dynamically by menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Architecture Diagram Horizontal Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📌 Architecture Diagram Horizontal Template</h1>
+
+                    <div class="info-box">
+                        <strong>📚 Sobre:</strong> Este template demonstra como representar uma arquitetura horizontal usando caixas + setas (fluxo da esquerda para a direita), com uma legenda no canto inferior direito da caixa externa.
+                    </div>
+
+                    <h2>🔄 Exemplo: Linha Única (Single Row)</h2>
+                    <p>Diagrama horizontal com uma única linha de caixas conectadas da esquerda para a direita:</p>
+
+                    <div class="arch-diagram arch-diagram--horizontal">
+                        <div class="arch-diagram__inner">
+                            <div class="arch-diagram__stack arch-diagram__stack--horizontal">
+                                <div class="arch-diagram__box arch-diagram__box--accent">Client Request</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box">Load Balancer</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box">Application Server</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box arch-diagram__box--accent">Database</div>
+                            </div>
+                            <div class="arch-diagram__caption">Request Flow</div>
+                        </div>
+                    </div>
+
+                    <h2>📊 Exemplo: Múltiplas Linhas (Multiple Rows)</h2>
+                    <p>Diagrama horizontal com múltiplas linhas empilhadas verticalmente, cada uma representando um fluxo diferente:</p>
+
+                    <div class="arch-diagram arch-diagram--horizontal">
+                        <div class="arch-diagram__inner">
+                            <div class="arch-diagram__stack arch-diagram__stack--horizontal">
+                                <div class="arch-diagram__box arch-diagram__box--accent">User Input</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box">Validation</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box">Processing</div>
+                            </div>
+                            <div class="arch-diagram__stack arch-diagram__stack--horizontal">
+                                <div class="arch-diagram__box">Data Fetch</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box arch-diagram__box--accent">API Call</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box">Response</div>
+                            </div>
+                            <div class="arch-diagram__stack arch-diagram__stack--horizontal">
+                                <div class="arch-diagram__box">Cache Check</div>
+                                <div class="arch-diagram__arrow arch-diagram__arrow--horizontal">
+                                    <span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"></span>
+                                </div>
+                                <div class="arch-diagram__box">Storage</div>
+                            </div>
+                            <div class="arch-diagram__caption">Data Processing Pipeline</div>
+                        </div>
+                    </div>
+
+                    <h2>🧩 Como usar</h2>
+                    <ul>
+                        <li><strong>Estrutura:</strong> use a classe <code>arch-diagram arch-diagram--horizontal</code> no elemento raiz (sem <code>.app-card</code> - o <code>.arch-diagram__inner</code> já fornece a caixa externa).</li>
+                        <li><strong>Caixas:</strong> cada elemento é um <code>.arch-diagram__box</code>.</li>
+                        <li><strong>Setas:</strong> use <code>.arch-diagram__arrow arch-diagram__arrow--horizontal</code> entre as caixas, sempre com <code>&lt;span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"&gt;&lt;/span&gt;</code> dentro.</li>
+                        <li><strong>Stack horizontal:</strong> use <code>.arch-diagram__stack arch-diagram__stack--horizontal</code> para criar uma linha horizontal de caixas.</li>
+                        <li><strong>Múltiplas linhas:</strong> adicione múltiplos <code>.arch-diagram__stack arch-diagram__stack--horizontal</code> dentro de <code>.arch-diagram__inner</code> para ter linhas empilhadas verticalmente.</li>
+                        <li><strong>Legenda:</strong> <code>.arch-diagram__caption</code> fica no canto inferior direito da caixa externa.</li>
+                        <li><strong>Responsivo:</strong> em mobile, as linhas horizontais se empilham verticalmente automaticamente.</li>
+                    </ul>
+
+                    <h2>📝 Exemplo de Código HTML</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">HTML</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-html">&lt;div class="arch-diagram arch-diagram--horizontal"&gt;
+  &lt;div class="arch-diagram__inner"&gt;
+    &lt;div class="arch-diagram__stack arch-diagram__stack--horizontal"&gt;
+      &lt;div class="arch-diagram__box arch-diagram__box--accent"&gt;Client Request&lt;/div&gt;
+      &lt;div class="arch-diagram__arrow arch-diagram__arrow--horizontal"&gt;
+        &lt;span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="arch-diagram__box"&gt;Load Balancer&lt;/div&gt;
+      &lt;div class="arch-diagram__arrow arch-diagram__arrow--horizontal"&gt;
+        &lt;span class="arch-diagram__arrow-line arch-diagram__arrow-line--horizontal"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="arch-diagram__box arch-diagram__box--accent"&gt;Database&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="arch-diagram__caption"&gt;Request Flow&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <h2>⚡ Quando usar</h2>
+                    <div class="highlight-box">
+                        <ul style="margin: 0; padding-left: 1.5rem;">
+                            <li><strong>Fluxos de requisição:</strong> Client → Server → Database</li>
+                            <li><strong>Pipelines de dados:</strong> Input → Processing → Output</li>
+                            <li><strong>Processos sequenciais:</strong> Step 1 → Step 2 → Step 3</li>
+                            <li><strong>Fluxos de trabalho:</strong> Start → Process → End</li>
+                            <li><strong>Arquiteturas de rede:</strong> Frontend → API → Backend → Database</li>
+                        </ul>
+                    </div>
+
+                    <h2>🔄 Diferença entre Vertical e Horizontal</h2>
+                    <div class="info-box">
+                        <strong>Vertical (architecture-diagram):</strong> Use para representar camadas de sistema, hierarquias, ou estruturas em camadas (ex: Application Layer → GTK → GDK → OS).<br><br>
+                        <strong>Horizontal (architecture-diagram-horizontal):</strong> Use para representar fluxos, pipelines, ou processos sequenciais que fluem da esquerda para a direita (ex: Request → Load Balancer → Server → Database).
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- External JavaScript -->
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script src="../../resources/js/giscus.js"></script>
+    <script>
+        // copyCode: used by code block copy buttons.
+        window.copyCode = function(button) {
+            var wrapper = button.closest('.code-block-wrapper');
+            if (!wrapper) return;
+            var codeEl = wrapper.querySelector('code');
+            if (!codeEl) return;
+            var text = codeEl.textContent;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                });
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.focus(); ta.select();
+                try { document.execCommand('copy'); } catch(e) {}
+                document.body.removeChild(ta);
+                var orig = button.textContent;
+                button.textContent = '✔ Copied!';
+                setTimeout(function() { button.textContent = orig; }, 2000);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

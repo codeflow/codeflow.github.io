@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...">
+    <meta name="description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with fundamentals and progressing to advanced concepts.">
     <meta name="keywords" content="welcome, codeflow, java, golang, go programming, generics, java generics">
     <meta name="author" content="Rafael Santos">
     <meta name="robots" content="index, follow">
@@ -15,16 +15,16 @@
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://codeflow.com.br/content/en/welcome.html">
     <meta property="og:title" content="Welcome to Codeflow">
-    <meta property="og:description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...">
+    <meta property="og:description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with fundamentals and progressing to advanced concepts.">
     <meta property="og:image" content="https://codeflow.com.br/resources/img/codeflow.png">
     <meta property="og:site_name" content="Codeflow">
-    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale" content="en_US">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://codeflow.com.br/content/en/welcome.html">
     <meta name="twitter:title" content="Welcome to Codeflow">
-    <meta name="twitter:description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...">
+    <meta name="twitter:description" content="Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with fundamentals and progressing to advanced concepts.">
     <meta name="twitter:image" content="https://codeflow.com.br/resources/img/codeflow.png">
     
 
@@ -62,7 +62,7 @@
             font-family: Arial, Verdana, sans-serif;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            vertical-align: top;
+            vertical-align: middle;
         }
         table tbody tr:nth-child(even) td {
             background-color: #ECF4FE !important;
@@ -98,6 +98,52 @@
             font-size: 4rem;
             line-height: 1;
         }
+        /* Pagination styles */
+        .pagination-container {
+            margin-top: 1rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            padding: 0.5rem 0;
+        }
+        .pagination-button {
+            padding: 0.5rem 1rem;
+            background-color: #BED6F8;
+            color: #0B356C;
+            border: 1px solid #0078D0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-family: Arial, Verdana, sans-serif;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+        .pagination-button:hover:not(:disabled) {
+            background-color: #0078D0;
+            color: #FFFFFF;
+        }
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .pagination-button.active {
+            background-color: #0078D0;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+        .pagination-info {
+            font-size: 11px;
+            color: #666;
+            font-family: Arial, Verdana, sans-serif;
+            margin: 0 1rem;
+            white-space: nowrap;
+        }
+        .pagination-hidden {
+            display: none !important;
+        }
     </style>
     <script type="application/ld+json">
 {
@@ -105,7 +151,7 @@
   "@type": "WebSite",
   "name": "Codeflow",
   "url": "https://codeflow.com.br",
-  "description": "Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with f...",
+  "description": "Codeflow was created to provide a structured and progressive learning experience. Navigate through the side menu to explore different topics, starting with fundamentals and progressing to advanced concepts.",
   "potentialAction": {
     "@type": "SearchAction",
     "target": "https://codeflow.com.br/search.html?q={search_term_string}",
@@ -148,7 +194,6 @@
                 </div>
                 <div class="language-selector">
                     <select id="languageSelector">
-                        <option value="br">🇧🇷 Português</option>
                         <option value="en" selected>🇺🇸 English</option>
                     </select>
                 </div>
@@ -159,22 +204,23 @@
         
         <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
             <span style="display: inline-flex; align-items: center;">🕐</span>
-            <span style="display: inline-flex; align-items: center;">20/11/2025 22:40:47</span>
+            <span style="display: inline-flex; align-items: center;">19/02/2026 19:43:21</span>
             <span style="display: inline-flex; align-items: center;">👨‍💻</span>
             <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
         </div>
         <div class="info-box">
-            <strong>📚 About:</strong> Codeflow is a structured learning platform that offers complete and organized content about programming technologies, including Java and Golang.
+            <strong>📚 About:</strong> Codeflow is a technology learning platform based on modularized stack files and an architecture that uses Artificial Intelligence to provide clear and highly informative content.
         </div>
 
         <h2>🎯 Overview</h2>
         <p>
-            Codeflow was created to provide a structured and progressive learning experience. 
-            Navigate through the side menu to explore different topics, starting with fundamentals and advancing to more complex concepts.
+            Codeflow was developed with an innovative architecture that combines modularized stacks with Artificial Intelligence to create a unique learning experience. 
+            Content is dynamically generated from stacks, ensuring up-to-date information and a natural progression from basic to advanced concepts.
         </p>
 
         <h2>📊 Content Statistics</h2>
-        <table>
+        <div id="statistics-container">
+            <table id="statistics-table">
             <thead>
                 <tr>
                     <th>Technology</th>
@@ -183,118 +229,24 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="2"><strong>Java</strong></td>
-                    <td>Java History</td>
-                    <td>6 contents</td>
-                    <td>✅ In development</td>
-                </tr>
-                <tr>
-                    <td>Advanced Features</td>
-                    <td>1 content</td>
-                    <td>✅ In development</td>
-                </tr>
-                <tr>
-                    <td><strong>Golang</strong></td>
-                    <td>Go History and Philosophy</td>
-                    <td>1 content</td>
-                    <td>✅ In development</td>
-                </tr>
-            </tbody>
+                <tbody id="statistics-tbody">
+                <!-- Statistics will be loaded dynamically from resources/db/statistics.json -->
+                </tbody>
         </table>
-
-        <h2>🔑 Key Features</h2>
-        <div class="icon-section">
-            <span class="emoji-large">📚</span>
-            <div>
-                <h3>Structured Content</h3>
-                <p>All content is organized hierarchically and progressively, allowing you to learn from basic to advanced naturally.</p>
-            </div>
-        </div>
-
-        <div class="icon-section">
-            <span class="emoji-large">🌐</span>
-            <div>
-                <h3>Multi-language Support</h3>
-                <p>All content is available in Portuguese (BR) and English (EN), allowing you to choose your preferred language.</p>
-            </div>
-        </div>
-
-        <div class="icon-section">
-            <span class="emoji-large">📝</span>
-            <div>
-                <h3>Rich Content</h3>
-                <p>Each topic includes detailed explanations, code examples with syntax highlighting, tables, icons, and visual resources to facilitate learning.</p>
-            </div>
-        </div>
-
-        <div class="icon-section">
-            <span class="emoji-large">🔄</span>
-            <div>
-                <h3>Constant Updates</h3>
-                <p>Content is regularly updated with new topics, improvements, and fixes, keeping you always up to date.</p>
-            </div>
+            <div id="statistics-pagination" class="pagination-container pagination-hidden"></div>
         </div>
 
         <h2>📅 Latest Updates</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <strong>Java - Advanced Features - Section Created</strong> - Section created with summary page about Java's advanced features, including Generics, Collections Framework, Annotations, Reflection, Lambda Expressions, Streams API, and Concurrency.
+        <div id="updates-container">
+            <div class="timeline" id="updates-timeline">
+                <!-- Updates will be loaded dynamically from resources/db/updates.json -->
             </div>
-            <div class="timeline-item">
-                <strong>Java - Generics</strong> - Complete documentation on Java Generics, including type parameters, wildcards, bounded types, type erasure, practical examples, and best practices.
-            </div>
-            <div class="timeline-item">
-                <strong>Golang - Origin and creation of Go</strong> - Complete documentation about the origin of Go, creators (Rob Pike, Ken Thompson, Robert Griesemer), historical context at Google, motivations for creation, design principles, and industry impact.
-            </div>
-            <div class="timeline-item">
-                <strong>Golang - Go History and Philosophy - Section Created</strong> - Section created with summary page about Go history and philosophy, including origin, design principles, version evolution, community, and use cases.
-            </div>
-            <div class="timeline-item">
-                <strong>Evolution (Java 8, 11, 17, 21, 22+)</strong> - Complete documentation about Java's evolution since Java 8, including all LTS versions and their main features.
-            </div>
-            <div class="timeline-item">
-                <strong>OpenJDK and Community</strong> - Complete documentation about OpenJDK, its history, governance, distributions, and impact on the Java community.
-            </div>
-            <div class="timeline-item">
-                <strong>Transition to Oracle</strong> - Complete documentation about Oracle's acquisition of Sun Microsystems in 2010, including timeline, impacts and changes in the Java ecosystem.
-            </div>
-            <div class="timeline-item">
-                <strong>J2ME Architecture</strong> - Complete documentation about the architecture and components of the J2ME platform for mobile and embedded devices, including CLDC, MIDP, KVM and CVM.
-            </div>
-            <div class="timeline-item">
-                <strong>J2EE Architecture</strong> - Complete documentation about the architecture and components of the J2EE platform for enterprise applications, including Servlets, JSP, EJB, JMS and other enterprise services.
-            </div>
-            <div class="timeline-item">
-                <strong>Java History - Complete Section</strong> - Section created with summary pages and content about Java history, including conception, JDK 1.0, and platform evolution.
-            </div>
-            <div class="timeline-item">
-                <strong>Conception (Sun, James Gosling)</strong> - Content added about Java's origins and James Gosling's role in creating the language.
-            </div>
-            <div class="timeline-item">
-                <strong>JDK 1.0 - Section Created</strong> - Section created with summary pages about JDK 1.0 launch and javac compiler.
-            </div>
-            <div class="timeline-item">
-                <strong>JDK 1.0 Launch</strong> - Complete documentation about the official release of JDK 1.0 in 1996.
-            </div>
-            <div class="timeline-item">
-                <strong>JDK 1.0 Compiler (javac)</strong> - Details about the javac compiler and its importance in the Java ecosystem.
-            </div>
-            <div class="timeline-item">
-                <strong>Platform - Section Created</strong> - Section created with summary pages about J2SE, J2EE, J2ME era and J2SE architecture.
-            </div>
-            <div class="timeline-item">
-                <strong>J2SE, J2EE, J2ME Era</strong> - Content about the division of the Java platform into three distinct editions.
-            </div>
-            <div class="timeline-item">
-                <strong>J2SE Architecture</strong> - Documentation about the architecture and components of the J2SE platform.
-            </div>
+            <div id="updates-pagination" class="pagination-container pagination-hidden"></div>
         </div>
 
         <h2>🚀 Getting Started</h2>
         <div class="highlight-box">
-            <p><strong>💡 Tip:</strong> Start by exploring the different technologies available in the side menu. Navigate through different topics according to your learning needs.</p>
+            <p><strong>💡 Tip:</strong> Codeflow uses modularized stacks to organize knowledge. Each technology has its own stack file that defines the structure of topics and subtopics. Artificial Intelligence processes these stacks to generate complete and well-structured educational content.</p>
         </div>
                 
         <!-- Giscus Comments -->
@@ -331,8 +283,66 @@
                     }
                 });
             }
+            
+            // Load data from JSON files (only if not loaded dynamically)
+            // If loaded dynamically, index-page.js will call these functions
+            if (document.querySelector('.app-layout')) {
+                // Page is loaded in index.html, functions will be called by index-page.js
+                // Functions are defined in resources/js/welcome-data.js
+            } else {
+                // Page is loaded standalone, load data immediately
+                if (typeof loadWelcomeStatistics === 'function') {
+                    loadWelcomeStatistics();
+                }
+                if (typeof loadWelcomeUpdates === 'function') {
+                    loadWelcomeUpdates();
+                }
+            }
         });
+        
+        // Function to initialize circular progress bars
+        function initializeCircularProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-bar-fill');
+            progressBars.forEach(function(fill) {
+                const container = fill.closest('.progress-bar-container');
+                if (!container) return;
+                
+                // Get percentage from width (can be "33%" or "33px")
+                let width = fill.style.width || window.getComputedStyle(fill).width;
+                let percentage = 0;
+                
+                // First, try to get from text content (most reliable)
+                const text = fill.querySelector('.progress-bar-text');
+                if (text) {
+                    const textContent = text.textContent || '';
+                    percentage = parseFloat(textContent.replace('%', '')) || 0;
+                }
+                
+                // If not found in text, try to get from width
+                if (isNaN(percentage) || percentage === 0) {
+                    // If width contains %, extract percentage directly
+                    if (width.includes('%')) {
+                        percentage = parseFloat(width);
+                    } else {
+                        // If it's in pixels, calculate percentage from container width
+                        const containerWidth = container.offsetWidth || parseFloat(window.getComputedStyle(container).width);
+                        if (containerWidth > 0) {
+                            percentage = (parseFloat(width) / containerWidth) * 100;
+                        }
+                    }
+                }
+                
+                // Calculate angle: percentage * 3.6 degrees (360 / 100)
+                const angle = percentage * 3.6;
+                
+                // Set CSS variable for conic-gradient
+                container.style.setProperty('--progress-angle', angle + 'deg');
+                
+                // Set data-percentage attribute for tooltip (always set, even if 0)
+                const roundedPercentage = Math.round(percentage);
+                container.setAttribute('data-percentage', roundedPercentage + '%');
+            });
+        }
     </script>
 </body>
 </html>
-

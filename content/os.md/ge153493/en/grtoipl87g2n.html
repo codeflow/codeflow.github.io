@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+        
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>📌 Process Concepts</h1>
+        
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">18/02/2026 21:36:32</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Process vs thread, process vs program, PCB (Process Control Block), process states.
+        </div>
+
+        <h2>🟢 📚 What is a Process?</h2>
+        <p>
+            A <strong>process</strong> is an instance of a program in execution. It is the fundamental unit of work in an operating system. A process includes the program code, its current activity (represented by the program counter), and the associated data (variables, files, etc.).
+        </p>
+        <p>
+            When a program is loaded into memory and executed, it becomes a process. Multiple instances of the same program can run simultaneously as separate processes, each with its own memory space and execution context.
+        </p>
+
+        <h2>🟡 📚 Process vs Program</h2>
+        <p>
+            Understanding the difference between a <strong>process</strong> and a <strong>program</strong> is fundamental to operating system concepts.
+        </p>
+        <p>
+            <strong>Program:</strong>
+        </p>
+        <ul>
+            <li><strong>Static Entity:</strong> A program is a passive collection of instructions stored on disk</li>
+            <li><strong>No Execution State:</strong> It doesn't have a program counter, registers, or variables</li>
+            <li><strong>Persistent:</strong> Exists as a file until deleted</li>
+            <li><strong>Single Instance:</strong> One program file can be used to create multiple processes</li>
+        </ul>
+        <p>
+            <strong>Process:</strong>
+        </p>
+        <ul>
+            <li><strong>Dynamic Entity:</strong> A process is an active instance of a program in execution</li>
+            <li><strong>Has Execution State:</strong> Includes program counter, registers, stack, heap, data section</li>
+            <li><strong>Temporary:</strong> Exists only while the program is running</li>
+            <li><strong>Multiple Instances:</strong> The same program can create multiple processes</li>
+        </ul>
+        <p>
+            <strong>Analogy:</strong> A program is like a recipe (static instructions), while a process is like cooking (active execution of those instructions).
+        </p>
+
+        <h2>🟡 📚 Process vs Thread</h2>
+        <p>
+            Both processes and threads are units of execution, but they differ in how they share resources and memory.
+        </p>
+        <p>
+            <strong>Process:</strong>
+        </p>
+        <ul>
+            <li><strong>Independent Memory Space:</strong> Each process has its own address space</li>
+            <li><strong>Heavyweight:</strong> More overhead for creation, context switching, and communication</li>
+            <li><strong>Isolated:</strong> Processes cannot directly access each other's memory</li>
+            <li><strong>IPC Required:</strong> Inter-Process Communication (IPC) needed for data sharing</li>
+            <li><strong>More Secure:</strong> Failures in one process don't directly affect others</li>
+        </ul>
+        <p>
+            <strong>Thread:</strong>
+        </p>
+        <ul>
+            <li><strong>Shared Memory Space:</strong> Threads within a process share the same address space</li>
+            <li><strong>Lightweight:</strong> Less overhead for creation and context switching</li>
+            <li><strong>Shared Resources:</strong> Threads can directly access shared memory and variables</li>
+            <li><strong>Fast Communication:</strong> Data sharing through shared memory (requires synchronization)</li>
+            <li><strong>Less Secure:</strong> A bug in one thread can affect the entire process</li>
+        </ul>
+        <p>
+            <strong>When to Use Processes:</strong> When you need isolation, security, or when tasks are independent.
+        </p>
+        <p>
+            <strong>When to Use Threads:</strong> When tasks need to share data frequently, for parallel computation, or for responsive user interfaces.
+        </p>
+
+        <h2>🟡 📚 Process Control Block (PCB)</h2>
+        <p>
+            The <strong>Process Control Block (PCB)</strong>, also known as a <strong>Task Control Block</strong>, is a data structure maintained by the operating system for each process. It contains all the information needed to manage and control a process.
+        </p>
+        <p>
+            <strong>PCB Components:</strong>
+        </p>
+        <ul>
+            <li><strong>Process Identification:</strong>
+                <ul>
+                    <li>Process ID (PID) - unique identifier</li>
+                    <li>Parent Process ID (PPID)</li>
+                    <li>User ID (UID) - owner of the process</li>
+                </ul>
+            </li>
+            <li><strong>Process State:</strong> Current state (running, ready, waiting, etc.)</li>
+            <li><strong>CPU Registers:</strong> Saved register values when process is not running</li>
+            <li><strong>Program Counter:</strong> Address of next instruction to execute</li>
+            <li><strong>Memory Management:</strong>
+                <ul>
+                    <li>Base and limit registers</li>
+                    <li>Page tables</li>
+                    <li>Memory allocation information</li>
+                </ul>
+            </li>
+            <li><strong>Accounting Information:</strong>
+                <ul>
+                    <li>CPU time used</li>
+                    <li>Time limits</li>
+                    <li>Account numbers</li>
+                    <li>Job or process numbers</li>
+                </ul>
+            </li>
+            <li><strong>I/O Status Information:</strong>
+                <ul>
+                    <li>List of I/O devices allocated to the process</li>
+                    <li>List of open files</li>
+                    <li>Pending I/O requests</li>
+                </ul>
+            </li>
+            <li><strong>Scheduling Information:</strong>
+                <ul>
+                    <li>Process priority</li>
+                    <li>Scheduling queue pointers</li>
+                    <li>Other scheduling parameters</li>
+                </ul>
+            </li>
+        </ul>
+        <p>
+            The PCB is created when a process is created and deleted when the process terminates. It is the key data structure that allows the OS to manage multiple processes efficiently.
+        </p>
+
+        <h2>🟡 📚 Process States</h2>
+        <p>
+            A process goes through various states during its lifetime. The state of a process is defined by the current activity of that process.
+        </p>
+        <p>
+            <strong>Common Process States:</strong>
+        </p>
+        <ul>
+            <li><strong>New:</strong> Process is being created</li>
+            <li><strong>Ready:</strong> Process is ready to run and waiting for CPU</li>
+            <li><strong>Running:</strong> Process is currently executing on CPU</li>
+            <li><strong>Waiting/Blocked:</strong> Process is waiting for some event (I/O completion, signal, etc.)</li>
+            <li><strong>Terminated:</strong> Process has finished execution</li>
+        </ul>
+        <p>
+            <strong>State Transitions:</strong>
+        </p>
+        <ul>
+            <li><strong>New → Ready:</strong> Process is admitted to the system</li>
+            <li><strong>Ready → Running:</strong> Process is selected by scheduler (dispatch)</li>
+            <li><strong>Running → Ready:</strong> Process is interrupted (time slice expired, higher priority process)</li>
+            <li><strong>Running → Waiting:</strong> Process requests I/O or waits for an event</li>
+            <li><strong>Waiting → Ready:</strong> Event occurs (I/O completes, signal received)</li>
+            <li><strong>Running → Terminated:</strong> Process finishes or is killed</li>
+        </ul>
+        <p>
+            <strong>State Diagram:</strong>
+        </p>
+        <p>
+            The process state transitions form a cycle: New → Ready → Running → (Ready or Waiting) → Terminated. Only one process can be in the Running state per CPU at a time, while many processes can be in Ready or Waiting states.
+        </p>
+
+        <h2>🟡 📚 Process Attributes</h2>
+        <p>
+            Each process has several attributes that describe its characteristics and behavior:
+        </p>
+        <ul>
+            <li><strong>Process ID (PID):</strong> Unique identifier assigned by the OS</li>
+            <li><strong>Parent Process ID (PPID):</strong> ID of the process that created this process</li>
+            <li><strong>User ID (UID):</strong> User who owns the process</li>
+            <li><strong>Group ID (GID):</strong> Group the process belongs to</li>
+            <li><strong>Priority:</strong> Scheduling priority (higher priority processes run first)</li>
+            <li><strong>Nice Value:</strong> Adjustment to priority (Unix/Linux)</li>
+            <li><strong>Working Directory:</strong> Current directory for file operations</li>
+            <li><strong>Environment Variables:</strong> Variables available to the process</li>
+            <li><strong>File Descriptors:</strong> Open files and I/O channels</li>
+        </ul>
+
+        <h2>🟡 📚 Process Hierarchy</h2>
+        <p>
+            Processes form a hierarchical tree structure. When a process creates another process, the creator is called the <strong>parent process</strong>, and the created process is called the <strong>child process</strong>.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Tree Structure:</strong> Processes form a tree with a root process (usually init or systemd)</li>
+            <li><strong>Inheritance:</strong> Child processes inherit certain attributes from parent (environment variables, file descriptors)</li>
+            <li><strong>Process Groups:</strong> Related processes can be grouped together</li>
+            <li><strong>Sessions:</strong> Collection of process groups (used for terminal control)</li>
+        </ul>
+        <p>
+            <strong>Init Process:</strong> The first process (PID 1) is created by the kernel at boot time. All other processes are descendants of this process.
+        </p>
+
+        <h2>🟡 📚 Process Memory Layout</h2>
+        <p>
+            Each process has its own memory address space, which is typically organized into several regions:
+        </p>
+
+        <div class="memory-layers">
+            <div class="memory-layers__inner">
+                <div class="memory-layers__layer memory-layers__layer--accent">
+                    <div class="memory-layers__layer-header">Stack (High Memory)</div>
+                    <div class="memory-layers__layer-content">Local variables, function calls, return addresses</div>
+                </div>
+                <div class="memory-layers__layer">
+                    <div class="memory-layers__layer-header">Heap</div>
+                    <div class="memory-layers__layer-content">Dynamic memory allocation (malloc, new)</div>
+                </div>
+                <div class="memory-layers__layer">
+                    <div class="memory-layers__layer-header">Data Segment</div>
+                    <div class="memory-layers__layer-content">Global and static variables</div>
+                </div>
+                <div class="memory-layers__layer memory-layers__layer--accent">
+                    <div class="memory-layers__layer-header">Code Segment (Low Memory)</div>
+                    <div class="memory-layers__layer-content">Program instructions (read-only)</div>
+                </div>
+                <div class="memory-layers__caption">Process Memory Layout</div>
+            </div>
+        </div>
+
+        <h2>🟡 📚 Process Context</h2>
+        <p>
+            The <strong>process context</strong> is the collection of all information needed to resume a process after it has been interrupted. It includes:
+        </p>
+        <ul>
+            <li><strong>CPU Context:</strong> Register values (program counter, stack pointer, general-purpose registers)</li>
+            <li><strong>Memory Context:</strong> Memory layout, page tables, allocated memory regions</li>
+            <li><strong>I/O Context:</strong> Open files, network connections, device handles</li>
+            <li><strong>Security Context:</strong> User ID, group ID, permissions, capabilities</li>
+        </ul>
+        <p>
+            When a process is interrupted, its context is saved in the PCB. When the process resumes, its context is restored from the PCB. This allows the OS to switch between processes efficiently.
+        </p>
+
+        <h2>🟡 📚 Process Lifecycle</h2>
+        <p>
+            The lifecycle of a process follows these stages:
+        </p>
+        <ol>
+            <li><strong>Creation:</strong> Process is created (fork, exec, spawn)</li>
+            <li><strong>Ready:</strong> Process is loaded into memory and ready to run</li>
+            <li><strong>Running:</strong> Process executes on CPU</li>
+            <li><strong>Waiting:</strong> Process waits for events (I/O, signals, synchronization)</li>
+            <li><strong>Termination:</strong> Process finishes execution or is terminated</li>
+            <li><strong>Cleanup:</strong> Resources are deallocated, PCB is removed</li>
+        </ol>
+        <p>
+            The OS manages this lifecycle, ensuring efficient resource utilization and proper cleanup.
+        </p>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Process_(computing)" target="_blank" rel="noopener noreferrer">Process (Computing) - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_processes.htm" target="_blank" rel="noopener noreferrer">Operating System - Processes - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/states-of-a-process-in-operating-systems/" target="_blank" rel="noopener noreferrer">States of a Process in Operating Systems - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/process-control-block/" target="_blank" rel="noopener noreferrer">Process Control Block - GeeksforGeeks</a></li>
+            </ul>
+        </div>
+
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

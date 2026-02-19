@@ -1,0 +1,76 @@
+/* ===== Search Page Styles ===== */
+
+.search-results {
+    margin-top: 1rem;
+}
+
+.search-result-item {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #BED6F8;
+    background-color: #FFFFFF;
+    border-left: 4px solid #0078D0;
+}
+
+.search-result-item:hover {
+    background-color: #ECF4FE;
+    border-left-color: #0090FF;
+}
+
+.search-result-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #0B356C;
+    margin-bottom: 0.5rem;
+}
+
+.search-result-title a {
+    color: #0078D0;
+    text-decoration: none;
+}
+
+.search-result-title a:hover {
+    color: #0090FF;
+    text-decoration: underline;
+}
+
+.search-result-path {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.search-result-description {
+    font-size: 11px;
+    color: #000000;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.search-result-snippet {
+    font-size: 10px;
+    color: #666;
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+.search-no-results {
+    padding: 2rem;
+    text-align: center;
+    color: #666;
+}
+
+.search-loading {
+    padding: 2rem;
+    text-align: center;
+    color: #666;
+}
+
+.search-stats {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #BED6F8;
+}

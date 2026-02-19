@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+        
+        // copyCode: fallback for standalone access (index.html already defines it globally)
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>📌 History and Evolution</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">18/02/2026 21:21:05</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Evolution of operating systems, batch systems, time-sharing, multiprogrammed systems, modern operating systems.
+        </div>
+
+        <h2>🟢 📚 Early Computing (1940s-1950s)</h2>
+        <p>
+            The history of operating systems begins with the earliest computers, which had no operating systems at all. Programs were entered directly into the machine using <strong>plugboards</strong> or <strong>punched cards</strong>, and each program had to manage all hardware resources itself.
+        </p>
+        <p>
+            <strong>Key characteristics of early systems:</strong>
+        </p>
+        <ul>
+            <li><strong>No Operating System:</strong> Programs ran directly on hardware</li>
+            <li><strong>Manual Operation:</strong> Operators physically loaded programs and data</li>
+            <li><strong>Single User:</strong> Only one program could run at a time</li>
+            <li><strong>No Resource Management:</strong> Each program managed its own I/O and memory</li>
+            <li><strong>Inefficient:</strong> Much time was wasted between program executions</li>
+        </ul>
+
+        <h2>🟡 📚 Batch Systems (1950s-1960s)</h2>
+        <p>
+            <strong>Batch processing</strong> was the first major evolution in operating systems. Programs were collected into batches and processed sequentially without human intervention between jobs.
+        </p>
+        <p>
+            <strong>Key features of batch systems:</strong>
+        </p>
+        <ul>
+            <li><strong>Job Queue:</strong> Programs were queued and executed one after another</li>
+            <li><strong>Resident Monitor:</strong> A simple program that managed job execution</li>
+            <li><strong>Automatic Job Sequencing:</strong> No manual intervention needed between jobs</li>
+            <li><strong>Improved Efficiency:</strong> Reduced idle time between program executions</li>
+            <li><strong>Still Single-User:</strong> Only one job ran at a time</li>
+        </ul>
+        <p>
+            Batch systems significantly improved computer utilization by eliminating the need for operators to manually load each program. However, they still suffered from low CPU utilization when programs performed I/O operations.
+        </p>
+
+        <h2>🟡 📚 Multiprogramming Systems (1960s)</h2>
+        <p>
+            <strong>Multiprogramming</strong> was a breakthrough that allowed multiple programs to reside in memory simultaneously. When one program was waiting for I/O, the CPU could switch to another program, dramatically improving system utilization.
+        </p>
+        <p>
+            <strong>Key innovations:</strong>
+        </p>
+        <ul>
+            <li><strong>Multiple Programs in Memory:</strong> Several programs loaded simultaneously</li>
+            <li><strong>CPU Switching:</strong> CPU switches between programs when one is waiting</li>
+            <li><strong>Memory Management:</strong> OS manages memory allocation for multiple programs</li>
+            <li><strong>I/O Management:</strong> OS handles I/O operations for all programs</li>
+            <li><strong>Resource Protection:</strong> Programs isolated from each other</li>
+        </ul>
+        <p>
+            Multiprogramming systems were the foundation for modern operating systems, introducing concepts like memory protection, process scheduling, and resource management that are still fundamental today.
+        </p>
+
+        <h2>🟡 📚 Time-Sharing Systems (1960s-1970s)</h2>
+        <p>
+            <strong>Time-sharing</strong> extended multiprogramming by allowing multiple users to interact with the system simultaneously. Each user had the illusion of having their own dedicated computer.
+        </p>
+        <p>
+            <strong>Key features:</strong>
+        </p>
+        <ul>
+            <li><strong>Multiple Users:</strong> Several users could use the system at the same time</li>
+            <li><strong>Interactive Computing:</strong> Users could interact with programs in real-time</li>
+            <li><strong>Rapid Response:</strong> System responded quickly to user input</li>
+            <li><strong>Time Slicing:</strong> CPU time divided among users in small slices</li>
+            <li><strong>Terminal Access:</strong> Users accessed the system via terminals</li>
+        </ul>
+        <p>
+            Time-sharing systems like <strong>CTSS</strong> (Compatible Time-Sharing System) and <strong>Multics</strong> pioneered many concepts used in modern operating systems, including hierarchical file systems, virtual memory, and security mechanisms.
+        </p>
+
+        <h2>🟡 📚 Personal Computer Era (1970s-1980s)</h2>
+        <p>
+            The advent of personal computers brought operating systems to individual users. Early PC operating systems were simple but laid the groundwork for modern desktop systems.
+        </p>
+        <p>
+            <strong>Notable systems:</strong>
+        </p>
+        <ul>
+            <li><strong>CP/M (1974):</strong> One of the first operating systems for microcomputers</li>
+            <li><strong>MS-DOS (1981):</strong> Dominant OS for IBM PC-compatible computers</li>
+            <li><strong>Apple DOS/ProDOS:</strong> Operating systems for Apple II computers</li>
+            <li><strong>Mac OS (1984):</strong> First graphical user interface for personal computers</li>
+        </ul>
+        <p>
+            These systems were primarily single-user, single-tasking, but they made computing accessible to millions of people and established the foundation for modern desktop operating systems.
+        </p>
+
+        <h2>🟡 📚 Modern Operating Systems (1990s-Present)</h2>
+        <p>
+            Modern operating systems combine features from all previous generations, providing multitasking, multi-user support, networking, security, and graphical interfaces.
+        </p>
+        <p>
+            <strong>Key modern OS families:</strong>
+        </p>
+        <ul>
+            <li><strong>Unix/Linux:</strong> Multi-user, multitasking systems based on Unix principles</li>
+            <li><strong>Windows:</strong> Microsoft's family of operating systems (Windows NT, Windows 10/11)</li>
+            <li><strong>macOS:</strong> Apple's Unix-based operating system for Mac computers</li>
+            <li><strong>Mobile OS:</strong> iOS, Android - operating systems for smartphones and tablets</li>
+            <li><strong>Real-Time OS:</strong> Specialized systems for time-critical applications</li>
+            <li><strong>Embedded OS:</strong> Lightweight systems for embedded devices</li>
+        </ul>
+
+        <h2>🟡 📚 Evolution Timeline</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>1940s-1950s - No Operating Systems</strong>
+                <p>Programs ran directly on hardware with no OS. Manual operation with plugboards and punched cards.</p>
+            </div>
+            <div class="timeline-item">
+                <strong>1950s-1960s - Batch Systems</strong>
+                <p>First operating systems with batch processing. Programs executed sequentially from a queue.</p>
+            </div>
+            <div class="timeline-item">
+                <strong>1960s - Multiprogramming</strong>
+                <p>Multiple programs in memory simultaneously. CPU switches between programs during I/O waits.</p>
+            </div>
+            <div class="timeline-item">
+                <strong>1960s-1970s - Time-Sharing</strong>
+                <p>Multiple users interact with the system simultaneously. CTSS and Multics pioneered modern concepts.</p>
+            </div>
+            <div class="timeline-item">
+                <strong>1970s-1980s - Personal Computers</strong>
+                <p>CP/M, MS-DOS, and early Mac OS brought operating systems to individual users.</p>
+            </div>
+            <div class="timeline-item">
+                <strong>1990s-Present - Modern OS</strong>
+                <p>Unix/Linux, Windows, macOS, and mobile OS combine all previous innovations with modern features.</p>
+            </div>
+        </div>
+
+        <h2>🟡 📚 Key Milestones</h2>
+        <p>
+            Several key milestones shaped the evolution of operating systems:
+        </p>
+        <ul>
+            <li><strong>1961 - CTSS:</strong> First time-sharing system at MIT</li>
+            <li><strong>1969 - Unix:</strong> Created at Bell Labs, became the foundation for many modern systems</li>
+            <li><strong>1971 - First Microprocessor:</strong> Enabled affordable personal computers</li>
+            <li><strong>1981 - IBM PC:</strong> Standardized PC architecture, led to MS-DOS dominance</li>
+            <li><strong>1984 - Macintosh:</strong> First successful GUI-based personal computer</li>
+            <li><strong>1991 - Linux:</strong> Open-source Unix-like kernel, now powers most servers and many devices</li>
+            <li><strong>2007 - iPhone:</strong> Revolutionized mobile computing with iOS</li>
+        </ul>
+
+        <h2>🟡 📚 Current Trends</h2>
+        <p>
+            Modern operating systems continue to evolve:
+        </p>
+        <ul>
+            <li><strong>Virtualization:</strong> Virtual machines and containers for better resource utilization</li>
+            <li><strong>Cloud Computing:</strong> Operating systems optimized for cloud environments</li>
+            <li><strong>Security:</strong> Enhanced security features to protect against modern threats</li>
+            <li><strong>Mobile-First:</strong> Operating systems designed primarily for mobile devices</li>
+            <li><strong>IoT:</strong> Lightweight operating systems for Internet of Things devices</li>
+            <li><strong>Real-Time Systems:</strong> Operating systems for time-critical applications</li>
+        </ul>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/History_of_operating_systems" target="_blank" rel="noopener noreferrer">History of Operating Systems - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_overview.htm" target="_blank" rel="noopener noreferrer">Operating System Overview - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/evolution-of-operating-system/" target="_blank" rel="noopener noreferrer">Evolution of Operating System - GeeksforGeeks</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{
+  "component": "architecture-diagram-horizontal",
+  "name": "Architecture Diagram (Horizontal)",
+  "description": "Horizontal architecture diagram with boxes and arrows flowing left to right, showing system layers or process flows. Supports single row (horizontal) or multiple rows (stacked vertically).",
+  "version": "1.0.0",
+  "cssClasses": {
+    "diagram": "arch-diagram arch-diagram--horizontal",
+    "inner": "arch-diagram__inner",
+    "stack": "arch-diagram__stack arch-diagram__stack--horizontal",
+    "box": "arch-diagram__box",
+    "boxAccent": "arch-diagram__box--accent",
+    "arrow": "arch-diagram__arrow arch-diagram__arrow--horizontal",
+    "arrowLine": "arch-diagram__arrow-line arch-diag]ram__arrow-line--horizontal",
+    "caption": "arch-diagram__caption"
+  },
+  "structure": {
+    "singleRow": "<div class=\"arch-diagram arch-diagram--horizontal\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">{LAYER_1}</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">{LAYER_2}</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">{LAYER_3}</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">{LAYER_4}</div>\n    </div>\n    <div class=\"arch-diagram__caption\">{CAPTION}</div>\n  </div>\n</div>",
+    "multipleRows": "<div class=\"arch-diagram arch-diagram--horizontal\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      {ROW_1_CONTENT}\n    </div>\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      {ROW_2_CONTENT}\n    </div>\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      {ROW_3_CONTENT}\n    </div>\n    <div class=\"arch-diagram__caption\">{CAPTION}</div>\n  </div>\n</div>",
+    "required": ["CAPTION"],
+    "optional": ["LAYER_1", "LAYER_2", "LAYER_3", "LAYER_4", "ROW_1_CONTENT", "ROW_2_CONTENT", "ROW_3_CONTENT"]
+  },
+  "properties": {
+    "CAPTION": {
+      "type": "string",
+      "description": "Caption text displayed at bottom-right of the outer box.",
+      "required": true
+    },
+    "LAYER_1": {
+      "type": "string",
+      "description": "First layer (leftmost) - use accent class for emphasis.",
+      "required": false
+    },
+    "LAYER_2": {
+      "type": "string",
+      "description": "Second layer.",
+      "required": false
+    },
+    "LAYER_3": {
+      "type": "string",
+      "description": "Third layer.",
+      "required": false
+    },
+    "LAYER_4": {
+      "type": "string",
+      "description": "Last layer (rightmost) - use accent class for emphasis.",
+      "required": false
+    },
+    "ROW_1_CONTENT": {
+      "type": "string",
+      "description": "HTML content for first row (multiple boxes and arrows).",
+      "required": false
+    },
+    "ROW_2_CONTENT": {
+      "type": "string",
+      "description": "HTML content for second row (multiple boxes and arrows).",
+      "required": false
+    },
+    "ROW_3_CONTENT": {
+      "type": "string",
+      "description": "HTML content for third row (multiple boxes and arrows).",
+      "required": false
+    }
+  },
+  "example": {
+    "singleRow": {
+      "LAYER_1": "Client Request",
+      "LAYER_2": "Load Balancer",
+      "LAYER_3": "Application Server",
+      "LAYER_4": "Database",
+      "CAPTION": "Request Flow"
+    },
+    "multipleRows": {
+      "ROW_1_CONTENT": "<div class=\"arch-diagram__box arch-diagram__box--accent\">User Input</div>\n<div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n<div class=\"arch-diagram__box\">Validation</div>\n<div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n<div class=\"arch-diagram__box\">Processing</div>",
+      "ROW_2_CONTENT": "<div class=\"arch-diagram__box\">Data Fetch</div>\n<div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n<div class=\"arch-diagram__box arch-diagram__box--accent\">API Call</div>\n<div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n<div class=\"arch-diagram__box\">Response</div>",
+      "ROW_3_CONTENT": "<div class=\"arch-diagram__box\">Cache Check</div>\n<div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n<div class=\"arch-diagram__box\">Storage</div>",
+      "CAPTION": "Data Processing Pipeline"
+    }
+  },
+  "renderedHtml": {
+    "singleRow": "<div class=\"arch-diagram arch-diagram--horizontal\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">Client Request</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">Load Balancer</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">Application Server</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">Database</div>\n    </div>\n    <div class=\"arch-diagram__caption\">Request Flow</div>\n  </div>\n</div>",
+    "multipleRows": "<div class=\"arch-diagram arch-diagram--horizontal\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">User Input</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">Validation</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">Processing</div>\n    </div>\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      <div class=\"arch-diagram__box\">Data Fetch</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">API Call</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">Response</div>\n    </div>\n    <div class=\"arch-diagram__stack arch-diagram__stack--horizontal\">\n      <div class=\"arch-diagram__box\">Cache Check</div>\n      <div class=\"arch-diagram__arrow arch-diagram__arrow--horizontal\"><span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span></div>\n      <div class=\"arch-diagram__box\">Storage</div>\n    </div>\n    <div class=\"arch-diagram__caption\">Data Processing Pipeline</div>\n  </div>\n</div>"
+  },
+  "features": [
+    "Outer box with border and background (provided by arch-diagram__inner)",
+    "Single row (horizontal flow) or multiple rows (stacked vertically)",
+    "Horizontal arrows with lines connecting boxes (must include arch-diagram__arrow-line--horizontal span)",
+    "Accent boxes for emphasis (first/last layers)",
+    "Caption positioned at bottom-right",
+    "Responsive (rows stack vertically on mobile)"
+  ],
+  "notes": "Always include <span class=\"arch-diagram__arrow-line arch-diagram__arrow-line--horizontal\"></span> inside each .arch-diagram__arrow--horizontal for the line/arrow to appear. Do NOT wrap in .app-card - the .arch-diagram__inner already provides the outer box. Use arch-diagram--horizontal modifier class on the root element."
+}

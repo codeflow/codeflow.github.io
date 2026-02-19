@@ -1,0 +1,42 @@
+{
+  "component": "card",
+  "name": "Card",
+  "description": "Container to group related content and create distinct visual sections",
+  "version": "1.0.0",
+  "cssClasses": {
+    "container": "app-card"
+  },
+  "structure": {
+    "html": "<div class=\"app-card\">\n  <h3>Card Title</h3>\n  <p>Card content here.</p>\n</div>",
+    "required": ["container"],
+    "optional": ["h1", "h2", "h3", "p", "ul", "ol", "table", "a", "code", "pre"]
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Optional card title (usually h3)",
+      "required": false
+    },
+    "content": {
+      "type": "string|array|object",
+      "description": "Card content. Can be text, list, table or other components",
+      "required": true
+    }
+  },
+  "example": {
+    "title": "Example Card",
+    "content": [
+      "This is an example card using the app-card class.",
+      "Cards are useful for grouping related content."
+    ]
+  },
+  "renderedHtml": "<div class=\"app-card\">\n  <h3>Example Card</h3>\n  <p>This is an example card using the app-card class.</p>\n  <p>Cards are useful for grouping related content.</p>\n</div>",
+  "features": [
+    "Blue border (#BED6F8)",
+    "Internal padding of 2rem",
+    "Automatic margin for centering",
+    "Max-width of 520px",
+    "Accepts any HTML content"
+  ],
+  "notes": "Cards have a maximum width of 520px and are automatically centered. They can contain any type of HTML content."
+}

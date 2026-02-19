@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+        
+        // copyCode: fallback for standalone access (index.html already defines it globally)
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>📌 Types of Operating Systems</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">18/02/2026 21:25:53</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Monolithic OS, microkernel, exokernel, hybrid, real-time OS, embedded, distributed operating systems.
+        </div>
+
+        <h2>🟢 📚 Classification by Architecture</h2>
+        <p>
+            Operating systems can be classified based on their internal architecture, which determines how the kernel is structured and how system services are organized.
+        </p>
+
+        <h2>🟡 📚 Monolithic Operating Systems</h2>
+        <p>
+            A <strong>monolithic kernel</strong> is a single large program that contains all operating system components in one address space. All kernel services run in kernel mode.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Single Address Space:</strong> All kernel code runs in the same memory space</li>
+            <li><strong>Direct Function Calls:</strong> Services call each other directly</li>
+            <li><strong>High Performance:</strong> No overhead from inter-process communication</li>
+            <li><strong>Simple Design:</strong> Easier to implement and understand</li>
+            <li><strong>Less Secure:</strong> A bug in one component can crash the entire system</li>
+        </ul>
+        <p>
+            <strong>Examples:</strong> Linux (traditional), Unix, MS-DOS, early versions of Windows
+        </p>
+        <p>
+            Monolithic kernels are efficient because there's no overhead from message passing or context switching between kernel components. However, they can be less reliable since a failure in one component can affect the entire system.
+        </p>
+
+        <h2>🟡 📚 Microkernel Operating Systems</h2>
+        <p>
+            A <strong>microkernel</strong> minimizes the kernel by moving most services to user space. Only essential services run in kernel mode.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Minimal Kernel:</strong> Only essential services in kernel space</li>
+            <li><strong>User-Space Services:</strong> Most OS services run as user processes</li>
+            <li><strong>Message Passing:</strong> Services communicate via messages</li>
+            <li><strong>Modularity:</strong> Services can be added, removed, or restarted independently</li>
+            <li><strong>Better Security:</strong> Failures in services don't crash the kernel</li>
+            <li><strong>More Overhead:</strong> Message passing adds latency</li>
+        </ul>
+        <p>
+            <strong>Examples:</strong> QNX, MINIX, L4, Mach (used in early macOS)
+        </p>
+        <p>
+            Microkernels provide better modularity and reliability, but the message passing overhead can impact performance compared to monolithic kernels.
+        </p>
+
+        <h2>🟡 📚 Hybrid Operating Systems</h2>
+        <p>
+            <strong>Hybrid kernels</strong> combine aspects of both monolithic and microkernel designs. They keep some services in kernel space for performance while moving others to user space.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Mixed Approach:</strong> Combines benefits of both architectures</li>
+            <li><strong>Performance Critical in Kernel:</strong> Time-sensitive services in kernel space</li>
+            <li><strong>Other Services in User Space:</strong> Less critical services as user processes</li>
+            <li><strong>Balanced Design:</strong> Good performance with reasonable modularity</li>
+        </ul>
+        <p>
+            <strong>Examples:</strong> Windows NT/2000/XP/Vista/7/8/10/11, macOS (XNU kernel), DragonFly BSD
+        </p>
+        <p>
+            Hybrid kernels attempt to get the best of both worlds: performance from monolithic design and modularity from microkernel design.
+        </p>
+
+        <h2>🟡 📚 Exokernel Operating Systems</h2>
+        <p>
+            An <strong>exokernel</strong> provides minimal abstraction, giving applications direct access to hardware resources. Applications can implement their own abstractions.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Minimal Abstraction:</strong> Very thin layer over hardware</li>
+            <li><strong>Application Control:</strong> Applications manage their own resources</li>
+            <li><strong>High Performance:</strong> No unnecessary abstraction overhead</li>
+            <li><strong>Complexity in Applications:</strong> Applications must handle more details</li>
+            <li><strong>Specialized Use:</strong> Best for specific, performance-critical applications</li>
+        </ul>
+        <p>
+            <strong>Examples:</strong> ExOS (research), Nemesis, XOK
+        </p>
+        <p>
+            Exokernels are primarily research systems that explore the limits of kernel design, trading abstraction for maximum performance and flexibility.
+        </p>
+
+        <h2>🟡 📚 Real-Time Operating Systems (RTOS)</h2>
+        <p>
+            <strong>Real-time operating systems</strong> are designed to process data and respond to events within strict time constraints. They guarantee that critical tasks complete within specified deadlines.
+        </p>
+        <p>
+            <strong>Types of RTOS:</strong>
+        </p>
+        <ul>
+            <li><strong>Hard Real-Time:</strong> Missing a deadline causes system failure</li>
+            <li><strong>Soft Real-Time:</strong> Missing a deadline degrades performance but doesn't cause failure</li>
+        </ul>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Deterministic:</strong> Predictable response times</li>
+            <li><strong>Priority-Based Scheduling:</strong> Critical tasks get highest priority</li>
+            <li><strong>Minimal Latency:</strong> Very fast interrupt handling</li>
+            <li><strong>Resource Management:</strong> Efficient allocation of CPU and memory</li>
+        </ul>
+        <p>
+            <strong>Examples:</strong> VxWorks, FreeRTOS, QNX, RT Linux, Windows CE
+        </p>
+        <p>
+            RTOS are used in systems where timing is critical, such as medical devices, industrial control systems, and automotive systems.
+        </p>
+
+        <h2>🟡 📚 Embedded Operating Systems</h2>
+        <p>
+            <strong>Embedded operating systems</strong> are designed for embedded systems - computers integrated into larger devices. They are typically lightweight and resource-efficient.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Small Footprint:</strong> Minimal memory and storage requirements</li>
+            <li><strong>Low Power Consumption:</strong> Optimized for battery-powered devices</li>
+            <li><strong>Real-Time Capabilities:</strong> Often include RTOS features</li>
+            <li><strong>Limited Resources:</strong> Designed for constrained hardware</li>
+            <li><strong>Specialized Functionality:</strong> Tailored for specific device types</li>
+        </ul>
+        <p>
+            <strong>Examples:</strong> Embedded Linux, FreeRTOS, ThreadX, Contiki, TinyOS
+        </p>
+        <p>
+            Embedded OS are found in devices like routers, smart appliances, IoT devices, and consumer electronics.
+        </p>
+
+        <h2>🟡 📚 Distributed Operating Systems</h2>
+        <p>
+            <strong>Distributed operating systems</strong> manage a group of independent computers and make them appear as a single coherent system. They provide transparency of distribution.
+        </p>
+        <p>
+            <strong>Characteristics:</strong>
+        </p>
+        <ul>
+            <li><strong>Network Transparency:</strong> Users don't need to know where resources are located</li>
+            <li><strong>Resource Sharing:</strong> Shared access to files, printers, and other resources</li>
+            <li><strong>Fault Tolerance:</strong> System continues operating even if some nodes fail</li>
+            <li><strong>Load Balancing:</strong> Distributes work across multiple machines</li>
+            <li><strong>Scalability:</strong> Can add more nodes to increase capacity</li>
+        </ul>
+        <p>
+            <strong>Examples:</strong> Amoeba, Plan 9, Inferno, distributed versions of Unix/Linux
+        </p>
+        <p>
+            Distributed OS enable multiple computers to work together as a unified system, providing better performance, reliability, and resource utilization.
+        </p>
+
+        <h2>🟡 📚 Comparison Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Performance</th>
+                    <th>Modularity</th>
+                    <th>Security</th>
+                    <th>Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Monolithic</strong></td>
+                    <td>High</td>
+                    <td>Low</td>
+                    <td>Medium</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td><strong>Microkernel</strong></td>
+                    <td>Medium</td>
+                    <td>High</td>
+                    <td>High</td>
+                    <td>High</td>
+                </tr>
+                <tr>
+                    <td><strong>Hybrid</strong></td>
+                    <td>High</td>
+                    <td>Medium</td>
+                    <td>Medium-High</td>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td><strong>Exokernel</strong></td>
+                    <td>Very High</td>
+                    <td>Very High</td>
+                    <td>Medium</td>
+                    <td>Very High</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🟡 📚 Choosing the Right Type</h2>
+        <p>
+            The choice of operating system type depends on the specific requirements:
+        </p>
+        <ul>
+            <li><strong>General-Purpose Computing:</strong> Monolithic or hybrid (Windows, Linux, macOS)</li>
+            <li><strong>Real-Time Systems:</strong> RTOS (VxWorks, FreeRTOS)</li>
+            <li><strong>Embedded Devices:</strong> Embedded OS (Embedded Linux, FreeRTOS)</li>
+            <li><strong>High-Performance Computing:</strong> Distributed OS or specialized kernels</li>
+            <li><strong>Research/Experimental:</strong> Exokernel or microkernel</li>
+        </ul>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)" target="_blank" rel="noopener noreferrer">Kernel (Operating System) - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_types.htm" target="_blank" rel="noopener noreferrer">Types of Operating Systems - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/types-of-operating-systems/" target="_blank" rel="noopener noreferrer">Types of Operating Systems - GeeksforGeeks</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
