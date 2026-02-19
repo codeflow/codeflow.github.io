@@ -1,0 +1,129 @@
+{
+  "name": "Codeflow Components Index",
+  "description": "Index of all available components in Codeflow",
+  "version": "1.0.0",
+  "lastUpdated": "2025-01-01",
+  "components": [
+    {
+      "id": "timeline",
+      "name": "Timeline",
+      "file": "timeline.json",
+      "description": "Component to display chronological events",
+      "category": "layout"
+    },
+    {
+      "id": "card",
+      "name": "Card",
+      "file": "card.json",
+      "description": "Container to group related content",
+      "category": "layout"
+    },
+    {
+      "id": "code-block",
+      "name": "Code Block",
+      "file": "code-block.json",
+      "description": "Code block with syntax highlighting",
+      "category": "content"
+    },
+    {
+      "id": "form",
+      "name": "Form",
+      "file": "form.json",
+      "description": "Form components",
+      "category": "form"
+    },
+    {
+      "id": "table",
+      "name": "Table",
+      "file": "table.json",
+      "description": "Table with theme styles",
+      "category": "content"
+    },
+    {
+      "id": "info-box",
+      "name": "Info Box",
+      "file": "info-box.json",
+      "description": "Informative boxes (info, highlight, success)",
+      "category": "content"
+    },
+    {
+      "id": "text",
+      "name": "Text Components",
+      "file": "text.json",
+      "description": "Text components (titles, paragraphs, lists)",
+      "category": "content"
+    },
+    {
+      "id": "icon-section",
+      "name": "Icon Section",
+      "file": "icon-section.json",
+      "description": "Section with large icon and content",
+      "category": "layout"
+    },
+    {
+      "id": "fieldset",
+      "name": "Fieldset",
+      "file": "fieldset.json",
+      "description": "Grouping of form fields",
+      "category": "form"
+    },
+    {
+      "id": "separator",
+      "name": "Separator",
+      "file": "separator.json",
+      "description": "Horizontal separator (HR)",
+      "category": "layout"
+    },
+    {
+      "id": "code-tabs",
+      "name": "Code Tabs",
+      "file": "code-tabs.json",
+      "description": "Code with tabs to show different versions or implementations",
+      "category": "content"
+    },
+    {
+      "id": "image",
+      "name": "Image (Figure)",
+      "file": "image.json",
+      "description": "Image with caption and source (figure/figcaption) to enrich sections",
+      "category": "content"
+    },
+    {
+      "id": "architecture-diagram",
+      "name": "Architecture Diagram",
+      "file": "architecture-diagram.json",
+      "description": "Layered architecture diagram with boxes and arrows, showing system layers or process flows",
+      "category": "content"
+    },
+    {
+      "id": "architecture-diagram-horizontal",
+      "name": "Architecture Diagram (Horizontal)",
+      "file": "architecture-diagram-horizontal.json",
+      "description": "Horizontal architecture diagram with boxes and arrows flowing left to right",
+      "category": "content"
+    },
+    {
+      "id": "memory-layers",
+      "name": "Memory Layers",
+      "file": "memory-layers.json",
+      "description": "Stacked layers diagram representing memory regions or hierarchical structures without arrows",
+      "category": "content"
+    },
+    {
+      "id": "progress-bar",
+      "name": "Progress Bar",
+      "file": "progress-bar.json",
+      "description": "Horizontal progress bar with percentage display (circular on mobile)",
+      "category": "content"
+    }
+  ],
+  "categories": {
+    "layout": "Layout and structure components",
+    "content": "Content components",
+    "form": "Form components"
+  },
+  "usage": {
+    "description": "Each component has a separate JSON file with its structure, properties and examples",
+    "example": "To use the timeline component, see templates/data/timeline.json"
+  }
+}

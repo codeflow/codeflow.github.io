@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+        
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>🔄 States and Lifecycle</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">18/02/2026 22:30:00</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Process states represent the different stages a process goes through during its execution. Understanding state transitions is fundamental to process management in operating systems.
+        </div>
+
+        <h2>📊 Process States</h2>
+        <p>
+            A process can be in one of several states during its lifecycle. The main states are:
+        </p>
+
+        <h3>New</h3>
+        <p>
+            The process is being created. At this stage, the operating system is allocating resources and initializing the Process Control Block (PCB).
+        </p>
+
+        <h3>Ready</h3>
+        <p>
+            The process is loaded into main memory and is waiting to be assigned to a CPU. It has all the resources it needs except for CPU time.
+        </p>
+
+        <h3>Running</h3>
+        <p>
+            The process is currently being executed by the CPU. Instructions are being executed, and the process is actively using processor resources.
+        </p>
+
+        <h3>Waiting (Blocked)</h3>
+        <p>
+            The process is waiting for some event to occur, such as:
+        </p>
+        <ul>
+            <li>I/O operation completion</li>
+            <li>Signal from another process</li>
+            <li>Resource availability</li>
+            <li>Timer expiration</li>
+        </ul>
+
+        <h3>Terminated</h3>
+        <p>
+            The process has finished execution or has been terminated. The operating system deallocates resources and removes the process from the system.
+        </p>
+
+        <h2>🔄 State Transitions</h2>
+        <p>
+            Processes transition between states based on various events:
+        </p>
+
+        <h3>New → Ready</h3>
+        <p>
+            When the operating system finishes creating the process and loads it into memory, it moves to the ready state.
+        </p>
+
+        <h3>Ready → Running</h3>
+        <p>
+            The scheduler selects the process from the ready queue and assigns it to a CPU. This transition is called <strong>dispatch</strong>.
+        </p>
+
+        <h3>Running → Ready</h3>
+        <p>
+            This occurs when:
+        </p>
+        <ul>
+            <li>The process's time slice expires (time quantum)</li>
+            <li>A higher priority process becomes ready (preemption)</li>
+            <li>The scheduler decides to switch processes</li>
+        </ul>
+
+        <h3>Running → Waiting</h3>
+        <p>
+            The process voluntarily gives up the CPU because it needs to wait for:
+        </p>
+        <ul>
+            <li>I/O operation to complete</li>
+            <li>Resource to become available</li>
+            <li>Signal or event</li>
+        </ul>
+
+        <h3>Waiting → Ready</h3>
+        <p>
+            When the event the process was waiting for occurs (e.g., I/O completes), the process moves back to the ready state.
+        </p>
+
+        <h3>Running → Terminated</h3>
+        <p>
+            The process finishes execution normally or is terminated by the operating system or another process.
+        </p>
+
+        <h2>📈 State Diagram</h2>
+        <p>
+            The following diagram illustrates the process state transitions:
+        </p>
+
+        <div class="arch-diagram">
+            <div class="arch-diagram__inner">
+                <!-- Fluxo principal: New → Ready → Running → Terminated -->
+                <div class="arch-diagram__stack">
+                    <div class="arch-diagram__box">New</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">Ready</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box arch-diagram__box--accent">Running</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">Terminated</div>
+                </div>
+                <!-- Ciclo: Running → Waiting → Ready -->
+                <div class="arch-diagram__stack">
+                    <div class="arch-diagram__box arch-diagram__box--accent">Running</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">Waiting</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">Ready</div>
+                </div>
+                <!-- Transição: Running → Ready (preempção) -->
+                <div class="arch-diagram__stack">
+                    <div class="arch-diagram__box arch-diagram__box--accent">Running</div>
+                    <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                    <div class="arch-diagram__box">Ready</div>
+                </div>
+                <div class="arch-diagram__caption">Process State Transitions</div>
+            </div>
+        </div>
+
+        <h2>💻 Practical Example</h2>
+        <p>
+            The following complete example demonstrates how to check and monitor process states in Linux:
+        </p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="code-block-language">bash</span>
+                <button class="code-block-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-bash">#!/bin/bash
+
+# Check process state using ps command
+ps aux | grep process_name
+
+# View detailed process information
+ps -o pid,state,cmd -p &lt;PID&gt;
+
+# Monitor process state changes in real-time
+watch -n 1 'ps -o pid,state,cmd -p &lt;PID&gt;'
+
+# List all processes with their states
+ps -eo pid,state,cmd | head -20
+
+# Common states in ps output:
+# R - Running or Runnable
+# S - Interruptible Sleep (waiting)
+# D - Uninterruptible Sleep (I/O)
+# T - Stopped
+# Z - Zombie</code></pre>
+        </div>
+
+        <h4>Part 1: Basic Process State Check</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="code-block-language">bash</span>
+                <button class="code-block-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-bash"># Check process state using ps command
+ps aux | grep process_name</code></pre>
+        </div>
+        <p>
+            The <code>ps aux</code> command lists all running processes with detailed information. The <code>grep</code> command filters the output to show only processes matching the specified name. This is useful for finding a specific process and checking its current state.
+        </p>
+
+        <h4>Part 2: Detailed Process Information</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="code-block-language">bash</span>
+                <button class="code-block-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-bash"># View detailed process information
+ps -o pid,state,cmd -p &lt;PID&gt;</code></pre>
+        </div>
+        <p>
+            The <code>ps -o</code> command allows you to specify custom output formats. Here, we display the Process ID (PID), current state, and command. The <code>-p</code> option specifies the process ID to query. This provides precise information about a specific process's state.
+        </p>
+
+        <h4>Part 3: Real-time State Monitoring</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="code-block-language">bash</span>
+                <button class="code-block-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-bash"># Monitor process state changes in real-time
+watch -n 1 'ps -o pid,state,cmd -p &lt;PID&gt;'</code></pre>
+        </div>
+        <p>
+            The <code>watch</code> command executes the specified command repeatedly at regular intervals (every 1 second in this case). This allows you to observe state transitions in real-time, which is particularly useful for debugging and understanding process behavior.
+        </p>
+
+        <h4>Part 4: Understanding State Codes</h4>
+        <p>
+            The <code>ps</code> command uses single-letter codes to represent process states:
+        </p>
+        <ul>
+            <li><strong>R (Running/Runnable):</strong> The process is either currently executing or ready to run</li>
+            <li><strong>S (Interruptible Sleep):</strong> The process is waiting for an event (can be interrupted by signals)</li>
+            <li><strong>D (Uninterruptible Sleep):</strong> The process is waiting for I/O completion (cannot be interrupted)</li>
+            <li><strong>T (Stopped):</strong> The process has been stopped by a signal (e.g., SIGSTOP)</li>
+            <li><strong>Z (Zombie):</strong> The process has terminated but its parent hasn't read its exit status</li>
+        </ul>
+
+        <h2>🔍 State Information in Process Control Block</h2>
+        <p>
+            The Process Control Block (PCB) stores the current state of the process. This information is crucial for:
+        </p>
+        <ul>
+            <li><strong>Context Switching:</strong> The OS needs to know the process state to save and restore context</li>
+            <li><strong>Scheduling:</strong> Only ready processes can be scheduled</li>
+            <li><strong>Resource Management:</strong> Waiting processes indicate resource dependencies</li>
+            <li><strong>Process Synchronization:</strong> State information helps coordinate process interactions</li>
+        </ul>
+
+        <h2>⚡ Preemption and Non-Preemption</h2>
+        <p>
+            State transitions can be:
+        </p>
+
+        <h3>Preemptive</h3>
+        <p>
+            The operating system can forcibly move a process from running to ready state (e.g., when a higher priority process becomes ready).
+        </p>
+
+        <h3>Non-Preemptive</h3>
+        <p>
+            The process voluntarily gives up the CPU (e.g., when it finishes its time slice or needs to wait for I/O).
+        </p>
+
+        <h2>📝 Summary</h2>
+        <p>
+            Process states and their transitions form the foundation of process management in operating systems. Understanding these states helps in:
+        </p>
+        <ul>
+            <li>Designing efficient scheduling algorithms</li>
+            <li>Optimizing resource utilization</li>
+            <li>Implementing process synchronization mechanisms</li>
+            <li>Debugging process-related issues</li>
+        </ul>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Process_state" target="_blank" rel="noopener noreferrer">Process State - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_processes_lifecycle.htm" target="_blank" rel="noopener noreferrer">Operating System - Process Life Cycle - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/states-of-a-process-in-operating-systems/" target="_blank" rel="noopener noreferrer">States of a Process in Operating Systems - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/process-scheduling-in-operating-system/" target="_blank" rel="noopener noreferrer">Process Scheduling in Operating System - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.javatpoint.com/os-process-states" target="_blank" rel="noopener noreferrer">OS Process States - JavaTpoint</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

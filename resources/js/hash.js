@@ -1,8 +1,8 @@
-// Sistema de Hash para Categorias e Tópicos
+// Hash System for Categories and Topics
 
-// Função para gerar hash de categoria
+// Function to generate category hash
 function getCategoryHashCode(categoryName) {
-    // Normaliza: remove espaços, acentos, converte para minúsculas
+    // Normalizes: removes spaces, accents, converts to lowercase
     const normalized = categoryName.toLowerCase()
         .replace(/\s+/g, '')
         .replace(/[àáâãäå]/g, 'a')
@@ -22,7 +22,7 @@ function getCategoryHashCode(categoryName) {
     return prefix + Math.abs(hash).toString().substring(0, 6);
 }
 
-// Mapeamento de categorias para hash (para manter consistência)
+// Category to hash mapping (to maintain consistency)
 const categoryHashes = {
     'História do Java': getCategoryHashCode('História do Java'),
     'Sintaxe & Estruturas Básicas': getCategoryHashCode('Sintaxe & Estruturas Básicas'),
@@ -38,9 +38,9 @@ function getCategoryHash(categoryName) {
     return categoryHashes[categoryName] || getCategoryHashCode(categoryName);
 }
 
-// Função para gerar hash do nome do arquivo baseado no tópico
+// Function to generate file name hash based on topic
 function getTopicFileNameHash(topicName) {
-    // Normaliza o nome do tópico
+    // Normalizes topic name
     const normalized = topicName.toLowerCase()
         .replace(/\s+/g, '')
         .replace(/[àáâãäå]/g, 'a')
@@ -52,7 +52,7 @@ function getTopicFileNameHash(topicName) {
         .replace(/[&]/g, 'e')
         .replace(/[^a-z0-9]/g, '');
     
-    // Gera hash numérico
+    // Generates numeric hash
     let hash = 0;
     for (let i = 0; i < normalized.length; i++) {
         const char = normalized.charCodeAt(i);
@@ -60,11 +60,11 @@ function getTopicFileNameHash(topicName) {
         hash = hash & hash;
     }
     
-    // Converte para string alfanumérica (base36)
+    // Converts to alphanumeric string (base36)
     const hashNum = Math.abs(hash);
     const hashStr = hashNum.toString(36);
     
-    // Gera hash adicional baseado em posição dos caracteres para mais aleatoriedade
+    // Generates additional hash based on character position for more randomness
     let additionalHash = 0;
     for (let i = 0; i < normalized.length; i++) {
         additionalHash = ((additionalHash << 3) - additionalHash) + (normalized.charCodeAt(i) * (i + 1));
@@ -72,10 +72,10 @@ function getTopicFileNameHash(topicName) {
     }
     const additionalStr = Math.abs(additionalHash).toString(36);
     
-    // Combina os dois hashes e pega os primeiros 20 caracteres
+    // Combines both hashes and takes first 20 characters
     const combined = (hashStr + additionalStr).replace(/[^a-z0-9]/g, '').substring(0, 20);
     
-    // Garante que tenha pelo menos 10 caracteres
+    // Ensures it has at least 10 characters
     return combined.length >= 10 ? combined : combined + Math.abs(hash).toString(36).substring(0, 10 - combined.length);
 }
 

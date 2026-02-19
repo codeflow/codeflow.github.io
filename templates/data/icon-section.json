@@ -1,0 +1,46 @@
+{
+  "component": "icon-section",
+  "name": "Icon Section",
+  "description": "Section with large icon and content beside it",
+  "version": "1.0.0",
+  "cssClasses": {
+    "container": "icon-section",
+    "icon": "emoji-large"
+  },
+  "structure": {
+    "html": "<div class=\"icon-section\">\n  <span class=\"emoji-large\">📚</span>\n  <div>\n    <h3>Section Title</h3>\n    <p>Section content here.</p>\n  </div>\n</div>",
+    "required": ["container", "icon", "content"],
+    "optional": ["h3", "p", "ul", "ol"]
+  },
+  "properties": {
+    "icon": {
+      "type": "string",
+      "description": "Emoji or icon to be displayed (large size)",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Section title (usually h3)",
+      "required": false
+    },
+    "content": {
+      "type": "string|array",
+      "description": "Section content. Can be string or array of paragraphs",
+      "required": true
+    }
+  },
+  "example": {
+    "icon": "📚",
+    "title": "Structured Content",
+    "content": "All content is organized in a hierarchical and progressive way, allowing you to learn from basic to advanced naturally."
+  },
+  "renderedHtml": "<div class=\"icon-section\">\n  <span class=\"emoji-large\">📚</span>\n  <div>\n    <h3>Structured Content</h3>\n    <p>All content is organized in a hierarchical and progressive way, allowing you to learn from basic to advanced naturally.</p>\n  </div>\n</div>",
+  "features": [
+    "Horizontal flexbox layout",
+    "Large icon (3-4rem)",
+    "Vertically aligned content",
+    "0.5-1rem gap between icon and content",
+    "Responsive"
+  ],
+  "notes": "The icon-section component uses flexbox to align the icon to the left and content to the right. The icon can be an emoji or any Unicode character."
+}

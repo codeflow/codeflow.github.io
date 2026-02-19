@@ -1,0 +1,105 @@
+{
+  "component": "form",
+  "name": "Form",
+  "description": "Form components including inputs, selects, textareas, buttons, checkboxes and radios",
+  "version": "1.0.0",
+  "cssClasses": {
+    "form": "app-form",
+    "label": "app-label",
+    "input": "app-input",
+    "select": "app-select",
+    "textarea": "app-textarea",
+    "button": "app-button"
+  },
+  "components": {
+    "form": {
+      "description": "Main form container",
+      "html": "<form class=\"app-form\">\n  <!-- fields here -->\n</form>"
+    },
+    "input": {
+      "description": "Text input field",
+      "html": "<div>\n  <label for=\"field\" class=\"app-label\">Label:</label>\n  <input type=\"text\" id=\"field\" name=\"field\" class=\"app-input\" placeholder=\"Type here\">\n</div>",
+      "types": ["text", "email", "password", "number", "date", "time", "datetime-local", "month", "week", "range", "search", "tel", "url"]
+    },
+    "select": {
+      "description": "Selection field",
+      "html": "<div>\n  <label for=\"field\" class=\"app-label\">Label:</label>\n  <select id=\"field\" name=\"field\" class=\"app-select\">\n    <option value=\"\">Select</option>\n    <option value=\"option1\">Option 1</option>\n  </select>\n</div>"
+    },
+    "textarea": {
+      "description": "Multiline text area",
+      "html": "<div>\n  <label for=\"field\" class=\"app-label\">Label:</label>\n  <textarea id=\"field\" name=\"field\" class=\"app-textarea\" rows=\"5\" placeholder=\"Type here\"></textarea>\n</div>"
+    },
+    "button": {
+      "description": "Action button",
+      "html": "<button type=\"submit\" class=\"app-button\">Submit</button>",
+      "types": ["submit", "reset", "button"]
+    },
+    "checkbox": {
+      "description": "Checkbox",
+      "html": "<div>\n  <label>\n    <input type=\"checkbox\" name=\"option\" value=\"value\">\n    Option text\n  </label>\n</div>"
+    },
+    "radio": {
+      "description": "Radio button",
+      "html": "<div>\n  <label>\n    <input type=\"radio\" name=\"option\" value=\"value\" checked>\n    Option text\n  </label>\n</div>"
+    },
+    "fieldset": {
+      "description": "Field grouping",
+      "html": "<fieldset>\n  <legend>Group Title</legend>\n  <!-- fields here -->\n</fieldset>"
+    }
+  },
+  "example": {
+    "fields": [
+      {
+        "fieldType": "input",
+        "label": "Full Name",
+        "name": "name",
+        "id": "name",
+        "inputType": "text",
+        "placeholder": "Enter your name",
+        "required": true
+      },
+      {
+        "fieldType": "input",
+        "label": "Email",
+        "name": "email",
+        "id": "email",
+        "inputType": "email",
+        "placeholder": "your@email.com",
+        "required": true
+      },
+      {
+        "fieldType": "select",
+        "label": "Country",
+        "name": "country",
+        "id": "country",
+        "options": [
+          {"value": "", "text": "Select a country"},
+          {"value": "br", "text": "Brazil"},
+          {"value": "us", "text": "United States"}
+        ]
+      },
+      {
+        "fieldType": "textarea",
+        "label": "Message",
+        "name": "message",
+        "id": "message",
+        "rows": 5,
+        "placeholder": "Enter your message"
+      },
+      {
+        "fieldType": "button",
+        "text": "Submit",
+        "buttonType": "submit"
+      }
+    ]
+  },
+  "renderedHtml": "<form class=\"app-form\">\n  <div>\n    <label for=\"name\" class=\"app-label\">Full Name:</label>\n    <input type=\"text\" id=\"name\" name=\"name\" class=\"app-input\" placeholder=\"Enter your name\">\n  </div>\n  <div>\n    <label for=\"email\" class=\"app-label\">Email:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" class=\"app-input\" placeholder=\"your@email.com\">\n  </div>\n  <div>\n    <label for=\"country\" class=\"app-label\">Country:</label>\n    <select id=\"country\" name=\"country\" class=\"app-select\">\n      <option value=\"\">Select a country</option>\n      <option value=\"br\">Brazil</option>\n      <option value=\"us\">United States</option>\n    </select>\n  </div>\n  <div>\n    <label for=\"message\" class=\"app-label\">Message:</label>\n    <textarea id=\"message\" name=\"message\" class=\"app-textarea\" rows=\"5\" placeholder=\"Enter your message\"></textarea>\n  </div>\n  <div>\n    <button type=\"submit\" class=\"app-button\">Submit</button>\n  </div>\n</form>",
+  "features": [
+    "Background gradient on fields",
+    "Focus effect with highlighted color",
+    "Disabled and readonly states",
+    "Consistent styles on all fields",
+    "Responsive"
+  ],
+  "notes": "All form fields automatically follow the BlueSky theme when using the appropriate classes."
+}

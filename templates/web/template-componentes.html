@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Template of various components available in Codeflow">
+    <meta name="keywords" content="template, components, tables, cards, codeflow, example">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-componentes.html">
+    
+    <title>Codeflow - Components Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView"></ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Components Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>🧩 Components Template</h1>
+                    
+                    <p>This template demonstrates all visual components available in the Codeflow BlueSky theme, including tables, cards, informative boxes, code and other elements.</p>
+
+                    <h2>📊 Tables</h2>
+                    
+                    <h3>Basic Table</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>City</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>João Silva</td>
+                                <td>30</td>
+                                <td>São Paulo</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>Maria Santos</td>
+                                <td>25</td>
+                                <td>Rio de Janeiro</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>Pedro Oliveira</td>
+                                <td>35</td>
+                                <td>Belo Horizonte</td>
+                                <td>Inactive</td>
+                            </tr>
+                            <tr>
+                                <td>Ana Costa</td>
+                                <td>28</td>
+                                <td>Curitiba</td>
+                                <td>Active</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>Table with Header and Footer</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Notebook</td>
+                                <td>2</td>
+                                <td>R$ 2.500,00</td>
+                                <td>R$ 5.000,00</td>
+                            </tr>
+                            <tr>
+                                <td>Mouse</td>
+                                <td>5</td>
+                                <td>R$ 50,00</td>
+                                <td>R$ 250,00</td>
+                            </tr>
+                            <tr>
+                                <td>Teclado</td>
+                                <td>3</td>
+                                <td>R$ 150,00</td>
+                                <td>R$ 450,00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"><strong>Grand Total</strong></td>
+                                <td><strong>R$ 5.700,00</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    <h3>Table with Colspan and Rowspan</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Category</th>
+                                <th colspan="2">Sales</th>
+                                <th rowspan="2">Total</th>
+                            </tr>
+                            <tr>
+                                <th>Q1</th>
+                                <th>Q2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Electronics</td>
+                                <td>R$ 10.000,00</td>
+                                <td>R$ 12.000,00</td>
+                                <td>R$ 22.000,00</td>
+                            </tr>
+                            <tr>
+                                <td>Clothing</td>
+                                <td>R$ 5.000,00</td>
+                                <td>R$ 6.000,00</td>
+                                <td>R$ 11.000,00</td>
+                            </tr>
+                            <tr>
+                                <td>Accessories</td>
+                                <td>R$ 3.000,00</td>
+                                <td>R$ 4.000,00</td>
+                                <td>R$ 7.000,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>📦 Cards</h2>
+                    
+                    <div class="app-card">
+                        <h3>Basic Card</h3>
+                        <p>This is an example card using the class <code>.app-card</code>. Cards are useful for grouping related content and creating distinct visual sections.</p>
+                        <p>Cards have blue border, internal padding and automatic margin for centering.</p>
+                    </div>
+                    
+                    <div class="app-card">
+                        <h3>Card with List</h3>
+                        <ul>
+                            <li>Card item 1</li>
+                            <li>Card item 2</li>
+                            <li>Card item 3</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="app-card">
+                        <h3>Card with Link</h3>
+                        <p>This card contains an <a href="#exemplo">example link</a> to demonstrate how links appear inside cards.</p>
+                    </div>
+
+                    <h2>📢 Informative Boxes</h2>
+                    
+                    <div class="info-box">
+                        <strong>ℹ️ Information:</strong> This is an informative box using the class <code>.info-box</code>. Use to highlight important information or useful tips.
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <strong>💡 Highlight:</strong> This is a highlight box using the class <code>.highlight-box</code>. Use to draw attention to special information or warnings.
+                    </div>
+                    
+                    <div class="success-box">
+                        <strong>✅ Success:</strong> This is a success box using the class <code>.success-box</code>. Use to show success messages or confirmations.
+                    </div>
+
+                    <h2>💻 Code Blocks</h2>
+                    
+                    <h3>Code Block with Header</h3>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">JAVASCRIPT</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">// JavaScript code example
+function example() {
+    const data = {
+        name: 'Codeflow',
+        version: '1.0.0'
+    };
+    
+    console.log(`Welcome to ${data.name} v${data.version}`);
+    
+    return data;
+}</code></pre>
+                    </div>
+                    
+                    <h3>Simple Code Block</h3>
+                    <pre><code class="language-html">&lt;div class="app-card"&gt;
+    &lt;h3&gt;Card Title&lt;/h3&gt;
+    &lt;p&gt;Card content here.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                    
+                    <h3>Inline Code</h3>
+                    <p>Use <code>const x = 10;</code> for inline code within paragraphs.</p>
+
+                    <h2>🎨 Sections with Icons</h2>
+                    
+                    <div class="icon-section">
+                        <span class="emoji-large">📚</span>
+                        <div>
+                            <h3>Structured Content</h3>
+                            <p>All content is organized hierarchically and progressively, allowing you to learn from basic to advanced naturally.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="icon-section">
+                        <span class="emoji-large">🌐</span>
+                        <div>
+                            <h3>Multi-language Support</h3>
+                            <p>All content is available in Portuguese (BR) and English (EN), allowing you to choose your preferred language.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="icon-section">
+                        <span class="emoji-large">📝</span>
+                        <div>
+                            <h3>Rich Content</h3>
+                            <p>Each topic includes detailed explanations, code examples with syntax highlighting, tables, icons and visual resources to facilitate learning.</p>
+                        </div>
+                    </div>
+
+                    <h2>📐 Fieldset and Legend</h2>
+                    
+                    <fieldset>
+                        <legend>Personal Information</legend>
+                        <p>This is an example of fieldset with legend. Use to group related form fields.</p>
+                        <p>The fieldset has a blue border and the legend appears at the top of the border.</p>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Preferences</legend>
+                        <p>Another example of fieldset to demonstrate how multiple fieldsets appear on the page.</p>
+                    </fieldset>
+
+                    <h2>➖ Separators</h2>
+                    
+                    <p>Text before horizontal separator.</p>
+                    <hr>
+                    <p>Text after horizontal separator.</p>
+
+                    <h2>🖼️ Image Placeholder</h2>
+                    
+                    <div class="image-placeholder">
+                        <p>🖼️ Image: example.png</p>
+                        <p><small>Use this class to indicate where an image will be inserted</small></p>
+                    </div>
+
+                    <h2>📝 Example de Código HTML</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">HTML</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-html">&lt;!-- Table --&gt;
+&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Column 1&lt;/th&gt;
+            &lt;th&gt;Column 2&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Data 1&lt;/td&gt;
+            &lt;td&gt;Data 2&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;!-- Card --&gt;
+&lt;div class="app-card"&gt;
+    &lt;h3&gt;Title&lt;/h3&gt;
+    &lt;p&gt;Card content.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Info Box --&gt;
+&lt;div class="info-box"&gt;
+    &lt;strong&gt;Information:&lt;/strong&gt; Informative text here.
+&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> All components automatically follow the BlueSky theme. Use the appropriate classes to ensure visual consistency across all pages.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

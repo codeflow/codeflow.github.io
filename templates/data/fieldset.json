@@ -1,0 +1,52 @@
+{
+  "component": "fieldset",
+  "name": "Fieldset",
+  "description": "Grouping of form fields with legend",
+  "version": "1.0.0",
+  "cssClasses": {
+    "fieldset": "fieldset",
+    "legend": "legend"
+  },
+  "structure": {
+    "html": "<fieldset>\n  <legend>Group Title</legend>\n  <!-- fields here -->\n</fieldset>",
+    "required": ["fieldset", "legend"],
+    "optional": ["input", "select", "textarea", "checkbox", "radio"]
+  },
+  "properties": {
+    "legend": {
+      "type": "string",
+      "description": "Title of the field group",
+      "required": true
+    },
+    "fields": {
+      "type": "array",
+      "description": "Array of fields within the fieldset",
+      "required": true
+    }
+  },
+  "example": {
+    "legend": "Personal Information",
+    "fields": [
+      {
+        "fieldType": "input",
+        "label": "Name",
+        "name": "name",
+        "inputType": "text"
+      },
+      {
+        "fieldType": "input",
+        "label": "Email",
+        "name": "email",
+        "inputType": "email"
+      }
+    ]
+  },
+  "renderedHtml": "<fieldset>\n  <legend>Personal Information</legend>\n  <div>\n    <label for=\"name\" class=\"app-label\">Name:</label>\n    <input type=\"text\" id=\"name\" name=\"name\" class=\"app-input\">\n  </div>\n  <div>\n    <label for=\"email\" class=\"app-label\">Email:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" class=\"app-input\">\n  </div>\n</fieldset>",
+  "features": [
+    "Blue border (#BED6F8)",
+    "Internal padding of 10px",
+    "Styled legend",
+    "Groups related fields"
+  ],
+  "notes": "The fieldset is useful for visually grouping related form fields. The legend appears at the top of the border."
+}

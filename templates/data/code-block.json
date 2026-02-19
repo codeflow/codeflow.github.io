@@ -1,0 +1,57 @@
+{
+  "component": "code-block",
+  "name": "Code Block",
+  "description": "Code block with syntax highlighting and copy button",
+  "version": "1.0.0",
+  "cssClasses": {
+    "wrapper": "code-block-wrapper",
+    "header": "code-block-header",
+    "languageLabel": "language-label",
+    "copyButton": "copy-code-btn",
+    "pre": "pre",
+    "code": "code"
+  },
+  "structure": {
+    "html": "<div class=\"code-block-wrapper\">\n  <div class=\"code-block-header\">\n    <span class=\"language-label\">JAVASCRIPT</span>\n    <button class=\"copy-code-btn\" onclick=\"copyCode(this)\">Copy</button>\n  </div>\n  <pre><code class=\"language-javascript\">// code here</code></pre>\n</div>",
+    "required": ["wrapper", "header", "pre", "code"],
+    "optional": ["languageLabel", "copyButton"]
+  },
+  "properties": {
+    "language": {
+      "type": "string",
+      "description": "Programming language for syntax highlighting",
+      "required": true,
+      "options": ["javascript", "java", "html", "css", "python", "go", "json", "xml", "bash", "sql", "typescript", "php", "ruby", "c", "cpp", "csharp"]
+    },
+    "code": {
+      "type": "string",
+      "description": "Code to be displayed",
+      "required": true
+    },
+    "showCopyButton": {
+      "type": "boolean",
+      "description": "Show copy code button",
+      "default": true
+    },
+    "showLineNumbers": {
+      "type": "boolean",
+      "description": "Show line numbers (requires highlightjs-line-numbers.js)",
+      "default": true
+    }
+  },
+  "example": {
+    "language": "javascript",
+    "code": "function example() {\n  const data = {\n    name: 'Codeflow',\n    version: '1.0.0'\n  };\n  \n  console.log(`Welcome to ${data.name} v${data.version}`);\n  \n  return data;\n}",
+    "showCopyButton": true,
+    "showLineNumbers": true
+  },
+  "renderedHtml": "<div class=\"code-block-wrapper\">\n  <div class=\"code-block-header\">\n    <span class=\"language-label\">JAVASCRIPT</span>\n    <button class=\"copy-code-btn\" onclick=\"copyCode(this)\">Copy</button>\n  </div>\n  <pre><code class=\"language-javascript\">function example() {\n  const data = {\n    name: 'Codeflow',\n    version: '1.0.0'\n  };\n  \n  console.log(`Welcome ${data.name} v${data.version}`);\n  \n  return data;\n}</code></pre>\n</div>",
+  "features": [
+    "Syntax highlighting with Highlight.js",
+    "Copy code button",
+    "Optional line numbers",
+    "Header with language label",
+    "Support for multiple languages"
+  ],
+  "notes": "For simple inline code, use only the <code> tag without the wrapper. The copy button requires the copyCode() function in JavaScript."
+}

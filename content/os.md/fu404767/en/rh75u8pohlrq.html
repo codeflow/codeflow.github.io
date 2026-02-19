@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+        
+        // copyCode: fallback for standalone access (index.html already defines it globally)
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>📌 Introduction and Basic Concepts</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">18/02/2026 21:10:16</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> What is an operating system, main functions, interface between hardware and software, abstractions.
+        </div>
+
+        <h2>🟢 📚 What is an Operating System?</h2>
+        <p>
+            An <strong>Operating System (OS)</strong> is system software that manages computer hardware, software resources, and provides common services for computer programs. It acts as an intermediary between users and the computer hardware, making it easier to use the computer efficiently.
+        </p>
+        <p>
+            The operating system is the most important software that runs on a computer. It manages the computer's memory and processes, as well as all of its software and hardware. It also allows you to communicate with the computer without knowing how to speak the computer's language.
+        </p>
+
+        <h2>🟢 📚 Main Functions of an Operating System</h2>
+        <p>
+            Operating systems perform several key functions:
+        </p>
+        <ul>
+            <li><strong>Process Management:</strong> Creating, scheduling, and terminating processes</li>
+            <li><strong>Memory Management:</strong> Allocating and managing system memory</li>
+            <li><strong>File System Management:</strong> Organizing and managing files and directories</li>
+            <li><strong>Device Management:</strong> Controlling and coordinating input/output devices</li>
+            <li><strong>Security and Access Control:</strong> Protecting system resources and user data</li>
+            <li><strong>User Interface:</strong> Providing interfaces for users to interact with the system</li>
+            <li><strong>Resource Allocation:</strong> Managing and allocating system resources efficiently</li>
+        </ul>
+
+        <h2>🟢 📚 Interface Between Hardware and Software</h2>
+        <p>
+            The operating system serves as a crucial interface layer between hardware and software:
+        </p>
+        <ul>
+            <li><strong>Hardware Abstraction:</strong> The OS hides hardware complexity from applications</li>
+            <li><strong>System Calls:</strong> Applications request OS services through system calls</li>
+            <li><strong>Device Drivers:</strong> The OS uses drivers to communicate with hardware devices</li>
+            <li><strong>Resource Virtualization:</strong> The OS provides virtual resources to applications</li>
+        </ul>
+        <p>
+            Without an operating system, each application would need to include its own code to handle hardware interactions, making software development extremely complex and error-prone.
+        </p>
+
+        <h2>🟡 📚 Abstractions Provided by the OS</h2>
+        <p>
+            Operating systems provide important abstractions that simplify programming:
+        </p>
+        <ul>
+            <li><strong>Process Abstraction:</strong> Each program runs as an independent process</li>
+            <li><strong>File Abstraction:</strong> Data is organized into files and directories</li>
+            <li><strong>Virtual Memory:</strong> Each process sees a large, uniform address space</li>
+            <li><strong>Device Abstraction:</strong> Hardware devices appear as simple files or interfaces</li>
+            <li><strong>Network Abstraction:</strong> Network communication is simplified through sockets</li>
+        </ul>
+
+        <h2>🟡 📚 Operating System Layers</h2>
+        <p>
+            Modern operating systems are typically organized in layers:
+        </p>
+
+        <div class="memory-layers">
+            <div class="memory-layers__inner">
+                <div class="memory-layers__layer memory-layers__layer--accent">
+                    <div class="memory-layers__layer-header">User Space</div>
+                    <div class="memory-layers__layer-content">Where applications and user programs run</div>
+                </div>
+                <div class="memory-layers__layer">
+                    <div class="memory-layers__layer-header">System Libraries</div>
+                    <div class="memory-layers__layer-content">Provide common functions to applications</div>
+                </div>
+                <div class="memory-layers__layer">
+                    <div class="memory-layers__layer-header">System Call Interface</div>
+                    <div class="memory-layers__layer-content">The boundary between user space and kernel</div>
+                </div>
+                <div class="memory-layers__layer">
+                    <div class="memory-layers__layer-header">Kernel Space</div>
+                    <div class="memory-layers__layer-content">Core OS functionality (process management, memory, I/O)</div>
+                </div>
+                <div class="memory-layers__layer memory-layers__layer--accent">
+                    <div class="memory-layers__layer-header">Hardware</div>
+                    <div class="memory-layers__layer-content">Physical computer components</div>
+                </div>
+                <div class="memory-layers__caption">Operating System Layers</div>
+            </div>
+        </div>
+
+        <h2>🟡 📚 Types of Operating Systems</h2>
+        <p>
+            Operating systems can be classified in various ways:
+        </p>
+        <ul>
+            <li><strong>By Architecture:</strong> Monolithic, microkernel, hybrid, exokernel</li>
+            <li><strong>By Purpose:</strong> General-purpose, real-time, embedded, distributed</li>
+            <li><strong>By User Interface:</strong> Command-line (CLI), graphical (GUI), touch-based</li>
+            <li><strong>By Number of Users:</strong> Single-user, multi-user</li>
+            <li><strong>By Task Handling:</strong> Single-tasking, multi-tasking</li>
+        </ul>
+
+        <h2>🟢 📚 Key Concepts</h2>
+        <p>
+            Understanding operating systems requires familiarity with several key concepts:
+        </p>
+        <ul>
+            <li><strong>Kernel:</strong> The core component that manages system resources</li>
+            <li><strong>Process:</strong> A running instance of a program</li>
+            <li><strong>Thread:</strong> A lightweight process that shares memory with other threads</li>
+            <li><strong>System Call:</strong> A programmatic way to request services from the OS</li>
+            <li><strong>Interrupt:</strong> A signal that causes the processor to temporarily stop and handle an event</li>
+            <li><strong>Context Switch:</strong> The process of switching from one process to another</li>
+        </ul>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Operating_system" target="_blank" rel="noopener noreferrer">Operating System - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/index.htm" target="_blank" rel="noopener noreferrer">Operating System Tutorial</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/operating-systems/" target="_blank" rel="noopener noreferrer">Operating Systems - GeeksforGeeks</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

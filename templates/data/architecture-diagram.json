@@ -1,0 +1,92 @@
+{
+  "component": "architecture-diagram",
+  "name": "Architecture Diagram",
+  "description": "Layered architecture diagram with boxes and arrows, showing system layers or process flows. Supports single column (vertical) or multiple columns (side by side).",
+  "version": "1.0.0",
+  "cssClasses": {
+    "diagram": "arch-diagram",
+    "inner": "arch-diagram__inner",
+    "stack": "arch-diagram__stack",
+    "box": "arch-diagram__box",
+    "boxAccent": "arch-diagram__box--accent",
+    "arrow": "arch-diagram__arrow",
+    "arrowLine": "arch-diagram__arrow-line",
+    "caption": "arch-diagram__caption"
+  },
+  "structure": {
+    "singleColumn": "<div class=\"arch-diagram\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack\">\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">{LAYER_1}</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">{LAYER_2}</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">{LAYER_3}</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">{LAYER_4}</div>\n    </div>\n    <div class=\"arch-diagram__caption\">{CAPTION}</div>\n  </div>\n</div>",
+    "multipleColumns": "<div class=\"arch-diagram\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack\">\n      {COLUMN_1_CONTENT}\n    </div>\n    <div class=\"arch-diagram__stack\">\n      {COLUMN_2_CONTENT}\n    </div>\n    <div class=\"arch-diagram__stack\">\n      {COLUMN_3_CONTENT}\n    </div>\n    <div class=\"arch-diagram__caption\">{CAPTION}</div>\n  </div>\n</div>",
+    "required": ["CAPTION"],
+    "optional": ["LAYER_1", "LAYER_2", "LAYER_3", "LAYER_4", "COLUMN_1_CONTENT", "COLUMN_2_CONTENT", "COLUMN_3_CONTENT"]
+  },
+  "properties": {
+    "CAPTION": {
+      "type": "string",
+      "description": "Caption text displayed at bottom-right of the outer box.",
+      "required": true
+    },
+    "LAYER_1": {
+      "type": "string",
+      "description": "First layer (top) - use accent class for emphasis.",
+      "required": false
+    },
+    "LAYER_2": {
+      "type": "string",
+      "description": "Second layer.",
+      "required": false
+    },
+    "LAYER_3": {
+      "type": "string",
+      "description": "Third layer.",
+      "required": false
+    },
+    "LAYER_4": {
+      "type": "string",
+      "description": "Last layer (bottom) - use accent class for emphasis.",
+      "required": false
+    },
+    "COLUMN_1_CONTENT": {
+      "type": "string",
+      "description": "HTML content for first column (multiple boxes and arrows).",
+      "required": false
+    },
+    "COLUMN_2_CONTENT": {
+      "type": "string",
+      "description": "HTML content for second column (multiple boxes and arrows).",
+      "required": false
+    },
+    "COLUMN_3_CONTENT": {
+      "type": "string",
+      "description": "HTML content for third column (multiple boxes and arrows).",
+      "required": false
+    }
+  },
+  "example": {
+    "singleColumn": {
+      "LAYER_1": "Application Layer",
+      "LAYER_2": "GTK (Widget Toolkit)",
+      "LAYER_3": "GDK (Platform Abstraction)",
+      "LAYER_4": "Operating System / Display Server",
+      "CAPTION": "GTK Architecture"
+    },
+    "multipleColumns": {
+      "COLUMN_1_CONTENT": "<div class=\"arch-diagram__box\">New</div>\n<div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n<div class=\"arch-diagram__box\">Ready</div>\n<div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n<div class=\"arch-diagram__box arch-diagram__box--accent\">Running</div>\n<div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n<div class=\"arch-diagram__box\">Terminated</div>",
+      "COLUMN_2_CONTENT": "<div class=\"arch-diagram__box arch-diagram__box--accent\">Running</div>\n<div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n<div class=\"arch-diagram__box\">Waiting</div>\n<div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n<div class=\"arch-diagram__box\">Ready</div>",
+      "COLUMN_3_CONTENT": "<div class=\"arch-diagram__box arch-diagram__box--accent\">Running</div>\n<div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n<div class=\"arch-diagram__box\">Ready</div>",
+      "CAPTION": "Process State Transitions"
+    }
+  },
+  "renderedHtml": {
+    "singleColumn": "<div class=\"arch-diagram\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack\">\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">Application Layer</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">GTK (Widget Toolkit)</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">GDK (Platform Abstraction)</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">Operating System / Display Server</div>\n    </div>\n    <div class=\"arch-diagram__caption\">GTK Architecture</div>\n  </div>\n</div>",
+    "multipleColumns": "<div class=\"arch-diagram\">\n  <div class=\"arch-diagram__inner\">\n    <div class=\"arch-diagram__stack\">\n      <div class=\"arch-diagram__box\">New</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">Ready</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">Running</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">Terminated</div>\n    </div>\n    <div class=\"arch-diagram__stack\">\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">Running</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">Waiting</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">Ready</div>\n    </div>\n    <div class=\"arch-diagram__stack\">\n      <div class=\"arch-diagram__box arch-diagram__box--accent\">Running</div>\n      <div class=\"arch-diagram__arrow\"><span class=\"arch-diagram__arrow-line\"></span></div>\n      <div class=\"arch-diagram__box\">Ready</div>\n    </div>\n    <div class=\"arch-diagram__caption\">Process State Transitions</div>\n  </div>\n</div>"
+  },
+  "features": [
+    "Outer box with border and background (provided by arch-diagram__inner)",
+    "Single column (vertical stack) or multiple columns (side by side)",
+    "Arrows with lines connecting boxes (must include arch-diagram__arrow-line span)",
+    "Accent boxes for emphasis (first/last layers)",
+    "Caption positioned at bottom-right",
+    "Responsive (columns stack vertically on mobile)"
+  ],
+  "notes": "Always include <span class=\"arch-diagram__arrow-line\"></span> inside each .arch-diagram__arrow for the line/arrow to appear. Do NOT wrap in .app-card - the .arch-diagram__inner already provides the outer box."
+}

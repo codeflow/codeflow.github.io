@@ -1,128 +1,159 @@
 /**
  * Giscus Comments Integration
  * 
- * Configuração do Giscus para comentários nas páginas.
+ * Giscus configuration for comments on pages.
  * 
- * IMPORTANTE: Antes de usar, você precisa:
- * 1. Instalar o app Giscus no GitHub: https://github.com/apps/giscus
- * 2. Autorizar o app no seu repositório
- * 3. Configurar as variáveis abaixo com os dados do seu repositório
+ * IMPORTANT: Before using, you need to:
+ * 1. Install the Giscus app on GitHub: https://github.com/apps/giscus
+ * 2. Authorize the app in your repository
+ * 3. Configure the variables below with your repository data
  */
 
 (function() {
     'use strict';
 
     // ============================================
-    // CONFIGURAÇÃO - AJUSTE AQUI
+    // CONFIGURATION - ADJUST HERE
     // ============================================
     const GISCUS_CONFIG = {
-        // Substitua pelo seu usuário/organização do GitHub
+        // Replace with your GitHub user/organization
         repo: 'codeflow/codeflow.github.io',
         
-        // ID do repositório (encontre em: https://giscus.app)
-        repoId: 'MDEwOlJlcG9zaXRvcnkxNzUwOTMxNjk=', // Será preenchido após configuração no giscus.app
+        // Repository ID (find at: https://giscus.app)
+        repoId: 'MDEwOlJlcG9zaXRvcnkxNzUwOTMxNjk=', // Will be filled after configuration at giscus.app
         
-        // Categoria do repositório (geralmente 'Announcements' ou 'General')
+        // Repository category (usually 'Announcements' or 'General')
         category: 'Announcements',
         
-        // ID da categoria (encontre em: https://giscus.app)
-        categoryId: 'DIC_kwDOCm-1sc4CyEBv', // Será preenchido após configuração no giscus.app
+        // Category ID (find at: https://giscus.app)
+        categoryId: 'DIC_kwDOCm-1sc4CyEBv', // Will be filled after configuration at giscus.app
         
-        // Mapeamento de idiomas
+        // Language mapping
         mapping: {
             'br': 'pt',
             'en': 'en'
         },
         
-        // Tema (pode ser 'light', 'dark', 'preferred_color_scheme', ou um tema customizado)
+        // Theme (can be 'light', 'dark', 'preferred_color_scheme', or a custom theme)
         theme: 'light',
         
-        // Posição dos comentários ('top' ou 'bottom')
+        // Comments position ('top' or 'bottom')
         reactionsEnabled: true,
         
-        // Habilitar reações
+        // Enable reactions
         emitMetadata: true,
         
-        // Emitir metadados
+        // Emit metadata
         inputPosition: 'bottom',
         
-        // Posição do input ('top' ou 'bottom')
+        // Input position ('top' or 'bottom')
         lang: 'pt'
     };
 
     /**
-     * Obtém o idioma atual da página
+     * Gets the current page language
      */
     function getCurrentLanguage() {
-        // Tenta obter do localStorage
+        // Try to get from localStorage
         const storedLang = localStorage.getItem('codeflow-language');
         if (storedLang) {
             return GISCUS_CONFIG.mapping[storedLang] || 'pt';
         }
         
-        // Tenta obter do HTML lang attribute
+        // Try to get from HTML lang attribute
         const htmlLang = document.documentElement.lang;
         if (htmlLang) {
             if (htmlLang.startsWith('en')) return 'en';
             if (htmlLang.startsWith('pt')) return 'pt';
         }
         
-        // Tenta obter do path da URL
+        // Try to get from URL path
         const path = window.location.pathname;
-        if (path.includes('/en/')) return 'en';
-        if (path.includes('/br/')) return 'pt';
+        // Detects any 2-letter language code in the path
+        const langMatch = path.match(/\/([a-z]{2})(-[A-Z]{2})?\//);
+        if (langMatch) {
+            const langCode = langMatch[1];
+            // Maps language codes to Giscus codes
+            const giscusLangMap = {
+                'br': 'pt',
+                'pt': 'pt',
+                'en': 'en',
+                'es': 'es',
+                'fr': 'fr',
+                'de': 'de',
+                'it': 'it',
+                'ja': 'ja',
+                'ko': 'ko',
+                'zh': 'zh-CN',
+                'ru': 'ru',
+                'ar': 'ar',
+                'hi': 'hi'
+            };
+            return giscusLangMap[langCode] || 'pt';
+        }
         
         // Default
         return 'pt';
     }
 
     /**
-     * Gera um identificador único para a página baseado no path
+     * Generates a unique identifier for the page based on the path
      */
     function getPageIdentifier() {
         const path = window.location.pathname;
-        // Remove a extensão .html e normaliza o path
+        // Removes .html extension and normalizes the path
         const cleanPath = path.replace(/\.html$/, '').replace(/\/$/, '');
-        // Remove o protocolo e domínio se presente
+        // Removes protocol and domain if present
         const relativePath = cleanPath.replace(/^https?:\/\/[^\/]+/, '');
-        // Usa o path relativo como identificador
+        // Uses the relative path as identifier
         return relativePath || 'index';
     }
 
     /**
-     * Inicializa o Giscus
+     * Initializes Giscus
      */
-    function initGiscus() {
-        // Verifica se já existe um container
+    function initGiscus(forceReinit = false) {
+        // Checks if container already exists
         const container = document.getElementById('giscus-container');
         if (!container) {
-            console.warn('Giscus: Container não encontrado');
+            console.warn('Giscus: Container not found');
             return;
         }
 
-        // Verifica se o Giscus já foi carregado
-        if (window.giscus) {
-            console.warn('Giscus: Já inicializado');
+        // If forcing reinitialization, removes old script
+        if (forceReinit) {
+            const oldScript = container.querySelector('script[src*="giscus.app"]');
+            if (oldScript) {
+                oldScript.remove();
+            }
+            if (window.giscus) {
+                delete window.giscus;
+            }
+        }
+
+        // Checks if Giscus is already loaded (unless forced)
+        if (window.giscus && !forceReinit) {
+            console.warn('Giscus: Already initialized');
             return;
         }
 
-        // Verifica se repoId e categoryId estão configurados
+        // Checks if repoId and categoryId are configured
         if (!GISCUS_CONFIG.repoId || !GISCUS_CONFIG.categoryId) {
-            console.warn('Giscus: repoId e categoryId precisam ser configurados. Visite https://giscus.app para obter esses valores.');
+            console.warn('Giscus: repoId and categoryId need to be configured. Visit https://giscus.app to get these values.');
             container.innerHTML = '<div style="padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; color: #856404;">' +
-                '<strong>⚠️ Giscus não configurado:</strong> Por favor, configure o repoId e categoryId em resources/js/giscus.js. ' +
-                'Visite <a href="https://giscus.app" target="_blank">https://giscus.app</a> para obter esses valores.</div>';
+                '<strong>⚠️ Giscus not configured:</strong> Please configure repoId and categoryId in resources/js/giscus.js. ' +
+                'Visit <a href="https://giscus.app" target="_blank">https://giscus.app</a> to get these values.</div>';
             return;
         }
 
-        // Cria o script do Giscus
+        // Creates Giscus script
         const script = document.createElement('script');
         script.src = 'https://giscus.app/client.js';
         script.setAttribute('data-repo', GISCUS_CONFIG.repo);
         script.setAttribute('data-repo-id', GISCUS_CONFIG.repoId);
         script.setAttribute('data-category', GISCUS_CONFIG.category);
         script.setAttribute('data-category-id', GISCUS_CONFIG.categoryId);
-        script.setAttribute('data-mapping', 'pathname'); // Usa o pathname como identificador
+        script.setAttribute('data-mapping', 'pathname'); // Uses pathname as identifier
         script.setAttribute('data-strict', '0');
         script.setAttribute('data-reactions-enabled', GISCUS_CONFIG.reactionsEnabled ? '1' : '0');
         script.setAttribute('data-emit-metadata', GISCUS_CONFIG.emitMetadata ? '1' : '0');
@@ -137,7 +168,7 @@
     }
 
     /**
-     * Atualiza o idioma do Giscus quando o idioma da página muda
+     * Updates Giscus language when page language changes
      */
     function updateGiscusLanguage() {
         if (window.giscus && window.giscus.setConfig) {
@@ -148,19 +179,21 @@
         }
     }
 
-    // Inicializa quando o DOM estiver pronto
+    // Initializes when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initGiscus);
     } else {
         initGiscus();
     }
 
-    // Escuta mudanças de idioma
+    // Listens for language changes
     window.addEventListener('languageChanged', updateGiscusLanguage);
 
-    // Expõe funções globais para uso externo
+    // Exposes global functions for external use
     window.GiscusComments = {
-        init: initGiscus,
+        init: function(forceReinit) {
+            return initGiscus(forceReinit || false);
+        },
         updateLanguage: updateGiscusLanguage,
         config: GISCUS_CONFIG
     };

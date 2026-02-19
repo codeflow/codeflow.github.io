@@ -1,0 +1,115 @@
+{
+  "component": "code-tabs",
+  "name": "Code Tabs",
+  "description": "Code component with tabs to show different versions, implementations or comparisons of the same code",
+  "version": "1.0.0",
+  "cssClasses": {
+    "container": "code-tabs-container",
+    "header": "code-tabs-header",
+    "button": "code-tab-button",
+    "content": "code-tab-content"
+  },
+  "structure": {
+    "html": "<div class=\"code-tabs-container\">\n  <div class=\"code-tabs-header\">\n    <button class=\"code-tab-button active\" onclick=\"switchCodeTab(this, 'tab1')\">Tab 1</button>\n    <button class=\"code-tab-button\" onclick=\"switchCodeTab(this, 'tab2')\">Tab 2</button>\n  </div>\n  <div id=\"tab1\" class=\"code-tab-content active\">\n    <div class=\"code-block-wrapper\">\n      <div class=\"code-block-header\">\n        <span class=\"language-label\">LANGUAGE</span>\n        <button class=\"copy-code-btn\" onclick=\"copyCode(this)\">Copy</button>\n      </div>\n      <pre><code class=\"language-java\">// code here</code></pre>\n    </div>\n  </div>\n  <div id=\"tab2\" class=\"code-tab-content\">\n    <div class=\"code-block-wrapper\">\n      <div class=\"code-block-header\">\n        <span class=\"language-label\">LANGUAGE</span>\n        <button class=\"copy-code-btn\" onclick=\"copyCode(this)\">Copy</button>\n      </div>\n      <pre><code class=\"language-java\">// code here</code></pre>\n    </div>\n  </div>\n</div>",
+    "required": ["container", "header", "button", "content"],
+    "optional": ["code-block-wrapper", "copy-code-btn"]
+  },
+  "properties": {
+    "tabs": {
+      "type": "array",
+      "description": "Array of tabs, each with its code",
+      "required": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique tab ID (used in HTML)",
+            "required": true
+          },
+          "label": {
+            "type": "string",
+            "description": "Tab label (e.g., 'Java 7', 'Java 8')",
+            "required": true
+          },
+          "language": {
+            "type": "string",
+            "description": "Programming language for syntax highlighting",
+            "required": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Code to be displayed in this tab",
+            "required": true
+          },
+          "showCopyButton": {
+            "type": "boolean",
+            "description": "Show copy code button",
+            "default": true
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Whether this tab should be active by default",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "tabs": [
+      {
+        "id": "java7",
+        "label": "Java 7",
+        "language": "java",
+        "code": "List<String> names = Arrays.asList(\"Java\", \"Python\");\nCollections.sort(names, new Comparator<String>() {\n    @Override\n    public int compare(String s1, String s2) {\n        return s1.compareTo(s2);\n    }\n});",
+        "showCopyButton": true,
+        "active": true
+      },
+      {
+        "id": "java8",
+        "label": "Java 8",
+        "language": "java",
+        "code": "List<String> names = Arrays.asList(\"Java\", \"Python\");\nnames.sort((s1, s2) -> s1.compareTo(s2));\n// Or using method reference\nnames.sort(String::compareTo);",
+        "showCopyButton": true,
+        "active": false
+      },
+      {
+        "id": "java9",
+        "label": "Java 9",
+        "language": "java",
+        "code": "List<String> names = List.of(\"Java\", \"Python\");\nnames.stream()\n    .sorted()\n    .forEach(System.out::println);",
+        "showCopyButton": true,
+        "active": false
+      }
+    ]
+  },
+  "renderedHtml": "<div class=\"code-tabs-container\">\n  <div class=\"code-tabs-header\">\n    <button class=\"code-tab-button active\" onclick=\"switchCodeTab(this, 'java7')\">Java 7</button>\n    <button class=\"code-tab-button\" onclick=\"switchCodeTab(this, 'java8')\">Java 8</button>\n    <button class=\"code-tab-button\" onclick=\"switchCodeTab(this, 'java9')\">Java 9</button>\n  </div>\n  <div id=\"java7\" class=\"code-tab-content active\">\n    <div class=\"code-block-wrapper\">\n      <div class=\"code-block-header\">\n        <span class=\"language-label\">JAVA 7</span>\n        <button class=\"copy-code-btn\" onclick=\"copyCode(this)\">Copy</button>\n      </div>\n      <pre><code class=\"language-java\">List<String> names = Arrays.asList(\"Java\", \"Python\");\nCollections.sort(names, new Comparator<String>() {\n    @Override\n    public int compare(String s1, String s2) {\n        return s1.compareTo(s2);\n    }\n});</code></pre>\n    </div>\n  </div>\n  <div id=\"java8\" class=\"code-tab-content\">\n    <div class=\"code-block-wrapper\">\n      <div class=\"code-block-header\">\n        <span class=\"language-label\">JAVA 8</span>\n        <button class=\"copy-code-btn\" onclick=\"copyCode(this)\">Copy</button>\n      </div>\n      <pre><code class=\"language-java\">List<String> names = Arrays.asList(\"Java\", \"Python\");\nnames.sort((s1, s2) -> s1.compareTo(s2));\n// Or using method reference\nnames.sort(String::compareTo);</code></pre>\n    </div>\n  </div>\n  <div id=\"java9\" class=\"code-tab-content\">\n    <div class=\"code-block-wrapper\">\n      <div class=\"code-block-header\">\n        <span class=\"language-label\">JAVA 9</span>\n        <button class=\"copy-code-btn\" onclick=\"copyCode(this)\">Copy</button>\n      </div>\n      <pre><code class=\"language-java\">List<String> names = List.of(\"Java\", \"Python\");\nnames.stream()\n    .sorted()\n    .forEach(System.out::println);</code></pre>\n    </div>\n  </div>\n</div>",
+  "javascript": {
+    "required": true,
+    "function": "switchCodeTab(button, tabId)",
+    "description": "JavaScript function required to switch between tabs",
+    "code": "function switchCodeTab(button, tabId) {\n    const container = button.closest('.code-tabs-container');\n    container.querySelectorAll('.code-tab-button').forEach(btn => {\n        btn.classList.remove('active');\n    });\n    container.querySelectorAll('.code-tab-content').forEach(content => {\n        content.classList.remove('active');\n    });\n    button.classList.add('active');\n    const content = document.getElementById(tabId);\n    if (content) {\n        content.classList.add('active');\n        if (typeof hljs !== 'undefined') {\n            content.querySelectorAll('pre code').forEach((block) => {\n                hljs.highlightElement(block);\n                if (typeof hljs.lineNumbersBlock !== 'undefined') {\n                    hljs.lineNumbersBlock(block);\n                }\n            });\n        }\n    }\n}"
+  },
+  "css": {
+    "required": true,
+    "description": "CSS styles must be included in the page or in theme.css",
+    "location": "Can be inline in the page or added to theme.css"
+  },
+  "features": [
+    "Multiple tabs for different code versions",
+    "Independent syntax highlighting for each tab",
+    "Copy code button in each tab",
+    "Design consistent with BlueSky theme",
+    "Responsive and accessible",
+    "Re-applies syntax highlighting when switching tabs"
+  ],
+  "useCases": [
+    "Show code evolution between versions (Java 7, 8, 9, 11, etc.)",
+    "Compare implementations in different frameworks",
+    "Show equivalent code in different languages",
+    "Demonstrate different approaches to the same problem",
+    "Compare code before and after refactoring"
+  ],
+  "notes": "The component requires the JavaScript function switchCodeTab() and CSS styles. Make sure to include both in the page. The first tab should have the 'active' class on both the button and the content."
+}

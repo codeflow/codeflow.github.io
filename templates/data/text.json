@@ -1,0 +1,118 @@
+{
+  "component": "text",
+  "name": "Text Components",
+  "description": "Text components including titles, paragraphs, lists, links and formatting",
+  "version": "1.0.0",
+  "components": {
+    "heading": {
+      "description": "Titles (H1, H2, H3)",
+      "types": {
+        "h1": {
+          "description": "Main title",
+          "fontSize": "18px",
+          "color": "#0B356C",
+          "border": "border-bottom: 2px solid #BED6F8",
+          "html": "<h1>Main Title</h1>"
+        },
+        "h2": {
+          "description": "Subtitle",
+          "fontSize": "14px",
+          "color": "#0B356C",
+          "border": "border-left: 4px solid #BED6F8",
+          "html": "<h2>Subtitle</h2>"
+        },
+        "h3": {
+          "description": "Smaller subtitle",
+          "fontSize": "12px",
+          "color": "#0B356C",
+          "html": "<h3>Smaller Subtitle</h3>"
+        }
+      }
+    },
+    "paragraph": {
+      "description": "Text paragraph",
+      "html": "<p>This is a normal text paragraph.</p>",
+      "fontSize": "11px",
+      "color": "#000000",
+      "lineHeight": "1.6"
+    },
+    "list": {
+      "description": "Ordered and unordered lists",
+      "types": {
+        "ul": {
+          "description": "Unordered list",
+          "html": "<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</ul>"
+        },
+        "ol": {
+          "description": "Ordered list",
+          "html": "<ol>\n  <li>First item</li>\n  <li>Second item</li>\n</ol>"
+        },
+        "dl": {
+          "description": "Definition list",
+          "html": "<dl>\n  <dt>Term</dt>\n  <dd>Term definition</dd>\n</dl>"
+        }
+      }
+    },
+    "link": {
+      "description": "Link",
+      "html": "<a href=\"#exemplo\">Link text</a>",
+      "color": "#0078D0",
+      "hoverColor": "#0090FF",
+      "visitedColor": "#0090FF"
+    },
+    "formatting": {
+      "description": "Formatação de texto",
+      "types": {
+        "strong": {
+          "description": "Bold text",
+          "html": "<strong>Bold text</strong>"
+        },
+        "em": {
+          "description": "Italic text",
+          "html": "<em>Italic text</em>"
+        },
+        "code": {
+          "description": "Inline code",
+          "html": "<code>inline code</code>",
+          "background": "#ECF4FE",
+          "border": "1px solid #BED6F8"
+        },
+        "mark": {
+          "description": "Marked text",
+          "html": "<mark>Marked text</mark>"
+        },
+        "small": {
+          "description": "Small text",
+          "html": "<small>Small text</small>"
+        }
+      }
+    }
+  },
+  "example": {
+    "heading": {
+      "level": 1,
+      "text": "Main Title"
+    },
+    "paragraphs": [
+      "This is the first paragraph with <strong>bold text</strong> and <em>italic text</em>.",
+      "This is the second paragraph with <code>inline code</code> and an <a href=\"#exemplo\">example link</a>."
+    ],
+    "list": {
+      "type": "ul",
+      "items": [
+        "First list item",
+        "Second list item",
+        "Third list item"
+      ]
+    }
+  },
+  "renderedHtml": "<h1>Main Title</h1>\n<p>This is the first paragraph with <strong>bold text</strong> and <em>italic text</em>.</p>\n<p>This is the second paragraph with <code>inline code</code> and an <a href=\"#exemplo\">example link</a>.</p>\n<ul>\n  <li>First list item</li>\n  <li>Second list item</li>\n  <li>Third list item</li>\n</ul>",
+  "features": [
+    "Titles with automatic styles",
+    "Paragraphs with adequate spacing",
+    "Lists with indentation",
+    "Links with theme colors",
+    "Inline formatting (bold, italic, code)"
+  ],
+  "notes": "All text components automatically follow the BlueSky theme. Use the appropriate semantic HTML tags."
+}

@@ -1,10 +1,10 @@
-// Sistema de Busca de Conteúdo
+// Content Search System
 
-// Cache de índices de busca
+// Search index cache
 let searchIndex = null;
 let searchIndexPromise = null;
 
-// Função para normalizar texto para busca
+// Function to normalize text for search
 function normalizeSearchText(text) {
     return text.toLowerCase()
         .normalize('NFD')
@@ -12,14 +12,14 @@ function normalizeSearchText(text) {
         .trim();
 }
 
-// Função para extrair texto de um elemento HTML
+// Function to extract text from an HTML element
 function extractTextFromHTML(html) {
     const div = document.createElement('div');
     div.innerHTML = html;
     return div.textContent || div.innerText || '';
 }
 
-// Função para obter snippet de texto ao redor da palavra-chave
+// Function to get text snippet around keyword
 function getSnippet(text, keyword, maxLength = 150) {
     const normalizedText = normalizeSearchText(text);
     const normalizedKeyword = normalizeSearchText(keyword);
@@ -39,12 +39,12 @@ function getSnippet(text, keyword, maxLength = 150) {
     return snippet;
 }
 
-// Função para indexar uma página HTML
+// Function to index an HTML page
 async function indexPage(url, lang) {
     try {
-        console.log('Search: Indexando página:', url);
+        console.log('Search: Indexing page:', url);
         
-        // Para file:// protocol, usa XMLHttpRequest em vez de fetch
+        // For file:// protocol, uses XMLHttpRequest instead of fetch
         let html;
         if (url.startsWith('file://')) {
             html = await new Promise((resolve, reject) => {
@@ -55,13 +55,13 @@ async function indexPage(url, lang) {
                         if (xhr.status === 0 || xhr.status === 200) {
                             resolve(xhr.responseText);
                         } else {
-                            console.error('Search: Erro ao carregar', url, 'Status:', xhr.status);
+                            console.error('Search: Error loading', url, 'Status:', xhr.status);
                             reject(new Error(`HTTP ${xhr.status}`));
                         }
                     }
                 };
                 xhr.onerror = function() {
-                    console.error('Search: Erro de rede ao carregar', url);
+                    console.error('Search: Network error loading', url);
                     reject(new Error('Network error'));
                 };
                 xhr.send();
@@ -69,7 +69,7 @@ async function indexPage(url, lang) {
         } else {
             const response = await fetch(url);
             if (!response.ok) {
-                console.error('Search: Erro HTTP ao carregar', url, 'Status:', response.status);
+                console.error('Search: HTTP error loading', url, 'Status:', response.status);
                 return null;
             }
             html = await response.text();
@@ -77,11 +77,11 @@ async function indexPage(url, lang) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         
-        // Extrai o título da página
+        // Extracts page title
         const titleElement = doc.querySelector('h1');
         const title = titleElement ? titleElement.textContent.trim() : doc.title;
         
-        // Extrai o conteúdo principal
+        // Extracts main content
         const contentContainer = doc.querySelector('.content-container');
         if (!contentContainer) return null;
         
@@ -92,7 +92,7 @@ async function indexPage(url, lang) {
         // Extrai todo o texto
         const text = clone.textContent || clone.innerText || '';
         
-        // Extrai descrição (primeiro parágrafo ou info-box)
+        // Extracts description (first paragraph or info-box)
         const infoBox = contentContainer.querySelector('.info-box');
         let description = '';
         if (infoBox) {
@@ -114,80 +114,66 @@ async function indexPage(url, lang) {
             description: description || text.substring(0, 200),
             text: text,
             lang: lang,
-            path: menuPath
+            path: menuPath,
+            originalPath: null // Will be filled during indexing
         };
     } catch (error) {
-        console.error('Erro ao indexar página:', url, error);
+        console.error('Error indexing page:', url, error);
         return null;
     }
 }
 
-// Função para construir índice de busca
+// Function to load pages from JSON
+async function loadPagesFromJSON() {
+    try {
+        // Path is relative to index.html (root)
+        const response = await fetch('resources/db/search.json');
+        if (!response.ok) {
+            console.error('Search: Error loading search.json:', response.status);
+            return [];
+        }
+        const data = await response.json();
+        if (!data || !data.pages) {
+            console.error('Search: Invalid search.json format');
+            return [];
+        }
+        return data.pages;
+    } catch (error) {
+        console.error('Search: Error loading search.json:', error);
+        return [];
+    }
+}
+
+// Function to build search index
 async function buildSearchIndex() {
     if (searchIndex) return searchIndex;
     if (searchIndexPromise) return searchIndexPromise;
     
     searchIndexPromise = (async () => {
         const index = [];
-        const currentLang = localStorage.getItem('codeflow-language') || 'br';
+        const currentLang = localStorage.getItem('codeflow-language') || 'en';
         
-        // Lista de páginas conhecidas (pode ser expandida)
-        const pages = [
-            // Páginas principais
-            { path: 'content/java.md/br/1nqriq7eql.html', lang: 'br' },
-            { path: 'content/java.md/en/1nqriq7eql.html', lang: 'en' },
-            { path: 'content/java.md/br/ee3l86y9j0cd.html', lang: 'br' },
-            { path: 'content/java.md/en/ee3l86y9j0cd.html', lang: 'en' },
-            { path: 'content/java.md/br/1xrfm11lm1.html', lang: 'br' },
-            { path: 'content/java.md/en/1xrfm11lm1.html', lang: 'en' },
-            { path: 'content/java.md/br/1o4a4w7aov.html', lang: 'br' },
-            { path: 'content/java.md/en/1o4a4w7aov.html', lang: 'en' },
-            { path: 'content/java.md/br/u8n8srtc79q8.html', lang: 'br' },
-            { path: 'content/java.md/en/u8n8srtc79q8.html', lang: 'en' },
-            // Páginas de resumo - Recursos Avançados
-            { path: 'content/java.md/br/npowyzyv1zxzy68985b9.html', lang: 'br' },
-            { path: 'content/java.md/en/npowyzyv1zxzy68985b9.html', lang: 'en' },
-            // Páginas de conteúdo
-            { path: 'content/java.md/hi870208/br/363ba4sngb4e.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/363ba4sngb4e.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/xb9pezoakznr.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/xb9pezoakznr.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/ev6nbs1cxqd6.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/ev6nbs1cxqd6.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/3qvvuyx7rfph.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/3qvvuyx7rfph.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/kfwhqp409kpx.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/kfwhqp409kpx.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/kfwi2r409ls1.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/kfwi2r409ls1.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/kfwhvv409l69.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/kfwhvv409l69.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/3z28jy2onq8u.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/3z28jy2onq8u.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/lfr7klwpxix9.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/lfr7klwpxix9.html', lang: 'en' },
-            { path: 'content/java.md/hi870208/br/uou6eno1v99v.html', lang: 'br' },
-            { path: 'content/java.md/hi870208/en/uou6eno1v99v.html', lang: 'en' },
-            // Páginas de conteúdo - Recursos Avançados
-            { path: 'content/java.md/re120788/br/nvppty1uxxx5zz38b477.html', lang: 'br' },
-            { path: 'content/java.md/re120788/en/nvppty1uxxx5zz38b477.html', lang: 'en' },
-            // Páginas principais - Golang
-            { path: 'content/golang.md/br/1nqriq7eql.html', lang: 'br' },
-            { path: 'content/golang.md/en/1nqriq7eql.html', lang: 'en' },
-            { path: 'content/golang.md/br/kigsa21few3.html', lang: 'br' },
-            { path: 'content/golang.md/en/kigsa21few3.html', lang: 'en' },
-            // Páginas de resumo - História e Filosofia do Go
-            { path: 'content/golang.md/hi111630/br/igmd7ry7yy2z.html', lang: 'br' },
-            { path: 'content/golang.md/hi111630/en/igmd7ry7yy2z.html', lang: 'en' },
-            // Páginas de conteúdo - História e Filosofia do Go
-            { path: 'content/golang.md/hi111630/br/yd7hc8hvimk7.html', lang: 'br' },
-            { path: 'content/golang.md/hi111630/en/yd7hc8hvimk7.html', lang: 'en' },
-        ];
+        // Load pages from JSON file
+        const pages = await loadPagesFromJSON();
+        console.log('Search: Pages loaded from JSON:', pages.length);
         
-        // Indexa apenas páginas do idioma atual
-        const pagesToIndex = pages.filter(p => p.lang === currentLang);
+        if (pages.length === 0) {
+            console.error('Search: No pages found in search.json');
+            return [];
+        }
         
-        // Calcula caminho base
+        // Indexes only pages from current language
+        let pagesToIndex = pages.filter(p => p.lang === currentLang);
+        console.log('Search: Pages to index for language', currentLang + ':', pagesToIndex.length);
+        
+        // If no pages found for current language, fallback to 'en'
+        if (pagesToIndex.length === 0 && currentLang !== 'en') {
+            console.log('Search: No pages found for language', currentLang + ', falling back to en');
+            pagesToIndex = pages.filter(p => p.lang === 'en');
+            console.log('Search: Pages to index for language en:', pagesToIndex.length);
+        }
+        
+        // Calculates base path
         const currentHref = window.location.href;
         const currentPath = window.location.pathname;
         let basePath = '';
@@ -196,20 +182,20 @@ async function buildSearchIndex() {
         console.log('Search: currentPath:', currentPath);
         
         if (currentHref.startsWith('file://')) {
-            // Para file://, constrói caminho absoluto
+            // For file://, builds absolute path
             try {
                 const url = new URL(currentHref);
                 const pathname = url.pathname;
                 
-                // Encontra onde está 'codeflow.github.io' no caminho
+                // Finds where 'codeflow.github.io' is in path
                 const projectIndex = pathname.indexOf('/codeflow.github.io/');
                 
                 if (projectIndex !== -1) {
-                    // Constrói caminho absoluto até a raiz do projeto
+                    // Builds absolute path to project root
                     const projectRoot = pathname.substring(0, projectIndex + '/codeflow.github.io'.length);
                     basePath = `file://${projectRoot}/`;
                 } else {
-                    // Fallback: calcula caminho relativo
+                    // Fallback: calculates relative path
                     if (currentPath.includes('/content/')) {
                         const pathParts = currentPath.split('/').filter(p => p);
                         const depth = pathParts.length - 1;
@@ -219,7 +205,7 @@ async function buildSearchIndex() {
                     }
                 }
             } catch (e) {
-                console.error('Search: Erro ao calcular basePath file://', e);
+                console.error('Search: Error calculating basePath file://', e);
                 basePath = './';
             }
         } else {
@@ -237,11 +223,17 @@ async function buildSearchIndex() {
         
         console.log('Search: basePath calculado:', basePath);
         
-        // Indexa todas as páginas
+        // Indexes all pages
         const indexPromises = pagesToIndex.map(page => {
             const fullPath = basePath + page.path;
-            console.log('Search: Indexando:', fullPath);
-            return indexPage(fullPath, page.lang);
+            console.log('Search: Indexing:', fullPath);
+            return indexPage(fullPath, page.lang).then(result => {
+                if (result) {
+                    // Stores original page path
+                    result.originalPath = page.path;
+                }
+                return result;
+            });
         });
         
         const results = await Promise.all(indexPromises);
@@ -254,7 +246,7 @@ async function buildSearchIndex() {
     return searchIndexPromise;
 }
 
-// Função de busca
+// Search function
 function searchContent(query, index) {
     if (!query || !index || index.length === 0) return [];
     
@@ -271,21 +263,21 @@ function searchContent(query, index) {
         let score = 0;
         let matches = [];
         
-        // Busca por palavras
+        // Searches by words
         queryWords.forEach(word => {
-            // Título tem peso maior
+            // Title has higher weight
             if (normalizedTitle.includes(word)) {
                 score += 10;
                 matches.push('title');
             }
             
-            // Descrição tem peso médio
+            // Description has medium weight
             if (normalizedDescription.includes(word)) {
                 score += 5;
                 matches.push('description');
             }
             
-            // Conteúdo tem peso menor
+            // Content has lower weight
             const contentMatches = (normalizedText.match(new RegExp(word, 'g')) || []).length;
             score += contentMatches;
             if (contentMatches > 0) {
@@ -293,7 +285,7 @@ function searchContent(query, index) {
             }
         });
         
-        // Busca exata tem peso extra
+        // Exact search has extra weight
         if (normalizedText.includes(normalizedQuery) || normalizedTitle.includes(normalizedQuery)) {
             score += 20;
         }
@@ -308,161 +300,172 @@ function searchContent(query, index) {
         }
     });
     
-    // Ordena por score (maior primeiro)
+    // Sorts by score (highest first)
     results.sort((a, b) => b.score - a.score);
     
     return results;
 }
 
-// Função para executar busca e redirecionar para página de resultados
+// Function to perform search and redirect to results page or load in index.html
 function performSearch(query) {
-    console.log('Search: performSearch chamado com query:', query);
+    console.log('Search: performSearch called with query:', query);
     
     if (!query || query.trim().length === 0) {
-        alert('Por favor, digite um termo de busca.');
+        alert('Please enter a search term.');
         return;
     }
     
-    // Salva a query na URL
-    const currentLang = localStorage.getItem('codeflow-language') || 'br';
+    // Saves query in URL
+    const currentLang = localStorage.getItem('codeflow-language') || 'en';
     
-    // Calcula caminho relativo
-    const currentHref = window.location.href;
+    // Check if we are in index.html
     const currentPath = window.location.pathname;
-    let relativePath = '';
+    const currentFileName = currentPath.split('/').pop();
+    const isIndexPage = currentFileName === 'index.html' || currentFileName === '' || currentPath === '/';
     
-    console.log('Search: currentPath:', currentPath);
-    console.log('Search: currentHref:', currentHref);
-    
-    // Detecta se estamos usando file:// protocol
-    if (currentHref.startsWith('file://')) {
-        // Para file://, usa uma abordagem mais simples: constrói caminho absoluto
-        try {
-            const url = new URL(currentHref);
-            const pathname = url.pathname;
-            
-            // Remove o nome do arquivo atual
-            const lastSlashIndex = pathname.lastIndexOf('/');
-            const directoryPath = pathname.substring(0, lastSlashIndex + 1);
-            
-            // Encontra onde está 'codeflow.github.io' no caminho
-            const projectIndex = pathname.indexOf('/codeflow.github.io/');
-            
-            if (projectIndex !== -1) {
-                // Constrói caminho absoluto até a raiz do projeto
-                const projectRoot = pathname.substring(0, projectIndex + '/codeflow.github.io'.length);
-                relativePath = `file://${projectRoot}/search.html`;
-            } else {
-                // Fallback: calcula caminho relativo baseado na estrutura
-                if (pathname.includes('/content/')) {
-                    // Conta quantos níveis subir
-                    const pathParts = directoryPath.split('/').filter(p => p);
-                    const contentIndex = pathParts.indexOf('content');
-                    
-                    if (contentIndex !== -1) {
-                        // Do arquivo até content, depois até a raiz
-                        const depth = pathParts.length - contentIndex;
-                        relativePath = '../'.repeat(depth) + 'search.html';
+    if (isIndexPage && typeof window.loadSearchContent === 'function') {
+        // If we are in index.html and the function exists, load search content directly
+        console.log('Search: Loading search content in index.html');
+        window.loadSearchContent(query, currentLang);
+        // Update URL without reloading
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.set('q', query);
+        newUrl.searchParams.set('lang', currentLang);
+        window.history.pushState({}, '', newUrl);
+    } else {
+        // Otherwise, redirect to search.html (for standalone access or other pages)
+        const currentHref = window.location.href;
+        const currentPath = window.location.pathname;
+        let relativePath = '';
+        
+        console.log('Search: currentPath:', currentPath);
+        console.log('Search: currentHref:', currentHref);
+        
+        // Detects if we are using file:// protocol
+        if (currentHref.startsWith('file://')) {
+            // For file://, uses a simpler approach: builds absolute path
+            try {
+                const url = new URL(currentHref);
+                const pathname = url.pathname;
+                
+                // Removes current file name
+                const lastSlashIndex = pathname.lastIndexOf('/');
+                const directoryPath = pathname.substring(0, lastSlashIndex + 1);
+                
+                // Finds where 'codeflow.github.io' is in path
+                const projectIndex = pathname.indexOf('/codeflow.github.io/');
+                
+                if (projectIndex !== -1) {
+                    // Builds absolute path to project root
+                    const projectRoot = pathname.substring(0, projectIndex + '/codeflow.github.io'.length);
+                    relativePath = `file://${projectRoot}/search.html`;
+                } else {
+                    // Fallback: calculates relative path based on structure
+                    if (pathname.includes('/content/')) {
+                        // Counts how many levels to go up
+                        const pathParts = directoryPath.split('/').filter(p => p);
+                        const contentIndex = pathParts.indexOf('content');
+                        
+                        if (contentIndex !== -1) {
+                            // From file to content, then to root
+                            const depth = pathParts.length - contentIndex;
+                            relativePath = '../'.repeat(depth) + 'search.html';
+                        } else {
+                            // Counts all directories
+                            const depth = pathParts.length;
+                            relativePath = '../'.repeat(depth) + 'search.html';
+                        }
                     } else {
-                        // Conta todos os diretórios
-                        const depth = pathParts.length;
-                        relativePath = '../'.repeat(depth) + 'search.html';
+                        relativePath = './search.html';
                     }
+                }
+            } catch (e) {
+                console.error('Search: Error calculating path file://', e);
+                // Simple fallback
+                if (currentPath.includes('/content/')) {
+                    const pathWithoutFile = currentPath.substring(0, currentPath.lastIndexOf('/'));
+                    const depth = (pathWithoutFile.match(/\//g) || []).length;
+                    relativePath = '../'.repeat(depth) + 'search.html';
                 } else {
                     relativePath = './search.html';
                 }
             }
-        } catch (e) {
-            console.error('Search: Erro ao calcular caminho file://', e);
-            // Fallback simples
+        } else {
+            // Para http/https
             if (currentPath.includes('/content/')) {
-                const pathWithoutFile = currentPath.substring(0, currentPath.lastIndexOf('/'));
-                const depth = (pathWithoutFile.match(/\//g) || []).length;
+                const pathParts = currentPath.split('/').filter(p => p);
+                const depth = pathParts.length - 1;
                 relativePath = '../'.repeat(depth) + 'search.html';
+            } else if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath.endsWith('search.html')) {
+                relativePath = './search.html';
             } else {
                 relativePath = './search.html';
             }
         }
-    } else {
-        // Para http/https
-        if (currentPath.includes('/content/')) {
-            const pathParts = currentPath.split('/').filter(p => p);
-            const depth = pathParts.length - 1;
-            relativePath = '../'.repeat(depth) + 'search.html';
-        } else if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath.endsWith('search.html')) {
-            relativePath = './search.html';
-        } else {
-            relativePath = './search.html';
-        }
+        
+        const finalUrl = `${relativePath}?q=${encodeURIComponent(query)}&lang=${currentLang}`;
+        console.log('Search: Redirecting to:', finalUrl);
+        
+        window.location.href = finalUrl;
     }
-    
-    const finalUrl = `${relativePath}?q=${encodeURIComponent(query)}&lang=${currentLang}`;
-    console.log('Search: Redirecionando para:', finalUrl);
-    
-    window.location.href = finalUrl;
 }
 
-// Inicialização do sistema de busca
+// Search system initialization
 (function() {
     function initSearch() {
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchButton');
         
         if (!searchInput || !searchButton) {
-            console.warn('Search: Elementos de busca não encontrados');
+            console.warn('Search: Search elements not found');
             return;
         }
         
-        console.log('Search: Inicializando sistema de busca');
+        console.log('Search: Initializing search system');
         
         // Busca ao pressionar Enter
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const query = searchInput.value.trim();
-                console.log('Search: Enter pressionado, query:', query);
+                console.log('Search: Enter pressed, query:', query);
                 if (query) {
                     performSearch(query);
                 } else {
-                    alert('Por favor, digite um termo de busca.');
+                    alert('Please enter a search term.');
                 }
             }
         });
         
-        // Busca ao clicar no botão
+        // Search on button click
         searchButton.addEventListener('click', function(e) {
             e.preventDefault();
             const query = searchInput.value.trim();
-            console.log('Search: Botão clicado, query:', query);
+            console.log('Search: Button clicked, query:', query);
             if (query) {
                 performSearch(query);
             } else {
-                alert('Por favor, digite um termo de busca.');
+                alert('Please enter a search term.');
             }
         });
         
-        // Função para atualizar placeholder baseado no idioma
+        // Function to update placeholder based on language
         function updateSearchPlaceholder() {
-            const currentLang = localStorage.getItem('codeflow-language') || 'br';
-            if (currentLang === 'en') {
-                searchInput.placeholder = '🔍 Search content...';
-                searchButton.title = 'Search';
-            } else {
-                searchInput.placeholder = '🔍 Buscar conteúdo...';
-                searchButton.title = 'Buscar';
-            }
+            const currentLang = localStorage.getItem('codeflow-language') || 'en';
+            searchInput.placeholder = '🔍 Search content...';
+            searchButton.title = 'Search';
         }
         
-        // Atualiza placeholder inicial
+        // Updates initial placeholder
         updateSearchPlaceholder();
         
-        // Observa mudanças no idioma
+        // Observes language changes
         const languageSelector = document.getElementById('languageSelector');
         if (languageSelector) {
             languageSelector.addEventListener('change', updateSearchPlaceholder);
         }
         
-        // Observa mudanças no localStorage (para quando o idioma muda em outra parte)
+        // Observes localStorage changes (for when language changes elsewhere)
         window.addEventListener('storage', function(e) {
             if (e.key === 'codeflow-language') {
                 updateSearchPlaceholder();
@@ -470,11 +473,11 @@ function performSearch(query) {
         });
     }
     
-    // Aguarda o DOM estar pronto
+    // Waits for DOM to be ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initSearch);
     } else {
-        // DOM já está pronto, inicializa imediatamente
+        // DOM is already ready, inicializa imediatamente
         initSearch();
     }
     
@@ -483,60 +486,55 @@ function performSearch(query) {
         const searchButton = document.getElementById('searchButton');
         
         if (!searchInput || !searchButton) {
-            console.warn('Search: Elementos de busca não encontrados');
+            console.warn('Search: Search elements not found');
             return;
         }
         
-        console.log('Search: Inicializando sistema de busca');
+        console.log('Search: Initializing search system');
         
         // Busca ao pressionar Enter
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const query = searchInput.value.trim();
-                console.log('Search: Enter pressionado, query:', query);
+                console.log('Search: Enter pressed, query:', query);
                 if (query) {
                     performSearch(query);
                 } else {
-                    alert('Por favor, digite um termo de busca.');
+                    alert('Please enter a search term.');
                 }
             }
         });
         
-        // Busca ao clicar no botão
+        // Search on button click
         searchButton.addEventListener('click', function(e) {
             e.preventDefault();
             const query = searchInput.value.trim();
-            console.log('Search: Botão clicado, query:', query);
+            console.log('Search: Button clicked, query:', query);
             if (query) {
                 performSearch(query);
             } else {
-                alert('Por favor, digite um termo de busca.');
+                alert('Please enter a search term.');
             }
         });
         
-        // Função para atualizar placeholder baseado no idioma
+        // Function to update placeholder based on language
         function updateSearchPlaceholder() {
-            const currentLang = localStorage.getItem('codeflow-language') || 'br';
-            if (currentLang === 'en') {
-                searchInput.placeholder = '🔍 Search content...';
-                searchButton.title = 'Search';
-            } else {
-                searchInput.placeholder = '🔍 Buscar conteúdo...';
-                searchButton.title = 'Buscar';
-            }
+            const currentLang = localStorage.getItem('codeflow-language') || 'en';
+            searchInput.placeholder = '🔍 Search content...';
+            searchButton.title = 'Search';
         }
         
-        // Atualiza placeholder inicial
+        // Updates initial placeholder
         updateSearchPlaceholder();
         
-        // Observa mudanças no idioma
+        // Observes language changes
         const languageSelector = document.getElementById('languageSelector');
         if (languageSelector) {
             languageSelector.addEventListener('change', updateSearchPlaceholder);
         }
         
-        // Observa mudanças no localStorage (para quando o idioma muda em outra parte)
+        // Observes localStorage changes (for when language changes elsewhere)
         window.addEventListener('storage', function(e) {
             if (e.key === 'codeflow-language') {
                 updateSearchPlaceholder();
@@ -545,7 +543,7 @@ function performSearch(query) {
     }
 })();
 
-// Exporta funções para uso na página de resultados
+// Exports functions for use in results page
 if (typeof window !== 'undefined') {
     window.searchContent = searchContent;
     window.buildSearchIndex = buildSearchIndex;

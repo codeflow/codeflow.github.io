@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Template de camadas de memória com caixas empilhadas (BlueSky theme)">
+    <meta name="keywords" content="template, memory layers, stacked layers, codeflow, bluesky">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-memory-layers.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://codeflow.com.br/templates/web/template-memory-layers.html">
+    <meta property="og:title" content="Memory Layers Template - Codeflow">
+    <meta property="og:description" content="Template de camadas de memória com caixas empilhadas (BlueSky theme)">
+    <meta property="og:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+    <meta property="og:site_name" content="Codeflow">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://codeflow.com.br/templates/web/template-memory-layers.html">
+    <meta name="twitter:title" content="Memory Layers Template - Codeflow">
+    <meta name="twitter:description" content="Template de camadas de memória com caixas empilhadas (BlueSky theme)">
+    <meta name="twitter:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+
+    <title>Codeflow - Memory Layers Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Sidebar Menu -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu will be built dynamically by menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Memory Layers Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📌 Memory Layers Template</h1>
+
+                    <div class="info-box">
+                        <strong>📚 Sobre:</strong> Este template demonstra como representar camadas empilhadas (estilo regiões de memória) usando caixas sem setas, com uma legenda no canto inferior direito da caixa externa.
+                    </div>
+
+                    <h2>💾 Exemplo: Layout de Memória</h2>
+                    <p>Diagrama mostrando as diferentes regiões de memória empilhadas:</p>
+
+                    <div class="memory-layers">
+                        <div class="memory-layers__inner">
+                            <div class="memory-layers__layer memory-layers__layer--accent">
+                                <div class="memory-layers__layer-header">Stack (High Memory)</div>
+                                <div class="memory-layers__layer-content">Local variables, function calls</div>
+                            </div>
+                            <div class="memory-layers__layer">
+                                <div class="memory-layers__layer-header">Heap</div>
+                                <div class="memory-layers__layer-content">Dynamic memory allocation</div>
+                            </div>
+                            <div class="memory-layers__layer">
+                                <div class="memory-layers__layer-header">Data Segment</div>
+                                <div class="memory-layers__layer-content">Global and static variables</div>
+                            </div>
+                            <div class="memory-layers__layer memory-layers__layer--accent">
+                                <div class="memory-layers__layer-header">Code Segment (Low Memory)</div>
+                                <div class="memory-layers__layer-content">Program instructions</div>
+                            </div>
+                            <div class="memory-layers__caption">Memory Layout</div>
+                        </div>
+                    </div>
+
+                    <h2>📊 Exemplo: Camadas de Sistema</h2>
+                    <p>Diagrama mostrando camadas de sistema operacional:</p>
+
+                    <div class="memory-layers">
+                        <div class="memory-layers__inner">
+                            <div class="memory-layers__layer memory-layers__layer--accent">
+                                <div class="memory-layers__layer-header">User Space</div>
+                                <div class="memory-layers__layer-content">Applications, user programs</div>
+                            </div>
+                            <div class="memory-layers__layer">
+                                <div class="memory-layers__layer-header">System Libraries</div>
+                                <div class="memory-layers__layer-content">Shared libraries, system calls</div>
+                            </div>
+                            <div class="memory-layers__layer">
+                                <div class="memory-layers__layer-header">Kernel Space</div>
+                                <div class="memory-layers__layer-content">Device drivers, kernel modules</div>
+                            </div>
+                            <div class="memory-layers__layer memory-layers__layer--accent">
+                                <div class="memory-layers__layer-header">Hardware</div>
+                                <div class="memory-layers__layer-content">CPU, memory, I/O devices</div>
+                            </div>
+                            <div class="memory-layers__caption">Operating System Layers</div>
+                        </div>
+                    </div>
+
+                    <h2>🧩 Como usar</h2>
+                    <ul>
+                        <li><strong>Estrutura:</strong> use a classe <code>memory-layers</code> diretamente (sem <code>.app-card</code> - o <code>.memory-layers__inner</code> já fornece a caixa externa).</li>
+                        <li><strong>Camadas:</strong> cada camada é um <code>.memory-layers__layer</code>.</li>
+                        <li><strong>Cabeçalho:</strong> use <code>.memory-layers__layer-header</code> para o título da camada.</li>
+                        <li><strong>Conteúdo:</strong> use <code>.memory-layers__layer-content</code> para o conteúdo descritivo da camada.</li>
+                        <li><strong>Destaque:</strong> use <code>memory-layers__layer--accent</code> na primeira e última camada para dar ênfase.</li>
+                        <li><strong>Legenda:</strong> <code>.memory-layers__caption</code> fica no canto inferior direito da caixa externa.</li>
+                        <li><strong>Sem setas:</strong> este componente não usa setas - as camadas são simplesmente empilhadas.</li>
+                    </ul>
+
+                    <h2>📝 Exemplo de Código HTML</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">HTML</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-html">&lt;div class="memory-layers"&gt;
+  &lt;div class="memory-layers__inner"&gt;
+    &lt;div class="memory-layers__layer memory-layers__layer--accent"&gt;
+      &lt;div class="memory-layers__layer-header"&gt;Stack (High Memory)&lt;/div&gt;
+      &lt;div class="memory-layers__layer-content"&gt;Local variables, function calls&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="memory-layers__layer"&gt;
+      &lt;div class="memory-layers__layer-header"&gt;Heap&lt;/div&gt;
+      &lt;div class="memory-layers__layer-content"&gt;Dynamic memory allocation&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="memory-layers__layer memory-layers__layer--accent"&gt;
+      &lt;div class="memory-layers__layer-header"&gt;Code Segment (Low Memory)&lt;/div&gt;
+      &lt;div class="memory-layers__layer-content"&gt;Program instructions&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="memory-layers__caption"&gt;Memory Layout&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <h2>⚡ Quando usar</h2>
+                    <div class="highlight-box">
+                        <ul style="margin: 0; padding-left: 1.5rem;">
+                            <li><strong>Regiões de memória:</strong> Stack, Heap, Data Segment, Code Segment</li>
+                            <li><strong>Camadas de sistema:</strong> User Space, Kernel Space, Hardware</li>
+                            <li><strong>Hierarquias estáticas:</strong> Estruturas que não precisam de setas</li>
+                            <li><strong>Pilhas de memória:</strong> Visualização de stack frames</li>
+                            <li><strong>Camadas de abstração:</strong> Quando não há fluxo, apenas estrutura</li>
+                        </ul>
+                    </div>
+
+                    <h2>🔄 Diferença entre os componentes</h2>
+                    <div class="info-box">
+                        <strong>Architecture Diagram (Vertical):</strong> Use quando precisa mostrar setas entre camadas (ex: Application → Framework → OS).<br><br>
+                        <strong>Memory Layers:</strong> Use quando precisa mostrar camadas empilhadas SEM setas (ex: Stack, Heap, Data, Code). Ideal para regiões de memória ou estruturas estáticas.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- External JavaScript -->
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script src="../../resources/js/giscus.js"></script>
+    <script>
+        // copyCode: used by code block copy buttons.
+        window.copyCode = function(button) {
+            var wrapper = button.closest('.code-block-wrapper');
+            if (!wrapper) return;
+            var codeEl = wrapper.querySelector('code');
+            if (!codeEl) return;
+            var text = codeEl.textContent;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                });
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.focus(); ta.select();
+                try { document.execCommand('copy'); } catch(e) {}
+                document.body.removeChild(ta);
+                var orig = button.textContent;
+                button.textContent = '✔ Copied!';
+                setTimeout(function() { button.textContent = orig; }, 2000);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

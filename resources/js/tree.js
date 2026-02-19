@@ -1,10 +1,10 @@
-// Funcionalidade da Tree View
+// Tree View functionality
 
 (function() {
     const treeView = document.getElementById('treeView');
     if (!treeView) return;
 
-    // Expandir todos os nós na inicialização
+    // Expand all nodes on initialization
     function expandAllNodes() {
         if (!treeView) return;
         const allToggles = treeView.querySelectorAll('.app-tree__toggle--collapsed');
@@ -20,11 +20,11 @@
         });
     }
 
-    // Função para inicializar event listeners
+    // Function to initialize event listeners
     function initTreeListeners() {
         if (!treeView) return;
         
-        // Expansão/colapso de nós
+        // Node expansion/collapse
         treeView.addEventListener('click', function(e) {
             const toggle = e.target.closest('.app-tree__toggle');
             if (toggle) {
@@ -46,32 +46,67 @@
             }
         });
 
-        // Seleção de nós
+        // Node selection
         treeView.addEventListener('click', function(e) {
             const node = e.target.closest('.app-tree__node');
             if (node && !e.target.closest('.app-tree__toggle')) {
-                // Remove seleção anterior
+                // Checks if it is a folder (has children) or a file (has data-html)
+                const treeItem = node.closest('.app-tree__item');
+                const hasChildren = treeItem ? treeItem.querySelector('.app-tree__children') : null;
+                const htmlFile = node.getAttribute('data-html');
+                
+                // If it is a folder (has children but no htmlFile), just expands/collapses, does not load content
+                if (hasChildren && !htmlFile) {
+                    // It is a folder, just expands/collapses if it has toggle
+                    const toggle = node.querySelector('.app-tree__toggle');
+                    if (toggle) {
+                        const children = treeItem.querySelector('.app-tree__children');
+                        if (children) {
+                            const isExpanded = toggle.classList.contains('app-tree__toggle--expanded');
+                            if (isExpanded) {
+                                toggle.classList.remove('app-tree__toggle--expanded');
+                                toggle.classList.add('app-tree__toggle--collapsed');
+                                children.classList.remove('app-tree__children--expanded');
+                            } else {
+                                toggle.classList.remove('app-tree__toggle--collapsed');
+                                toggle.classList.add('app-tree__toggle--expanded');
+                                children.classList.add('app-tree__children--expanded');
+                            }
+                        }
+                    }
+                    // Does not remove previous selection nor adds new selection for folders
+                    // Does not load content for folders
+                    e.stopPropagation();
+                    return;
+                }
+                
+                // If no htmlFile, it is not a valid file, does nothing
+                if (!htmlFile) {
+                    e.stopPropagation();
+                    return;
+                }
+                
+                // Removes previous selection
                 document.querySelectorAll('.app-tree__node--selected').forEach(n => {
                     n.classList.remove('app-tree__node--selected');
                 });
-                // Adiciona seleção ao nó clicado
+                // Adds selection to clicked node
                 node.classList.add('app-tree__node--selected');
                 
-                // Atualiza conteúdo
-                const path = node.getAttribute('data-path');
-                const label = node.querySelector('.app-tree__label').textContent;
-                const htmlFile = node.getAttribute('data-html');
-                const file = node.getAttribute('data-file');
-                const lines = node.getAttribute('data-lines');
-                
+                // Updates content only if it is a file (has htmlFile)
                 if (typeof updateContent !== 'undefined') {
+                    const path = node.getAttribute('data-path');
+                    const label = node.querySelector('.app-tree__label').textContent;
+                    const file = node.getAttribute('data-file');
+                    const lines = node.getAttribute('data-lines');
+                    
                     updateContent(path, label, htmlFile, file, lines);
                 }
             }
         });
     }
 
-    // Expandir todos os nós quando o DOM estiver pronto
+    // Expand all nodes when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             expandAllNodes();
@@ -82,54 +117,10 @@
         initTreeListeners();
     }
     
-    // Escuta evento quando o menu é construído dinamicamente
+    // Listens to event when menu is built dynamically
     document.addEventListener('menuBuilt', () => {
         expandAllNodes();
-        // Os event listeners já estão anexados, não precisa reanexar
-    });
-
-    // Expansão/colapso de nós
-    treeView.addEventListener('click', function(e) {
-        const toggle = e.target.closest('.app-tree__toggle');
-        if (toggle) {
-            e.stopPropagation();
-            const node = toggle.closest('.app-tree__item');
-            const children = node.querySelector('.app-tree__children');
-            if (children) {
-                const isExpanded = toggle.classList.contains('app-tree__toggle--expanded');
-                if (isExpanded) {
-                    toggle.classList.remove('app-tree__toggle--expanded');
-                    toggle.classList.add('app-tree__toggle--collapsed');
-                    children.classList.remove('app-tree__children--expanded');
-                } else {
-                    toggle.classList.remove('app-tree__toggle--collapsed');
-                    toggle.classList.add('app-tree__toggle--expanded');
-                    children.classList.add('app-tree__children--expanded');
-                }
-            }
-        }
-    });
-
-    // Seleção de nós
-    treeView.addEventListener('click', function(e) {
-        const node = e.target.closest('.app-tree__node');
-        if (node && !e.target.closest('.app-tree__toggle')) {
-            // Remove seleção anterior
-            document.querySelectorAll('.app-tree__node--selected').forEach(n => {
-                n.classList.remove('app-tree__node--selected');
-            });
-            // Adiciona seleção ao nó clicado
-            node.classList.add('app-tree__node--selected');
-            
-            // Atualiza conteúdo
-            const path = node.getAttribute('data-path');
-            const label = node.querySelector('.app-tree__label').textContent;
-            const htmlFile = node.getAttribute('data-html');
-            const file = node.getAttribute('data-file');
-            const lines = node.getAttribute('data-lines');
-            
-            updateContent(path, label, htmlFile, file, lines);
-        }
+        // Event listeners are already attached, no need to reattach
     });
 })();
 

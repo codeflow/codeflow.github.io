@@ -1,0 +1,53 @@
+{
+  "component": "progress-bar",
+  "name": "Progress Bar",
+  "description": "Horizontal progress bar with percentage display. On mobile, displays as a circular progress indicator. Percentage is shown as a tooltip on hover (desktop) or in the label (mobile).",
+  "version": "1.0.0",
+  "cssClasses": {
+    "wrapper": "progress-bar-wrapper",
+    "container": "progress-bar-container",
+    "fill": "progress-bar-fill",
+    "text": "progress-bar-text",
+    "label": "progress-bar-label"
+  },
+  "structure": {
+    "html": "<div class=\"progress-bar-wrapper\" style=\"display: flex; align-items: center; gap: 0.5rem;\">\n  <div class=\"progress-bar-container\" style=\"flex: 1; height: 16px;\" data-percentage=\"{PERCENTAGE}\">\n    <div class=\"progress-bar-fill\" style=\"width: {PERCENTAGE};\">\n      <span class=\"progress-bar-text\">{PERCENTAGE}</span>\n    </div>\n  </div>\n  <span class=\"progress-bar-label\" title=\"{TOOLTIP_TEXT}\" style=\"font-size: 11px; color: #666; white-space: nowrap; display: flex; align-items: center; justify-content: center; margin-top: 0; height: 16px; padding: 0;\">{LABEL_TEXT}</span>\n</div>",
+    "required": ["PERCENTAGE", "LABEL_TEXT"],
+    "optional": ["TOOLTIP_TEXT"]
+  },
+  "properties": {
+    "PERCENTAGE": {
+      "type": "string",
+      "description": "Progress percentage (e.g., '29%' or '100%'). Used for both width and data-percentage attribute.",
+      "required": true,
+      "example": "29%"
+    },
+    "LABEL_TEXT": {
+      "type": "string",
+      "description": "Text displayed next to the progress bar (e.g., '2/7' for '2 of 7 subtopics').",
+      "required": true,
+      "example": "2/7"
+    },
+    "TOOLTIP_TEXT": {
+      "type": "string",
+      "description": "Tooltip text shown on hover (desktop). Usually describes the progress (e.g., '2 of 7 subtopics').",
+      "required": false,
+      "example": "2 of 7 subtopics"
+    }
+  },
+  "example": {
+    "PERCENTAGE": "29%",
+    "LABEL_TEXT": "2/7",
+    "TOOLTIP_TEXT": "2 of 7 subtopics"
+  },
+  "renderedHtml": "<div class=\"progress-bar-wrapper\" style=\"display: flex; align-items: center; gap: 0.5rem;\">\n  <div class=\"progress-bar-container\" style=\"flex: 1; height: 16px;\" data-percentage=\"29%\">\n    <div class=\"progress-bar-fill\" style=\"width: 29%;\">\n      <span class=\"progress-bar-text\">29%</span>\n    </div>\n  </div>\n  <span class=\"progress-bar-label\" title=\"2 of 7 subtopics\" style=\"font-size: 11px; color: #666; white-space: nowrap; display: flex; align-items: center; justify-content: center; margin-top: 0; height: 16px; padding: 0;\">2/7</span>\n</div>",
+  "features": [
+    "Horizontal progress bar on desktop",
+    "Circular progress indicator on mobile (automatic via CSS)",
+    "Percentage tooltip on hover (desktop)",
+    "Label text next to progress bar",
+    "Responsive design (adapts to screen size)",
+    "data-percentage attribute for tooltip functionality"
+  ],
+  "notes": "The percentage text inside the progress bar is hidden on desktop (shown as tooltip) but visible on mobile. The data-percentage attribute is required for the tooltip to work. On mobile, the progress bar automatically becomes circular (16px diameter) via CSS media queries."
+}

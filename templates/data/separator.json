@@ -1,0 +1,32 @@
+{
+  "component": "separator",
+  "name": "Separator",
+  "description": "Horizontal separator (HR) to divide sections",
+  "version": "1.0.0",
+  "cssClasses": {
+    "hr": "hr"
+  },
+  "structure": {
+    "html": "<hr>",
+    "required": ["hr"]
+  },
+  "properties": {
+    "style": {
+      "type": "string",
+      "description": "Optional separator style",
+      "enum": ["default"],
+      "default": "default"
+    }
+  },
+  "example": {
+    "before": "Text before the separator.",
+    "after": "Text after the separator."
+  },
+  "renderedHtml": "<p>Text before the separator.</p>\n<hr>\n<p>Text after the separator.</p>",
+  "features": [
+    "Blue border (#BED6F8)",
+    "1rem margin above and below",
+    "Full container width"
+  ],
+  "notes": "The HR separator is used to visually divide content sections. It has automatic styling from the BlueSky theme."
+}

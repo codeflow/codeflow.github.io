@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Code template with tabs to show different versions of the same code">
+    <meta name="keywords" content="template, code, tabs, syntax highlighting, codeflow, example">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-code-tabs.html">
+    
+    <title>Codeflow - Code Template with Tabs</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView"></ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Code Template with Tabs</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>💻 Code Template with Tabs</h1>
+                    
+                    <p>This template demonstrates the code component with tabs, which allows showing different versions of the same code (for example, Java 7, Java 8, Java 9, etc.) in an organized and easy-to-navigate way.</p>
+
+                    <h2>📋 Code with Tabs - Java Example</h2>
+                    
+                    <div class="code-tabs-container">
+                        <div class="code-tabs-header">
+                            <button class="code-tab-button active" onclick="switchCodeTab(this, 'java7')">Java 7</button>
+                            <button class="code-tab-button" onclick="switchCodeTab(this, 'java8')">Java 8</button>
+                            <button class="code-tab-button" onclick="switchCodeTab(this, 'java9')">Java 9</button>
+                            <button class="code-tab-button" onclick="switchCodeTab(this, 'java11')">Java 11</button>
+                        </div>
+                        
+                        <div id="java7" class="code-tab-content active">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">JAVA 7</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">// Java 7 - Using anonymous classes
+List<String> names = Arrays.asList("Java", "Python", "C++");
+Collections.sort(names, new Comparator<String>() {
+    @Override
+    public int compare(String s1, String s2) {
+        return s1.compareTo(s2);
+    }
+});
+
+for (String name : names) {
+    System.out.println(name);
+}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="java8" class="code-tab-content">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">JAVA 8</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">// Java 8 - Using Lambda Expressions
+List<String> names = Arrays.asList("Java", "Python", "C++");
+Collections.sort(names, (s1, s2) -> s1.compareTo(s2));
+
+// Or using method reference
+names.sort(String::compareTo);
+
+// Using Streams
+names.stream()
+    .sorted()
+    .forEach(System.out::println);</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="java9" class="code-tab-content">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">JAVA 9</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">// Java 9 - List.of() to create immutable lists
+List<String> names = List.of("Java", "Python", "C++");
+
+// Improved Streams
+names.stream()
+    .sorted()
+    .forEach(System.out::println);
+
+// Optional.ifPresentOrElse
+Optional<String> first = names.stream().findFirst();
+first.ifPresentOrElse(
+    System.out::println,
+    () -> System.out.println("Empty list")
+);</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="java11" class="code-tab-content">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">JAVA 11</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">// Java 11 - Improved String methods
+List<String> names = List.of("Java", "Python", "C++");
+
+// String.isBlank(), String.lines()
+String text = "Java\nPython\nC++";
+text.lines()
+    .filter(line -> !line.isBlank())
+    .forEach(System.out::println);
+
+// var in lambdas
+var result = names.stream()
+    .map(String::toUpperCase)
+    .toList();</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>📋 Code with Tabs - Frameworks Example</h2>
+                    
+                    <div class="code-tabs-container">
+                        <div class="code-tabs-header">
+                            <button class="code-tab-button active" onclick="switchCodeTab(this, 'spring')">Spring Framework</button>
+                            <button class="code-tab-button" onclick="switchCodeTab(this, 'javax')">JAX-RS</button>
+                            <button class="code-tab-button" onclick="switchCodeTab(this, 'vertx')">Vert.x</button>
+                        </div>
+                        
+                        <div id="spring" class="code-tab-content active">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">SPRING</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">@RestController
+@RequestMapping("/api/users")
+public class UserController {
+    
+    @Autowired
+    private UserService userService;
+    
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.findAll();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="javax" class="code-tab-content">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">JAX-RS</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">@Path("/api/users")
+public class UserResource {
+    
+    @Inject
+    private UserService userService;
+    
+    @GET
+    public List<User> getAllUsers() {
+        return userService.findAll();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="vertx" class="code-tab-content">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">VERT.X</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">public class UserRouter {
+    
+    public Router createRouter(Vertx vertx) {
+        Router router = Router.router(vertx);
+        router.get("/api/users").handler(this::getAllUsers);
+        return router;
+    }
+    
+    private void getAllUsers(RoutingContext ctx) {
+        // Implementação
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>📋 Code with Tabs - Languages Example</h2>
+                    
+                    <div class="code-tabs-container">
+                        <div class="code-tabs-header">
+                            <button class="code-tab-button active" onclick="switchCodeTab(this, 'java')">Java</button>
+                            <button class="code-tab-button" onclick="switchCodeTab(this, 'kotlin')">Kotlin</button>
+                            <button class="code-tab-button" onclick="switchCodeTab(this, 'scala')">Scala</button>
+                        </div>
+                        
+                        <div id="java" class="code-tab-content active">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">JAVA</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-java">public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="kotlin" class="code-tab-content">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">KOTLIN</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-kotlin">class Calculator {
+    fun add(a: Int, b: Int): Int {
+        return a + b
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="scala" class="code-tab-content">
+                            <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <span class="language-label">SCALA</span>
+                                    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code class="language-scala">class Calculator {
+    def add(a: Int, b: Int): Int = {
+        a + b
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>📝 HTML Code Example</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">HTML</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-html">&lt;div class="code-tabs-container"&gt;
+    &lt;div class="code-tabs-header"&gt;
+        &lt;button class="code-tab-button active" onclick="switchCodeTab(this, 'java7')"&gt;Java 7&lt;/button&gt;
+        &lt;button class="code-tab-button" onclick="switchCodeTab(this, 'java8')"&gt;Java 8&lt;/button&gt;
+        &lt;button class="code-tab-button" onclick="switchCodeTab(this, 'java9')"&gt;Java 9&lt;/button&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="java7" class="code-tab-content active"&gt;
+        &lt;div class="code-block-wrapper"&gt;
+            &lt;div class="code-block-header"&gt;
+                &lt;span class="language-label"&gt;JAVA 7&lt;/span&gt;
+                &lt;button class="copy-code-btn" onclick="copyCode(this)"&gt;Copy&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;pre&gt;&lt;code class="language-java"&gt;// Java 7 code here&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div id="java8" class="code-tab-content"&gt;
+        &lt;div class="code-block-wrapper"&gt;
+            &lt;div class="code-block-header"&gt;
+                &lt;span class="language-label"&gt;JAVA 8&lt;/span&gt;
+                &lt;button class="copy-code-btn" onclick="copyCode(this)"&gt;Copy&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;pre&gt;&lt;code class="language-java"&gt;// Java 8 code here&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <h2>📝 Required JavaScript</h2>
+                    <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="language-label">JAVASCRIPT</span>
+                            <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">function switchCodeTab(button, tabId) {
+    // Remove active from all buttons and contents
+    const container = button.closest('.code-tabs-container');
+    container.querySelectorAll('.code-tab-button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    container.querySelectorAll('.code-tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Add active to clicked button and corresponding content
+    button.classList.add('active');
+    const content = document.getElementById(tabId);
+    if (content) {
+        content.classList.add('active');
+        
+        // Re-apply highlight.js if necessary
+        if (typeof hljs !== 'undefined') {
+            content.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+                if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                    hljs.lineNumbersBlock(block);
+                }
+            });
+        }
+    }
+}
+
+function copyCode(button) {
+    const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+    const text = codeBlock.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+        setTimeout(() => {
+            button.textContent = 'Copy';
+            button.classList.remove('copied');
+        }, 2000);
+    });
+}</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> The code component with tabs is ideal for showing code evolution, different implementations, or comparisons between versions/frameworks. Each tab can have its own code with independent syntax highlighting.
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>⚠️ Important:</strong> Make sure to include the JavaScript function <code>switchCodeTab()</code> on the page so the tabs work correctly. The function also re-applies syntax highlighting when a tab is selected.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script src="../../resources/js/code-tabs.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

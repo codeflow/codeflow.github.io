@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Template de diagrama de arquitetura com camadas em caixas e setas (BlueSky theme)">
+    <meta name="keywords" content="template, architecture diagram, codeflow, bluesky">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codeflow.com.br/templates/web/template-architecture-diagram.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://codeflow.com.br/templates/web/template-architecture-diagram.html">
+    <meta property="og:title" content="Architecture Diagram Template - Codeflow">
+    <meta property="og:description" content="Template de diagrama de arquitetura com camadas em caixas e setas (BlueSky theme)">
+    <meta property="og:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+    <meta property="og:site_name" content="Codeflow">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://codeflow.com.br/templates/web/template-architecture-diagram.html">
+    <meta name="twitter:title" content="Architecture Diagram Template - Codeflow">
+    <meta name="twitter:description" content="Template de diagrama de arquitetura com camadas em caixas e setas (BlueSky theme)">
+    <meta name="twitter:image" content="https://codeflow.com.br/resources/img/codeflow.png">
+
+    <title>Codeflow - Architecture Diagram Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Sidebar Menu -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu will be built dynamically by menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Architecture Diagram Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>📌 Architecture Diagram Template</h1>
+
+                    <div class="info-box">
+                        <strong>📚 Sobre:</strong> Este template demonstra como representar uma arquitetura em camadas usando caixas + setas, com uma legenda no canto inferior direito da caixa externa.
+                    </div>
+
+                    <div class="arch-diagram">
+                        <div class="arch-diagram__inner">
+                            <div class="arch-diagram__stack">
+                                <div class="arch-diagram__box arch-diagram__box--accent">Application Layer</div>
+                                <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                                <div class="arch-diagram__box">GTK (Widget Toolkit)</div>
+                                <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                                <div class="arch-diagram__box">GDK (Platform Abstraction)</div>
+                                <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                                <div class="arch-diagram__box">GObject (Object System)</div>
+                                <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                                <div class="arch-diagram__box">GLib (Core Library)</div>
+                                <div class="arch-diagram__arrow"><span class="arch-diagram__arrow-line"></span></div>
+                                <div class="arch-diagram__box arch-diagram__box--accent">Operating System / Display Server</div>
+                            </div>
+                            <div class="arch-diagram__caption">Architecture Diagram</div>
+                        </div>
+                    </div>
+
+                    <h2>🧩 Como usar</h2>
+                    <ul>
+                        <li><strong>Estrutura:</strong> use a classe <code>arch-diagram</code> diretamente (sem <code>.app-card</code> - o <code>.arch-diagram__inner</code> já fornece a caixa externa).</li>
+                        <li><strong>Caixas:</strong> cada camada é um <code>.arch-diagram__box</code>.</li>
+                        <li><strong>Setas:</strong> use <code>.arch-diagram__arrow</code> entre as caixas, sempre com <code>&lt;span class="arch-diagram__arrow-line"&gt;&lt;/span&gt;</code> dentro.</li>
+                        <li><strong>Múltiplas colunas:</strong> adicione múltiplos <code>.arch-diagram__stack</code> dentro de <code>.arch-diagram__inner</code> para ter colunas lado a lado.</li>
+                        <li><strong>Legenda:</strong> <code>.arch-diagram__caption</code> fica no canto inferior direito da caixa externa.</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- External JavaScript -->
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script src="../../resources/js/giscus.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
