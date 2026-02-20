@@ -1,0 +1,22 @@
+{
+  "name": "Codeflow - Educational Platform",
+  "short_name": "Codeflow",
+  "description": "Structured and progressive learning experience for programming and technology",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0078D0",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/resources/img/codeflow.png",
+      "sizes": "200x200",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "developer"],
+  "lang": "en",
+  "dir": "ltr"
+}
