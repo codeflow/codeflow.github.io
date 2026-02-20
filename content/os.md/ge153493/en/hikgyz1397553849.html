@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.js"></script>
+    <script>
+        
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>🧵 Thread Concepts</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">2025-02-20 09:40:00</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Threads are lightweight processes that share the same memory space and resources within a process. They enable concurrent execution within a single process, improving application responsiveness and resource utilization. Understanding thread concepts is essential for developing efficient multi-threaded applications.
+        </div>
+
+        <h2>🟢 📚 What is a Thread?</h2>
+        <p>A thread is the smallest unit of execution within a process. Unlike processes, which have separate memory spaces, threads within the same process share memory, file descriptors, and other resources. This makes threads more efficient for concurrent operations within a single application.</p>
+        
+        <p>Key characteristics of threads:</p>
+        <ul>
+            <li><strong>Lightweight</strong>: Threads require less overhead than processes</li>
+            <li><strong>Shared memory</strong>: All threads in a process share the same address space</li>
+            <li><strong>Independent execution</strong>: Each thread has its own program counter, stack, and registers</li>
+            <li><strong>Faster context switching</strong>: Switching between threads is faster than switching between processes</li>
+        </ul>
+
+        <h2>🟢 📚 Thread vs Process</h2>
+        <p>Understanding the differences between threads and processes is crucial for choosing the right concurrency model for your application.</p>
+
+        <div class="highlight-box">
+            <strong>Process:</strong>
+            <ul>
+                <li>Has its own memory space (isolated)</li>
+                <li>Heavyweight - requires more system resources</li>
+                <li>Slower to create and destroy</li>
+                <li>Slower context switching</li>
+                <li>Inter-process communication (IPC) required for sharing data</li>
+                <li>More secure - process isolation prevents interference</li>
+            </ul>
+            
+            <strong>Thread:</strong>
+            <ul>
+                <li>Shares memory space with other threads in the same process</li>
+                <li>Lightweight - requires fewer system resources</li>
+                <li>Faster to create and destroy</li>
+                <li>Faster context switching</li>
+                <li>Direct memory access for sharing data</li>
+                <li>Less secure - requires synchronization to prevent race conditions</li>
+            </ul>
+        </div>
+
+        <h2>🟡 📚 Thread Lifecycle</h2>
+        <p>Threads go through various states during their lifetime. The thread lifecycle consists of several distinct states:</p>
+        
+        <ul>
+            <li><strong>New</strong>: Thread object is created but not yet started</li>
+            <li><strong>Runnable/Ready</strong>: Thread is ready to run and waiting for CPU time</li>
+            <li><strong>Running</strong>: Thread is currently executing on the CPU</li>
+            <li><strong>Blocked/Waiting</strong>: Thread is waiting for a resource or event (I/O, lock, etc.)</li>
+            <li><strong>Terminated</strong>: Thread has completed execution or been terminated</li>
+        </ul>
+
+        <h2>🟡 📚 Thread Models</h2>
+        <p>Operating systems implement different thread models that determine how threads are managed and scheduled. The main thread models are:</p>
+
+        <h3>Many-to-One Model (User-Level Threads)</h3>
+        <p>Multiple user threads are mapped to a single kernel thread. The thread library manages all thread operations in user space, making it very efficient. However, if one thread blocks, all threads in the process block.</p>
+        
+        <div class="highlight-box">
+            <strong>Advantages:</strong>
+            <ul>
+                <li>Fast thread creation and switching</li>
+                <li>No kernel involvement needed</li>
+                <li>Portable across different operating systems</li>
+            </ul>
+            
+            <strong>Disadvantages:</strong>
+            <ul>
+                <li>Cannot take advantage of multiple CPUs</li>
+                <li>If one thread blocks, all threads block</li>
+                <li>Limited scalability</li>
+            </ul>
+        </div>
+
+        <h3>One-to-One Model (Kernel-Level Threads)</h3>
+        <p>Each user thread is mapped to a separate kernel thread. The operating system kernel manages thread creation, scheduling, and synchronization. This model provides true parallelism on multi-core systems.</p>
+        
+        <div class="highlight-box">
+            <strong>Advantages:</strong>
+            <ul>
+                <li>True parallelism on multi-core systems</li>
+                <li>If one thread blocks, others can continue</li>
+                <li>Better for CPU-intensive tasks</li>
+            </ul>
+            
+            <strong>Disadvantages:</strong>
+                <ul>
+                    <li>More overhead for thread creation</li>
+                    <li>Requires kernel involvement</li>
+                    <li>Limited number of threads (system resource constraints)</li>
+                </ul>
+        </div>
+
+        <h3>Many-to-Many Model (Hybrid Threads)</h3>
+        <p>Multiple user threads are mapped to a smaller or equal number of kernel threads. This model combines the benefits of both user-level and kernel-level threads, providing flexibility and efficiency.</p>
+        
+        <div class="highlight-box">
+            <strong>Advantages:</strong>
+            <ul>
+                <li>Can create many user threads</li>
+                <li>True parallelism on multi-core systems</li>
+                <li>Flexible thread management</li>
+            </ul>
+            
+            <strong>Disadvantages:</strong>
+            <ul>
+                <li>More complex implementation</li>
+                <li>Requires coordination between user and kernel levels</li>
+            </ul>
+        </div>
+
+        <h2>🟡 📚 User Threads</h2>
+        <p>User threads (also called user-level threads) are managed entirely by a thread library in user space, without kernel support. The operating system sees only the process, not the individual threads.</p>
+        
+        <p>Characteristics of user threads:</p>
+        <ul>
+            <li><strong>Fast creation</strong>: No system call required</li>
+            <li><strong>Fast context switching</strong>: No kernel mode switch needed</li>
+            <li><strong>Custom scheduling</strong>: Application can implement its own scheduling algorithm</li>
+            <li><strong>Portability</strong>: Can run on any operating system</li>
+            <li><strong>Blocking issue</strong>: If one thread blocks, all threads in the process block</li>
+        </ul>
+
+        <h2>🟡 📚 Kernel Threads</h2>
+        <p>Kernel threads are managed directly by the operating system kernel. Each kernel thread is a schedulable entity that the OS can assign to different CPUs.</p>
+        
+        <p>Characteristics of kernel threads:</p>
+        <ul>
+            <li><strong>True parallelism</strong>: Can run simultaneously on multiple CPUs</li>
+            <li><strong>Independent blocking</strong>: If one thread blocks, others can continue</li>
+            <li><strong>System call overhead</strong>: Thread operations require kernel mode switches</li>
+            <li><strong>OS-dependent</strong>: Implementation varies by operating system</li>
+            <li><strong>Resource limits</strong>: Limited by system resources and OS policies</li>
+        </ul>
+
+        <h2>🟡 🛠️ Thread Creation Example</h2>
+        <p>Here's a simple example of creating and managing threads in a programming language:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;pthread.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+
+void* thread_function(void* arg) {
+    int thread_id = *(int*)arg;
+    printf("Thread %d is running\n", thread_id);
+    sleep(2);
+    printf("Thread %d is finished\n", thread_id);
+    return NULL;
+}
+
+int main() {
+    pthread_t threads[3];
+    int thread_ids[3];
+    
+    // Create three threads
+    for (int i = 0; i < 3; i++) {
+        thread_ids[i] = i + 1;
+        if (pthread_create(&threads[i], NULL, thread_function, &thread_ids[i]) != 0) {
+            fprintf(stderr, "Error creating thread %d\n", i + 1);
+            return 1;
+        }
+    }
+    
+    // Wait for all threads to complete
+    for (int i = 0; i < 3; i++) {
+        pthread_join(threads[i], NULL);
+    }
+    
+    printf("All threads completed\n");
+    return 0;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+        
+        <h4>Thread Function</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">void* thread_function(void* arg) {
+    int thread_id = *(int*)arg;
+    printf("Thread %d is running\n", thread_id);
+    sleep(2);
+    printf("Thread %d is finished\n", thread_id);
+    return NULL;
+}</code></pre>
+        </div>
+        <p>This is the function that each thread will execute. It receives a pointer to an integer (thread ID), prints a message, sleeps for 2 seconds, and then prints a completion message. The function signature `void* thread_function(void* arg)` is required by the POSIX threads (pthread) library.</p>
+
+        <h4>Thread Creation</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">pthread_t threads[3];
+int thread_ids[3];
+
+for (int i = 0; i < 3; i++) {
+    thread_ids[i] = i + 1;
+    if (pthread_create(&threads[i], NULL, thread_function, &thread_ids[i]) != 0) {
+        fprintf(stderr, "Error creating thread %d\n", i + 1);
+        return 1;
+    }
+}</code></pre>
+        </div>
+        <p>The `pthread_create()` function creates a new thread. It takes four parameters: a pointer to a `pthread_t` variable to store the thread ID, thread attributes (NULL for defaults), the function to execute, and an argument to pass to that function. If creation fails, the function returns a non-zero value.</p>
+
+        <h4>Thread Joining</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">for (int i = 0; i < 3; i++) {
+    pthread_join(threads[i], NULL);
+}</code></pre>
+        </div>
+        <p>The `pthread_join()` function waits for a thread to complete execution. It blocks the calling thread until the specified thread terminates. The second parameter (NULL here) is used to retrieve the thread's return value if needed. This ensures that the main thread waits for all worker threads to finish before proceeding.</p>
+
+        <h2>🔴 📚 Thread Synchronization</h2>
+        <p>Since threads share memory space, proper synchronization is essential to prevent race conditions and ensure data consistency. Common synchronization mechanisms include:</p>
+        
+        <ul>
+            <li><strong>Mutexes</strong>: Mutual exclusion locks that allow only one thread to access a critical section</li>
+            <li><strong>Semaphores</strong>: Counting semaphores that control access to a pool of resources</li>
+            <li><strong>Condition Variables</strong>: Allow threads to wait for specific conditions to be met</li>
+            <li><strong>Barriers</strong>: Synchronization points where threads wait until all threads reach the barrier</li>
+            <li><strong>Read-Write Locks</strong>: Allow multiple readers or a single writer</li>
+        </ul>
+
+        <h2>🔴 📚 Thread Safety</h2>
+        <p>Thread safety refers to the property of code that functions correctly when accessed by multiple threads simultaneously. Thread-safe code prevents race conditions and ensures data integrity.</p>
+        
+        <p>Common techniques for achieving thread safety:</p>
+        <ul>
+            <li><strong>Immutable objects</strong>: Objects that cannot be modified after creation</li>
+            <li><strong>Synchronized methods</strong>: Methods that can only be executed by one thread at a time</li>
+            <li><strong>Thread-local storage</strong>: Each thread has its own copy of data</li>
+            <li><strong>Atomic operations</strong>: Operations that complete without interruption</li>
+            <li><strong>Lock-free data structures</strong>: Data structures designed for concurrent access without locks</li>
+        </ul>
+
+        <h2>🔴 📚 Thread Pools</h2>
+        <p>A thread pool is a collection of pre-created threads that are reused to execute tasks. Instead of creating a new thread for each task, tasks are submitted to the pool, and an available thread executes them.</p>
+        
+        <p>Benefits of thread pools:</p>
+        <ul>
+            <li><strong>Reduced overhead</strong>: Avoids the cost of creating and destroying threads</li>
+            <li><strong>Better resource management</strong>: Limits the number of concurrent threads</li>
+            <li><strong>Improved performance</strong>: Threads are ready to execute tasks immediately</li>
+            <li><strong>Controlled concurrency</strong>: Prevents system overload from too many threads</li>
+        </ul>
+
+        <h2>📚 Summary</h2>
+        <div class="highlight-box">
+            <ul>
+                <li><strong>Threads</strong> are lightweight execution units within a process that share memory space</li>
+                <li><strong>Threads vs Processes</strong>: Threads share memory and are faster, while processes are isolated and more secure</li>
+                <li><strong>Thread Lifecycle</strong> includes states: New, Runnable, Running, Blocked, and Terminated</li>
+                <li><strong>Thread Models</strong> include Many-to-One (user threads), One-to-One (kernel threads), and Many-to-Many (hybrid)</li>
+                <li><strong>User Threads</strong> are managed in user space, fast but cannot utilize multiple CPUs</li>
+                <li><strong>Kernel Threads</strong> are managed by the OS, support true parallelism but have more overhead</li>
+                <li><strong>Thread Synchronization</strong> is essential to prevent race conditions when threads share data</li>
+                <li><strong>Thread Safety</strong> ensures code works correctly with concurrent thread access</li>
+                <li><strong>Thread Pools</strong> improve performance by reusing threads instead of creating new ones</li>
+            </ul>
+        </div>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Thread_(computing)" target="_blank" rel="noopener noreferrer">Thread (Computing) - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_multithreading.htm" target="_blank" rel="noopener noreferrer">Multithreading - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/thread-in-operating-system/" target="_blank" rel="noopener noreferrer">Thread in Operating System - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.javatpoint.com/os-threads" target="_blank" rel="noopener noreferrer">Threads - JavaTpoint</a></li>
+                <li>🔗 <a href="https://www.studytonight.com/operating-system/threads" target="_blank" rel="noopener noreferrer">Threads - StudyTonight</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

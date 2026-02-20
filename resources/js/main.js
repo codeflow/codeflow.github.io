@@ -64,8 +64,114 @@
         // Initialize language and selector
         const languageSelector = document.getElementById('languageSelector');
         
-        // Set initial language
-        updateLanguage(currentLanguage);
+        // Ensure language selector is properly initialized
+        // FORCE English ('en') as default - ignore any saved preference on initial load
+        if (languageSelector) {
+            const defaultLang = 'en';
+            
+            // CRITICAL: Force English immediately, before any other code runs
+            languageSelector.value = defaultLang;
+            
+            // Update all options to ensure English is selected
+            const options = languageSelector.querySelectorAll('option');
+            options.forEach(option => {
+                option.removeAttribute('selected');
+                option.selected = false;
+                if (option.value === defaultLang) {
+                    option.setAttribute('selected', 'selected');
+                    option.selected = true;
+                }
+            });
+            
+            // Force currentLanguage to English
+            currentLanguage = defaultLang;
+            
+            // Force localStorage to English
+            localStorage.setItem('codeflow-language', defaultLang);
+            
+            // Multiple forced updates to ensure it sticks
+            requestAnimationFrame(() => {
+                languageSelector.value = defaultLang;
+                const enOption = languageSelector.querySelector('option[value="en"]');
+                if (enOption) {
+                    enOption.selected = true;
+                    enOption.setAttribute('selected', 'selected');
+                }
+            });
+            
+            setTimeout(() => {
+                if (languageSelector) {
+                    languageSelector.value = defaultLang;
+                    const enOption = languageSelector.querySelector('option[value="en"]');
+                    if (enOption) {
+                        enOption.selected = true;
+                        enOption.setAttribute('selected', 'selected');
+                    }
+                }
+            }, 50);
+            
+            setTimeout(() => {
+                if (languageSelector) {
+                    languageSelector.value = defaultLang;
+                    const enOption = languageSelector.querySelector('option[value="en"]');
+                    if (enOption) {
+                        enOption.selected = true;
+                        enOption.setAttribute('selected', 'selected');
+                    }
+                }
+            }, 200);
+            
+            // CRITICAL: Monitor for any changes to the selector and force back to 'en' if changed
+            // This prevents any other script from changing it to 'br' on initial load
+            let isInitialLoad = true;
+            const observer = new MutationObserver(function(mutations) {
+                if (isInitialLoad && languageSelector && languageSelector.value !== 'en') {
+                    console.log('Language selector changed to', languageSelector.value, '- forcing back to en');
+                    languageSelector.value = 'en';
+                    localStorage.setItem('codeflow-language', 'en');
+                    const enOption = languageSelector.querySelector('option[value="en"]');
+                    if (enOption) {
+                        enOption.selected = true;
+                        enOption.setAttribute('selected', 'selected');
+                    }
+                }
+            });
+            
+            // Observe changes to the select element
+            if (languageSelector) {
+                observer.observe(languageSelector, {
+                    attributes: true,
+                    attributeFilter: ['value', 'selected'],
+                    childList: false,
+                    subtree: true
+                });
+                
+                // Also listen for change events during initial load
+                const changeHandler = function() {
+                    if (isInitialLoad && languageSelector.value !== 'en') {
+                        console.log('Language selector changed via event to', languageSelector.value, '- forcing back to en');
+                        languageSelector.value = 'en';
+                        localStorage.setItem('codeflow-language', 'en');
+                        const enOption = languageSelector.querySelector('option[value="en"]');
+                        if (enOption) {
+                            enOption.selected = true;
+                            enOption.setAttribute('selected', 'selected');
+                        }
+                    }
+                };
+                languageSelector.addEventListener('change', changeHandler);
+                
+                // After 2 seconds, allow normal language changes
+                setTimeout(function() {
+                    isInitialLoad = false;
+                    observer.disconnect();
+                    languageSelector.removeEventListener('change', changeHandler);
+                }, 2000);
+            }
+        }
+        
+        // Force update language to English
+        updateLanguage('en');
         
         // No need to load content in index.html - it redirects automatically
         // The code below only executes on pages that already have content (not in index.html)

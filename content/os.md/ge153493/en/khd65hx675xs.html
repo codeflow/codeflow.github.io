@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.js"></script>
+    <script>
+        
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>⚙️ Process Creation and Termination</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">2026-02-20</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Process creation and termination are fundamental operations in operating systems. This topic covers system calls like fork(), exec(), wait(), and exit(), process hierarchy, and special process states like zombie and orphan processes.
+        </div>
+
+        <h2>🟢 📚 Process Creation Basics</h2>
+        <p>Process creation is the mechanism by which new processes are spawned in an operating system. In Unix-like systems, the primary method for creating new processes is through the <code>fork()</code> system call.</p>
+        
+        <p>When a process calls <code>fork()</code>, the operating system creates an exact copy of the calling process. This new process is called the <strong>child process</strong>, while the original process is called the <strong>parent process</strong>.</p>
+
+        <div class="highlight-box">
+            <strong>Key Characteristics of fork():</strong>
+            <ul>
+                <li>Creates an exact duplicate of the parent process</li>
+                <li>Child process gets a copy of parent's memory space</li>
+                <li>Both processes continue execution from the point after fork()</li>
+                <li>Returns different values: 0 in child, child's PID in parent</li>
+                <li>Child process gets a unique Process ID (PID)</li>
+            </ul>
+        </div>
+
+        <h2>🟢 🛠️ Basic fork() Example</h2>
+        <p>Here's a simple example demonstrating process creation with fork():</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+
+int main() {
+    pid_t pid;
+    
+    printf("Before fork()\n");
+    
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process
+        printf("Child process: PID = %d\n", getpid());
+        printf("Child: Parent PID = %d\n", getppid());
+    } else if (pid > 0) {
+        // Parent process
+        printf("Parent process: PID = %d\n", getpid());
+        printf("Parent: Child PID = %d\n", pid);
+    } else {
+        // fork() failed
+        perror("fork");
+        return 1;
+    }
+    
+    printf("After fork() - both processes execute this\n");
+    return 0;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Process ID Variables</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">pid_t pid;</code></pre>
+        </div>
+        <p><code>pid_t</code> is a data type used to represent process IDs. It's typically defined as an integer type that can hold a process identifier.</p>
+
+        <h4>Fork System Call</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">pid = fork();</code></pre>
+        </div>
+        <p>The <code>fork()</code> system call creates a new process by duplicating the calling process. It returns:
+        <ul>
+            <li><strong>0</strong> in the child process</li>
+            <li><strong>Child's PID</strong> in the parent process (a positive number)</li>
+            <li><strong>-1</strong> on error</li>
+        </ul>
+        </p>
+
+        <h4>Process Identification</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">if (pid == 0) {
+    // Child process
+    printf("Child process: PID = %d\n", getpid());
+    printf("Child: Parent PID = %d\n", getppid());
+} else if (pid > 0) {
+    // Parent process
+    printf("Parent process: PID = %d\n", getpid());
+    printf("Parent: Child PID = %d\n", pid);
+}</code></pre>
+        </div>
+        <p><code>getpid()</code> returns the current process's PID, while <code>getppid()</code> returns the parent process's PID. The child process uses the return value of <code>fork()</code> (0) to identify itself, while the parent uses the returned PID to track its child.</p>
+
+        <h2>🟡 📚 Process Hierarchy</h2>
+        <p>Processes in Unix-like systems form a hierarchical tree structure. Every process (except the init process with PID 1) has a parent process. This creates a process tree where:</p>
+        
+        <ul>
+            <li>The <strong>init process</strong> (PID 1) is the root of the process tree</li>
+            <li>Each process can create child processes using <code>fork()</code></li>
+            <li>Child processes can create their own children, forming a tree structure</li>
+            <li>When a parent terminates, its children become orphan processes</li>
+        </ul>
+
+        <ul class="content-treeview">
+            <li class="content-treeview__item">
+                <div class="content-treeview__node content-treeview__node--has-children">
+                    <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                    <span class="content-treeview__icon">⚙️</span>
+                    <span class="content-treeview__label">init (PID 1)</span>
+                </div>
+                <ul class="content-treeview__children content-treeview__children--expanded">
+                    <li class="content-treeview__item">
+                        <div class="content-treeview__node content-treeview__node--has-children">
+                            <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                            <span class="content-treeview__icon">💻</span>
+                            <span class="content-treeview__label">shell (PID 100)</span>
+                        </div>
+                        <ul class="content-treeview__children content-treeview__children--expanded">
+                            <li class="content-treeview__item">
+                                <div class="content-treeview__node content-treeview__node--has-children">
+                                    <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                                    <span class="content-treeview__icon">📄</span>
+                                    <span class="content-treeview__label">process_a (PID 200)</span>
+                                </div>
+                                <ul class="content-treeview__children content-treeview__children--expanded">
+                                    <li class="content-treeview__item">
+                                        <div class="content-treeview__node">
+                                            <span class="content-treeview__icon">📄</span>
+                                            <span class="content-treeview__label">process_b (PID 201)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="content-treeview__item">
+                                <div class="content-treeview__node">
+                                    <span class="content-treeview__icon">📄</span>
+                                    <span class="content-treeview__label">process_c (PID 202)</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="content-treeview__item">
+                        <div class="content-treeview__node">
+                            <span class="content-treeview__icon">🔧</span>
+                            <span class="content-treeview__label">daemon (PID 101)</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>🟡 🛠️ Creating Multiple Child Processes</h2>
+        <p>This example demonstrates creating multiple child processes and managing the process hierarchy:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main() {
+    pid_t pid1, pid2, pid3;
+    int i;
+    
+    printf("Parent PID: %d\n", getpid());
+    
+    // Create first child
+    pid1 = fork();
+    if (pid1 == 0) {
+        printf("Child 1: PID = %d, Parent PID = %d\n", getpid(), getppid());
+        sleep(2);
+        exit(0);
+    }
+    
+    // Create second child
+    pid2 = fork();
+    if (pid2 == 0) {
+        printf("Child 2: PID = %d, Parent PID = %d\n", getpid(), getppid());
+        sleep(2);
+        exit(0);
+    }
+    
+    // Create third child
+    pid3 = fork();
+    if (pid3 == 0) {
+        printf("Child 3: PID = %d, Parent PID = %d\n", getpid(), getppid());
+        sleep(2);
+        exit(0);
+    }
+    
+    // Parent waits for all children
+    for (i = 0; i < 3; i++) {
+        wait(NULL);
+    }
+    
+    printf("Parent: All children terminated\n");
+    return 0;
+}</code></pre>
+        </div>
+
+        <h2>🟡 📚 exec() Family of Functions</h2>
+        <p>The <code>exec()</code> family of functions replaces the current process image with a new program. Unlike <code>fork()</code>, which creates a copy, <code>exec()</code> completely replaces the process's memory space with a new program.</p>
+
+        <div class="highlight-box">
+            <strong>Common exec() Functions:</strong>
+            <ul>
+                <li><code>execl()</code> - Takes arguments as a list</li>
+                <li><code>execv()</code> - Takes arguments as an array</li>
+                <li><code>execle()</code> - With environment variables (list)</li>
+                <li><code>execve()</code> - With environment variables (array)</li>
+                <li><code>execlp()</code> - Searches PATH (list)</li>
+                <li><code>execvp()</code> - Searches PATH (array)</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Using fork() and exec() Together</h2>
+        <p>The common pattern is to use <code>fork()</code> to create a new process, then use <code>exec()</code> in the child to run a different program:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main() {
+    pid_t pid;
+    
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process: execute a new program
+        printf("Child: About to execute ls command\n");
+        execl("/bin/ls", "ls", "-l", NULL);
+        
+        // This line will never execute if execl succeeds
+        perror("execl failed");
+        exit(1);
+    } else if (pid > 0) {
+        // Parent process: wait for child to complete
+        printf("Parent: Waiting for child to finish\n");
+        wait(NULL);
+        printf("Parent: Child process completed\n");
+    } else {
+        perror("fork failed");
+        return 1;
+    }
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Executing a New Program</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">execl("/bin/ls", "ls", "-l", NULL);</code></pre>
+        </div>
+        <p><code>execl()</code> replaces the current process image with the program specified by the first argument. The subsequent arguments are passed as command-line arguments to the new program. The last argument must be <code>NULL</code> to indicate the end of arguments. If <code>execl()</code> succeeds, it never returns because the process image is completely replaced.</p>
+
+        <h4>Parent Waiting for Child</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">wait(NULL);</code></pre>
+        </div>
+        <p>The <code>wait()</code> system call suspends execution of the parent process until one of its children terminates. <code>NULL</code> means we don't need the exit status. The parent process blocks until the child completes execution.</p>
+
+        <h2>🟡 📚 wait() and waitpid()</h2>
+        <p>The <code>wait()</code> and <code>waitpid()</code> system calls allow a parent process to wait for its child processes to terminate and retrieve their exit status.</p>
+
+        <div class="highlight-box">
+            <strong>Key Differences:</strong>
+            <ul>
+                <li><code>wait()</code> - Waits for any child process to terminate</li>
+                <li><code>waitpid()</code> - Waits for a specific child process (by PID)</li>
+                <li>Both can retrieve exit status information</li>
+                <li>Both prevent zombie processes from accumulating</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Using wait() to Get Exit Status</h2>
+        <p>This example shows how to retrieve the exit status of a child process:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    pid_t pid;
+    int status;
+    
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process
+        printf("Child: PID = %d\n", getpid());
+        printf("Child: Exiting with status 42\n");
+        exit(42);
+    } else if (pid > 0) {
+        // Parent process
+        printf("Parent: Waiting for child (PID %d) to terminate\n", pid);
+        wait(&status);
+        
+        if (WIFEXITED(status)) {
+            printf("Parent: Child exited normally with status: %d\n", WEXITSTATUS(status));
+        } else if (WIFSIGNALED(status)) {
+            printf("Parent: Child terminated by signal: %d\n", WTERMSIG(status));
+        }
+    } else {
+        perror("fork failed");
+        return 1;
+    }
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Retrieving Exit Status</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">int status;
+wait(&status);</code></pre>
+        </div>
+        <p>By passing a pointer to an integer to <code>wait()</code>, we can retrieve information about how the child process terminated. The status value contains encoded information about the child's termination.</p>
+
+        <h4>Checking Exit Status</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">if (WIFEXITED(status)) {
+    printf("Child exited normally with status: %d\n", WEXITSTATUS(status));
+} else if (WIFSIGNALED(status)) {
+    printf("Child terminated by signal: %d\n", WTERMSIG(status));
+}</code></pre>
+        </div>
+        <p><code>WIFEXITED(status)</code> checks if the child exited normally. <code>WEXITSTATUS(status)</code> extracts the exit code. <code>WIFSIGNALED(status)</code> checks if the child was terminated by a signal, and <code>WTERMSIG(status)</code> gets the signal number.</p>
+
+        <h2>🟡 📚 exit() and Process Termination</h2>
+        <p>Processes terminate in several ways:</p>
+        
+        <ul>
+            <li><strong>Normal termination</strong> - Process calls <code>exit()</code> or returns from <code>main()</code></li>
+            <li><strong>Abnormal termination</strong> - Process receives a signal that causes termination</li>
+            <li><strong>Error termination</strong> - Process encounters an error and calls <code>exit()</code> with non-zero status</li>
+        </ul>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+int main() {
+    printf("Process starting\n");
+    
+    // Normal termination with exit code 0 (success)
+    exit(0);
+    
+    // This line never executes
+    printf("This will never print\n");
+}</code></pre>
+        </div>
+
+        <h2>🔴 📚 Zombie Processes</h2>
+        <p>A <strong>zombie process</strong> is a process that has completed execution but still has an entry in the process table. This happens when:</p>
+        
+        <ul>
+            <li>The child process terminates</li>
+            <li>The parent process hasn't called <code>wait()</code> or <code>waitpid()</code> yet</li>
+            <li>The child's exit status is still needed by the parent</li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>Zombie Process Characteristics:</strong>
+            <ul>
+                <li>Process has finished execution</li>
+                <li>Still occupies a slot in the process table</li>
+                <li>Consumes minimal system resources (just the process table entry)</li>
+                <li>Cannot be killed (already dead)</li>
+                <li>Removed when parent calls wait() or parent terminates</li>
+            </ul>
+        </div>
+
+        <h2>🔴 🛠️ Creating a Zombie Process</h2>
+        <p>This example demonstrates how a zombie process is created:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    pid_t pid;
+    
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process terminates immediately
+        printf("Child: PID = %d, exiting now\n", getpid());
+        exit(0);
+    } else if (pid > 0) {
+        // Parent process doesn't wait for child
+        printf("Parent: PID = %d, Child PID = %d\n", getpid(), pid);
+        printf("Parent: Not calling wait() - child will become zombie\n");
+        printf("Parent: Sleeping for 30 seconds - check 'ps aux | grep defunct'\n");
+        sleep(30);
+        // Now wait for child (zombie will be cleaned up)
+        wait(NULL);
+        printf("Parent: Child cleaned up\n");
+    } else {
+        perror("fork failed");
+        return 1;
+    }
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <p>While the parent is sleeping, the child process becomes a zombie. You can verify this by running <code>ps aux | grep defunct</code> in another terminal. The zombie will be cleaned up when the parent calls <code>wait()</code>.</p>
+
+        <h2>🔴 📚 Orphan Processes</h2>
+        <p>An <strong>orphan process</strong> is a process whose parent has terminated. When a parent process dies before its child:</p>
+        
+        <ul>
+            <li>The child process becomes an orphan</li>
+            <li>The init process (PID 1) becomes the new parent</li>
+            <li>Orphan processes are automatically adopted by init</li>
+            <li>Init periodically calls <code>wait()</code> to clean up orphaned zombies</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>Orphan Process Lifecycle:</strong><br>
+            1. Parent creates child process<br>
+            2. Parent terminates before child<br>
+            3. Child becomes orphan (parent PID changes to 1)<br>
+            4. Init process adopts the orphan<br>
+            5. When orphan terminates, init cleans it up
+        </div>
+
+        <h2>🔴 🛠️ Creating an Orphan Process</h2>
+        <p>This example demonstrates how an orphan process is created:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    pid_t pid;
+    
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process
+        printf("Child: PID = %d, Parent PID = %d\n", getpid(), getppid());
+        printf("Child: Sleeping for 5 seconds\n");
+        sleep(5);
+        printf("Child: After sleep, Parent PID = %d\n", getppid());
+        printf("Child: If parent PID is now 1, I became an orphan\n");
+        exit(0);
+    } else if (pid > 0) {
+        // Parent process terminates immediately
+        printf("Parent: PID = %d, Child PID = %d\n", getpid(), pid);
+        printf("Parent: Terminating now - child will become orphan\n");
+        exit(0);
+    } else {
+        perror("fork failed");
+        return 1;
+    }
+}</code></pre>
+        </div>
+
+        <p>When you run this program, the parent terminates immediately while the child continues running. The child's parent PID will change from the original parent's PID to 1 (init), indicating it has become an orphan.</p>
+
+        <h2>🔴 📚 Process Termination Best Practices</h2>
+        <p>To avoid zombie processes and properly manage process lifecycle:</p>
+
+        <div class="highlight-box">
+            <strong>Best Practices:</strong>
+            <ul>
+                <li>Always call <code>wait()</code> or <code>waitpid()</code> for child processes</li>
+                <li>Use signal handlers to handle child termination (SIGCHLD)</li>
+                <li>Set up proper cleanup routines for process termination</li>
+                <li>Use <code>exit()</code> with appropriate exit codes (0 for success, non-zero for errors)</li>
+                <li>Consider using <code>waitpid()</code> with <code>WNOHANG</code> for non-blocking waits</li>
+            </ul>
+        </div>
+
+        <h2>🔴 🛠️ Handling Child Termination with Signals</h2>
+        <p>This example shows how to handle child termination using the SIGCHLD signal:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;stdlib.h&gt;
+
+void sigchld_handler(int sig) {
+    pid_t pid;
+    int status;
+    
+    // Wait for all terminated children (non-blocking)
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+        if (WIFEXITED(status)) {
+            printf("Child %d exited with status %d\n", pid, WEXITSTATUS(status));
+        }
+    }
+}
+
+int main() {
+    pid_t pid;
+    struct sigaction sa;
+    
+    // Set up SIGCHLD handler
+    sa.sa_handler = sigchld_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART | SA_NOCLDSTOP;
+    sigaction(SIGCHLD, &sa, NULL);
+    
+    // Create child process
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process
+        printf("Child: PID = %d, running for 3 seconds\n", getpid());
+        sleep(3);
+        exit(42);
+    } else if (pid > 0) {
+        // Parent process
+        printf("Parent: PID = %d, waiting for child signal\n", getpid());
+        // Parent continues doing other work
+        while (1) {
+            sleep(1);
+            printf("Parent: Still running...\n");
+        }
+    } else {
+        perror("fork failed");
+        return 1;
+    }
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Signal Handler Setup</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">struct sigaction sa;
+sa.sa_handler = sigchld_handler;
+sigemptyset(&sa.sa_mask);
+sa.sa_flags = SA_RESTART | SA_NOCLDSTOP;
+sigaction(SIGCHLD, &sa, NULL);</code></pre>
+        </div>
+        <p>This sets up a signal handler for SIGCHLD, which is sent to a parent process when a child terminates. <code>SA_RESTART</code> ensures system calls are restarted after the signal handler, and <code>SA_NOCLDSTOP</code> means the signal is only sent on termination, not on stop/continue.</p>
+
+        <h4>Non-blocking Wait</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+    // Process terminated child
+}</code></pre>
+        </div>
+        <p><code>waitpid(-1, &status, WNOHANG)</code> waits for any child process (<code>-1</code>) but returns immediately if no child has terminated (<code>WNOHANG</code>). The loop processes all terminated children without blocking the parent process.</p>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Fork_(system_call)" target="_blank" rel="noopener noreferrer">Fork (system call) - Wikipedia</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man2/fork.2.html" target="_blank" rel="noopener noreferrer">fork(2) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man2/execve.2.html" target="_blank" rel="noopener noreferrer">execve(2) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man2/wait.2.html" target="_blank" rel="noopener noreferrer">wait(2) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/unix_system_calls/fork.htm" target="_blank" rel="noopener noreferrer">Unix System Calls - fork() - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/zombie-processes-prevention/" target="_blank" rel="noopener noreferrer">Zombie Processes and Prevention - GeeksforGeeks</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

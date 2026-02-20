@@ -2226,4 +2226,119 @@ body.content-page li {
         pointer-events: none !important;
     }
 }
+
+/* ===== Content Treeview (for hierarchical structures in content pages) ===== */
+.content-treeview {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0;
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+    background-color: #FFFFFF;
+    border: 1px solid #BED6F8;
+    padding: 0.5rem;
+}
+
+.content-treeview__item {
+    margin: 0;
+    padding: 0;
+}
+
+.content-treeview__node {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    color: #000000;
+    user-select: none;
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.content-treeview__node:hover {
+    background-color: rgba(242, 247, 255, 0.5);
+    border-color: #BED6F8;
+}
+
+.content-treeview__toggle {
+    width: 11px;
+    height: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.25rem;
+    color: #000000;
+    font-size: 7px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid #BED6F8;
+    background: linear-gradient(to bottom, #F2F7FF 0%, #ffffff 100%);
+    background-color: #ffffff;
+    flex-shrink: 0;
+    margin-top: 0;
+    align-self: center;
+}
+
+.content-treeview__toggle:hover {
+    background: linear-gradient(to bottom, #BED6F8 0%, #F2F7FF 100%);
+    background-color: #BED6F8;
+}
+
+.content-treeview__toggle--expanded::before {
+    content: '−';
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    font-weight: bold;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+}
+
+.content-treeview__toggle--collapsed::before {
+    content: '+';
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: bold;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+    transform: scaleY(1.1) translateY(0.5px);
+}
+
+.content-treeview__icon {
+    margin-right: 0.25rem;
+    display: inline-block;
+    flex-shrink: 0;
+    align-self: center;
+    font-size: 16px;
+    line-height: 1;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+.content-treeview__label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.content-treeview__children {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 1.5rem;
+    display: none;
+}
+
+.content-treeview__children--expanded {
+    display: block;
+}
   

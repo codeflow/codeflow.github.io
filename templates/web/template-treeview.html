@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="../../resources/img/codeflow.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Treeview Component Template">
+    <meta name="keywords" content="treeview, hierarchy, tree structure">
+    <meta name="author" content="Rafael Santos">
+    <meta name="robots" content="index, follow">
+    
+    <title>Treeview Component Template</title>
+    <link rel="stylesheet" href="../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+</head>
+<body class="app-page">
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="app-sidebar__header">
+                <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-sidebar__logo"></a>
+                <span>CODEFLOW</span>
+            </div>
+            <div class="app-sidebar__content">
+                <div class="app-search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search content..." class="app-search-input">
+                    <button id="searchButton" class="app-search-button" title="Search">🔍</button>
+                </div>
+                <ul class="app-tree" id="treeView">
+                    <!-- Menu will be built dynamically by menu.js -->
+                </ul>
+            </div>
+            <div class="app-sidebar__resizer" id="resizer"></div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="app-content">
+            <div class="app-content__header">
+                <div class="app-content__header-left">
+                    <button class="app-mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="../../index.html"><img src="../../resources/img/codeflow.png" alt="Codeflow" class="app-content__logo-mobile"></a>
+                    <span id="contentHeader">Treeview Component Template</span>
+                </div>
+                <div class="language-selector">
+                    <select id="languageSelector">
+                        <option value="en" selected>🇺🇸 English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="app-content__body" id="contentBody">
+                <div class="content-container">
+                    <h1>🌳 Treeview Component</h1>
+                    
+                    <div class="info-box">
+                        <strong>📚 About:</strong> The treeview component is used to display hierarchical structures like process trees, directory structures, organizational charts, and any parent-child relationships.
+                    </div>
+
+                    <h2>🟢 📚 Basic Treeview Example</h2>
+                    <p>Here's a simple example of a process tree using the treeview component:</p>
+
+                    <ul class="content-treeview">
+                        <li class="content-treeview__item">
+                            <div class="content-treeview__node content-treeview__node--has-children">
+                                <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                                <span class="content-treeview__icon">⚙️</span>
+                                <span class="content-treeview__label">init (PID 1)</span>
+                            </div>
+                            <ul class="content-treeview__children content-treeview__children--expanded">
+                                <li class="content-treeview__item">
+                                    <div class="content-treeview__node content-treeview__node--has-children">
+                                        <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                                        <span class="content-treeview__icon">💻</span>
+                                        <span class="content-treeview__label">shell (PID 100)</span>
+                                    </div>
+                                    <ul class="content-treeview__children content-treeview__children--expanded">
+                                        <li class="content-treeview__item">
+                                            <div class="content-treeview__node content-treeview__node--has-children">
+                                                <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                                                <span class="content-treeview__icon">📄</span>
+                                                <span class="content-treeview__label">process_a (PID 200)</span>
+                                            </div>
+                                            <ul class="content-treeview__children content-treeview__children--expanded">
+                                                <li class="content-treeview__item">
+                                                    <div class="content-treeview__node">
+                                                        <span class="content-treeview__icon">📄</span>
+                                                        <span class="content-treeview__label">process_b (PID 201)</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="content-treeview__item">
+                                            <div class="content-treeview__node">
+                                                <span class="content-treeview__icon">📄</span>
+                                                <span class="content-treeview__label">process_c (PID 202)</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="content-treeview__item">
+                                    <div class="content-treeview__node">
+                                        <span class="content-treeview__icon">🔧</span>
+                                        <span class="content-treeview__label">daemon (PID 101)</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h2>🟡 📚 Directory Structure Example</h2>
+                    <p>Treeview can also be used to display directory structures:</p>
+
+                    <ul class="content-treeview">
+                        <li class="content-treeview__item">
+                            <div class="content-treeview__node content-treeview__node--has-children">
+                                <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                                <span class="content-treeview__icon">📁</span>
+                                <span class="content-treeview__label">project/</span>
+                            </div>
+                            <ul class="content-treeview__children content-treeview__children--expanded">
+                                <li class="content-treeview__item">
+                                    <div class="content-treeview__node content-treeview__node--has-children">
+                                        <span class="content-treeview__toggle content-treeview__toggle--expanded"></span>
+                                        <span class="content-treeview__icon">📁</span>
+                                        <span class="content-treeview__label">src/</span>
+                                    </div>
+                                    <ul class="content-treeview__children content-treeview__children--expanded">
+                                        <li class="content-treeview__item">
+                                            <div class="content-treeview__node">
+                                                <span class="content-treeview__icon">📄</span>
+                                                <span class="content-treeview__label">main.js</span>
+                                            </div>
+                                        </li>
+                                        <li class="content-treeview__item">
+                                            <div class="content-treeview__node">
+                                                <span class="content-treeview__icon">📄</span>
+                                                <span class="content-treeview__label">utils.js</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="content-treeview__item">
+                                    <div class="content-treeview__node">
+                                        <span class="content-treeview__icon">📄</span>
+                                        <span class="content-treeview__label">package.json</span>
+                                    </div>
+                                </li>
+                                <li class="content-treeview__item">
+                                    <div class="content-treeview__node">
+                                        <span class="content-treeview__icon">📄</span>
+                                        <span class="content-treeview__label">README.md</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h2>📚 References</h2>
+                    <div class="highlight-box">
+                        <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                            <li>🔗 <a href="../../templates/data/treeview.json" target="_blank" rel="noopener noreferrer">Treeview Component Documentation</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="app-mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- External JavaScript files -->
+    <script src="../../resources/js/hash.js"></script>
+    <script src="../../resources/js/i18n.js"></script>
+    <script src="../../resources/js/menu.js"></script>
+    <script src="../../resources/js/sidebar.js"></script>
+    <script src="../../resources/js/content.js"></script>
+    <script src="../../resources/js/tree.js"></script>
+    <script src="../../resources/js/search.js"></script>
+    <script src="../../resources/js/giscus.js"></script>
+    <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/index-page.js"></script>
+    <script src="../../resources/js/version.js"></script>
+</body>
+</html>

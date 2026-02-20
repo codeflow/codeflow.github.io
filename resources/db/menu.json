@@ -9,7 +9,7 @@
       "type": "folder",
       "children": [
         {
-          "path": "OS/Fundamentos de Sistemas Operacionais",
+          "path": "OS/Operating Systems Fundamentals",
           "i18n": {
             "en": "Operating Systems Fundamentals"
           },
@@ -17,7 +17,7 @@
           "type": "folder",
           "children": [
             {
-              "path": "OS/Fundamentos de Sistemas Operacionais/Introdução e Conceitos Básicos",
+              "path": "OS/Operating Systems Fundamentals/Introduction and Basic Concepts",
               "i18n": {
                 "en": "Introduction and Basic Concepts"
               },
@@ -27,7 +27,7 @@
               "children": []
             },
             {
-              "path": "OS/Fundamentos de Sistemas Operacionais/História e Evolução",
+              "path": "OS/Operating Systems Fundamentals/History and Evolution",
               "i18n": {
                 "en": "History and Evolution"
               },
@@ -37,7 +37,7 @@
               "children": []
             },
             {
-              "path": "OS/Fundamentos de Sistemas Operacionais/Tipos de Sistemas Operacionais",
+              "path": "OS/Operating Systems Fundamentals/Types of Operating Systems",
               "i18n": {
                 "en": "Types of Operating Systems"
               },
@@ -47,7 +47,7 @@
               "children": []
             },
             {
-              "path": "OS/Fundamentos de Sistemas Operacionais/Arquitetura de Sistemas Operacionais",
+              "path": "OS/Operating Systems Fundamentals/Operating System Architecture",
               "i18n": {
                 "en": "Operating System Architecture"
               },
@@ -59,7 +59,7 @@
           ]
         },
         {
-          "path": "OS/Gerenciamento de Processos",
+          "path": "OS/Process Management",
           "i18n": {
             "en": "Process Management"
           },
@@ -67,7 +67,7 @@
           "type": "folder",
           "children": [
             {
-              "path": "OS/Gerenciamento de Processos/Conceitos de Processos",
+              "path": "OS/Process Management/Process Concepts",
               "i18n": {
                 "en": "Process Concepts"
               },
@@ -77,7 +77,7 @@
               "children": []
             },
             {
-              "path": "OS/Gerenciamento de Processos/Estados e Ciclo de Vida",
+              "path": "OS/Process Management/States and Lifecycle",
               "i18n": {
                 "en": "States and Lifecycle"
               },
@@ -87,13 +87,73 @@
               "children": []
             },
             {
-              "path": "OS/Gerenciamento de Processos/Scheduling",
+              "path": "OS/Process Management/Scheduling",
               "i18n": {
                 "en": "Scheduling"
               },
               "icon": "📖",
               "type": "file",
               "html": "content/os.md/ge153493/en/h613ph8ljjmn.html",
+              "children": []
+            },
+            {
+              "path": "OS/Process Management/Context Switch",
+              "i18n": {
+                "en": "Context Switch"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/dwfrmrb1j4fl.html",
+              "children": []
+            },
+            {
+              "path": "OS/Process Management/Process Creation and Termination",
+              "i18n": {
+                "en": "Process Creation and Termination"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/khd65hx675xs.html",
+              "children": []
+            },
+            {
+              "path": "OS/Process Management/Inter-Process Communication (IPC)",
+              "i18n": {
+                "en": "Inter-Process Communication (IPC)"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/lnjucn846jt3.html",
+              "children": []
+            },
+            {
+              "path": "OS/Process Management/Process Synchronization",
+              "i18n": {
+                "en": "Process Synchronization"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/9svdv3907209608.html",
+              "children": []
+            }
+          ]
+        },
+        {
+          "path": "OS/Threads and Concurrency",
+          "i18n": {
+            "en": "Threads and Concurrency"
+          },
+          "icon": "📁",
+          "type": "folder",
+          "children": [
+            {
+              "path": "OS/Threads and Concurrency/Thread Concepts",
+              "i18n": {
+                "en": "Thread Concepts"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/ge153493/en/hikgyz1397553849.html",
               "children": []
             }
           ]

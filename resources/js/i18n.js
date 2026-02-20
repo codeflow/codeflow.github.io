@@ -1,5 +1,46 @@
 // Internationalization System (i18n)
 
+// CRITICAL: Force English as default BEFORE any other code runs
+// This script runs IMMEDIATELY when loaded, before any other scripts
+// Force localStorage to 'en' and set the select value
+(function() {
+    // Force localStorage to English
+    localStorage.setItem('codeflow-language', 'en');
+    
+    // Force the select element to English immediately when DOM is ready
+    function forceEnglish() {
+        const selector = document.getElementById('languageSelector');
+        if (selector) {
+            selector.value = 'en';
+            // Force all options
+            const options = selector.querySelectorAll('option');
+            options.forEach(function(opt) {
+                opt.removeAttribute('selected');
+                if (opt.value === 'en') {
+                    opt.setAttribute('selected', 'selected');
+                    opt.selected = true;
+                }
+            });
+        }
+    }
+    
+    // Try immediately
+    forceEnglish();
+    
+    // Try when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', forceEnglish);
+    } else {
+        forceEnglish();
+    }
+    
+    // Try multiple times to ensure it sticks
+    setTimeout(forceEnglish, 0);
+    setTimeout(forceEnglish, 10);
+    setTimeout(forceEnglish, 50);
+    setTimeout(forceEnglish, 100);
+})();
+
 const i18n = {
     br: {
         welcome: 'Bem-vindo',
@@ -25,15 +66,33 @@ function detectBrowserLanguage() {
 }
 
 // Manage current language
-let currentLanguage = localStorage.getItem('codeflow-language') || 'en';
+// ALWAYS start with 'en' (English) on page load - ignore localStorage on initial load
+// This ensures English is always the default, regardless of what was saved before
+let currentLanguage = 'en';
+
+// Force English as default on every page load
+// The user can change it if they want, and it will be saved for future sessions
+// But on initial load, we always start with English
+localStorage.setItem('codeflow-language', 'en');
 
 // Update interface with selected language
 function updateLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('codeflow-language', lang);
     
-    // Update selector
-    document.getElementById('languageSelector').value = lang;
+    // Update selector - ensure it's set correctly
+    const languageSelector = document.getElementById('languageSelector');
+    if (languageSelector) {
+        languageSelector.value = lang;
+        // Ensure the selected attribute is set correctly
+        const options = languageSelector.querySelectorAll('option');
+        options.forEach(option => {
+            option.removeAttribute('selected');
+            if (option.value === lang) {
+                option.setAttribute('selected', 'selected');
+            }
+        });
+    }
     
     // Update interface texts
     const translations = i18n[lang];

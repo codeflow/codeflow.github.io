@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-02-19",
+  "lastUpdated": "2025-02-20",
   "statistics": [
     {
       "technology": "OS",
@@ -13,10 +13,18 @@
     {
       "technology": "OS",
       "category": "Process Management",
-      "availableTopics": 3,
+      "availableTopics": 7,
       "totalSubtopics": 7,
-      "completedSubtopics": 3,
-      "percentage": 43
+      "completedSubtopics": 7,
+      "percentage": 100
+    },
+    {
+      "technology": "OS",
+      "category": "Threads and Concurrency",
+      "availableTopics": 1,
+      "totalSubtopics": 5,
+      "completedSubtopics": 1,
+      "percentage": 20
     }
   ]
 }

@@ -1,0 +1,61 @@
+{
+  "component": "treeview",
+  "name": "Tree View",
+  "description": "Hierarchical tree structure for displaying parent-child relationships, directory structures, process trees, organizational hierarchies, and any tree-like data structures.",
+  "version": "1.0.0",
+  "cssClasses": {
+    "tree": "content-treeview",
+    "item": "content-treeview__item",
+    "node": "content-treeview__node",
+    "nodeHasChildren": "content-treeview__node--has-children",
+    "toggle": "content-treeview__toggle",
+    "toggleExpanded": "content-treeview__toggle--expanded",
+    "toggleCollapsed": "content-treeview__toggle--collapsed",
+    "icon": "content-treeview__icon",
+    "label": "content-treeview__label",
+    "children": "content-treeview__children",
+    "childrenExpanded": "content-treeview__children--expanded"
+  },
+  "structure": {
+    "basic": "<ul class=\"content-treeview\">\n  <li class=\"content-treeview__item\">\n    <div class=\"content-treeview__node\">\n      <span class=\"content-treeview__icon\">{ICON}</span>\n      <span class=\"content-treeview__label\">{LABEL}</span>\n    </div>\n  </li>\n</ul>",
+    "withChildren": "<ul class=\"content-treeview\">\n  <li class=\"content-treeview__item\">\n    <div class=\"content-treeview__node content-treeview__node--has-children\">\n      <span class=\"content-treeview__toggle content-treeview__toggle--expanded\"></span>\n      <span class=\"content-treeview__icon\">{ICON}</span>\n      <span class=\"content-treeview__label\">{LABEL}</span>\n    </div>\n    <ul class=\"content-treeview__children content-treeview__children--expanded\">\n      {CHILDREN}\n    </ul>\n  </li>\n</ul>",
+    "required": ["LABEL"],
+    "optional": ["ICON", "CHILDREN"]
+  },
+  "properties": {
+    "LABEL": {
+      "type": "string",
+      "description": "Text label for the tree node",
+      "required": true
+    },
+    "ICON": {
+      "type": "string",
+      "description": "Icon emoji or symbol for the node (optional, defaults to 📁 for folders, 📄 for files)",
+      "required": false
+    },
+    "CHILDREN": {
+      "type": "string",
+      "description": "HTML content for child nodes (nested <li> elements)",
+      "required": false
+    }
+  },
+  "example": {
+    "processTree": {
+      "LABEL": "init (PID 1)",
+      "ICON": "⚙️",
+      "CHILDREN": "<li class=\"content-treeview__item\">\n  <div class=\"content-treeview__node content-treeview__node--has-children\">\n    <span class=\"content-treeview__toggle content-treeview__toggle--expanded\"></span>\n    <span class=\"content-treeview__icon\">💻</span>\n    <span class=\"content-treeview__label\">shell (PID 100)</span>\n  </div>\n  <ul class=\"content-treeview__children content-treeview__children--expanded\">\n    <li class=\"content-treeview__item\">\n      <div class=\"content-treeview__node content-treeview__node--has-children\">\n        <span class=\"content-treeview__toggle content-treeview__toggle--expanded\"></span>\n        <span class=\"content-treeview__icon\">📄</span>\n        <span class=\"content-treeview__label\">process_a (PID 200)</span>\n      </div>\n      <ul class=\"content-treeview__children content-treeview__children--expanded\">\n        <li class=\"content-treeview__item\">\n          <div class=\"content-treeview__node\">\n            <span class=\"content-treeview__icon\">📄</span>\n            <span class=\"content-treeview__label\">process_b (PID 201)</span>\n          </div>\n        </li>\n      </ul>\n    </li>\n    <li class=\"content-treeview__item\">\n      <div class=\"content-treeview__node\">\n        <span class=\"content-treeview__icon\">📄</span>\n        <span class=\"content-treeview__label\">process_c (PID 202)</span>\n      </div>\n    </li>\n  </ul>\n</li>\n<li class=\"content-treeview__item\">\n  <div class=\"content-treeview__node\">\n    <span class=\"content-treeview__icon\">🔧</span>\n    <span class=\"content-treeview__label\">daemon (PID 101)</span>\n  </div>\n</li>"
+    }
+  },
+  "renderedHtml": {
+    "processTree": "<ul class=\"content-treeview\">\n  <li class=\"content-treeview__item\">\n    <div class=\"content-treeview__node content-treeview__node--has-children\">\n      <span class=\"content-treeview__toggle content-treeview__toggle--expanded\"></span>\n      <span class=\"content-treeview__icon\">⚙️</span>\n      <span class=\"content-treeview__label\">init (PID 1)</span>\n    </div>\n    <ul class=\"content-treeview__children content-treeview__children--expanded\">\n      <li class=\"content-treeview__item\">\n        <div class=\"content-treeview__node content-treeview__node--has-children\">\n          <span class=\"content-treeview__toggle content-treeview__toggle--expanded\"></span>\n          <span class=\"content-treeview__icon\">💻</span>\n          <span class=\"content-treeview__label\">shell (PID 100)</span>\n        </div>\n        <ul class=\"content-treeview__children content-treeview__children--expanded\">\n          <li class=\"content-treeview__item\">\n            <div class=\"content-treeview__node content-treeview__node--has-children\">\n              <span class=\"content-treeview__toggle content-treeview__toggle--expanded\"></span>\n              <span class=\"content-treeview__icon\">📄</span>\n              <span class=\"content-treeview__label\">process_a (PID 200)</span>\n            </div>\n            <ul class=\"content-treeview__children content-treeview__children--expanded\">\n              <li class=\"content-treeview__item\">\n                <div class=\"content-treeview__node\">\n                  <span class=\"content-treeview__icon\">📄</span>\n                  <span class=\"content-treeview__label\">process_b (PID 201)</span>\n                </div>\n              </li>\n            </ul>\n          </li>\n          <li class=\"content-treeview__item\">\n            <div class=\"content-treeview__node\">\n              <span class=\"content-treeview__icon\">📄</span>\n              <span class=\"content-treeview__label\">process_c (PID 202)</span>\n            </div>\n          </li>\n        </ul>\n      </li>\n      <li class=\"content-treeview__item\">\n        <div class=\"content-treeview__node\">\n          <span class=\"content-treeview__icon\">🔧</span>\n          <span class=\"content-treeview__label\">daemon (PID 101)</span>\n        </div>\n      </li>\n    </ul>\n  </li>\n</ul>"
+  },
+  "features": [
+    "Expandable/collapsible nodes with toggle buttons",
+    "Icons for visual identification",
+    "Nested hierarchical structure",
+    "Uses same CSS classes as menu treeview (app-tree) but with content-treeview prefix",
+    "Interactive expand/collapse functionality",
+    "Responsive design"
+  ],
+  "notes": "Use this component for displaying hierarchical structures like process trees, directory structures, organizational charts, file systems, and any parent-child relationships. The treeview uses the same CSS structure as the menu treeview but with 'content-treeview' prefix to avoid conflicts. JavaScript for expand/collapse is automatically handled by tree.js if the classes match the pattern."
+}

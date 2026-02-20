@@ -1,7 +1,58 @@
 // Tree View functionality
 
 (function() {
+    // Function to initialize content treeviews (for hierarchical structures in content pages)
+    function initContentTreeview(contentTree) {
+        if (!contentTree) return;
+        
+        // Expand all nodes by default
+        const allToggles = contentTree.querySelectorAll('.content-treeview__toggle--collapsed');
+        const allChildren = contentTree.querySelectorAll('.content-treeview__children');
+        
+        allToggles.forEach(toggle => {
+            toggle.classList.remove('content-treeview__toggle--collapsed');
+            toggle.classList.add('content-treeview__toggle--expanded');
+        });
+        
+        allChildren.forEach(children => {
+            children.classList.add('content-treeview__children--expanded');
+        });
+        
+        // Add click listeners for expand/collapse
+        contentTree.addEventListener('click', function(e) {
+            const toggle = e.target.closest('.content-treeview__toggle');
+            if (toggle) {
+                e.stopPropagation();
+                const node = toggle.closest('.content-treeview__item');
+                const children = node.querySelector('.content-treeview__children');
+                if (children) {
+                    const isExpanded = toggle.classList.contains('content-treeview__toggle--expanded');
+                    if (isExpanded) {
+                        toggle.classList.remove('content-treeview__toggle--expanded');
+                        toggle.classList.add('content-treeview__toggle--collapsed');
+                        children.classList.remove('content-treeview__children--expanded');
+                    } else {
+                        toggle.classList.remove('content-treeview__toggle--collapsed');
+                        toggle.classList.add('content-treeview__toggle--expanded');
+                        children.classList.add('content-treeview__children--expanded');
+                    }
+                }
+            }
+        });
+    }
+    
+    // Support both menu treeview (app-tree) and content treeview (content-treeview)
     const treeView = document.getElementById('treeView');
+    const contentTreeviews = document.querySelectorAll('.content-treeview');
+    
+    // Initialize content treeviews
+    if (contentTreeviews.length > 0) {
+        contentTreeviews.forEach(contentTree => {
+            initContentTreeview(contentTree);
+        });
+    }
+    
+    // Initialize menu treeview
     if (!treeView) return;
 
     // Expand all nodes on initialization
@@ -122,5 +173,20 @@
         expandAllNodes();
         // Event listeners are already attached, no need to reattach
     });
+    
+    // Initialize content treeviews when DOM is ready (for dynamically loaded content)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentTreeviews = document.querySelectorAll('.content-treeview');
+            contentTreeviews.forEach(contentTree => {
+                initContentTreeview(contentTree);
+            });
+        });
+    } else {
+        const contentTreeviews = document.querySelectorAll('.content-treeview');
+        contentTreeviews.forEach(contentTree => {
+            initContentTreeview(contentTree);
+        });
+    }
 })();
 

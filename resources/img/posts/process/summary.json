@@ -1,0 +1,220 @@
+{
+  "version": "1.0.0",
+  "pages": [
+    {
+      "pageName": "Context Switch",
+      "pagePath": "content/os.md/ge153493/en/dwfrmrb1j4fl.html",
+      "sections": [
+        {
+          "sectionTitle": "What is Context Switch?",
+          "hash": "1eec4b77fb",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Why Context Switching is Needed",
+          "hash": "3a604e3971",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Context Switch Process",
+          "hash": "b9ee7bae5b",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Save Current Process State",
+          "hash": "b15e9d6bf8",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Select Next Process",
+          "hash": "db510946af",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Restore Next Process State",
+          "hash": "6a607568f0",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Context Switch Overhead",
+          "hash": "6db3534e70",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Context Switch Between Processes vs Threads",
+          "hash": "adca83b25b",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Process Context Switch",
+          "hash": "6836cf260b",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Thread Context Switch",
+          "hash": "cc44138e69",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Context Switch Implementation Example",
+          "hash": "49592706f5",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Hardware Support for Context Switching",
+          "hash": "449f1b046e",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Hardware Task Switching (x86)",
+          "hash": "6f18eadbcc",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Optimizing Context Switch Performance",
+          "hash": "86837e2d96",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Kernel Threads",
+          "hash": "c688aa59c3",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Context Switch Performance Metrics",
+          "hash": "caf146d6c6",
+          "extension": "png"
+        }
+      ]
+    },
+    {
+      "pageName": "Process Creation and Termination",
+      "pagePath": "content/os.md/ge153493/en/khd65hx675xs.html",
+      "sections": [
+        {
+          "sectionTitle": "Process Hierarchy",
+          "hash": "dd86dbdcc8",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Zombie Processes",
+          "hash": "af65bcd16b",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Orphan Processes",
+          "hash": "327282fad0",
+          "extension": "png"
+        }
+      ]
+    },
+    {
+      "pageName": "Inter-Process Communication (IPC)",
+      "pagePath": "content/os.md/ge153493/en/lnjucn846jt3.html",
+      "sections": [
+        {
+          "sectionTitle": "Types of IPC Mechanisms",
+          "hash": "e2166c4200",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Pipes",
+          "hash": "d9922596ee",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "FIFOs (Named Pipes)",
+          "hash": "08a09eb288",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Message Queues",
+          "hash": "72a80c8dd7",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Shared Memory",
+          "hash": "6c7138961c",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Semaphores",
+          "hash": "686e2b62d4",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Signals",
+          "hash": "c5e7b3a509",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Sockets",
+          "hash": "b30ed065a5",
+          "extension": "png"
+        }
+      ]
+    },
+    {
+      "pageName": "Process Synchronization",
+      "pagePath": "content/os.md/ge153493/en/9svdv3907209608.html",
+      "sections": [
+        {
+          "sectionTitle": "Race Conditions",
+          "hash": "8e78e2171b",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Critical Sections",
+          "hash": "9df3519d9f",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Mutual Exclusion",
+          "hash": "eb8d397480",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Deadlock",
+          "hash": "d67636890e",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Synchronization Algorithms",
+          "hash": "4d00d9a7e5",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Advanced Synchronization Mechanisms",
+          "hash": "fe0198a4c2",
+          "extension": "png"
+        }
+      ]
+    },
+    {
+      "pageName": "Thread Concepts",
+      "pagePath": "content/os.md/ge153493/en/hikgyz1397553849.html",
+      "sections": [
+        {
+          "sectionTitle": "Thread vs Process",
+          "hash": "88cc4e59a4",
+          "extension": "jpg"
+        },
+        {
+          "sectionTitle": "Thread Lifecycle",
+          "hash": "12adefae43",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Thread Models",
+          "hash": "86b5954190",
+          "extension": "png"
+        },
+        {
+          "sectionTitle": "Thread Pools",
+          "hash": "723b8593da",
+          "extension": "jpg"
+        }
+      ]
+    }
+  ]
+}

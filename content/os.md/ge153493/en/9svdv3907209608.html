@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.js"></script>
+    <script>
+        
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>🔒 Process Synchronization</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">2025-02-20 09:35:00</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Process synchronization is a mechanism that ensures multiple processes coordinate their execution to avoid race conditions, maintain data consistency, and prevent deadlocks. It involves concepts like critical sections, mutual exclusion, semaphores, and synchronization algorithms.
+        </div>
+
+        <h2>🟢 📚 What is Process Synchronization?</h2>
+        <p>Process synchronization is the coordination of multiple processes to ensure they execute in a controlled manner, preventing conflicts when accessing shared resources. In a multi-process environment, processes may need to access shared data, files, or hardware resources simultaneously, which can lead to inconsistent states or incorrect results.</p>
+        
+        <p>The primary goal of process synchronization is to:</p>
+        <ul>
+            <li><strong>Prevent race conditions</strong>: Ensure that processes don't interfere with each other when accessing shared resources</li>
+            <li><strong>Maintain data consistency</strong>: Guarantee that shared data remains in a valid state</li>
+            <li><strong>Coordinate execution</strong>: Control the order in which processes access critical resources</li>
+            <li><strong>Avoid deadlocks</strong>: Prevent situations where processes are waiting indefinitely for each other</li>
+        </ul>
+
+        <h2>🟢 📚 Race Conditions</h2>
+        <p>A race condition occurs when the outcome of a program depends on the relative timing of events, such as the order in which processes execute. When multiple processes access and modify shared data without proper synchronization, the final result may be unpredictable and incorrect.</p>
+        
+        <div class="highlight-box">
+            <strong>Example Scenario:</strong> Two processes (P1 and P2) are both trying to increment a shared counter variable. Without synchronization:
+            <ul>
+                <li>P1 reads counter = 5</li>
+                <li>P2 reads counter = 5 (before P1 writes)</li>
+                <li>P1 increments and writes counter = 6</li>
+                <li>P2 increments and writes counter = 6</li>
+                <li><strong>Result:</strong> Counter should be 7, but it's 6 (lost update)</li>
+            </ul>
+        </div>
+
+        <h2>🟡 📚 Critical Sections</h2>
+        <p>A critical section is a code segment that accesses shared resources and must not be executed by more than one process at a time. The critical section problem requires that:</p>
+        <ul>
+            <li><strong>Mutual Exclusion</strong>: Only one process can execute in its critical section at a time</li>
+            <li><strong>Progress</strong>: If no process is in its critical section and some processes want to enter, one must be selected</li>
+            <li><strong>Bounded Waiting</strong>: A process waiting to enter its critical section should not wait indefinitely</li>
+        </ul>
+
+        <h2>🟡 📚 Mutual Exclusion</h2>
+        <p>Mutual exclusion ensures that only one process can access a shared resource at a time. This is fundamental to preventing race conditions and maintaining data integrity. Various mechanisms can achieve mutual exclusion:</p>
+        <ul>
+            <li><strong>Locks</strong>: Binary semaphores or mutexes that allow only one process to acquire the lock</li>
+            <li><strong>Semaphores</strong>: Integer variables used to control access to shared resources</li>
+            <li><strong>Monitors</strong>: High-level synchronization constructs that encapsulate shared data and operations</li>
+            <li><strong>Atomic operations</strong>: Hardware-level operations that complete without interruption</li>
+        </ul>
+
+        <h2>🟡 🛠️ Semaphores</h2>
+        <p>A semaphore is a synchronization variable that maintains a counter. It supports two atomic operations:</p>
+        <ul>
+            <li><strong>wait()</strong> (or P): Decrements the semaphore. If the value becomes negative, the process blocks</li>
+            <li><strong>signal()</strong> (or V): Increments the semaphore. If there are waiting processes, one is awakened</li>
+        </ul>
+
+        <p>There are two types of semaphores:</p>
+        <ul>
+            <li><strong>Binary Semaphore (Mutex)</strong>: Can only be 0 or 1, used for mutual exclusion</li>
+            <li><strong>Counting Semaphore</strong>: Can be any non-negative integer, used for resource counting</li>
+        </ul>
+
+        <h3>Semaphore Example</h3>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PSEUDOCODE</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">// Binary semaphore (mutex) for mutual exclusion
+semaphore mutex = 1;
+
+// Process 1
+wait(mutex);
+    // Critical section
+    shared_variable++;
+signal(mutex);
+
+// Process 2
+wait(mutex);
+    // Critical section
+    shared_variable--;
+signal(mutex);</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+        
+        <h4>Semaphore Initialization</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PSEUDOCODE</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">semaphore mutex = 1;</code></pre>
+        </div>
+        <p>Initializes a binary semaphore (mutex) with value 1, meaning the resource is available. When a process calls <code>wait()</code>, it decrements the value. If the value becomes 0, the resource is locked. If another process tries to acquire it, the value becomes negative and the process blocks.</p>
+
+        <h4>Entering Critical Section</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PSEUDOCODE</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">wait(mutex);
+    // Critical section
+    shared_variable++;</code></pre>
+        </div>
+        <p>Before entering the critical section, the process calls <code>wait(mutex)</code> to acquire the lock. This ensures mutual exclusion - only one process can be in the critical section at a time. The process then safely modifies the shared variable.</p>
+
+        <h4>Exiting Critical Section</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PSEUDOCODE</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">signal(mutex);</code></pre>
+        </div>
+        <p>After completing the critical section, the process calls <code>signal(mutex)</code> to release the lock. This increments the semaphore value and wakes up any waiting processes, allowing them to enter their critical sections.</p>
+
+        <h2>🟡 📚 Deadlock</h2>
+        <p>A deadlock is a situation where two or more processes are blocked forever, waiting for each other to release resources. For a deadlock to occur, four conditions must be present simultaneously (Coffman conditions):</p>
+        <ul>
+            <li><strong>Mutual Exclusion</strong>: Resources cannot be shared</li>
+            <li><strong>Hold and Wait</strong>: A process holds a resource while waiting for another</li>
+            <li><strong>No Preemption</strong>: Resources cannot be forcibly taken from a process</li>
+            <li><strong>Circular Wait</strong>: A circular chain of processes exists, each waiting for a resource held by the next</li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>Example Deadlock Scenario:</strong>
+            <ul>
+                <li>Process P1 holds resource R1 and waits for resource R2</li>
+                <li>Process P2 holds resource R2 and waits for resource R1</li>
+                <li>Both processes are blocked indefinitely - deadlock occurs</li>
+            </ul>
+        </div>
+
+        <h2>🟡 📚 Starvation</h2>
+        <p>Starvation occurs when a process is indefinitely denied access to resources it needs, even though other processes are making progress. Unlike deadlock, where all processes are blocked, starvation means some processes continue while others wait indefinitely.</p>
+        
+        <p>Common causes of starvation include:</p>
+        <ul>
+            <li><strong>Unfair scheduling</strong>: Some processes are always prioritized over others</li>
+            <li><strong>Resource allocation policies</strong>: Resources are allocated in a way that consistently favors certain processes</li>
+            <li><strong>Priority inversion</strong>: Low-priority processes hold resources needed by high-priority processes</li>
+        </ul>
+
+        <h2>🔴 📚 Synchronization Algorithms</h2>
+        <p>Various algorithms have been developed to solve the critical section problem and achieve process synchronization. These algorithms differ in their complexity, efficiency, and hardware requirements.</p>
+
+        <h3>Peterson's Algorithm</h3>
+        <p>Peterson's algorithm is a classic software-based solution for mutual exclusion between two processes. It uses shared variables to coordinate access without requiring special hardware instructions.</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PSEUDOCODE</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">// Shared variables
+bool flag[2] = {false, false};
+int turn = 0;
+
+// Process i (i = 0 or 1)
+do {
+    flag[i] = true;
+    turn = 1 - i;  // Give turn to other process
+    while (flag[1-i] && turn == 1-i);  // Wait if other wants and has turn
+        // Critical section
+    flag[i] = false;
+        // Remainder section
+} while (true);</code></pre>
+        </div>
+
+        <h3>Bakery Algorithm</h3>
+        <p>The Bakery algorithm extends Peterson's solution to N processes. It assigns each process a "ticket number" and processes enter their critical sections in ticket order, similar to customers in a bakery.</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">PSEUDOCODE</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">// Shared variables
+bool choosing[N] = {false};
+int number[N] = {0};
+
+// Process i
+do {
+    choosing[i] = true;
+    number[i] = max(number[0], number[1], ..., number[N-1]) + 1;
+    choosing[i] = false;
+    
+    for (int j = 0; j < N; j++) {
+        while (choosing[j]);  // Wait if j is choosing
+        while (number[j] != 0 && 
+               (number[j] < number[i] || 
+                (number[j] == number[i] && j < i)));  // Wait for turn
+    }
+        // Critical section
+    number[i] = 0;
+        // Remainder section
+} while (true);</code></pre>
+        </div>
+
+        <h3>Dekker's Algorithm</h3>
+        <p>Dekker's algorithm was one of the first software solutions for mutual exclusion between two processes. It uses flags and a turn variable to coordinate access.</p>
+
+        <h2>🔴 📚 Advanced Synchronization Mechanisms</h2>
+        
+        <h3>Monitors</h3>
+        <p>A monitor is a high-level synchronization construct that encapsulates shared data and the operations that can be performed on it. Only one process can execute a monitor procedure at a time, providing automatic mutual exclusion.</p>
+        
+        <p>Key features of monitors:</p>
+        <ul>
+            <li><strong>Encapsulation</strong>: Shared data and operations are grouped together</li>
+            <li><strong>Automatic mutual exclusion</strong>: Only one process can be active in the monitor at a time</li>
+            <li><strong>Condition variables</strong>: Allow processes to wait for specific conditions and be notified when conditions change</li>
+        </ul>
+
+        <h3>Message Passing</h3>
+        <p>Message passing is an alternative to shared memory for inter-process communication and synchronization. Processes communicate by sending and receiving messages, which naturally provides synchronization.</p>
+        
+        <p>Two main operations:</p>
+        <ul>
+            <li><strong>send(destination, message)</strong>: Sends a message to a destination process</li>
+            <li><strong>receive(source, message)</strong>: Receives a message from a source process</li>
+        </ul>
+
+        <h3>Read-Write Locks</h3>
+        <p>Read-write locks allow multiple readers or a single writer to access a resource. This is useful when reads are more frequent than writes, as it allows concurrent reads while maintaining exclusive access for writes.</p>
+
+        <h2>📚 Summary</h2>
+        <div class="highlight-box">
+            <ul>
+                <li><strong>Process Synchronization</strong> coordinates multiple processes to prevent race conditions and maintain data consistency</li>
+                <li><strong>Race conditions</strong> occur when processes access shared resources without coordination</li>
+                <li><strong>Critical sections</strong> are code segments that must be executed atomically</li>
+                <li><strong>Mutual exclusion</strong> ensures only one process accesses a resource at a time</li>
+                <li><strong>Semaphores</strong> are synchronization variables that control resource access</li>
+                <li><strong>Deadlock</strong> occurs when processes wait indefinitely for each other</li>
+                <li><strong>Starvation</strong> happens when a process is indefinitely denied resources</li>
+                <li><strong>Synchronization algorithms</strong> (Peterson's, Bakery, Dekker's) provide software solutions for mutual exclusion</li>
+                <li><strong>Advanced mechanisms</strong> like monitors and message passing offer higher-level synchronization abstractions</li>
+            </ul>
+        </div>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Process_synchronization" target="_blank" rel="noopener noreferrer">Process Synchronization - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_process_synchronization.htm" target="_blank" rel="noopener noreferrer">Process Synchronization - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/introduction-of-process-synchronization/" target="_blank" rel="noopener noreferrer">Process Synchronization - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.javatpoint.com/os-process-synchronization" target="_blank" rel="noopener noreferrer">Process Synchronization - JavaTpoint</a></li>
+                <li>🔗 <a href="https://www.studytonight.com/operating-system/process-synchronization" target="_blank" rel="noopener noreferrer">Process Synchronization - StudyTonight</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

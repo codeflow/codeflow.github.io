@@ -119,7 +119,15 @@ function buildMenuItem(item, lang) {
     const hasChildren = item.children && item.children.length > 0;
     const isFolder = item.type === 'folder' || hasChildren;
     // Gets translated label directly from menu.json (doesn't depend on i18n.js)
-    const label = item.i18n && item.i18n[lang] ? item.i18n[lang] : item.path.split('/').pop();
+    // Tries current language first, then falls back to English, then to path
+    let label;
+    if (item.i18n && item.i18n[lang]) {
+        label = item.i18n[lang];
+    } else if (item.i18n && item.i18n['en']) {
+        label = item.i18n['en'];
+    } else {
+        label = item.path.split('/').pop();
+    }
     
     let html = '<li class="app-tree__item">';
     html += `<div class="app-tree__node${hasChildren ? ' app-tree__node--has-children' : ''}"`;
@@ -154,6 +162,9 @@ function buildMenuItem(item, lang) {
 }
 
 // Function to build the complete menu
+// Track if this is the first menu build
+let isFirstMenuBuild = true;
+
 async function buildMenu(forceReload = false) {
     const treeView = document.getElementById('treeView');
     if (!treeView) {
@@ -161,7 +172,20 @@ async function buildMenu(forceReload = false) {
         return;
     }
     
-    const lang = localStorage.getItem('codeflow-language') || 'en';
+    // CRITICAL: On first build, ALWAYS use 'en' (English) regardless of localStorage
+    // This ensures the combobox always starts with English selected
+    const wasFirstBuild = isFirstMenuBuild;
+    let lang;
+    if (isFirstMenuBuild) {
+        lang = 'en';
+        // Force localStorage to 'en' on first load
+        localStorage.setItem('codeflow-language', 'en');
+        isFirstMenuBuild = false;
+    } else {
+        // On subsequent builds (language changes), use the selected language
+        lang = localStorage.getItem('codeflow-language') || 'en';
+    }
+    
     const menuData = await loadMenuData(forceReload);
     
     if (!menuData || !menuData.menu) {
@@ -184,7 +208,10 @@ async function buildMenu(forceReload = false) {
         
         // Menu already uses translations from menu.json directly, so doesn't need i18n.js
         // But updates other interface elements (like header) if i18n is available
-        if (typeof updateLanguage !== 'undefined') {
+        // IMPORTANT: Only update language if this is NOT the first build
+        // On first build, main.js will handle the language initialization
+        // We use wasFirstBuild (captured before isFirstMenuBuild was changed) to check
+        if (typeof updateLanguage !== 'undefined' && !wasFirstBuild) {
             updateLanguage(lang);
         }
         

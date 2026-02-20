@@ -115,6 +115,13 @@
       "file": "progress-bar.json",
       "description": "Horizontal progress bar with percentage display (circular on mobile)",
       "category": "content"
+    },
+    {
+      "id": "treeview",
+      "name": "Tree View",
+      "file": "treeview.json",
+      "description": "Hierarchical tree structure for displaying parent-child relationships, process trees, directory structures, and organizational charts",
+      "category": "content"
     }
   ],
   "categories": {

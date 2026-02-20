@@ -76,38 +76,47 @@
                 const currentLang = localStorage.getItem('codeflow-language') || 'en';
                 
                 // Constrói o caminho completo com idioma
-                // O htmlFile vem do menu.json sem o /{LANGUAGE}/, então precisamos adicionar
+                // O htmlFile pode vir do menu.json com ou sem o /{LANGUAGE}/
                 let contentPath = htmlFile;
                 
-                // Se o caminho não inclui o idioma, adiciona
-                // Padrão: content/{tech}.md/{hash}/{lang}/{file}.html ou content/{tech}.md/{lang}/{file}.html
+                // Verifica se o caminho já inclui algum idioma (br, en, es, etc.)
+                const langPattern = /\/(br|en|es|fr|de|it|pt|pt-BR|en-US|es-ES|fr-FR)\//;
+                const hasLang = langPattern.test(contentPath);
+                
+                // Se o caminho não inclui o idioma atual, substitui ou adiciona
                 if (!contentPath.includes(`/${currentLang}/`)) {
-                    // Verifica se tem hash de categoria (formato: content/{tech}.md/{hash}/{file}.html)
-                    const hashPattern = /content\/([a-z0-9]+)\.md\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
-                    const hashMatch = contentPath.match(hashPattern);
-                    
-                    if (hashMatch) {
-                        // Tem hash de categoria: content/{tech}.md/{hash}/{lang}/{file}.html
-                        const tech = hashMatch[1];
-                        const hash = hashMatch[2];
-                        const file = hashMatch[3];
-                        contentPath = `content/${tech}.md/${hash}/${currentLang}/${file}`;
+                    if (hasLang) {
+                        // Se já tem um idioma, substitui pelo idioma atual
+                        contentPath = contentPath.replace(langPattern, `/${currentLang}/`);
                     } else {
-                        // Sem hash: content/{tech}.md/{file}.html -> content/{tech}.md/{lang}/{file}.html
-                        const simplePattern = /content\/([a-z0-9]+)\.md\/([a-z0-9]+\.html)$/;
-                        const simpleMatch = contentPath.match(simplePattern);
+                        // Se não tem idioma, adiciona o idioma atual
+                        // Verifica se tem hash de categoria (formato: content/{tech}.md/{hash}/{file}.html)
+                        const hashPattern = /content\/([a-z0-9]+)\.md\/([a-z0-9]+)\/([a-z0-9]+\.html)$/;
+                        const hashMatch = contentPath.match(hashPattern);
                         
-                        if (simpleMatch) {
-                            const tech = simpleMatch[1];
-                            const file = simpleMatch[2];
-                            contentPath = `content/${tech}.md/${currentLang}/${file}`;
+                        if (hashMatch) {
+                            // Tem hash de categoria: content/{tech}.md/{hash}/{lang}/{file}.html
+                            const tech = hashMatch[1];
+                            const hash = hashMatch[2];
+                            const file = hashMatch[3];
+                            contentPath = `content/${tech}.md/${hash}/${currentLang}/${file}`;
                         } else {
-                            // Tenta adicionar o idioma antes do último segmento
-                            const lastSlash = contentPath.lastIndexOf('/');
-                            if (lastSlash !== -1) {
-                                const before = contentPath.substring(0, lastSlash);
-                                const after = contentPath.substring(lastSlash + 1);
-                                contentPath = `${before}/${currentLang}/${after}`;
+                            // Sem hash: content/{tech}.md/{file}.html -> content/{tech}.md/{lang}/{file}.html
+                            const simplePattern = /content\/([a-z0-9]+)\.md\/([a-z0-9]+\.html)$/;
+                            const simpleMatch = contentPath.match(simplePattern);
+                            
+                            if (simpleMatch) {
+                                const tech = simpleMatch[1];
+                                const file = simpleMatch[2];
+                                contentPath = `content/${tech}.md/${currentLang}/${file}`;
+                            } else {
+                                // Tenta adicionar o idioma antes do último segmento
+                                const lastSlash = contentPath.lastIndexOf('/');
+                                if (lastSlash !== -1) {
+                                    const before = contentPath.substring(0, lastSlash);
+                                    const after = contentPath.substring(lastSlash + 1);
+                                    contentPath = `${before}/${currentLang}/${after}`;
+                                }
                             }
                         }
                     }
@@ -201,6 +210,44 @@
                     const insertedContainer = contentBody.querySelector('.content-container');
                     if (insertedContainer) {
                         executeContainerScripts(insertedContainer);
+                    }
+                    
+                    // Initializes content treeviews if present
+                    const contentTreeviews = contentBody.querySelectorAll('.content-treeview');
+                    if (contentTreeviews.length > 0) {
+                        contentTreeviews.forEach(contentTree => {
+                            // Expand all nodes by default
+                            const allToggles = contentTree.querySelectorAll('.content-treeview__toggle--collapsed');
+                            const allChildren = contentTree.querySelectorAll('.content-treeview__children');
+                            allToggles.forEach(toggle => {
+                                toggle.classList.remove('content-treeview__toggle--collapsed');
+                                toggle.classList.add('content-treeview__toggle--expanded');
+                            });
+                            allChildren.forEach(children => {
+                                children.classList.add('content-treeview__children--expanded');
+                            });
+                            // Add click listeners for expand/collapse
+                            contentTree.addEventListener('click', function(e) {
+                                const toggle = e.target.closest('.content-treeview__toggle');
+                                if (toggle) {
+                                    e.stopPropagation();
+                                    const node = toggle.closest('.content-treeview__item');
+                                    const children = node.querySelector('.content-treeview__children');
+                                    if (children) {
+                                        const isExpanded = toggle.classList.contains('content-treeview__toggle--expanded');
+                                        if (isExpanded) {
+                                            toggle.classList.remove('content-treeview__toggle--expanded');
+                                            toggle.classList.add('content-treeview__toggle--collapsed');
+                                            children.classList.remove('content-treeview__children--expanded');
+                                        } else {
+                                            toggle.classList.remove('content-treeview__toggle--collapsed');
+                                            toggle.classList.add('content-treeview__toggle--expanded');
+                                            children.classList.add('content-treeview__children--expanded');
+                                        }
+                                    }
+                                }
+                            });
+                        });
                     }
                     
                     // Updates header

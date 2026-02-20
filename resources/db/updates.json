@@ -1,7 +1,27 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-02-19",
+  "lastUpdated": "2025-02-20",
   "updates": [
+    {
+      "title": "OS - Thread Concepts",
+      "description": "Complete documentation on thread concepts, thread vs process, thread lifecycle, thread models (many-to-one, one-to-one, many-to-many), user threads, kernel threads, thread synchronization, thread safety, and thread pools."
+    },
+    {
+      "title": "OS - Process Synchronization",
+      "description": "Complete documentation on process synchronization, race conditions, critical sections, mutual exclusion, semaphores, deadlock, starvation, synchronization algorithms (Peterson's, Bakery, Dekker's), monitors, message passing, and read-write locks."
+    },
+    {
+      "title": "OS - Inter-Process Communication (IPC)",
+      "description": "Complete documentation on inter-process communication mechanisms including pipes, FIFOs (named pipes), message queues, shared memory, semaphores, signals, sockets, IPC comparison, and best practices for process communication."
+    },
+    {
+      "title": "OS - Process Creation and Termination",
+      "description": "Complete documentation on process creation (fork), process execution (exec family), process waiting (wait, waitpid), process termination (exit), process hierarchy, zombie processes, orphan processes, and best practices for process lifecycle management."
+    },
+    {
+      "title": "OS - Context Switch",
+      "description": "Complete documentation on context switching, process state save/restore, context switch overhead, switching between processes and threads, hardware support, and performance optimization techniques."
+    },
     {
       "title": "OS - Scheduling",
       "description": "Complete documentation on CPU scheduling, algorithms (FCFS, SJF, Priority, Round-Robin, MLFQ), preemptive vs non-preemptive scheduling, scheduling criteria, and practical implementation examples."

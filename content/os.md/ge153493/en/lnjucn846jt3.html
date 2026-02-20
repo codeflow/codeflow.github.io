@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.js"></script>
+    <script>
+        
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>📡 Inter-Process Communication (IPC)</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">2026-02-20</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Inter-Process Communication (IPC) refers to mechanisms that allow processes to communicate and synchronize with each other. This topic covers pipes, FIFOs, message queues, shared memory, semaphores, signals, and sockets.
+        </div>
+
+        <h2>🟢 📚 What is IPC?</h2>
+        <p>Inter-Process Communication (IPC) is a set of mechanisms that enable processes to exchange data and coordinate their activities. Since processes have separate memory spaces, they cannot directly access each other's memory. IPC provides various methods for processes to communicate.</p>
+
+        <div class="highlight-box">
+            <strong>Why IPC is Needed:</strong>
+            <ul>
+                <li>Processes have isolated memory spaces</li>
+                <li>Direct memory access between processes is not allowed</li>
+                <li>Processes need to share data and coordinate activities</li>
+                <li>IPC provides safe and controlled communication channels</li>
+            </ul>
+        </div>
+
+        <h2>🟡 📚 Types of IPC Mechanisms</h2>
+        <p>Unix-like systems provide several IPC mechanisms, each with different characteristics:</p>
+
+        <div class="app-card">
+            <h3>1. Pipes</h3>
+            <p>Unidirectional communication channel for related processes (parent-child).</p>
+        </div>
+
+        <div class="app-card">
+            <h3>2. FIFOs (Named Pipes)</h3>
+            <p>Named pipes that allow communication between unrelated processes.</p>
+        </div>
+
+        <div class="app-card">
+            <h3>3. Message Queues</h3>
+            <p>Structured message passing with priorities and type-based filtering.</p>
+        </div>
+
+        <div class="app-card">
+            <h3>4. Shared Memory</h3>
+            <p>Fastest IPC method - processes share a common memory region.</p>
+        </div>
+
+        <div class="app-card">
+            <h3>5. Semaphores</h3>
+            <p>Synchronization primitives for coordinating access to shared resources.</p>
+        </div>
+
+        <div class="app-card">
+            <h3>6. Signals</h3>
+            <p>Asynchronous notifications sent to processes.</p>
+        </div>
+
+        <div class="app-card">
+            <h3>7. Sockets</h3>
+            <p>Network-based communication, can be used for local or remote IPC.</p>
+        </div>
+
+        <h2>🟢 📚 Pipes</h2>
+        <p>A <strong>pipe</strong> is a unidirectional communication channel that connects the standard output of one process to the standard input of another. Pipes are created using the <code>pipe()</code> system call and are typically used for communication between related processes (parent and child).</p>
+
+        <div class="highlight-box">
+            <strong>Pipe Characteristics:</strong>
+            <ul>
+                <li>Unidirectional (data flows in one direction)</li>
+                <li>Created with <code>pipe()</code> system call</li>
+                <li>Returns two file descriptors: read end and write end</li>
+                <li>Data is buffered by the kernel</li>
+                <li>Limited capacity (typically 64KB)</li>
+                <li>Only works between related processes (same process tree)</li>
+            </ul>
+        </div>
+
+        <h2>🟢 🛠️ Basic Pipe Example</h2>
+        <p>This example demonstrates communication between parent and child processes using a pipe:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    int fd[2];  // fd[0] = read end, fd[1] = write end
+    pid_t pid;
+    char buffer[100];
+    const char *message = "Hello from parent!";
+    
+    // Create pipe
+    if (pipe(fd) == -1) {
+        perror("pipe");
+        return 1;
+    }
+    
+    // Fork child process
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process - reads from pipe
+        close(fd[1]);  // Close write end (child doesn't write)
+        
+        read(fd[0], buffer, sizeof(buffer));
+        printf("Child received: %s\n", buffer);
+        
+        close(fd[0]);
+    } else if (pid > 0) {
+        // Parent process - writes to pipe
+        close(fd[0]);  // Close read end (parent doesn't read)
+        
+        write(fd[1], message, strlen(message) + 1);
+        printf("Parent sent: %s\n", message);
+        
+        close(fd[1]);
+        wait(NULL);  // Wait for child
+    } else {
+        perror("fork");
+        return 1;
+    }
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Creating a Pipe</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">int fd[2];
+if (pipe(fd) == -1) {
+    perror("pipe");
+    return 1;
+}</code></pre>
+        </div>
+        <p><code>pipe(fd)</code> creates a pipe and stores two file descriptors in the array: <code>fd[0]</code> is the read end, and <code>fd[1]</code> is the write end. If <code>pipe()</code> fails, it returns -1.</p>
+
+        <h4>Closing Unused Ends</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">// In child: close write end
+close(fd[1]);
+
+// In parent: close read end
+close(fd[0]);</code></pre>
+        </div>
+        <p>Each process should close the file descriptor it doesn't use. This ensures that when one process finishes, the other process will receive EOF (end-of-file) when reading, allowing proper synchronization.</p>
+
+        <h2>🟡 📚 FIFOs (Named Pipes)</h2>
+        <p>A <strong>FIFO</strong> (First In, First Out), also called a <strong>named pipe</strong>, is similar to a regular pipe but has a name in the file system. This allows unrelated processes to communicate.</p>
+
+        <div class="highlight-box">
+            <strong>FIFO Characteristics:</strong>
+            <ul>
+                <li>Has a name in the file system (created with <code>mkfifo()</code>)</li>
+                <li>Can be used by unrelated processes</li>
+                <li>Unidirectional like regular pipes</li>
+                <li>Persists until explicitly removed</li>
+                <li>Blocking I/O by default</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ FIFO Example</h2>
+        <p>This example demonstrates communication using a named pipe:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    const char *fifo_path = "/tmp/myfifo";
+    int fd;
+    char buffer[100];
+    
+    // Create FIFO (named pipe)
+    if (mkfifo(fifo_path, 0666) == -1) {
+        perror("mkfifo");
+        // If FIFO already exists, that's okay
+        if (errno != EEXIST) {
+            return 1;
+        }
+    }
+    
+    // Open FIFO for writing
+    fd = open(fifo_path, O_WRONLY);
+    if (fd == -1) {
+        perror("open");
+        return 1;
+    }
+    
+    // Write to FIFO
+    const char *message = "Hello from writer!";
+    write(fd, message, strlen(message) + 1);
+    
+    close(fd);
+    printf("Writer: Sent message\n");
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h2>🟡 📚 Message Queues</h2>
+        <p><strong>Message queues</strong> provide a structured way to send messages between processes. Messages have a type and can be retrieved based on type or in FIFO order.</p>
+
+        <div class="highlight-box">
+            <strong>Message Queue Characteristics:</strong>
+            <ul>
+                <li>Messages have a type identifier</li>
+                <li>Messages can be retrieved by type or in order</li>
+                <li>Persistent across process termination</li>
+                <li>System-wide resource (identified by key)</li>
+                <li>Limited by system quotas</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Message Queue Example</h2>
+        <p>This example demonstrates message queue communication:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;sys/msg.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;string.h&gt;
+
+struct msgbuf {
+    long mtype;
+    char mtext[100];
+};
+
+int main() {
+    key_t key = ftok("/tmp", 'A');
+    int msgid;
+    struct msgbuf message;
+    
+    // Create message queue
+    msgid = msgget(key, 0666 | IPC_CREAT);
+    if (msgid == -1) {
+        perror("msgget");
+        return 1;
+    }
+    
+    // Send message
+    message.mtype = 1;
+    strcpy(message.mtext, "Hello from message queue!");
+    
+    if (msgsnd(msgid, &message, sizeof(message.mtext), 0) == -1) {
+        perror("msgsnd");
+        return 1;
+    }
+    
+    printf("Message sent: %s\n", message.mtext);
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h2>🟡 📚 Shared Memory</h2>
+        <p><strong>Shared memory</strong> is the fastest IPC mechanism. It allows multiple processes to access the same region of memory, enabling very fast data sharing.</p>
+
+        <div class="highlight-box">
+            <strong>Shared Memory Characteristics:</strong>
+            <ul>
+                <li>Fastest IPC method (no data copying)</li>
+                <li>Multiple processes can access the same memory</li>
+                <li>Requires synchronization (semaphores, mutexes)</li>
+                <li>System-wide resource (identified by key)</li>
+                <li>Persists until explicitly removed</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Shared Memory Example</h2>
+        <p>This example demonstrates shared memory usage:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;sys/shm.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    key_t key = ftok("/tmp", 'B');
+    int shmid;
+    char *shm;
+    
+    // Create shared memory segment
+    shmid = shmget(key, 1024, 0666 | IPC_CREAT);
+    if (shmid == -1) {
+        perror("shmget");
+        return 1;
+    }
+    
+    // Attach shared memory
+    shm = (char *)shmat(shmid, NULL, 0);
+    if (shm == (char *)-1) {
+        perror("shmat");
+        return 1;
+    }
+    
+    // Write to shared memory
+    strcpy(shm, "Hello from shared memory!");
+    printf("Written to shared memory: %s\n", shm);
+    
+    // Detach shared memory
+    shmdt(shm);
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h2>🟡 📚 Semaphores</h2>
+        <p><strong>Semaphores</strong> are synchronization primitives used to control access to shared resources. They prevent race conditions by ensuring only one process accesses a critical section at a time.</p>
+
+        <div class="highlight-box">
+            <strong>Semaphore Characteristics:</strong>
+            <ul>
+                <li>Integer counter that tracks available resources</li>
+                <li>Atomic operations: wait (P) and signal (V)</li>
+                <li>Used for mutual exclusion and synchronization</li>
+                <li>Can be binary (0 or 1) or counting</li>
+                <li>System-wide resource (identified by key)</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Semaphore Example</h2>
+        <p>This example demonstrates semaphore usage for mutual exclusion:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;sys/sem.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/types.h&gt;
+
+union semun {
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array;
+};
+
+int main() {
+    key_t key = ftok("/tmp", 'C');
+    int semid;
+    union semun arg;
+    struct sembuf sb;
+    
+    // Create semaphore set
+    semid = semget(key, 1, 0666 | IPC_CREAT);
+    if (semid == -1) {
+        perror("semget");
+        return 1;
+    }
+    
+    // Initialize semaphore to 1 (binary semaphore)
+    arg.val = 1;
+    if (semctl(semid, 0, SETVAL, arg) == -1) {
+        perror("semctl");
+        return 1;
+    }
+    
+    // Wait (P operation) - decrement semaphore
+    sb.sem_num = 0;
+    sb.sem_op = -1;  // Decrement by 1
+    sb.sem_flg = 0;
+    semop(semid, &sb, 1);
+    
+    printf("Critical section - semaphore acquired\n");
+    
+    // Critical section code here
+    
+    // Signal (V operation) - increment semaphore
+    sb.sem_op = 1;  // Increment by 1
+    semop(semid, &sb, 1);
+    
+    printf("Critical section - semaphore released\n");
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h2>🟡 📚 Signals</h2>
+        <p><strong>Signals</strong> are asynchronous notifications sent to processes. They can be used for IPC, process control, and error handling.</p>
+
+        <div class="highlight-box">
+            <strong>Signal Characteristics:</strong>
+            <ul>
+                <li>Asynchronous notifications</li>
+                <li>Predefined signal types (SIGINT, SIGTERM, SIGUSR1, etc.)</li>
+                <li>Can be sent by kernel, other processes, or the process itself</li>
+                <li>Process can handle signals with signal handlers</li>
+                <li>Limited information (just signal number)</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Signal Example</h2>
+        <p>This example demonstrates signal handling:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+
+void signal_handler(int sig) {
+    printf("Received signal %d\n", sig);
+}
+
+int main() {
+    pid_t pid;
+    
+    // Set up signal handler
+    signal(SIGUSR1, signal_handler);
+    
+    pid = fork();
+    
+    if (pid == 0) {
+        // Child process
+        printf("Child: Waiting for signal...\n");
+        pause();  // Wait for signal
+        printf("Child: Signal received!\n");
+    } else if (pid > 0) {
+        // Parent process
+        sleep(1);  // Give child time to set up handler
+        printf("Parent: Sending SIGUSR1 to child\n");
+        kill(pid, SIGUSR1);
+        wait(NULL);
+    } else {
+        perror("fork");
+        return 1;
+    }
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h2>🟡 📚 Sockets</h2>
+        <p><strong>Sockets</strong> provide network-based communication. They can be used for local IPC (Unix domain sockets) or remote communication (Internet sockets).</p>
+
+        <div class="highlight-box">
+            <strong>Socket Characteristics:</strong>
+            <ul>
+                <li>Can be used for local or remote communication</li>
+                <li>Unix domain sockets for local IPC (faster than network sockets)</li>
+                <li>Internet sockets for network communication</li>
+                <li>Bidirectional communication</li>
+                <li>Supports multiple protocols (TCP, UDP)</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Unix Domain Socket Example</h2>
+        <p>This example demonstrates local IPC using Unix domain sockets:</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/un.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    int sockfd;
+    struct sockaddr_un addr;
+    const char *socket_path = "/tmp/mysocket";
+    char buffer[100];
+    
+    // Create socket
+    sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (sockfd == -1) {
+        perror("socket");
+        return 1;
+    }
+    
+    // Set up address
+    memset(&addr, 0, sizeof(addr));
+    addr.sun_family = AF_UNIX;
+    strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
+    
+    // Bind socket
+    if (bind(sockfd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
+        perror("bind");
+        close(sockfd);
+        return 1;
+    }
+    
+    // Listen for connections
+    if (listen(sockfd, 5) == -1) {
+        perror("listen");
+        close(sockfd);
+        return 1;
+    }
+    
+    printf("Server: Listening on %s\n", socket_path);
+    
+    // Accept connection
+    int client_fd = accept(sockfd, NULL, NULL);
+    if (client_fd == -1) {
+        perror("accept");
+        close(sockfd);
+        return 1;
+    }
+    
+    // Receive message
+    read(client_fd, buffer, sizeof(buffer));
+    printf("Server: Received: %s\n", buffer);
+    
+    close(client_fd);
+    close(sockfd);
+    unlink(socket_path);  // Remove socket file
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h2>🔴 📚 IPC Mechanism Comparison</h2>
+        <p>Different IPC mechanisms have different characteristics. Here's a comparison:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Mechanism</th>
+                    <th>Speed</th>
+                    <th>Complexity</th>
+                    <th>Use Case</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Shared Memory</td>
+                    <td>Fastest</td>
+                    <td>High (needs synchronization)</td>
+                    <td>High-performance data sharing</td>
+                </tr>
+                <tr>
+                    <td>Sockets</td>
+                    <td>Fast (Unix domain)</td>
+                    <td>Medium</td>
+                    <td>Network or local communication</td>
+                </tr>
+                <tr>
+                    <td>Message Queues</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                    <td>Structured message passing</td>
+                </tr>
+                <tr>
+                    <td>Pipes/FIFOs</td>
+                    <td>Medium</td>
+                    <td>Low</td>
+                    <td>Simple unidirectional communication</td>
+                </tr>
+                <tr>
+                    <td>Signals</td>
+                    <td>Fast</td>
+                    <td>Low</td>
+                    <td>Asynchronous notifications</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔴 📚 Best Practices for IPC</h2>
+        <p>When choosing and using IPC mechanisms:</p>
+
+        <div class="highlight-box">
+            <strong>Best Practices:</strong>
+            <ul>
+                <li><strong>Choose the right mechanism:</strong> Use shared memory for high-performance, pipes for simplicity, sockets for network communication</li>
+                <li><strong>Synchronize properly:</strong> Use semaphores or mutexes with shared memory</li>
+                <li><strong>Handle errors:</strong> Always check return values and handle errors appropriately</li>
+                <li><strong>Clean up resources:</strong> Remove IPC objects (message queues, shared memory, semaphores) when done</li>
+                <li><strong>Use timeouts:</strong> Avoid indefinite blocking by using non-blocking I/O or timeouts</li>
+                <li><strong>Consider security:</strong> Set appropriate permissions on IPC objects</li>
+            </ul>
+        </div>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Inter-process_communication" target="_blank" rel="noopener noreferrer">Inter-process communication - Wikipedia</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man2/pipe.2.html" target="_blank" rel="noopener noreferrer">pipe(2) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man3/mkfifo.3.html" target="_blank" rel="noopener noreferrer">mkfifo(3) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man2/msgget.2.html" target="_blank" rel="noopener noreferrer">msgget(2) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man2/shmget.2.html" target="_blank" rel="noopener noreferrer">shmget(2) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man2/semget.2.html" target="_blank" rel="noopener noreferrer">semget(2) - Linux Manual Page</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/inter_process_communication/index.htm" target="_blank" rel="noopener noreferrer">Inter Process Communication - TutorialsPoint</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

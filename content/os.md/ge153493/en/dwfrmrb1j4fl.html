@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.js"></script>
+    <script>
+        
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>🔄 Context Switch</h1>
+        
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">20/02/2026 15:00:00</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Context switching is the process of saving the state of a currently running process and restoring the state of another process so it can resume execution. This is a fundamental mechanism in multitasking operating systems that allows multiple processes to share the CPU.
+        </div>
+
+        <h2>🟢 📚 What is Context Switch?</h2>
+        <p>
+            A context switch is the mechanism by which the operating system saves the execution context (state) of the currently running process and loads the execution context of another process to continue its execution. This allows the CPU to switch between different processes, enabling multitasking and time-sharing.
+        </p>
+        <p>
+            The execution context includes all the information needed to resume a process exactly where it left off:
+        </p>
+        <ul>
+            <li><strong>CPU Registers:</strong> Program counter (PC), stack pointer (SP), general-purpose registers, status registers</li>
+            <li><strong>Memory Management:</strong> Page tables, memory mappings, virtual address space</li>
+            <li><strong>Process State:</strong> Process ID (PID), priority, scheduling information</li>
+            <li><strong>I/O State:</strong> Open file descriptors, I/O buffers, device states</li>
+        </ul>
+
+        <h2>🟢 📚 Why Context Switching is Needed</h2>
+        <p>
+            Context switching is essential for:
+        </p>
+        <ul>
+            <li><strong>Multitasking:</strong> Allowing multiple processes to run concurrently on a single CPU</li>
+            <li><strong>Time-Sharing:</strong> Fairly distributing CPU time among multiple processes</li>
+            <li><strong>Preemptive Scheduling:</strong> Interrupting running processes to give CPU time to higher-priority processes</li>
+            <li><strong>I/O Operations:</strong> Switching to another process when the current one is waiting for I/O</li>
+            <li><strong>Responsiveness:</strong> Ensuring the system remains responsive to user interactions</li>
+        </ul>
+
+        <h2>🟡 📚 Context Switch Process</h2>
+        <p>
+            The context switch process involves several steps:
+        </p>
+
+        <h3>1. Save Current Process State</h3>
+        <p>
+            When a context switch is triggered (by a timer interrupt, I/O completion, or system call), the operating system:
+        </p>
+        <ul>
+            <li>Saves all CPU registers to the Process Control Block (PCB) of the current process</li>
+            <li>Updates the process state (e.g., from "running" to "ready" or "waiting")</li>
+            <li>Stores the program counter to know where to resume execution</li>
+            <li>Saves stack pointer and other register values</li>
+        </ul>
+
+        <h3>2. Select Next Process</h3>
+        <p>
+            The scheduler selects the next process to run based on the scheduling algorithm:
+        </p>
+        <ul>
+            <li>Checks the ready queue for processes waiting to execute</li>
+            <li>Applies scheduling criteria (priority, time quantum, etc.)</li>
+            <li>Selects the most appropriate process</li>
+        </ul>
+
+        <h3>3. Restore Next Process State</h3>
+        <p>
+            The operating system loads the saved state of the selected process:
+        </p>
+        <ul>
+            <li>Restores all CPU registers from the PCB</li>
+            <li>Updates memory management unit (MMU) with the process's page tables</li>
+            <li>Restores the program counter to resume execution</li>
+            <li>Updates process state to "running"</li>
+        </ul>
+
+        <h3>4. Resume Execution</h3>
+        <p>
+            The CPU begins executing the newly loaded process from where it was previously interrupted.
+        </p>
+
+        <h2>🟡 📚 Context Switch Overhead</h2>
+        <p>
+            Context switching has performance overhead because it requires:
+        </p>
+        <ul>
+            <li><strong>CPU Time:</strong> Time spent saving and restoring process state</li>
+            <li><strong>Cache Flushing:</strong> CPU caches may need to be flushed or invalidated</li>
+            <li><strong>TLB Flush:</strong> Translation Lookaside Buffer (TLB) may need to be cleared</li>
+            <li><strong>Memory Access:</strong> Reading from and writing to memory (PCB storage)</li>
+        </ul>
+        <p>
+            Typical context switch times range from:
+        </p>
+        <ul>
+            <li><strong>Microseconds:</strong> On modern systems (1-10 microseconds)</li>
+            <li><strong>Milliseconds:</strong> On older or slower systems</li>
+        </ul>
+        <p>
+            The overhead depends on:
+        </p>
+        <ul>
+            <li>Number of registers to save/restore</li>
+            <li>Memory access speed</li>
+            <li>Cache efficiency</li>
+            <li>Hardware support for context switching</li>
+        </ul>
+
+        <h2>🟡 🛠️ Context Switch Between Processes vs Threads</h2>
+        <p>
+            Context switching behavior differs between processes and threads:
+        </p>
+
+        <h3>Process Context Switch</h3>
+        <p>
+            Switching between processes (different address spaces):
+        </p>
+        <ul>
+            <li><strong>More Expensive:</strong> Requires changing memory address space</li>
+            <li><strong>MMU Update:</strong> Must update page tables and TLB</li>
+            <li><strong>Full State Save:</strong> All registers, memory mappings, file descriptors</li>
+            <li><strong>Cache Impact:</strong> Higher chance of cache misses</li>
+        </ul>
+
+        <h3>Thread Context Switch</h3>
+        <p>
+            Switching between threads (same address space):
+        </p>
+        <ul>
+            <li><strong>Less Expensive:</strong> No memory address space change</li>
+            <li><strong>No MMU Update:</strong> Page tables remain the same</li>
+            <li><strong>Minimal State Save:</strong> Only CPU registers and stack pointer</li>
+            <li><strong>Better Cache Performance:</strong> Shared memory space improves cache hit rate</li>
+        </ul>
+
+        <h2>🟡 🛠️ Context Switch Implementation Example</h2>
+        <p>
+            The following example demonstrates a simplified context switch implementation:
+        </p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+// Process Control Block (PCB)
+typedef struct {
+    int pid;
+    int state;  // 0: ready, 1: running, 2: waiting
+    void* stack_pointer;
+    int program_counter;
+    int registers[8];  // General-purpose registers
+} PCB;
+
+// Global variables
+PCB* current_process = NULL;
+PCB* ready_queue[10];
+int ready_count = 0;
+
+// Save current process context
+void save_context(PCB* pcb) {
+    // In real implementation, this would use assembly to save registers
+    // For demonstration, we simulate saving state
+    printf("Saving context for process %d\n", pcb->pid);
+    printf("  - Program Counter: %d\n", pcb->program_counter);
+    printf("  - Stack Pointer: %p\n", pcb->stack_pointer);
+    printf("  - State: %d\n", pcb->state);
+}
+
+// Restore process context
+void restore_context(PCB* pcb) {
+    // In real implementation, this would use assembly to restore registers
+    // For demonstration, we simulate restoring state
+    printf("Restoring context for process %d\n", pcb->pid);
+    printf("  - Program Counter: %d\n", pcb->program_counter);
+    printf("  - Stack Pointer: %p\n", pcb->stack_pointer);
+    pcb->state = 1;  // Set to running
+}
+
+// Context switch function
+void context_switch(PCB* next_process) {
+    if (current_process != NULL) {
+        // Save current process state
+        current_process->state = 0;  // Set to ready
+        save_context(current_process);
+        
+        // Add to ready queue
+        ready_queue[ready_count++] = current_process;
+    }
+    
+    // Switch to next process
+    current_process = next_process;
+    restore_context(current_process);
+    
+    printf("Context switch completed. Now running process %d\n", current_process->pid);
+}
+
+// Example usage
+int main() {
+    // Create sample processes
+    PCB p1 = {1, 0, NULL, 100, {0}};
+    PCB p2 = {2, 0, NULL, 200, {0}};
+    
+    // Initial context switch to process 1
+    context_switch(&p1);
+    
+    // Simulate timer interrupt - switch to process 2
+    printf("\n--- Timer interrupt ---\n");
+    context_switch(&p2);
+    
+    // Simulate another interrupt - switch back to process 1
+    printf("\n--- Timer interrupt ---\n");
+    context_switch(&p1);
+    
+    return 0;
+}</code></pre>
+        </div>
+
+        <h4>Code Breakdown</h4>
+
+        <h4>Part 1: Process Control Block (PCB)</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">typedef struct {
+    int pid;
+    int state;  // 0: ready, 1: running, 2: waiting
+    void* stack_pointer;
+    int program_counter;
+    int registers[8];  // General-purpose registers
+} PCB;</code></pre>
+        </div>
+        <p>
+            The <code>PCB</code> structure stores all the information needed to save and restore a process's execution context. In a real operating system, the PCB contains much more information, including memory management data, file descriptors, and scheduling information.
+        </p>
+
+        <h4>Part 2: Context Switch Function</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">void context_switch(PCB* next_process) {
+    if (current_process != NULL) {
+        // Save current process state
+        current_process->state = 0;  // Set to ready
+        save_context(current_process);
+        
+        // Add to ready queue
+        ready_queue[ready_count++] = current_process;
+    }
+    
+    // Switch to next process
+    current_process = next_process;
+    restore_context(current_process);
+    
+    printf("Context switch completed. Now running process %d\n", current_process->pid);
+}</code></pre>
+        </div>
+        <p>
+            The <code>context_switch</code> function demonstrates the basic steps of a context switch: saving the current process state, selecting the next process, and restoring its state. In a real operating system, this would be implemented in assembly language or with special hardware support to efficiently save and restore CPU registers.
+        </p>
+
+        <h2>🔴 📚 Hardware Support for Context Switching</h2>
+        <p>
+            Modern processors provide hardware support to optimize context switching:
+        </p>
+
+        <h3>1. Fast System Calls</h3>
+        <p>
+            Special instructions (e.g., <code>syscall</code>, <code>sysenter</code>) that allow efficient transitions between user mode and kernel mode, reducing the overhead of system calls that may trigger context switches.
+        </p>
+
+        <h3>2. TLB Management</h3>
+        <p>
+            Translation Lookaside Buffer (TLB) management features:
+        </p>
+        <ul>
+            <li><strong>ASID (Address Space ID):</strong> Allows TLB entries to be tagged with process IDs, avoiding full TLB flushes</li>
+            <li><strong>TLB Invalidation:</strong> Selective invalidation of TLB entries when switching address spaces</li>
+        </ul>
+
+        <h3>3. Register Windows (SPARC)</h3>
+        <p>
+            Some architectures (like SPARC) use register windows to reduce context switch overhead by providing separate register sets for different execution contexts.
+        </p>
+
+        <h3>4. Hardware Task Switching (x86)</h3>
+        <p>
+            x86 architecture provides Task State Segment (TSS) for hardware-assisted task switching, though modern operating systems typically use software-based context switching for better flexibility.
+        </p>
+
+        <h2>🔴 📚 Optimizing Context Switch Performance</h2>
+        <p>
+            Operating systems use various techniques to minimize context switch overhead:
+        </p>
+
+        <h3>1. Lazy TLB Flushing</h3>
+        <p>
+            Instead of flushing the entire TLB on every context switch, the OS can:
+        </p>
+        <ul>
+            <li>Use Address Space Identifiers (ASID) to tag TLB entries</li>
+            <li>Only flush TLB entries when necessary (when switching to a different address space)</li>
+            <li>Reduce TLB miss penalties</li>
+        </ul>
+
+        <h3>2. Cache-Aware Scheduling</h3>
+        <p>
+            Scheduling algorithms that consider cache locality:
+        </p>
+        <ul>
+            <li>Prefer running processes that were recently on the CPU (warm cache)</li>
+            <li>Reduce cache misses and improve overall performance</li>
+        </ul>
+
+        <h3>3. Kernel Threads</h3>
+        <p>
+            Using kernel threads instead of processes for some operations:
+        </p>
+        <ul>
+            <li>Threads share the same address space</li>
+            <li>Context switches between threads are faster</li>
+            <li>Reduced memory management overhead</li>
+        </ul>
+
+        <h3>4. Preemption Granularity</h3>
+        <p>
+            Adjusting how frequently preemption occurs:
+        </p>
+        <ul>
+            <li>Too frequent: High context switch overhead</li>
+            <li>Too infrequent: Poor responsiveness</li>
+            <li>Balance based on system workload</li>
+        </ul>
+
+        <h2>📊 Context Switch Performance Metrics</h2>
+        <p>
+            Context switch performance is measured by:
+        </p>
+        <ul>
+            <li><strong>Context Switch Time:</strong> Time to save one process and restore another</li>
+            <li><strong>Context Switch Rate:</strong> Number of context switches per second</li>
+            <li><strong>Overhead Percentage:</strong> Percentage of CPU time spent on context switching</li>
+        </ul>
+
+        <h2>📝 Summary</h2>
+        <p>
+            Context switching is a fundamental mechanism in operating systems that enables multitasking and time-sharing. Key points:
+        </p>
+        <ul>
+            <li>Context switch saves the state of the current process and restores the state of another process</li>
+            <li>It involves saving/restoring CPU registers, memory management information, and process state</li>
+            <li>Context switching has overhead that affects system performance</li>
+            <li>Thread context switches are faster than process context switches</li>
+            <li>Modern hardware and OS optimizations help reduce context switch overhead</li>
+            <li>Balancing context switch frequency is important for system performance and responsiveness</li>
+        </ul>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Context_switch" target="_blank" rel="noopener noreferrer">Context Switch - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.tutorialspoint.com/operating_system/os_process_scheduling.htm" target="_blank" rel="noopener noreferrer">Operating System - Process Scheduling - TutorialsPoint</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/context-switch-in-operating-system/" target="_blank" rel="noopener noreferrer">Context Switch in Operating System - GeeksforGeeks</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
