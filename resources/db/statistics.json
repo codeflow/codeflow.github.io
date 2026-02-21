@@ -21,10 +21,10 @@
     {
       "technology": "OS",
       "category": "Threads and Concurrency",
-      "availableTopics": 2,
+      "availableTopics": 3,
       "totalSubtopics": 5,
-      "completedSubtopics": 2,
-      "percentage": 40
+      "completedSubtopics": 3,
+      "percentage": 60
     }
   ]
 }

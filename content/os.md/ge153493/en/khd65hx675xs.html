@@ -60,6 +60,23 @@
 
         <h2>🟢 📚 Process Creation Basics</h2>
         <p>Process creation is the mechanism by which new processes are spawned in an operating system. In Unix-like systems, the primary method for creating new processes is through the <code>fork()</code> system call.</p>
+        <figure class="content-figure">
+            <img
+                class="content-image"
+                src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Unix_process_states.png"
+                alt="Unix process states diagram related to process lifecycle and scheduling"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
+            >
+            <figcaption class="content-figcaption">
+                Unix process states and transitions
+                <span class="content-figcaption__source">
+                    Source: <a href="https://commons.wikimedia.org/wiki/File:Unix_process_states.png" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>
+                </span>
+            </figcaption>
+        </figure>
+
         
         <p>When a process calls <code>fork()</code>, the operating system creates an exact copy of the calling process. This new process is called the <strong>child process</strong>, while the original process is called the <strong>parent process</strong>.</p>
 

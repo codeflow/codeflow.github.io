@@ -158,6 +158,8 @@
             width: 100%;
             position: relative;
             padding: 0.25rem 0;
+            touch-action: pan-y;
+            cursor: grab;
         }
         .latest-posts-track {
             display: flex;
@@ -249,6 +251,33 @@
             opacity: 0.35;
             cursor: not-allowed;
         }
+        .latest-posts-carousel.is-dragging {
+            cursor: grabbing;
+        }
+        .latest-posts-carousel.is-dragging .latest-posts-track {
+            user-select: none;
+        }
+        @media (max-width: 768px) {
+            .latest-posts-carousel {
+                padding: 0.25rem;
+                box-sizing: border-box;
+            }
+            .latest-posts-track {
+                width: 100%;
+                gap: 0.5rem;
+            }
+            .latest-post-card {
+                flex: 0 0 calc(100% - 0.25rem);
+                width: calc(100% - 0.25rem);
+                min-width: calc(100% - 0.25rem);
+                max-width: calc(100% - 0.25rem);
+            }
+            .latest-post-card__title,
+            .latest-post-card__description {
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
+        }
     </style>
     <script type="application/ld+json">
 {
@@ -309,7 +338,7 @@
         
         <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
             <span style="display: inline-flex; align-items: center;">🕐</span>
-            <span style="display: inline-flex; align-items: center;">21/02/2026 08:52:23</span>
+            <span style="display: inline-flex; align-items: center;">21/02/2026 17:30:20</span>
             <span style="display: inline-flex; align-items: center;">👨‍💻</span>
             <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
         </div>

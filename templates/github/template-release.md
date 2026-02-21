@@ -14,12 +14,6 @@
 - {{CONTENT_SUMMARY_LINE_1}}
 - {{CONTENT_SUMMARY_LINE_2}}
 
-### 🔵 {{CATEGORY_2_NAME}} ({{CATEGORY_2_PROGRESS}})
-- _No updates yet._
-
-### 🟡 {{CATEGORY_3_NAME}} ({{CATEGORY_3_PROGRESS}})
-- _No updates yet._
-
 ---
 
 ## 🔄 Unreleased
@@ -28,10 +22,12 @@
 - [{{TECHNOLOGY_UPPER}}] Added "{{CONTENT_TITLE}}" ({{LANGUAGE_CODE}}) - {{PAGE_PATH}}
 
 ### Changed
-- _No changes yet._
+- {{CHANGED_ITEM_1}}
+- {{CHANGED_ITEM_2}}
 
 ### Fixed
-- _No fixes yet._
+- {{FIXED_ITEM_1}}
+- {{FIXED_ITEM_2}}
 
 ---
 
@@ -66,8 +62,8 @@
 - {{COMPONENT_ITEM_3}}
 
 ### Image Management
-- {{IMAGE_ITEM_1}}
-- {{IMAGE_ITEM_2}}
+- Direct image search and insertion via `/find-image` (no intermediate summary file)
+- Duplicate image avoidance enforced for better visual variety
 
 ---
 
@@ -76,10 +72,12 @@
 ### Rule System Updates
 - ✅ {{RULE_UPDATE_1}}
 - ✅ {{RULE_UPDATE_2}}
+- ✅ {{RULE_UPDATE_3}}
 
 ### Bug Fixes
 - ✅ {{BUGFIX_1}}
 - ✅ {{BUGFIX_2}}
+- ✅ {{BUGFIX_3}}
 
 ---
 
@@ -99,7 +97,6 @@ Each page includes:
 ### Planned Content
 - {{NEXT_STEP_1}}
 - {{NEXT_STEP_2}}
-- {{NEXT_STEP_3}}
 
 ---
 
