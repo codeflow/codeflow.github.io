@@ -10,7 +10,7 @@ import os
 import webbrowser
 from urllib.parse import unquote
 
-PORT = 8040
+PORT = 9002
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):

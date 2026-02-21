@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.js"></script>
+    <script>
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>🔀 Thread Creation and Management</h1>
+
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">21/02/2026 12:14:00</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Thread creation and management define how concurrent execution units are started, coordinated, synchronized, and safely finalized. Mastering these operations is essential for building scalable and responsive multi-threaded applications.
+        </div>
+
+        <h2>🟢 📚 What Is Thread Creation and Management?</h2>
+        <p>
+            Thread creation and management include the complete lifecycle of a thread: creation, execution, synchronization, waiting, and termination. In operating systems and runtime libraries, this process determines how work is parallelized and how resources are shared safely.
+        </p>
+        <figure class="content-figure">
+            <img
+                class="content-image"
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Multithreaded_process.svg"
+                alt="Multithreaded process diagram showing threads within a single process"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
+            >
+            <figcaption class="content-figcaption">
+                Multithreaded process model
+                <span class="content-figcaption__source">
+                    Source: <a href="https://commons.wikimedia.org/wiki/File:Multithreaded_process.svg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>
+                </span>
+            </figcaption>
+        </figure>
+        <ul>
+            <li><strong>Create:</strong> Start a new execution path with its own stack and register context.</li>
+            <li><strong>Coordinate:</strong> Control execution order and dependencies among threads.</li>
+            <li><strong>Synchronize:</strong> Protect shared data and avoid race conditions.</li>
+            <li><strong>Finalize:</strong> Join, detach, or cancel threads according to application policy.</li>
+        </ul>
+
+        <h2>🟢 🛠️ Basic Thread Creation with POSIX Threads</h2>
+        <p>The following example shows a minimal thread creation and join flow using <code>pthread_create</code> and <code>pthread_join</code>.</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;pthread.h&gt;
+#include &lt;stdio.h&gt;
+
+void* worker(void* arg) {
+    int id = *(int*)arg;
+    printf("Thread %d is running\n", id);
+    return NULL;
+}
+
+int main(void) {
+    pthread_t t1;
+    int id = 1;
+
+    if (pthread_create(&t1, NULL, worker, &id) != 0) {
+        perror("pthread_create");
+        return 1;
+    }
+
+    pthread_join(t1, NULL);
+    printf("Thread completed\n");
+    return 0;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Thread Function</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">void* worker(void* arg) {
+    int id = *(int*)arg;
+    printf("Thread %d is running\n", id);
+    return NULL;
+}</code></pre>
+        </div>
+        <p>This routine is the code executed by the new thread. It receives a generic pointer argument, casts it, performs work, and returns a completion value.</p>
+
+        <h4>Create and Join</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">pthread_create(&t1, NULL, worker, &id);
+pthread_join(t1, NULL);</code></pre>
+        </div>
+        <p><code>pthread_create</code> starts a new thread, and <code>pthread_join</code> blocks until that thread finishes, ensuring controlled shutdown.</p>
+
+        <h2>🟡 📚 Lifecycle Controls: Join, Detach, and Cancel</h2>
+        <p>
+            Practical thread management requires deciding how each thread should end and who owns its cleanup. Three common controls are:
+        </p>
+        <ul>
+            <li><strong>Joinable threads:</strong> parent waits and collects completion status.</li>
+            <li><strong>Detached threads:</strong> resources are reclaimed automatically on completion.</li>
+            <li><strong>Cancelable threads:</strong> external cancellation points allow controlled interruption.</li>
+        </ul>
+        <div class="highlight-box">
+            <strong>Best practice:</strong> choose one ownership model per thread type to avoid leaks and zombie-like thread handles.
+        </div>
+
+        <h2>🟡 🛠️ Worker Pool Management Example</h2>
+        <p>This example models basic thread-pool style management with a fixed worker array and centralized join stage.</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#define WORKERS 4
+
+void* run_job(void* arg) {
+    int idx = *(int*)arg;
+    printf("Worker %d processing job\n", idx);
+    return NULL;
+}
+
+void run_pool(void) {
+    pthread_t workers[WORKERS];
+    int ids[WORKERS];
+
+    for (int i = 0; i &lt; WORKERS; i++) {
+        ids[i] = i;
+        pthread_create(&workers[i], NULL, run_job, &ids[i]);
+    }
+
+    for (int i = 0; i &lt; WORKERS; i++) {
+        pthread_join(workers[i], NULL);
+    }
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Pool Creation Loop</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">for (int i = 0; i &lt; WORKERS; i++) {
+    ids[i] = i;
+    pthread_create(&workers[i], NULL, run_job, &ids[i]);
+}</code></pre>
+        </div>
+        <p>This loop allocates work across a fixed number of workers, a common baseline for throughput-oriented services.</p>
+
+        <h4>Pool Synchronization Loop</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">for (int i = 0; i &lt; WORKERS; i++) {
+    pthread_join(workers[i], NULL);
+}</code></pre>
+        </div>
+        <p>Joining all workers creates a clear completion barrier and prevents premature process termination.</p>
+
+        <h2>🔴 📚 Advanced Thread Safety and Synchronization</h2>
+        <p>
+            In real systems, thread management is inseparable from synchronization strategy. Poor locking discipline creates deadlocks, priority inversion, and severe latency spikes.
+        </p>
+        <ul>
+            <li><strong>Mutex + condition variables:</strong> precise coordination for producer/consumer patterns.</li>
+            <li><strong>Read-write locks:</strong> optimize read-heavy shared structures.</li>
+            <li><strong>Atomics:</strong> reduce lock contention for simple counters and flags.</li>
+            <li><strong>Cancellation-safe cleanup:</strong> release locks/resources in all execution paths.</li>
+        </ul>
+
+        <h2>🔴 🛠️ Producer-Consumer with Mutex and Condition Variable</h2>
+        <p>The following complete example demonstrates bounded-buffer synchronization with safe signaling.</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">#include &lt;pthread.h&gt;
+#include &lt;stdio.h&gt;
+
+#define CAPACITY 8
+
+int buffer[CAPACITY];
+int count = 0;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t can_produce = PTHREAD_COND_INITIALIZER;
+pthread_cond_t can_consume = PTHREAD_COND_INITIALIZER;
+
+void produce(int item) {
+    pthread_mutex_lock(&mtx);
+    while (count == CAPACITY) {
+        pthread_cond_wait(&can_produce, &mtx);
+    }
+    buffer[count++] = item;
+    pthread_cond_signal(&can_consume);
+    pthread_mutex_unlock(&mtx);
+}
+
+int consume(void) {
+    pthread_mutex_lock(&mtx);
+    while (count == 0) {
+        pthread_cond_wait(&can_consume, &mtx);
+    }
+    int item = buffer[--count];
+    pthread_cond_signal(&can_produce);
+    pthread_mutex_unlock(&mtx);
+    return item;
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Critical Section Protection</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">pthread_mutex_lock(&mtx);
+/* shared state update */
+pthread_mutex_unlock(&mtx);</code></pre>
+        </div>
+        <p>The mutex ensures exclusive access to shared state (<code>buffer</code> and <code>count</code>), preventing races and data corruption.</p>
+
+        <h4>Condition-Based Waiting</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">while (count == CAPACITY) {
+    pthread_cond_wait(&can_produce, &mtx);
+}
+while (count == 0) {
+    pthread_cond_wait(&can_consume, &mtx);
+}</code></pre>
+        </div>
+        <p>Condition variables avoid busy-waiting and provide efficient coordination between producers and consumers.</p>
+
+        <h2>📚 Summary</h2>
+        <div class="highlight-box">
+            <ul>
+                <li>Thread management covers creation, execution control, synchronization, and termination policies.</li>
+                <li><code>pthread_create</code> + <code>pthread_join</code> is the baseline pattern for deterministic completion.</li>
+                <li>Join, detach, and cancel strategies must be chosen intentionally per workload type.</li>
+                <li>Advanced management depends on safe synchronization and cleanup discipline.</li>
+                <li>Well-managed threads improve scalability, responsiveness, and reliability.</li>
+            </ul>
+        </div>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Pthreads" target="_blank" rel="noopener noreferrer">POSIX Threads (pthreads) - Wikipedia</a></li>
+                <li>🔗 <a href="https://man7.org/linux/man-pages/man3/pthread_create.3.html" target="_blank" rel="noopener noreferrer">pthread_create(3) - Linux man-pages</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/multithreading-in-c/" target="_blank" rel="noopener noreferrer">Multithreading in C - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://cs61.seas.harvard.edu/wiki/2017/Synch2/" target="_blank" rel="noopener noreferrer">Synchronization Patterns - Harvard CS61</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

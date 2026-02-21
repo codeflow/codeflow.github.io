@@ -153,6 +153,11 @@ function initializeLatestPostsCarouselControls() {
 
     let index = 0;
     let autoplayTimer = null;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartTranslate = 0;
+    let currentTranslate = 0;
+    let suppressClick = false;
 
     function getStep() {
         if (cards.length < 2) return cards[0].offsetWidth;
@@ -161,6 +166,9 @@ function initializeLatestPostsCarouselControls() {
     }
 
     function getVisibleCount() {
+        if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) {
+            return 1; // Mobile: always one card per view
+        }
         const step = getStep();
         if (step <= 0) return 1;
         return Math.max(1, Math.floor(carousel.clientWidth / step));
@@ -183,7 +191,9 @@ function initializeLatestPostsCarouselControls() {
 
     function applyPosition() {
         const step = getStep();
-        track.style.transform = 'translateX(' + (-index * step) + 'px)';
+        const translate = Math.round(-index * step);
+        track.style.transform = 'translateX(' + translate + 'px)';
+        currentTranslate = translate;
         updateButtons();
     }
 
@@ -245,6 +255,75 @@ function initializeLatestPostsCarouselControls() {
     carousel.addEventListener('mouseenter', stopAutoplay);
     carousel.addEventListener('mouseleave', startAutoplay);
     window.addEventListener('resize', applyPosition);
+
+    function clampTranslate(value) {
+        const step = getStep();
+        const min = -getMaxIndex() * step;
+        const max = 0;
+        return Math.min(max, Math.max(min, value));
+    }
+
+    function onPointerDown(event) {
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+        isDragging = true;
+        suppressClick = false;
+        dragStartX = event.clientX;
+        dragStartTranslate = -index * getStep();
+        currentTranslate = dragStartTranslate;
+        stopAutoplay();
+        track.style.transition = 'none';
+        carousel.classList.add('is-dragging');
+        if (carousel.setPointerCapture) {
+            carousel.setPointerCapture(event.pointerId);
+        }
+    }
+
+    function onPointerMove(event) {
+        if (!isDragging) return;
+        const delta = event.clientX - dragStartX;
+        if (Math.abs(delta) > 4) suppressClick = true;
+        currentTranslate = clampTranslate(dragStartTranslate + delta);
+        track.style.transform = 'translateX(' + currentTranslate + 'px)';
+        if (event.cancelable) event.preventDefault();
+    }
+
+    function onPointerUp(event) {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        track.style.transition = 'transform 0.35s ease';
+        if (carousel.releasePointerCapture) {
+            try { carousel.releasePointerCapture(event.pointerId); } catch (e) {}
+        }
+
+        const delta = currentTranslate - dragStartTranslate;
+        const threshold = Math.max(30, getStep() * 0.18);
+        const maxIndex = getMaxIndex();
+
+        if (delta <= -threshold && index < maxIndex) {
+            index += 1;
+        } else if (delta >= threshold && index > 0) {
+            index -= 1;
+        }
+
+        applyPosition();
+        startAutoplay();
+    }
+
+    carousel.addEventListener('pointerdown', onPointerDown);
+    carousel.addEventListener('pointermove', onPointerMove);
+    carousel.addEventListener('pointerup', onPointerUp);
+    carousel.addEventListener('pointercancel', onPointerUp);
+    carousel.addEventListener('pointerleave', onPointerUp);
+
+    // Avoid accidental click on links/buttons right after drag
+    track.addEventListener('click', function(event) {
+        if (suppressClick) {
+            event.preventDefault();
+            event.stopPropagation();
+            suppressClick = false;
+        }
+    }, true);
 
     applyPosition();
     startAutoplay();

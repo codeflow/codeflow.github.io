@@ -165,6 +165,16 @@
               "type": "file",
               "html": "content/os.md/th959179/en/3cdn2afxb0nq.html",
               "children": []
+            },
+            {
+              "path": "OS/Threads and Concurrency/Thread Creation and Management",
+              "i18n": {
+                "en": "Thread Creation and Management"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/th959179/en/cpxhbjsscmun.html",
+              "children": []
             }
           ]
         }

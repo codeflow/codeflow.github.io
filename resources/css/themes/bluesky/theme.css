@@ -13,6 +13,8 @@
     width: 100%;
     position: relative;
     padding: 0.25rem 0;
+    touch-action: pan-y;
+    cursor: grab;
 }
 
 .latest-posts-track {
@@ -115,6 +117,39 @@
 .latest-post-carousel-btn.is-disabled {
     opacity: 0.35;
     cursor: not-allowed;
+}
+
+.latest-posts-carousel.is-dragging {
+    cursor: grabbing;
+}
+
+.latest-posts-carousel.is-dragging .latest-posts-track {
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    .latest-posts-carousel {
+        padding: 0.25rem;
+        box-sizing: border-box;
+    }
+
+    .latest-posts-track {
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .latest-post-card {
+        flex: 0 0 calc(100% - 0.25rem);
+        width: calc(100% - 0.25rem);
+        min-width: calc(100% - 0.25rem);
+        max-width: calc(100% - 0.25rem);
+    }
+
+    .latest-post-card__title,
+    .latest-post-card__description {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
 }
 /* RichFaces BlueSky Theme - Fiel ao original
  * Baseado em blueSky.skin.properties e skinning.ecss do RichFaces 4.0
