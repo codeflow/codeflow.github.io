@@ -155,6 +155,16 @@
               "type": "file",
               "html": "content/os.md/ge153493/en/hikgyz1397553849.html",
               "children": []
+            },
+            {
+              "path": "OS/Threads and Concurrency/Threading Models",
+              "i18n": {
+                "en": "Threading Models"
+              },
+              "icon": "📖",
+              "type": "file",
+              "html": "content/os.md/th959179/en/3cdn2afxb0nq.html",
+              "children": []
             }
           ]
         }

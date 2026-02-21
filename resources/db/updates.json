@@ -1,7 +1,11 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2025-02-20",
+  "lastUpdated": "2026-02-21",
   "updates": [
+    {
+      "title": "OS - Threading Models",
+      "description": "Complete documentation on threading models, including many-to-one, one-to-one, and many-to-many mappings, model trade-offs, scheduling behavior, and practical runtime mapping examples."
+    },
     {
       "title": "OS - Thread Concepts",
       "description": "Complete documentation on thread concepts, thread vs process, thread lifecycle, thread models (many-to-one, one-to-one, many-to-many), user threads, kernel threads, thread synchronization, thread safety, and thread pools."
