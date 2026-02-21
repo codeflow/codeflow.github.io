@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2025-02-20",
+  "lastUpdated": "2026-02-21",
   "statistics": [
     {
       "technology": "OS",
@@ -21,10 +21,10 @@
     {
       "technology": "OS",
       "category": "Threads and Concurrency",
-      "availableTopics": 1,
+      "availableTopics": 2,
       "totalSubtopics": 5,
-      "completedSubtopics": 1,
-      "percentage": 20
+      "completedSubtopics": 2,
+      "percentage": 40
     }
   ]
 }

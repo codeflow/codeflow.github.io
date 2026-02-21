@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../../resources/js/redirect-to-index.js"></script>
+    <link rel="stylesheet" href="../../../../resources/css/themes/bluesky/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.js"></script>
+    <script>
+        // copyCode: used by code block copy buttons.
+        // When the page is loaded inside index.html (dynamically), window.copyCode is already
+        // defined globally there. This definition is a fallback for standalone page access.
+        if (!window.copyCode) {
+            window.copyCode = function(button) {
+                var wrapper = button.closest('.code-block-wrapper');
+                if (!wrapper) return;
+                var codeEl = wrapper.querySelector('code');
+                if (!codeEl) return;
+                var text = codeEl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        var orig = button.textContent;
+                        button.textContent = '✔ Copied!';
+                        setTimeout(function() { button.textContent = orig; }, 2000);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    try { document.execCommand('copy'); } catch(e) {}
+                    document.body.removeChild(ta);
+                    var orig = button.textContent;
+                    button.textContent = '✔ Copied!';
+                    setTimeout(function() { button.textContent = orig; }, 2000);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h1>🔀 Threading Models</h1>
+
+        <!-- Page metadata -->
+        <div style="text-align: right; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
+            <span style="display: inline-flex; align-items: center;">🕐</span>
+            <span style="display: inline-flex; align-items: center;">2026-02-21 08:52:23</span>
+            <span style="display: inline-flex; align-items: center;">👨‍💻</span>
+            <a href="https://github.com/rafaelsantos" target="_blank" rel="noopener noreferrer" style="color: #0078D0; text-decoration: none; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center;">@rafaelsantos</a>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 About:</strong> Threading models define how user threads are mapped to kernel threads. This mapping directly affects parallelism, scheduling behavior, blocking characteristics, and performance in multi-threaded applications.
+        </div>
+
+        <h2>🟢 📚 What Are Threading Models?</h2>
+        <p>A threading model describes the relationship between user-level threads (managed by runtime libraries) and kernel-level threads (managed by the operating system). This mapping is one of the most important design decisions in concurrency because it determines how efficiently applications use CPU cores.</p>
+        <p>In practice, threading models answer questions such as:</p>
+        <ul>
+            <li>Can threads execute in parallel on multiple cores?</li>
+            <li>If one thread blocks in I/O, do the others continue running?</li>
+            <li>How much overhead exists for thread creation and context switching?</li>
+            <li>Who controls scheduling: runtime library, kernel, or both?</li>
+        </ul>
+
+        <h2>🟢 📚 Core Threading Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Mapping</th>
+                    <th>Parallelism</th>
+                    <th>Blocking Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Many-to-One</td>
+                    <td>Many user threads -> one kernel thread</td>
+                    <td>Limited (single kernel execution path)</td>
+                    <td>One blocking call can block the whole process</td>
+                </tr>
+                <tr>
+                    <td>One-to-One</td>
+                    <td>One user thread -> one kernel thread</td>
+                    <td>High (true multi-core execution)</td>
+                    <td>Blocking affects only that specific thread</td>
+                </tr>
+                <tr>
+                    <td>Many-to-Many</td>
+                    <td>Many user threads -> many kernel threads</td>
+                    <td>High with flexible balancing</td>
+                    <td>Blocking is isolated and managed by runtime + kernel</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🟡 📚 Many-to-One Model</h2>
+        <p>In this model, all user threads are multiplexed onto a single kernel thread. Thread management is very fast because most operations happen in user space, but the process cannot leverage multiple CPU cores for true parallel execution.</p>
+        <div class="highlight-box">
+            <ul>
+                <li><strong>Strength:</strong> low overhead for thread creation and switching.</li>
+                <li><strong>Weakness:</strong> a blocking system call can block all user threads.</li>
+                <li><strong>Use case:</strong> lightweight cooperative runtimes and constrained environments.</li>
+            </ul>
+        </div>
+
+        <h2>🟡 📚 One-to-One Model</h2>
+        <p>Each user thread maps to its own kernel thread. This is the most common model in modern systems because it enables real parallelism and robust handling of blocking operations, although it has higher overhead compared to pure user-level threading.</p>
+        <div class="highlight-box">
+            <ul>
+                <li><strong>Strength:</strong> excellent responsiveness and multi-core scalability.</li>
+                <li><strong>Weakness:</strong> higher memory and scheduling overhead.</li>
+                <li><strong>Use case:</strong> server workloads, desktop apps, and general-purpose systems.</li>
+            </ul>
+        </div>
+
+        <h2>🟡 📚 Many-to-Many Model</h2>
+        <p>Many-to-many combines user-level flexibility with kernel-level parallelism. The runtime scheduler maps many user threads onto a configurable pool of kernel threads, reducing overhead while keeping good scalability.</p>
+        <div class="highlight-box">
+            <ul>
+                <li><strong>Strength:</strong> balances performance and scalability.</li>
+                <li><strong>Weakness:</strong> implementation complexity in scheduler/runtime coordination.</li>
+                <li><strong>Use case:</strong> advanced runtimes and systems requiring adaptive scheduling.</li>
+            </ul>
+        </div>
+
+        <h2>🟡 🛠️ Practical Mapping Example</h2>
+        <p>The following pseudo-code demonstrates a simplified runtime scheduler for a many-to-many model where user threads are assigned to a worker pool of kernel threads.</p>
+
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">typedef struct {
+    int id;
+    int is_blocked;
+    void (*run)(void);
+} user_thread_t;
+
+typedef struct {
+    int kid; // kernel thread id
+    user_thread_t* current;
+} kernel_worker_t;
+
+void scheduler_loop(kernel_worker_t workers[], int worker_count, user_thread_t queue[], int queue_size) {
+    int next = 0;
+    while (next < queue_size) {
+        for (int w = 0; w < worker_count && next < queue_size; w++) {
+            if (workers[w].current == NULL || workers[w].current->is_blocked) {
+                workers[w].current = &queue[next++];
+                workers[w].current->run();
+            }
+        }
+    }
+}</code></pre>
+        </div>
+
+        <h3>Code Breakdown</h3>
+
+        <h4>Thread and Worker Structures</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">typedef struct {
+    int id;
+    int is_blocked;
+    void (*run)(void);
+} user_thread_t;
+
+typedef struct {
+    int kid;
+    user_thread_t* current;
+} kernel_worker_t;</code></pre>
+        </div>
+        <p><code>user_thread_t</code> represents lightweight user tasks managed by the runtime, while <code>kernel_worker_t</code> represents OS-visible execution units. This separation models many user threads sharing a smaller kernel thread pool.</p>
+
+        <h4>Scheduling Loop</h4>
+        <div class="code-block-wrapper">
+            <div class="code-block-header">
+                <span class="language-label">C</span>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-c">while (next < queue_size) {
+    for (int w = 0; w < worker_count && next < queue_size; w++) {
+        if (workers[w].current == NULL || workers[w].current->is_blocked) {
+            workers[w].current = &queue[next++];
+            workers[w].current->run();
+        }
+    }
+}</code></pre>
+        </div>
+        <p>The loop selects available workers and binds them to pending user threads. If a worker is idle, or its current task is blocked, the runtime dispatches a new user thread, enabling throughput with controlled kernel thread count.</p>
+
+        <h2>🔴 📚 Choosing the Right Model</h2>
+        <p>Model selection depends on workload and platform constraints:</p>
+        <ul>
+            <li><strong>CPU-bound parallelism:</strong> prefer one-to-one or many-to-many.</li>
+            <li><strong>Massive lightweight tasks:</strong> many-to-many can reduce overhead.</li>
+            <li><strong>Simple runtime with low complexity:</strong> one-to-one is often easiest.</li>
+            <li><strong>I/O-heavy services:</strong> avoid many-to-one due to blocking propagation risk.</li>
+        </ul>
+
+        <h2>📚 Summary</h2>
+        <div class="highlight-box">
+            <ul>
+                <li><strong>Threading models</strong> define user-to-kernel thread mapping behavior.</li>
+                <li><strong>Many-to-One</strong> is lightweight but weak for blocking and multi-core use.</li>
+                <li><strong>One-to-One</strong> is robust and parallel, but more resource-intensive.</li>
+                <li><strong>Many-to-Many</strong> offers flexibility and scalability with added complexity.</li>
+                <li>Choosing the model should align with workload, latency goals, and runtime design.</li>
+            </ul>
+        </div>
+
+        <h2>📚 References</h2>
+        <div class="highlight-box">
+            <ul style="margin: 0; padding-left: 1.5rem; list-style: none;">
+                <li>🔗 <a href="https://en.wikipedia.org/wiki/Thread_(computing)" target="_blank" rel="noopener noreferrer">Thread (Computing) - Wikipedia</a></li>
+                <li>🔗 <a href="https://www.geeksforgeeks.org/threading-models-in-process-management/" target="_blank" rel="noopener noreferrer">Threading Models in Process Management - GeeksforGeeks</a></li>
+                <li>🔗 <a href="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/4_Threads.html" target="_blank" rel="noopener noreferrer">Operating Systems: Threads - UIC Notes</a></li>
+                <li>🔗 <a href="https://www.scaler.com/topics/operating-system/thread-models-in-operating-system/" target="_blank" rel="noopener noreferrer">Thread Models in Operating System - Scaler Topics</a></li>
+            </ul>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div class="giscus-container">
+            <h2>💬 Comments</h2>
+            <div id="giscus-container"></div>
+        </div>
+    </div>
+    <script>
+        // Initialize highlight.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                    if (typeof hljs.lineNumbersBlock !== 'undefined') {
+                        hljs.lineNumbersBlock(block);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
