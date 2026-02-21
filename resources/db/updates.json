@@ -41,6 +41,22 @@
     {
       "title": "OS - Process Concepts",
       "description": "Complete documentation on process vs thread, process vs program, PCB (Process Control Block), process states, process attributes, process hierarchy, and process lifecycle."
+    },
+    {
+      "title": "OS - Operating System Architecture",
+      "description": "Complete documentation on kernel space vs user space, system calls, libraries, drivers, OS layers, memory protection, interrupts, and file system architecture."
+    },
+    {
+      "title": "OS - Types of Operating Systems",
+      "description": "Complete documentation on monolithic OS, microkernel, exokernel, hybrid, real-time OS, embedded, and distributed operating systems."
+    },
+    {
+      "title": "OS - History and Evolution",
+      "description": "Complete documentation on the evolution of operating systems, batch systems, time-sharing, multiprogrammed systems, and modern operating systems."
+    },
+    {
+      "title": "OS - Introduction and Basic Concepts",
+      "description": "Complete documentation on what is an operating system, main functions, interface between hardware and software, abstractions."
     }
   ]
 }
