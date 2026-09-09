@@ -784,3 +784,18 @@ body.cf-sheetOpen { overflow: hidden; }
   }
   .af-drawer .drExpand { display: none; }   /* já ocupa a tela toda */
 }
+
+/* ---------- Celular: cabeçalho de figura em linha corrida e barra de abas rolável ---------- */
+@media (max-width: 768px) {
+  /* título da figura em texto corrido: "— Figura 4" acompanha a última palavra em vez de cair sozinho à direita */
+  .cf-figure .figHdr { display: block; line-height: 1.35; }
+  .cf-figure .figHdr .figNum { white-space: nowrap; }
+  .cf-figure .figHdr .af-button.small { float: right; margin-left: 6px; }
+  /* abas do artigo: rolam na horizontal em vez de serem cortadas */
+  .af-tabBar {
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding: 0 4px;
+  }
+  .af-tabBar::-webkit-scrollbar { display: none; }
+  .af-tab { flex: none; padding-left: 9px; padding-right: 9px; }
+}
