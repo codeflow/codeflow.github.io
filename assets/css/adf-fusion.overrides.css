@@ -266,11 +266,13 @@ sup.cf-cite a:hover { text-decoration: underline; }
 /* Banner de abertura do artigo */
 .cf-hero {
   border: 1px solid #a9b8c7;
-  background: #eef3f8;
+  /* mesmo degradê e barra inferior do SVG, para o quadro continuar o banner quando a tela é mais larga que 880px */
+  background: linear-gradient(#f8fbfd, #dae6f2 calc(100% - 4px), #3d6791 calc(100% - 4px));
   margin: 0 0 10px;
   line-height: 0;
+  text-align: center;
 }
-.cf-hero svg { display: block; width: 100%; height: auto; }
+.cf-hero svg { display: inline-block; vertical-align: top; width: 100%; max-width: 880px; height: auto; }
 
 /* ---------- Fórmulas ---------- */
 .cf-formula {
