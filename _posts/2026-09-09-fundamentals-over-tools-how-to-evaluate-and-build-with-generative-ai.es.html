@@ -11,7 +11,6 @@ order: 1                     # position in the Content Navigator (within the cat
 tags: [generative-ai, llm, machine-learning, deep-learning, model-selection, trade-offs, llm-engineering, rag, fine-tuning, latency]
 reading_time: 12
 level: Introductory
-series_prev: { title: "¿Qué es la IA generativa, y por qué solo ahora se volvió viable?", url: "/es/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
 series_next: { title: "Cuando el código deja de ser el diferencial: el papel del desarrollador con IA generativa", url: "/es/articles/when-code-stops-being-the-differentiator-the-developers-role-with-generative-ai/" }
 excerpt: "Una caja de prompt es la superficie de la IA generativa, no su sustancia. Este artículo separa las capas — aplicación, familia de modelo, machine learning y deep learning —, explica el mecanismo que hace que un modelo genere y convierte la elección de modelo en una decisión de ingeniería con criterios: calidad, costo, latencia, especialización y dependencia del proveedor. Cierra con lo que cambia cuando el modelo pasa a ser un componente de un sistema que usted diseña, y cómo unos criterios estables permiten absorber un ecosistema en movimiento sin empezar de cero…"
 image: "/assets/social/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai.es.png"
@@ -170,7 +169,7 @@ history:
     nuevas coherentes con esos patrones. Para texto, la receta es concreta: el modelo se entrena para predecir el siguiente
     token dados los anteriores, sobre un corpus enorme; en la inferencia, un prompt fija el contexto y el modelo
     <b>muestrea</b> un token a la vez, realimentando cada elección como contexto para la siguiente.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> El
-    artículo anterior de esta serie presentó esa factorización; aquí el interés está en lo que implica para el ingeniero.
+    artículo sobre qué es la IA generativa, más adelante en esta serie, presenta esa factorización en detalle; aquí el interés está en lo que implica para el ingeniero.
   </p>
   <div class="cf-formula">
     <span class="eqNum">(1)</span>

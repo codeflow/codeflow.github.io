@@ -9,7 +9,6 @@ order: 1                     # position in the Content Navigator (within the cat
 tags: [generative-ai, llm, machine-learning, deep-learning, model-selection, trade-offs, llm-engineering, rag, fine-tuning, latency]
 reading_time: 12
 level: Introductory
-series_prev: { title: "What is Generative AI, and why did it only become viable now?", url: "/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
 series_next: { title: "When code stops being the differentiator: the developer's role with generative AI", url: "/articles/when-code-stops-being-the-differentiator-the-developers-role-with-generative-ai/" }
 excerpt: "A prompt box is the surface of generative AI, not its substance. This article separates the layers — application, model family, machine learning and deep learning — explains the mechanism that makes a model generate, and turns model choice into an engineering decision with criteria: quality, cost, latency, specialization and lock-in. It closes with what changes when the model becomes one component of a system you design, and how stable criteria let you absorb a fast-moving ecosystem without starting over…"
 image: "/assets/social/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai.en.png"
@@ -166,8 +165,8 @@ history:
     A generative model is a system trained to learn the patterns of a data distribution and to produce new outputs consistent
     with those patterns. For text the recipe is concrete: the model is trained to predict the next token given the previous
     ones, over an enormous corpus; at inference, a prompt sets the context and the model <b>samples</b> one token at a time,
-    feeding each choice back as context for the next.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> The previous article of this series introduced that
-    factorization; here the interest is in what it implies for the engineer.
+    feeding each choice back as context for the next.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> The article on what generative AI is, further along in this series, introduces that
+    factorization in detail; here the interest is in what it implies for the engineer.
   </p>
   <div class="cf-formula">
     <span class="eqNum">(1)</span>

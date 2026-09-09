@@ -11,7 +11,6 @@ order: 1                     # position in the Content Navigator (within the cat
 tags: [generative-ai, llm, machine-learning, deep-learning, model-selection, trade-offs, llm-engineering, rag, fine-tuning, latency]
 reading_time: 12
 level: Introductory
-series_prev: { title: "O que é IA generativa, e por que ela só se tornou viável agora?", url: "/pt-BR/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
 series_next: { title: "Quando o código deixa de ser o diferencial: o papel do desenvolvedor com IA generativa", url: "/pt-BR/articles/when-code-stops-being-the-differentiator-the-developers-role-with-generative-ai/" }
 excerpt: "Uma caixa de prompt é a superfície da IA generativa, não a substância. Este artigo separa as camadas — aplicação, família de modelo, machine learning e deep learning —, explica o mecanismo que faz um modelo gerar e transforma a escolha de modelo numa decisão de engenharia com critérios: qualidade, custo, latência, especialização e dependência de fornecedor. Fecha com o que muda quando o modelo vira um componente de um sistema que você projeta, e como critérios estáveis permitem absorver um ecossistema em movimento sem recomeçar do zero…"
 image: "/assets/social/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai.pt-BR.png"
@@ -168,8 +167,8 @@ history:
     Um modelo generativo é um sistema treinado para aprender os padrões de uma distribuição de dados e produzir saídas novas
     coerentes com esses padrões. Para texto, a receita é concreta: o modelo é treinado para prever o próximo token dados os
     anteriores, sobre um corpus enorme; na inferência, um prompt define o contexto e o modelo <b>amostra</b> um token por vez,
-    realimentando cada escolha como contexto para a próxima.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> O artigo anterior desta série apresentou essa
-    fatoração; aqui o interesse está no que ela implica para o engenheiro.
+    realimentando cada escolha como contexto para a próxima.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> O artigo sobre o que é IA generativa, mais adiante nesta série, apresenta essa
+    fatoração em detalhe; aqui o interesse está no que ela implica para o engenheiro.
   </p>
   <div class="cf-formula">
     <span class="eqNum">(1)</span>
