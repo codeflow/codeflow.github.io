@@ -108,7 +108,7 @@ ring.paste(0, mask=shape)                                # subtract the hexagon 
 ring = ring.filter(ImageFilter.GaussianBlur(12))         # soft falloff outwards: light, not a line
 ring.paste(0, mask=shape.filter(ImageFilter.MinFilter(9)))  # keep the inside of the hexagon dark after the blur
 ring = ring.point(lambda v: min(255, int(v * 1.5)))       # brighten the core so the glow still reads after the blur
-glow = Image.new("RGBA", (S, S), (250, 253, 255, 0))       # near-white light
+glow = Image.new("RGBA", (S, S), (190, 220, 255, 0))       # light blue, in the branding palette
 glow.putalpha(ring)
 glow.save(os.path.join(ROOT, "assets", "logo-glow.png"), optimize=True)
 print("logo glow written (%dx%d, ring hugging the outer contour)" % (S, S))

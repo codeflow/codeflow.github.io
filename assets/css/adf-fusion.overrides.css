@@ -33,7 +33,7 @@
   .cf-logoHalo::before { opacity: 0; animation: cfLogoHalo 7s ease-in-out infinite; }
   @keyframes cfLogoHalo {
     0%, 58%   { opacity: 0; }
-    72%, 82%  { opacity: .85; }
+    72%, 82%  { opacity: .7; }
     95%, 100% { opacity: 0; }
   }
 }
