@@ -29,12 +29,12 @@
   pointer-events: none;
 }
 @media (prefers-reduced-motion: no-preference) {
-  /* ciclo de 7s: logo normal por ~4s, o brilho acende (1s), fica aceso (0,7s), apaga (0,9s) e repete */
+  /* ciclo de 7s: logo normal por ~4s, o brilho acende (1,1s) e, assim que chega ao máximo, já começa a apagar (1,3s) */
   .cf-logoHalo::before { opacity: 0; animation: cfLogoHalo 7s ease-in-out infinite; }
   @keyframes cfLogoHalo {
     0%, 58%   { opacity: 0; }
-    72%, 82%  { opacity: .7; }
-    95%, 100% { opacity: 0; }
+    74%       { opacity: .7; }
+    93%, 100% { opacity: 0; }
   }
 }
 .af-branding .cf-brandName {
