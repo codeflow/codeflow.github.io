@@ -6,6 +6,8 @@ Codeflow — validate that a post is fully wired into the site.
   python3 scripts/validate_post.py --key <slug> --lang <lang> [--site http://localhost:4000] [--build]
 
 Checks (each prints PASS/FAIL/INFO):
+  SEO       meta description ≤160 chars, canonical, hreflang (own language + x-default), a 1200x630 social card as
+            og:image, h2 section headings and a TechArticle JSON-LD node
   TREE      the Content Navigator (rendered by the site's own JS in headless Chrome) has the post link under its
             category and topic
   SEARCH    /search.json has the post, and a search with a word of its title finds it (same rule as the site JS)
@@ -157,6 +159,42 @@ def main():
     sc = ", ".join(f"{k}={v:.2f}" for k, v in sorted(scores.items(), key=lambda kv: -kv[1])[:3])
     ok = html_lang == a.lang and a.lang in combo and i18n_ok and det == a.lang
     rep("LANG", ok, f"html lang={html_lang}; combobox={'/'.join(combo)}; text reads as {det} ({sc}){parity}")
+
+    # ---------- SEO: what every post must carry for search engines and social networks ----------
+    head = page_html.split("</head>")[0]
+    desc = re.search(r'<meta name="description" content="([^"]*)"', head)
+    dlen = len(htmlmod.unescape(desc.group(1))) if desc else 0
+    canon = re.search(r'<link rel="canonical" href="([^"]+)"', head)
+    alts = re.findall(r'<link rel="alternate" hreflang="([^"]+)"', head)
+    ogimg = re.search(r'<meta property="og:image" content="([^"]+)"', head)
+    img_ok, img_msg = False, "no og:image"
+    if ogimg:
+        rel = re.sub(r"^https?://[^/]+", "", ogimg.group(1))
+        local = os.path.join(ROOT, rel.lstrip("/"))
+        if rel.startswith("/assets/social/") and os.path.exists(local):
+            try:
+                from PIL import Image
+                w, h = Image.open(local).size; img_ok = (w, h) == (1200, 630); img_msg = f"social card {os.path.basename(local)} {w}x{h}"
+            except Exception: img_ok = True; img_msg = f"social card {os.path.basename(local)}"
+        elif rel.startswith("/assets/social/"): img_msg = f"og:image {rel} missing — run scripts/make_social_card.py"
+        else: img_msg = f"og:image is the default card ({rel}) — run scripts/make_social_card.py --key {a.key} --lang {a.lang}"
+    body_art = art.group(1) if art else ""
+    h2s = re.findall(r'<h2 class="af-subHeader" id="sec\d+">', body_art)
+    stray = re.findall(r'<div class="af-subHeader" id="sec\d+">', body_art)
+    jsonld_ok = False
+    m = re.search(r'<script type="application/ld\+json">(.*?)</script>', head, flags=re.S)
+    if m:
+        try: jsonld_ok = any(n.get("@type") == "TechArticle" for n in json.loads(m.group(1)).get("@graph", []))
+        except Exception: jsonld_ok = False
+    problems = []
+    if not desc or dlen == 0: problems.append("no meta description")
+    elif dlen > 160: problems.append(f"description has {dlen} chars (max 160)")
+    if not canon: problems.append("no canonical")
+    if a.lang not in alts or "x-default" not in alts: problems.append(f"hreflang incomplete ({'/'.join(alts) or 'none'})")
+    if not img_ok: problems.append(img_msg)
+    if len(h2s) < 5 or stray: problems.append(f"{len(h2s)} h2 section heading(s), {len(stray)} still <div> — sections must be <h2 class=\"af-subHeader\" id=\"secN\">")
+    if not jsonld_ok: problems.append("JSON-LD without a TechArticle node")
+    rep("SEO", not problems, ("; ".join(problems)) if problems else f"description {dlen} chars; canonical; hreflang {'/'.join(alts)}; {img_msg}; {len(h2s)} h2 sections; TechArticle JSON-LD")
 
     print_summary(results)
     if server: server.terminate()
