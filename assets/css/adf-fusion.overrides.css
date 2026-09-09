@@ -10,6 +10,15 @@
   height: 20px;
   vertical-align: middle;
   margin-right: 6px;
+  filter: drop-shadow(0 0 2px rgba(190, 220, 255, .45));   /* halo discreto e constante */
+}
+/* brilho suave pulsando ao redor do logo; desligado para quem prefere menos movimento */
+@media (prefers-reduced-motion: no-preference) {
+  .cf-brandLogo { animation: cfLogoGlow 4.5s ease-in-out infinite; }
+  @keyframes cfLogoGlow {
+    0%, 100% { filter: drop-shadow(0 0 1.5px rgba(190, 220, 255, .35)); }
+    50%      { filter: drop-shadow(0 0 4px rgba(205, 230, 255, .8)) drop-shadow(0 0 9px rgba(130, 185, 240, .35)); }
+  }
 }
 .af-branding .cf-brandName {
   font: bold 14px Tahoma, Verdana, sans-serif;

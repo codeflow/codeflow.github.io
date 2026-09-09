@@ -1,0 +1,29 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{%- assign latest = site.posts | first %}
+{%- for l in site.data.i18n %}
+  {%- if l[0] == site.lang %}{% assign hu = "/" %}{% else %}{% assign hu = "/" | append: l[0] | append: "/" %}{% endif %}
+  <url>
+    <loc>{{ hu | absolute_url }}</loc>
+    <lastmod>{{ latest.date | default: site.time | date_to_xmlschema }}</lastmod>
+    {%- for m in site.data.i18n %}{% if m[0] == site.lang %}{% assign mu = "/" %}{% else %}{% assign mu = "/" | append: m[0] | append: "/" %}{% endif %}
+    <xhtml:link rel="alternate" hreflang="{{ m[0] }}" href="{{ mu | absolute_url }}"/>{% endfor %}
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}"/>
+  </url>
+{%- endfor %}
+{%- for post in site.posts %}{% if post.stub != true %}
+  {%- assign pkey = post.key | default: post.slug %}
+  <url>
+    <loc>{{ post.url | absolute_url }}</loc>
+    <lastmod>{{ post.updated | default: post.date | date_to_xmlschema }}</lastmod>
+    {%- for p in site.posts %}{% assign k = p.key | default: p.slug %}{% if k == pkey and p.stub != true %}
+    <xhtml:link rel="alternate" hreflang="{{ p.lang | default: site.lang }}" href="{{ p.url | absolute_url }}"/>
+    {%- assign plang = p.lang | default: site.lang %}{% if plang == site.lang %}
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ p.url | absolute_url }}"/>{% endif %}{% endif %}{% endfor %}
+  </url>
+{%- endif %}{% endfor %}
+</urlset>

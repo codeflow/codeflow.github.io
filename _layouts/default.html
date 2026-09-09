@@ -7,8 +7,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }} — {{ t.ui.footer_tagline }}{% endif %}</title>
-{% if page.description %}<meta name="description" content="{{ page.description | strip_html | strip_newlines | escape }}">{% endif %}
-<link rel="icon" type="image/png" href="{{ '/assets/codeflow.png' | relative_url }}">
+{% include seo.html %}
+<meta name="theme-color" content="{{ site.theme_color }}">
+<meta name="color-scheme" content="light">
+<meta name="application-name" content="{{ site.title }}">
+<meta name="apple-mobile-web-app-title" content="{{ site.title }}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/icons/apple-touch-icon.png' | relative_url }}">
 {%- assign v = site.time | date: "%Y%m%d%H%M%S" %}
 <link rel="stylesheet" href="{{ '/assets/css/adf-fusion.css' | relative_url }}?v={{ v }}">
 <link rel="stylesheet" href="{{ '/assets/css/adf-fusion.overrides.css' | relative_url }}?v={{ v }}">
@@ -94,6 +104,7 @@ window.CODEFLOW = {
 <script src="{{ '/assets/js/shell.js' | relative_url }}?v={{ v }}"></script>
 {% if page.layout == "post" %}<script src="{{ '/assets/js/post.js' | relative_url }}?v={{ v }}"></script>{% endif %}
 {% for s in page.scripts %}<script src="{{ s | relative_url }}"></script>{% endfor %}
+<script>if ('serviceWorker' in navigator) { window.addEventListener('load', function () { navigator.serviceWorker.register('{{ '/service-worker.js' | relative_url }}'); }); }</script>
 
 </body>
 </html>
