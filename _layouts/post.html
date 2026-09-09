@@ -84,7 +84,7 @@ layout: default
           {%- if page.key_concepts %}
           <div class="cf-chipRow" style="margin:2px 0 8px;">
             <span class="rowLabel">{{ t.ui.key_concepts }}</span>
-            {%- for c in page.key_concepts %}<span class="cf-label">{{ c }}</span>{% endfor %}
+            {%- for c in page.key_concepts %}<span class="cf-badge">{{ c }}</span>{% endfor %}
           </div>
           {%- endif %}
           <p class="tip">{{ t.ui.click_tag }}</p>

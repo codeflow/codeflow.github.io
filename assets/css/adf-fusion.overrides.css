@@ -190,6 +190,23 @@ sup.cf-cite a:hover { text-decoration: underline; }
   margin-left: auto;
   align-self: flex-start;
 }
+/* Badge Fusion neutro (tipo de referência, conceitos-chave): pílula com o degradê de rótulo, texto de rótulo */
+.cf-badge,
+.cf-refList .refType.cf-label {
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 8px;
+  border: 1px solid #8098b2;
+  border-radius: 9px;
+  background: linear-gradient(#fefefe, #edf1f6 45%, #d9e2ec);
+  color: #3e4b58;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 14px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
 .cf-refList cite { font-style: italic; }
 .cf-refList .refSrc { color: #6b7a89; }
 
