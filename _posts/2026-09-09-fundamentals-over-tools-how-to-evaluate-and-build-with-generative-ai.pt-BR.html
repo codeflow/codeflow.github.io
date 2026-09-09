@@ -1,0 +1,559 @@
+---
+title: "Fundamentos antes de ferramentas: como avaliar e construir com IA generativa"
+date: 2026-09-09 08:00:00 -0300
+lang: pt-BR
+key: fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai
+permalink: /pt-BR/articles/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai/
+category: "Artificial Intelligence"
+section: "Generative AI"
+topic: "Generative AI"
+tags: [generative-ai, llm, machine-learning, deep-learning, model-selection, trade-offs, llm-engineering, rag, fine-tuning, latency]
+reading_time: 12
+level: Introductory
+series_prev: { title: "O que é IA generativa, e por que ela só se tornou viável agora?", url: "/pt-BR/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
+excerpt: "Uma caixa de prompt é a superfície da IA generativa, não a substância. Este artigo separa as camadas — aplicação, família de modelo, machine learning e deep learning —, explica o mecanismo que faz um modelo gerar e transforma a escolha de modelo numa decisão de engenharia com critérios: qualidade, custo, latência, especialização e dependência de fornecedor. Fecha com o que muda quando o modelo vira um componente de um sistema que você projeta, e como critérios estáveis permitem absorver um ecossistema em movimento sem recomeçar do zero…"
+description: "Por que entender os fundamentos da IA generativa vale mais do que a familiaridade com ferramentas: as camadas de LLMs a deep learning, o mecanismo generativo, critérios de engenharia e trade-offs para escolher modelos, e como construir soluções reais com o modelo como um componente."
+references_count: 12
+key_concepts: ["Camadas: aplicação, modelo, campo", "Distribuição aprendida", "Critérios de engenharia", "Trade-off qualidade-custo-latência", "Modelo como componente"]
+version: 1
+history:
+  - { when: "09/09/2026 08:00", what: "Publicação inicial do artigo (tradução da versão em inglês)" }
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    O que você vai encontrar neste artigo
+  </div>
+  <ul>
+    <li>Por que o <b>conhecimento conceitual</b> dura mais do que a familiaridade com um produto, e do que ele protege quando o ecossistema muda.</li>
+    <li>As camadas — <b>aplicação</b>, <b>família de modelo</b>, <b>machine learning</b> e <b>deep learning</b> — e por que separá-las melhora toda decisão técnica.</li>
+    <li>O <b>mecanismo</b> por trás dos modelos generativos e onde cada etapa do pipeline costuma quebrar.</li>
+    <li><b>Critérios de engenharia</b> para comparar arquiteturas, os trade-offs entre qualidade, custo, velocidade e especialização, e um pequeno script de pontuação.</li>
+    <li>O que muda quando o modelo vira <b>um componente</b> de um sistema que você projeta, e como acompanhar um campo em movimento rápido sem recomeçar do zero.</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+<svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Banner do artigo: de entender o mecanismo, passando por comparar com critérios, até construir a solução — tornar-se criador e não apenas usuário">
+<defs><linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient><linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfHeroArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker></defs>
+<rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+<text x="26" y="26" font-size="9" fill="#6b90b6" letter-spacing="1.4">CODEFLOW · INTELIGÊNCIA ARTIFICIAL · IA GENERATIVA</text>
+<text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">Fundamentos antes de ferramentas</text>
+<text x="26" y="74" font-size="12" fill="#44566a">De digitar prompts numa caixa a projetar sistemas que têm um modelo como um componente</text>
+<g font-size="10" fill="#1a2836">
+<rect x="28" y="96" width="150" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="103" y="112" font-size="10" fill="#1a2836" text-anchor="middle">Entender o mecanismo</text>
+<rect x="188" y="96" width="150" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="263" y="112" font-size="10" fill="#1a2836" text-anchor="middle">Comparar com critérios</text>
+<rect x="348" y="96" width="150" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="423" y="112" font-size="10" fill="#1a2836" text-anchor="middle">Construir a solução</text>
+</g>
+<path d="M178 108 L188 108 M338 108 L348 108" stroke="#3d6791" stroke-width="1.4"/>
+<path d="M498 108 L540 108" stroke="#3d6791" stroke-width="1.6" marker-end="url(#cfHeroArr)"/>
+<rect x="546" y="94" width="180" height="28" rx="4" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="636" y="112" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Criador, não só usuário</text>
+<g font-size="9">
+<text x="800" y="22" font-size="9" fill="#5b6b7a" text-anchor="middle">três níveis</text>
+<rect x="750" y="32" width="100" height="18" rx="2" fill="#e8f0fa" stroke="#a9b8c7"/><text x="800" y="44" font-size="9" fill="#1a2836" text-anchor="middle">Aplicação</text>
+<rect x="750" y="64" width="100" height="18" rx="2" fill="#cfe2f7" stroke="#a9b8c7"/><text x="800" y="76" font-size="9" fill="#1a2836" text-anchor="middle">Família de modelo</text>
+<rect x="750" y="96" width="100" height="18" rx="2" fill="#ffffff" stroke="#a9b8c7"/><text x="800" y="108" font-size="9" fill="#1a2836" text-anchor="middle">Campo (ML / DL)</text>
+<path d="M800 50 L800 57" stroke="#5b6b7a" marker-end="url(#cfHeroArr)"/>
+<path d="M800 82 L800 89" stroke="#5b6b7a" marker-end="url(#cfHeroArr)"/>
+</g></svg>
+  </div>
+
+  <p class="lead">
+    Uma equipe adota um assistente de chat, obtém bons resultados por um mês e então o fornecedor troca o modelo, o preço ou
+    o limite de requisições. Ninguém na sala consegue dizer se a alternativa é melhor, pior ou apenas diferente, porque a
+    equipe aprendeu um produto, não um mecanismo. Essa lacuna é o assunto deste artigo: o que é preciso entender de IA
+    generativa para avaliar seus limites, escolher tecnologias com critério, evitar depender de uma única ferramenta e, em
+    algum momento, construir aplicações com um modelo dentro delas, em vez de apenas digitar na aplicação de outra pessoa.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec1">1. Fundamentos duram mais que ferramentas</div>
+  <p>
+    A IA generativa costuma ser conhecida por uma interface: uma caixa de texto, um complemento no editor, um botão que
+    redige um e-mail. A interface é conveniente e também enganosa, porque esconde a única coisa que se transfere entre
+    produtos: o mecanismo. Quem sabe <i>como</i> um modelo produz texto consegue prever onde ele vai falhar, decidir o que
+    conferir e ler um lançamento novo pelo que de fato mudou. Quem só sabe <i>quais</i> botões apertar recomeça toda vez que
+    os botões mudam de lugar.
+  </p>
+  <ul>
+    <li><b>Avaliar limitações.</b> Saber que um modelo amostra de uma distribuição aprendida explica por que ele pode ser
+      fluente e errado ao mesmo tempo, e por que uma frase mais confiante não é mais evidência.</li>
+    <li><b>Escolher com critério.</b> Entender a estrutura de custo da inferência transforma "qual modelo é o melhor?" em "qual
+      modelo é adequado para esta carga, este orçamento e esta régua de qualidade?".</li>
+    <li><b>Evitar dependência.</b> Quando você sabe o que o modelo faz e o que a sua aplicação faz, migrar para outro fornecedor
+      ou para um modelo hospedado por você é uma tarefa de engenharia, não uma reescrita.</li>
+  </ul>
+  <p>
+    Num ecossistema em que os nomes mudam a cada trimestre, o conhecimento conceitual é o ativo com a maior validade. O
+    restante deste artigo constrói esse conhecimento na ordem em que um engenheiro precisa dele: primeiro as camadas, depois
+    o mecanismo, depois os critérios, depois o sistema.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec2">2. Onde os LLMs se encaixam: IA generativa, machine learning e deep learning</div>
+  <p>
+    Os termos costumam ser usados como sinônimos, e essa é a primeira fonte de decisões superficiais. Eles são aninhados.
+    <b>Machine learning</b> é o campo dos programas que melhoram a partir de dados em vez de serem escritos regra por regra.
+    <b>Deep learning</b> é o subconjunto que usa redes neurais com muitas camadas para aprender representações diretamente
+    dos dados brutos.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup> <b>Modelos generativos</b> são modelos, em geral profundos, treinados para produzir
+    amostras novas que seguem os padrões dos dados de treinamento. <b>Grandes modelos de linguagem</b> (LLMs) são uma família
+    de modelos generativos, construída sobre a arquitetura Transformer e treinada com texto em escala enorme.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+    Um assistente de chat não é nenhuma dessas coisas: é uma <b>aplicação</b> construída em cima de um LLM.
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">Camadas aninhadas e os três níveis de uma decisão <span class="figNum">&mdash; Figura 1</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 250" width="860" height="250" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Camadas aninhadas de inteligência artificial até LLMs à esquerda; à direita, os três níveis de uma decisão: aplicação, família de modelo e campo">
+<defs><linearGradient id="gN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient><linearGradient id="gH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfArr1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker></defs>
+<rect x="0" y="0" width="860" height="250" fill="#ffffff"/>
+<rect x="16" y="16" width="470" height="218" rx="6" fill="#f7f9fc" stroke="#8fa6c0"/>
+<text x="28" y="34" font-size="10" font-weight="bold" fill="#15497e">Inteligência artificial</text>
+<rect x="32" y="48" width="438" height="170" rx="6" fill="#eef3f8" stroke="#8fa6c0"/>
+<text x="44" y="66" font-size="10" font-weight="bold" fill="#15497e">Machine learning</text>
+<rect x="48" y="80" width="406" height="122" rx="6" fill="#e4ecf5" stroke="#8fa6c0"/>
+<text x="60" y="98" font-size="10" font-weight="bold" fill="#15497e">Deep learning</text>
+<rect x="64" y="112" width="374" height="74" rx="6" fill="#d6e3f1" stroke="#8fa6c0"/>
+<text x="76" y="130" font-size="10" font-weight="bold" fill="#15497e">Modelos generativos</text>
+<rect x="80" y="144" width="200" height="30" rx="3" fill="url(#gH)" stroke="#2e5378"/><text x="180" y="163" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">LLMs (texto, código)</text>
+<rect x="292" y="144" width="134" height="30" rx="3" fill="#ffffff" stroke="#7d8fa2"/><text x="359" y="163" font-size="10" fill="#1a2836" text-anchor="middle">Difusão (imagens)</text>
+<text x="520" y="20" font-size="9" fill="#6b90b6" letter-spacing="1.2">OS TRÊS NÍVEIS DE UMA DECISÃO</text>
+<rect x="520" y="30" width="320" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="680.0" y="49.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Aplicação</text>
+<text x="680.0" y="62.5" font-size="9" fill="#5b6b7a" text-anchor="middle">chatbot, copiloto, assistente — o que o usuário toca</text>
+<rect x="520" y="104" width="320" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="680.0" y="123.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Família de modelo</text>
+<text x="680.0" y="136.5" font-size="9" fill="#5b6b7a" text-anchor="middle">um LLM, um modelo de difusão — o que você escolhe</text>
+<rect x="520" y="178" width="320" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="680.0" y="197.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Campo</text>
+<text x="680.0" y="210.5" font-size="9" fill="#5b6b7a" text-anchor="middle">ML / DL: dados, treino, representação — como ele aprende</text>
+<path d="M680 74 L680 104" stroke="#44566a" marker-end="url(#cfArr1)"/>
+<path d="M680 148 L680 178" stroke="#44566a" marker-end="url(#cfArr1)"/>
+<text x="688" y="93" font-size="9" fill="#5b6b7a">roda sobre</text>
+<text x="688" y="167" font-size="9" fill="#5b6b7a">é construída com</text>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figura 1</b> &mdash; À esquerda, cada termo é um subconjunto do que o envolve; LLMs e modelos de difusão são duas famílias dentro dos modelos generativos. À direita, o nível em que você está raciocinando ao usar um chatbot (aplicação), escolher um modelo (família de modelo) ou discutir treinamento e representação (campo). Boa parte da confusão vem de responder a uma pergunta no nível errado.</div>
+  </div>
+  <p>
+    A hierarquia importa porque cada nível responde a uma pergunta diferente. Quando alguém usa um chatbot, está interagindo
+    com uma aplicação: prompts, memória, ferramentas e interface são decisões de aplicação. Quando escolhe um LLM, está
+    escolhendo uma família de modelo: tamanho, licença, janela de contexto e custo são decisões de modelo. Quando discute
+    dados de treinamento, funções de perda ou como o significado é representado em vetores, está no nível de machine
+    learning e deep learning. Separar as camadas torna a análise técnica mais precisa e impede que um recurso de produto seja
+    confundido com uma propriedade do campo.
+  </p>
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:150px;">Nível</th>
+        <th>Pergunta que responde</th>
+        <th style="width:220px;">Decisão típica</th>
+        <th style="width:190px;">Exemplo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><b>Aplicação</b></td><td>O que o usuário recebe, e como o modelo é embrulhado?</td><td>Prompts, ferramentas, recuperação, fluxo de revisão, interface</td><td>Assistente de suporte, copiloto de código</td></tr>
+      <tr class="band"><td><b>Família de modelo</b></td><td>Que tipo de modelo, em que tamanho e a que custo?</td><td>LLM vs difusão, hospedado vs aberto, janela de contexto</td><td>Um LLM aberto de 70B, um modelo de fronteira hospedado</td></tr>
+      <tr><td><b>Modelagem generativa</b></td><td>Como ele produz algo novo?</td><td>Objetivo, estratégia de amostragem, temperatura</td><td>Previsão do próximo token, remoção de ruído</td></tr>
+      <tr class="band"><td><b>Campo de ML / DL</b></td><td>Como ele aprende, afinal?</td><td>Dados, perda, arquitetura, representação</td><td>Transformer, embeddings, descida de gradiente</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Tabela 1 &mdash; Os quatro níveis, a pergunta que cada um responde e as decisões que pertencem a ele. Uma pontuação de benchmark é um fato no nível do modelo; uma boa resposta no seu produto é um resultado no nível da aplicação.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup></p>
+
+  <div class="af-subHeader" id="sec3">3. O mecanismo por trás dos modelos generativos</div>
+  <p>
+    Um modelo generativo é um sistema treinado para aprender os padrões de uma distribuição de dados e produzir saídas novas
+    coerentes com esses padrões. Para texto, a receita é concreta: o modelo é treinado para prever o próximo token dados os
+    anteriores, sobre um corpus enorme; na inferência, um prompt define o contexto e o modelo <b>amostra</b> um token por vez,
+    realimentando cada escolha como contexto para a próxima.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> O artigo anterior desta série apresentou essa
+    fatoração; aqui o interesse está no que ela implica para o engenheiro.
+  </p>
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="var">p</span>(<span class="var">x</span><sub>1</sub>, &hellip;, <span class="var">x</span><sub><span class="var">T</span></sub> | <span class="var">prompt</span>)
+    <span class="op">=</span>
+    <span style="font-size:18px; vertical-align:-2px;">&prod;</span><sub><span class="var">t</span>=1</sub><sup><span class="var">T</span></sup>&nbsp;
+    <span class="var">p</span>(<span class="var">x</span><sub><span class="var">t</span></sub> | <span class="var">prompt</span>, <span class="var">x</span><sub>&lt;<span class="var">t</span></sub>)
+  </div>
+  <p>
+    Três consequências saem diretamente da equação (1). Primeira: o modelo não tem noção de verdade, apenas de
+    verossimilhança sob os dados que viu; uma continuação plausível é preferida a uma exata quando as duas diferem. Segunda:
+    tudo o que o modelo "sabe" fica congelado nos parâmetros no momento do treinamento; o que aconteceu depois precisa ser
+    fornecido pelo prompt. Terceira: a saída depende de um sorteio, então o mesmo prompt pode produzir respostas diferentes,
+    e os parâmetros de amostragem fazem parte da superfície de engenharia, não são um detalhe.
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">O pipeline, e onde cada etapa quebra <span class="figNum">&mdash; Figura 2</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Pipeline dos dados à saída e, sob cada etapa, a forma típica como ela quebra">
+<defs><linearGradient id="gN2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient><linearGradient id="gH2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfArr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker></defs>
+<rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
+<text x="16" y="74" font-size="10" font-weight="bold" fill="#15497e">Pipeline</text>
+<text x="16" y="184" font-size="10" font-weight="bold" fill="#8c1c13">Onde quebra</text>
+<rect x="104" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="172.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Dados</text>
+<text x="172.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">texto, código, imagens</text>
+<text x="172.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">em escala enorme</text>
+<rect x="258" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="326.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Treinamento</text>
+<text x="326.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">ajusta parâmetros</text>
+<text x="326.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">para reduzir o erro</text>
+<rect x="412" y="40" width="136" height="60" rx="3" fill="url(#gH2)" stroke="#2e5378"/>
+<text x="480.0" y="61.5" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Modelo</text>
+<text x="480.0" y="74.5" font-size="9" fill="#dbe6f2" text-anchor="middle">padrões aprendidos</text>
+<text x="480.0" y="86.5" font-size="9" fill="#dbe6f2" text-anchor="middle">em pesos congelados</text>
+<rect x="566" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="634.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Inferência</text>
+<text x="634.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">prompt + amostragem</text>
+<text x="634.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">um token por vez</text>
+<rect x="720" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="788.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Saída</text>
+<text x="788.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">um artefato novo</text>
+<text x="788.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">moldado pelo prompt</text>
+<path d="M240 70 L258 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<path d="M394 70 L412 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<path d="M548 70 L566 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<path d="M702 70 L720 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<rect x="104" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="172.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Cobertura e viés</text>
+<text x="172.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">só sabe o que</text>
+<text x="172.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">os dados continham</text>
+<rect x="258" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="326.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Sub/sobreajuste</text>
+<text x="326.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">decora exemplos</text>
+<text x="326.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">ou aprende pouco</text>
+<rect x="412" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="480.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Corte de conhecimento</text>
+<text x="480.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">o mundo muda,</text>
+<text x="480.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">os pesos não</text>
+<rect x="566" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="634.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Erros de amostragem</text>
+<text x="634.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">fluente, confiante</text>
+<text x="634.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">e errado</text>
+<rect x="720" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="788.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Sem revisão</text>
+<text x="788.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">publicado sem</text>
+<text x="788.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">ser inspecionado</text>
+<path d="M172 100 L172 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M326 100 L326 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M480 100 L480 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M634 100 L634 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M788 100 L788 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figura 2</b> &mdash; Os dados são coletados, o treinamento ajusta parâmetros para reduzir o erro de previsão, os pesos resultantes são congelados, a inferência amostra deles sob um prompt e a saída é um artefato novo. Cada etapa tem uma falha característica: cobertura e viés nos dados, sub ou sobreajuste no treinamento, corte de conhecimento no modelo, erros de amostragem na inferência e ausência de revisão no fim. Saber a etapa diz qual correção se aplica.</div>
+  </div>
+  <p>
+    É por isso que entender o mecanismo muda o modo de usar a ferramenta. Um modelo que responde bem num contexto e falha em
+    outro não está sendo caprichoso: o primeiro contexto se parecia com os dados de treinamento e o segundo não, ou o prompt
+    deixou de fora o que os pesos não poderiam conter. A resposta passa a ser uma decisão de projeto — recuperar o contexto
+    que falta, restringir o formato da saída, baixar a temperatura, adicionar uma etapa de validação — em vez de um pedido
+    mais bem redigido. A pergunta nunca é só "o que ele respondeu?", mas "de onde vem essa capacidade, e que limites vêm
+    junto com ela?".<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec4">4. Comparação de arquiteturas por critérios de engenharia</div>
+  <p>
+    Escolher um modelo por popularidade, ou pela impressão deixada por uma demonstração, é o equivalente, no nível da
+    aplicação, a escolher um banco de dados porque está na moda. Uma comparação madura olha para critérios de engenharia:
+    quanto o modelo custa para rodar na carga esperada, quanto tempo uma requisição leva, quão bem ele pode ser especializado,
+    que qualidade alcança na <i>sua</i> tarefa e quão bem se encaixa nas restrições do caso — privacidade, licença,
+    implantação, idioma.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup> Um modelo que lidera um benchmark público pode ser a escolha errada para produção
+    se for caro ou lento demais para o tráfego, e um modelo modesto pode ser o certo se a tarefa é estreita e o volume é alto.
+  </p>
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:130px;">Critério</th>
+        <th>O que medir</th>
+        <th style="width:130px;">Peso em produção</th>
+        <th style="width:250px;">Falha típica quando ignorado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><b>Qualidade</b></td><td>Acurácia numa amostra das <i>suas</i> requisições, julgada por pessoas ou por uma rubrica; não só benchmarks públicos</td><td><span class="st ok">Alto</span></td><td>Ótima demonstração, produto pouco confiável</td></tr>
+      <tr class="band"><td><b>Custo</b></td><td>Preço por milhão de tokens de entrada e saída, ou horas de GPU por requisição quando hospedado por você; multiplicado pelo volume real</td><td><span class="st ok">Alto</span></td><td>A conta cresce mais rápido que o uso</td></tr>
+      <tr><td><b>Latência</b></td><td>Tempo até o primeiro token e tokens por segundo, no percentil 95, sob carga concorrente</td><td><span class="st warn">Depende do uso</span></td><td>Recurso interativo que parece quebrado</td></tr>
+      <tr class="band"><td><b>Especialização</b></td><td>Ganho com dados do domínio via recuperação, ajuste fino ou adaptadores, contra o custo de mantê-los</td><td><span class="st warn">Depende da tarefa</span></td><td>Modelo geral que nunca aprende o seu vocabulário</td></tr>
+      <tr><td><b>Aderência e dependência</b></td><td>Licença, residência dos dados, janela de contexto, saída estruturada, facilidade de substituição</td><td><span class="st ok">Alto</span></td><td>A migração vira uma reescrita</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Tabela 2 &mdash; Critérios de engenharia para comparar modelos generativos. "O que medir" é deliberadamente sobre a sua carga de trabalho: um ranking público mede uma distribuição de requisições diferente da que o seu produto vai ver.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>,<a href="#" onclick="gotoRefs(); return false;">11</a>]</sup></p>
+  <div class="af-panelBox light" id="boxBench">
+    <div class="boxHdr" onclick="toggleBox('boxBench')"><span class="disc">&#9660;</span>Por que "o melhor no benchmark" não é "o melhor para você"</div>
+    <div class="boxBody">
+      Um benchmark é um conjunto fixo de perguntas com uma regra de pontuação, e um modelo que pontua bem nele aprendeu a
+      responder <i>àquela</i> distribuição. O seu produto faz perguntas diferentes, num registro de linguagem diferente, com
+      custos de falha diferentes. A avaliação mais útil é, portanto, uma amostra pequena e honesta de requisições reais com
+      respostas esperadas, executada de novo toda vez que um modelo candidato muda. Custa uma tarde para montar e é o único
+      número que prevê o que os usuários vão ver.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec5">5. Trade-offs: qualidade, custo, velocidade e especialização</div>
+  <p>
+    Não existe modelo ideal em todos os cenários; existem trade-offs. Aumentar a qualidade normalmente significa um modelo
+    maior, o que eleva o custo por requisição e o tempo de resposta. Buscar velocidade significa um modelo menor ou saídas
+    mais curtas, o que pode reduzir a precisão. Especializar uma solução para um domínio pode entregar mais valor do que o
+    modelo mais geral disponível, ao preço de manter a versão especializada atualizada. Os resultados de escala tornam o
+    formato dessas curvas explícito: a capacidade cresce suavemente com parâmetros, dados e computação, e a conta também.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>,<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">Perfis de trade-off de três arquétipos de modelo <span class="figNum">&mdash; Figura 3</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 250" width="860" height="250" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Perfis de trade-off de três arquétipos de modelo em qualidade, custo, latência, especialização e dependência de fornecedor">
+<rect x="0" y="0" width="860" height="250" fill="#ffffff"/>
+<text x="305" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Qualidade (geral)</text>
+<text x="427" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Custo por requisição</text>
+<text x="549" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Latência</text>
+<text x="671" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Especialização</text>
+<text x="793" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Dependência (lock-in)</text>
+<text x="16" y="78" font-size="10" font-weight="bold" fill="#1a2836">Modelo grande de uso geral (API)</text>
+<text x="16" y="92" font-size="9" fill="#5b6b7a">centenas de bilhões de parâmetros, hospedado</text>
+<rect x="250" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="250" y="72" width="104" height="12" rx="2" fill="#3d6791"/>
+<text x="250" y="100" font-size="9" fill="#5b6b7a">alto</text>
+<rect x="372" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="372" y="72" width="94" height="12" rx="2" fill="#3d6791"/>
+<text x="372" y="100" font-size="9" fill="#5b6b7a">alto</text>
+<rect x="494" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="494" y="72" width="82" height="12" rx="2" fill="#3d6791"/>
+<text x="494" y="100" font-size="9" fill="#5b6b7a">alto</text>
+<rect x="616" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="616" y="72" width="38" height="12" rx="2" fill="#3d6791"/>
+<text x="616" y="100" font-size="9" fill="#5b6b7a">baixo</text>
+<rect x="738" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="738" y="72" width="94" height="12" rx="2" fill="#3d6791"/>
+<text x="738" y="100" font-size="9" fill="#5b6b7a">alto</text>
+<text x="16" y="140" font-size="10" font-weight="bold" fill="#1a2836">Modelo aberto de porte médio (próprio)</text>
+<text x="16" y="154" font-size="9" fill="#5b6b7a">7–70B parâmetros, na sua infraestrutura</text>
+<rect x="250" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="250" y="134" width="82" height="12" rx="2" fill="#3d6791"/>
+<text x="250" y="162" font-size="9" fill="#5b6b7a">alto</text>
+<rect x="372" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="372" y="134" width="55" height="12" rx="2" fill="#3d6791"/>
+<text x="372" y="162" font-size="9" fill="#5b6b7a">médio</text>
+<rect x="494" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="494" y="134" width="55" height="12" rx="2" fill="#3d6791"/>
+<text x="494" y="162" font-size="9" fill="#5b6b7a">médio</text>
+<rect x="616" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="616" y="134" width="66" height="12" rx="2" fill="#3d6791"/>
+<text x="616" y="162" font-size="9" fill="#5b6b7a">médio</text>
+<rect x="738" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="738" y="134" width="33" height="12" rx="2" fill="#3d6791"/>
+<text x="738" y="162" font-size="9" fill="#5b6b7a">baixo</text>
+<text x="16" y="202" font-size="10" font-weight="bold" fill="#1a2836">Modelo pequeno especializado (ajustado)</text>
+<text x="16" y="216" font-size="9" fill="#5b6b7a">1–8B parâmetros, ajustado a um domínio</text>
+<rect x="250" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="250" y="196" width="61" height="12" rx="2" fill="#3d6791"/>
+<text x="250" y="224" font-size="9" fill="#5b6b7a">médio</text>
+<rect x="372" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="372" y="196" width="22" height="12" rx="2" fill="#3d6791"/>
+<text x="372" y="224" font-size="9" fill="#5b6b7a">baixo</text>
+<rect x="494" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="494" y="196" width="22" height="12" rx="2" fill="#3d6791"/>
+<text x="494" y="224" font-size="9" fill="#5b6b7a">baixo</text>
+<rect x="616" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="616" y="196" width="99" height="12" rx="2" fill="#3d6791"/>
+<text x="616" y="224" font-size="9" fill="#5b6b7a">alto</text>
+<rect x="738" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="738" y="196" width="22" height="12" rx="2" fill="#3d6791"/>
+<text x="738" y="224" font-size="9" fill="#5b6b7a">baixo</text>
+<text x="16" y="244" font-size="9" fill="#6b7a89">As barras mostram a posição relativa de cada arquétipo (mais longa = mais daquilo). Ilustrativo, não é um benchmark.</text>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figura 3</b> &mdash; Cada linha é um arquétipo, cada coluna um critério, e a barra mostra quanto daquele critério o arquétipo carrega. O modelo grande hospedado lidera em qualidade geral e também em custo, latência e dependência; o modelo pequeno ajustado é barato, rápido e forte no próprio domínio, mas mais fraco fora dele; o modelo aberto de porte médio fica entre os dois e compra independência. Posições ilustrativas, não medições.</div>
+  </div>
+  <p>
+    Duas fórmulas tornam concreto o lado do custo e da velocidade. O custo de uma requisição é o número de tokens de entrada
+    vezes o preço de entrada mais o número de tokens de saída vezes o preço de saída; tokens de saída costumam ser várias
+    vezes mais caros que os de entrada, então respostas prolixas custam mais do que prompts longos. A latência de uma
+    requisição é o tempo até o primeiro token mais o número de tokens de saída dividido pela taxa de geração; esse segundo
+    termo é o motivo de uma resposta de 500 tokens parecer lenta mesmo vinda de um modelo rápido.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">11</a>]</sup>
+  </p>
+  <div class="cf-formula">
+    <span class="eqNum">(2)</span>
+    <span class="var">custo</span> <span class="op">=</span> <span class="var">n</span><sub>entrada</sub> &middot; <span class="var">c</span><sub>entrada</sub> <span class="op">+</span> <span class="var">n</span><sub>saída</sub> &middot; <span class="var">c</span><sub>saída</sub>
+  </div>
+  <div class="cf-formula">
+    <span class="eqNum">(3)</span>
+    <span class="var">latência</span> <span class="op">&asymp;</span> <span class="var">t</span><sub>primeiro</sub> <span class="op">+</span> <span class="frac"><span class="num"><span class="var">n</span><sub>saída</sub></span><span class="den"><span class="var">r</span><sub>geração</sub></span></span>
+  </div>
+  <p>
+    O trabalho de engenharia consiste em equilibrar essas variáveis conforme o objetivo de negócio, o orçamento e a
+    experiência que o usuário espera. Um hábito útil é escrever as restrições antes de olhar para qualquer modelo: uma
+    latência máxima, um custo máximo por requisição, uma qualidade mínima na amostra de avaliação. Candidatos que violam uma
+    restrição estão fora, seja qual for a reputação; os restantes são ordenados por uma pontuação ponderada. O script abaixo
+    faz exatamente isso, com os pesos como uma entrada explícita e revisável.
+  </p>
+  <div class="cf-codeBox">
+    <div class="codeHdr">escolher_modelo.py <span class="lang">&mdash; Python</span><button class="af-button small" onclick="copyCode(this)">Copiar</button></div>
+    <pre><span class="k">from</span> dataclasses <span class="k">import</span> dataclass
+
+<span class="k">@dataclass</span>
+<span class="k">class</span> Candidato:
+    nome: str
+    qualidade: float      <span class="c"># 0–1, acurácia na SUA amostra de avaliação</span>
+    custo: float          <span class="c"># moeda por requisição, da equação (2)</span>
+    latencia_p95: float   <span class="c"># segundos, da equação (3) medida sob carga</span>
+    dependencia: float    <span class="c"># 0–1, quão difícil é substituir (licença, formatos, hospedagem)</span>
+
+<span class="k">def</span> ordenar(candidatos, custo_max, latencia_max, qualidade_min, w):
+    <span class="s">"""Descarta todo candidato que viola uma restrição rígida e ordena os restantes
+    por uma pontuação ponderada. w = pesos de qualidade, custo, latência e dependência."""</span>
+    viaveis = [c <span class="k">for</span> c <span class="k">in</span> candidatos
+               <span class="k">if</span> c.custo &lt;= custo_max <span class="k">and</span> c.latencia_p95 &lt;= latencia_max <span class="k">and</span> c.qualidade &gt;= qualidade_min]
+    <span class="k">if</span> <span class="k">not</span> viaveis:
+        <span class="k">raise</span> ValueError(<span class="s">"nenhum candidato satisfaz as restrições: relaxe-as ou mude o projeto"</span>)
+    <span class="c"># normaliza custo e latência pelo pior valor viável, de modo que menor é melhor</span>
+    pior_custo = max(c.custo <span class="k">for</span> c <span class="k">in</span> viaveis)
+    pior_lat   = max(c.latencia_p95 <span class="k">for</span> c <span class="k">in</span> viaveis)
+    <span class="k">def</span> pontuacao(c):
+        <span class="k">return</span> (w[<span class="s">"qualidade"</span>] * c.qualidade
+                + w[<span class="s">"custo"</span>]     * (<span class="n">1</span> - c.custo / pior_custo)
+                + w[<span class="s">"latencia"</span>]  * (<span class="n">1</span> - c.latencia_p95 / pior_lat)
+                + w[<span class="s">"dependencia"</span>] * (<span class="n">1</span> - c.dependencia))
+    <span class="k">return</span> sorted(viaveis, key=pontuacao, reverse=<span class="k">True</span>)
+
+<span class="c"># exemplo: um assistente de suporte interno, 50 mil requisições/dia, interativo</span>
+pesos = {<span class="s">"qualidade"</span>: <span class="n">0.45</span>, <span class="s">"custo"</span>: <span class="n">0.25</span>, <span class="s">"latencia"</span>: <span class="n">0.20</span>, <span class="s">"dependencia"</span>: <span class="n">0.10</span>}
+ordenados = ordenar([
+    Candidato(<span class="s">"grande hospedado"</span>,   qualidade=<span class="n">0.93</span>, custo=<span class="n">0.012</span>, latencia_p95=<span class="n">4.8</span>, dependencia=<span class="n">0.8</span>),
+    Candidato(<span class="s">"médio aberto"</span>,       qualidade=<span class="n">0.84</span>, custo=<span class="n">0.004</span>, latencia_p95=<span class="n">2.9</span>, dependencia=<span class="n">0.3</span>),
+    Candidato(<span class="s">"pequeno ajustado"</span>,   qualidade=<span class="n">0.88</span>, custo=<span class="n">0.001</span>, latencia_p95=<span class="n">1.1</span>, dependencia=<span class="n">0.2</span>),
+], custo_max=<span class="n">0.010</span>, latencia_max=<span class="n">3.0</span>, qualidade_min=<span class="n">0.80</span>, w=pesos)
+print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])   <span class="c"># o grande hospedado fica de fora: lento e caro demais para este caso</span></pre>
+  </div>
+  <p>
+    O ponto do script não é a aritmética, e sim a disciplina: restrições primeiro, pesos explícitos, qualidade medida na sua
+    própria amostra. Com esses três no lugar, "escolhemos o modelo X" vira uma afirmação que alguém pode auditar e revisitar
+    quando os números mudarem.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec6">6. Construção de soluções reais com IA</div>
+  <p>
+    Construir uma solução real significa sair do uso passivo de uma ferramenta e projetar uma aplicação que resolve um
+    problema concreto do dia a dia de alguém. O modelo é um componente dessa aplicação, e raramente o maior. Em volta dele
+    ficam o código que monta o prompt a partir do pedido do usuário e do contexto relevante, a recuperação que traz documentos
+    que os pesos não poderiam conter, as ferramentas que o modelo pode chamar, a validação que confere a saída antes que ela
+    chegue a alguém e a observabilidade que diz quanto custa e com que frequência falha.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">Uma aplicação com um modelo generativo como componente <span class="figNum">&mdash; Figura 4</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 280" width="860" height="280" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Arquitetura de uma aplicação com um modelo generativo como componente: usuário, aplicação com montagem de prompt, recuperação e validação, o modelo, fontes de dados, observabilidade e a resposta">
+<defs><linearGradient id="gN4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient><linearGradient id="gH4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfArr4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker></defs>
+<rect x="0" y="0" width="860" height="280" fill="#ffffff"/>
+<rect x="16" y="112" width="96" height="48" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="64.0" y="133.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Usuário</text>
+<text x="64.0" y="146.5" font-size="9" fill="#5b6b7a" text-anchor="middle">um pedido</text>
+<rect x="150" y="40" width="250" height="150" rx="6" fill="#f4f7fb" stroke="#8fa6c0"/>
+<text x="162" y="58" font-size="10" font-weight="bold" fill="#15497e">Aplicação (seu código)</text>
+<rect x="166" y="66" width="218" height="32" rx="3" fill="url(#gN4)" stroke="#7d8fa2"/><text x="275" y="86" font-size="10" fill="#1a2836" text-anchor="middle">Montagem do prompt</text>
+<rect x="166" y="104" width="218" height="32" rx="3" fill="url(#gN4)" stroke="#7d8fa2"/><text x="275" y="124" font-size="10" fill="#1a2836" text-anchor="middle">Recuperação e ferramentas</text>
+<rect x="166" y="142" width="218" height="32" rx="3" fill="url(#gN4)" stroke="#7d8fa2"/><text x="275" y="162" font-size="10" fill="#1a2836" text-anchor="middle">Validação e guardrails</text>
+<rect x="450" y="96" width="170" height="64" rx="3" fill="url(#gH4)" stroke="#2e5378"/>
+<text x="535.0" y="119.5" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Modelo generativo</text>
+<text x="535.0" y="132.5" font-size="9" fill="#dbe6f2" text-anchor="middle">API ou hospedado por você</text>
+<text x="535.0" y="144.5" font-size="9" fill="#dbe6f2" text-anchor="middle">um componente substituível</text>
+<rect x="150" y="222" width="250" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="275.0" y="241.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Fontes de dados</text>
+<text x="275.0" y="254.5" font-size="9" fill="#5b6b7a" text-anchor="middle">documentos, bancos de dados, APIs</text>
+<rect x="660" y="40" width="184" height="60" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="752.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Observabilidade</text>
+<text x="752.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">logs, avaliações,</text>
+<text x="752.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">custo e latência</text>
+<rect x="660" y="120" width="184" height="52" rx="3" fill="#cfe2f7" stroke="#15497e"/>
+<text x="752.0" y="143.5" font-size="10" font-weight="bold" fill="#15497e" text-anchor="middle">Resposta</text>
+<text x="752.0" y="156.5" font-size="9" fill="#5b6b7a" text-anchor="middle">revisada e rastreável</text>
+<path d="M112 136 L150 136" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M384 118 L450 118" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M450 140 L384 140" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M275 222 L275 190" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M535 96 L535 70 L660 70" stroke="#44566a" fill="none" marker-end="url(#cfArr4)"/>
+<path d="M384 166 L640 166 L640 146 L660 146" stroke="#44566a" fill="none" marker-end="url(#cfArr4)"/>
+<text x="390" y="111" font-size="9" fill="#5b6b7a">prompt + contexto</text>
+<text x="390" y="154" font-size="9" fill="#5b6b7a">saída candidata</text>
+<text x="281" y="210" font-size="9" fill="#5b6b7a">recuperação</text>
+<text x="560" y="64" font-size="9" fill="#5b6b7a">rastros</text>
+<text x="400" y="180" font-size="9" fill="#5b6b7a">resultado validado</text>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figura 4</b> &mdash; O pedido do usuário entra no seu código, que monta o prompt, recupera contexto das suas fontes de dados e chama o modelo; a saída candidata passa por validação e guardrails antes de virar resposta, e cada passo deixa rastros para avaliação, custo e latência. A caixa do modelo é deliberadamente substituível: tudo o que torna o produto seu vive fora dela.</div>
+  </div>
+  <p>
+    É aqui que os fundamentos se pagam. Selecionar o modelo é uma decisão entre várias: avaliar a arquitetura, entender o
+    impacto no fluxo de trabalho, decidir o que o modelo pode fazer sozinho e o que uma pessoa precisa confirmar, e alinhar a
+    solução ao tipo de tarefa que a equipe ou o produto de fato executa. Um profissional que domina esses fundamentos deixa
+    de consumir IA e passa a projetar sistemas com IA como componente. Esse passo é o que separa experimentação de engenharia
+    aplicada, e é também o que mantém o sistema vivo quando um modelo é trocado: os prompts, a recuperação, as verificações e
+    as métricas permanecem.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec7">7. Um ecossistema em movimento rápido: adaptar sem recomeçar</div>
+  <p>
+    O ecossistema de IA generativa se move rápido: novos modelos, ferramentas e técnicas surgem continuamente, e um ranking
+    de seis meses atrás é história. Acompanhar o campo, portanto, não é opcional; faz parte da competência técnica necessária
+    para permanecer relevante. Mas acompanhar não significa decorar nomes de produtos. Significa manter <b>critérios
+    estáveis</b> para julgar novidade, maturidade e utilidade, de modo que cada lançamento possa ser lido rapidamente: o que
+    mudou no nível do modelo, quanto custa, o que mudaria na sua aplicação e se a sua amostra de avaliação confirma a
+    promessa.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">12</a>]</sup>
+  </p>
+  <div class="af-panelBox light" id="boxRelease">
+    <div class="boxHdr" onclick="toggleBox('boxRelease')"><span class="disc">&#9660;</span>Um roteiro para ler o lançamento de um modelo novo</div>
+    <div class="boxBody">
+      <ul style="margin:0; padding-left:18px;">
+        <li><b>Nível.</b> É uma família de modelo nova, um tamanho novo de uma família existente, ou um recurso de aplicação vestido de modelo?</li>
+        <li><b>Custo e latência.</b> Preço por token de entrada e saída; vazão medida; hardware necessário se hospedado por você.</li>
+        <li><b>Contexto e formato.</b> Janela de contexto, saída estruturada, chamada de ferramentas — as coisas de que a sua aplicação depende.</li>
+        <li><b>Licença e implantação.</b> Pesos abertos ou só API; residência dos dados; termos que afetam o seu produto.</li>
+        <li><b>A sua amostra.</b> Rode o conjunto de avaliação da seção 4. Se o número não se mexer, o lançamento ainda não importa para você.</li>
+      </ul>
+    </div>
+  </div>
+  <p>
+    Quem entende os fundamentos absorve essas mudanças sem recomeçar do zero a cada nova tecnologia. O Transformer de 2017
+    continua sendo a arquitetura sob os modelos de hoje; o comportamento de escala descrito em 2020 continua explicando por
+    que modelos maiores custam mais; o pipeline da Figura 2 não mudou. O que muda é a posição de cada produto no gráfico de
+    trade-offs, e é exatamente para isso que servem critérios estáveis.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec8">8. Da condição de usuário à linha de frente da criação</div>
+  <p>
+    Dominar IA generativa significa assumir uma posição ativa na criação de aplicações, e não apenas usar interfaces
+    prontas. Esse domínio combina o entendimento técnico do mecanismo, a leitura de um contexto — a tarefa, os usuários, as
+    restrições — e o ofício de transformar um modelo numa solução útil. Em times de software, isso se traduz em decisões mais
+    conscientes sobre adoção, integração e retorno prático: quais tarefas ganham, quanto o ganho custa e o que precisa ser
+    revisado. O resultado esperado não é só produtividade individual; é a capacidade de construir produtos e fluxos de
+    trabalho melhores, com o modelo como uma parte bem compreendida deles.
+  </p>
+  <p>
+    O <b>próximo artigo</b> desce um nível, ao mecanismo sobre o qual tudo isso se apoia: a <b>autoatenção</b> — como um
+    Transformer decide, token a token, para onde olhar.
+  </p>
+
+</div><!-- /cf-article -->
+
+<!-- references -->
+<ul class="cf-refList">
+  <li><span class="refNum">[1]</span><span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016, cap. 1 e 5. <span class="refSrc">ISBN 978-0262035613</span></span><span class="refType cf-label">Livro</span></li>
+  <li><span class="refNum">[2]</span><span>A. Vaswani; N. Shazeer; N. Parmar <i>et al.</i> &mdash; <cite>Attention Is All You Need</cite>, NeurIPS 2017. <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a> <span class="refSrc">(acessado em 09/09/2026)</span></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[3]</span><span>T. B. Brown; B. Mann; N. Ryder <i>et al.</i> &mdash; <cite>Language Models are Few-Shot Learners</cite>, NeurIPS 2020. <a href="https://arxiv.org/abs/2005.14165">arXiv:2005.14165</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[4]</span><span>J. Kaplan; S. McCandlish; T. Henighan <i>et al.</i> &mdash; <cite>Scaling Laws for Neural Language Models</cite>, 2020. <a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[5]</span><span>J. Hoffmann; S. Borgeaud; A. Mensch <i>et al.</i> &mdash; <cite>Training Compute-Optimal Large Language Models</cite>, NeurIPS 2022. <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[6]</span><span>P. Liang; R. Bommasani; T. Lee <i>et al.</i> &mdash; <cite>Holistic Evaluation of Language Models</cite>, 2022. <a href="https://arxiv.org/abs/2211.09110">arXiv:2211.09110</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[7]</span><span>P. Lewis; E. Perez; A. Piktus <i>et al.</i> &mdash; <cite>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</cite>, NeurIPS 2020. <a href="https://arxiv.org/abs/2005.11401">arXiv:2005.11401</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[8]</span><span>E. J. Hu; Y. Shen; P. Wallis <i>et al.</i> &mdash; <cite>LoRA: Low-Rank Adaptation of Large Language Models</cite>, ICLR 2022. <a href="https://arxiv.org/abs/2106.09685">arXiv:2106.09685</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[9]</span><span>R. Bommasani; D. A. Hudson; E. Adeli <i>et al.</i> &mdash; <cite>On the Opportunities and Risks of Foundation Models</cite>, 2021. <a href="https://arxiv.org/abs/2108.07258">arXiv:2108.07258</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[10]</span><span>D. Sculley; G. Holt; D. Golovin <i>et al.</i> &mdash; <cite>Hidden Technical Debt in Machine Learning Systems</cite>, NeurIPS 2015. <a href="https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems">papers.nips.cc</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[11]</span><span>R. Pope; S. Douglas; A. Chowdhery <i>et al.</i> &mdash; <cite>Efficiently Scaling Transformer Inference</cite>, 2022. <a href="https://arxiv.org/abs/2211.05102">arXiv:2211.05102</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[12]</span><span>H. Touvron; L. Martin; K. Stone <i>et al.</i> &mdash; <cite>Llama 2: Open Foundation and Fine-Tuned Chat Models</cite>, 2023. <a href="https://arxiv.org/abs/2307.09288">arXiv:2307.09288</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+</ul>
+<div class="af-spacer"></div>
+<div class="af-subHeader" style="margin-top:0;">Leitura complementar</div>
+<ul class="cf-refList">
+  <li><span class="refNum">[a]</span><span>A. Karpathy &mdash; <cite>Intro to Large Language Models</cite>, palestra, 2023. <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">youtube.com</a></span><span class="refType cf-label">Palestra</span></li>
+  <li><span class="refNum">[b]</span><span>C. Huyen &mdash; <cite>Building LLM applications for production</cite>, 2023. <a href="https://huyenchip.com/2023/04/11/llm-engineering.html">huyenchip.com</a></span><span class="refType cf-label">Artigo</span></li>
+  <li><span class="refNum">[c]</span><span>E. Yan &mdash; <cite>Patterns for Building LLM-based Systems &amp; Products</cite>, 2023. <a href="https://eugeneyan.com/writing/llm-patterns/">eugeneyan.com</a></span><span class="refType cf-label">Artigo</span></li>
+</ul>
+<p class="tip" style="margin-top:8px;">Referências verificadas em 09/09/2026 e conferidas na revisão técnica. Links externos abrem fora do Codeflow.</p>

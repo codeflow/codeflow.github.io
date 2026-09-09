@@ -1,0 +1,556 @@
+---
+title: "Fundamentals over tools: how to evaluate and build with generative AI"
+date: 2026-09-09 08:00:00 -0300
+lang: en
+category: "Artificial Intelligence"
+section: "Generative AI"
+topic: "Generative AI"
+tags: [generative-ai, llm, machine-learning, deep-learning, model-selection, trade-offs, llm-engineering, rag, fine-tuning, latency]
+reading_time: 12
+level: Introductory
+series_prev: { title: "What is Generative AI, and why did it only become viable now?", url: "/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
+excerpt: "A prompt box is the surface of generative AI, not its substance. This article separates the layers — application, model family, machine learning and deep learning — explains the mechanism that makes a model generate, and turns model choice into an engineering decision with criteria: quality, cost, latency, specialization and lock-in. It closes with what changes when the model becomes one component of a system you design, and how stable criteria let you absorb a fast-moving ecosystem without starting over…"
+description: "Why understanding the fundamentals of generative AI beats tool familiarity: the layers from LLMs to deep learning, the generative mechanism, engineering criteria and trade-offs for choosing models, and how to build real solutions with a model as one component."
+references_count: 12
+key_concepts: ["Layers: application, model, field", "Learned distribution", "Engineering criteria", "Quality-cost-latency trade-off", "Model as a component"]
+version: 1
+history:
+  - { when: "09/09/2026 08:00", what: "Initial publication of the article" }
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    What you will find in this article
+  </div>
+  <ul>
+    <li>Why <b>conceptual knowledge</b> outlasts familiarity with a product, and what it protects you from when the ecosystem changes.</li>
+    <li>The layers — <b>application</b>, <b>model family</b>, <b>machine learning</b> and <b>deep learning</b> — and why keeping them apart improves every technical decision.</li>
+    <li>The <b>mechanism</b> behind generative models, and where each stage of the pipeline typically breaks.</li>
+    <li><b>Engineering criteria</b> for comparing architectures, the trade-offs between quality, cost, speed and specialization, and a small scoring script.</li>
+    <li>What changes when the model becomes <b>one component</b> of a system you design, and how to keep up with a fast-moving field without starting over.</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+<svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Article banner: from understanding the mechanism, through comparing with criteria, to building the solution — becoming a builder rather than only a user">
+<defs><linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient><linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfHeroArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker></defs>
+<rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+<text x="26" y="26" font-size="9" fill="#6b90b6" letter-spacing="1.4">CODEFLOW · ARTIFICIAL INTELLIGENCE · GENERATIVE AI</text>
+<text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">Fundamentals over tools</text>
+<text x="26" y="74" font-size="12" fill="#44566a">From typing prompts into a box to designing systems that have a model as one component</text>
+<g font-size="10" fill="#1a2836">
+<rect x="28" y="96" width="150" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="103" y="112" font-size="10" fill="#1a2836" text-anchor="middle">Understand the mechanism</text>
+<rect x="188" y="96" width="150" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="263" y="112" font-size="10" fill="#1a2836" text-anchor="middle">Compare with criteria</text>
+<rect x="348" y="96" width="150" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="423" y="112" font-size="10" fill="#1a2836" text-anchor="middle">Build the solution</text>
+</g>
+<path d="M178 108 L188 108 M338 108 L348 108" stroke="#3d6791" stroke-width="1.4"/>
+<path d="M498 108 L540 108" stroke="#3d6791" stroke-width="1.6" marker-end="url(#cfHeroArr)"/>
+<rect x="546" y="94" width="180" height="28" rx="4" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="636" y="112" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Builder, not just user</text>
+<g font-size="9">
+<text x="800" y="22" font-size="9" fill="#5b6b7a" text-anchor="middle">three levels</text>
+<rect x="750" y="32" width="100" height="18" rx="2" fill="#e8f0fa" stroke="#a9b8c7"/><text x="800" y="44" font-size="9" fill="#1a2836" text-anchor="middle">Application</text>
+<rect x="750" y="64" width="100" height="18" rx="2" fill="#cfe2f7" stroke="#a9b8c7"/><text x="800" y="76" font-size="9" fill="#1a2836" text-anchor="middle">Model family</text>
+<rect x="750" y="96" width="100" height="18" rx="2" fill="#ffffff" stroke="#a9b8c7"/><text x="800" y="108" font-size="9" fill="#1a2836" text-anchor="middle">Field (ML / DL)</text>
+<path d="M800 50 L800 57" stroke="#5b6b7a" marker-end="url(#cfHeroArr)"/>
+<path d="M800 82 L800 89" stroke="#5b6b7a" marker-end="url(#cfHeroArr)"/>
+</g></svg>
+  </div>
+
+  <p class="lead">
+    A team adopts a chat assistant, gets good results for a month, and then the vendor changes the model, the price or the
+    rate limit. Nobody in the room can say whether the alternative is better, worse or merely different, because the team
+    learned a product, not a mechanism. That gap is the subject of this article: what you need to understand about generative
+    AI to evaluate its limits, choose technologies with criteria, avoid depending on a single tool and, eventually, build
+    applications with a model inside them rather than only typing into someone else's.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec1">1. Fundamentals outlast tools</div>
+  <p>
+    Generative AI is usually met through an interface: a text box, a completion in the editor, a button that drafts an e-mail.
+    The interface is convenient and also misleading, because it hides the only thing that transfers between products: the
+    mechanism. A person who knows <i>how</i> a model produces text can predict where it will fail, decide what to check, and
+    read a new release for what actually changed. A person who only knows <i>which</i> buttons to press starts over every
+    time the buttons move.
+  </p>
+  <ul>
+    <li><b>Evaluate limitations.</b> Knowing that a model samples from a learned distribution explains why it can be fluent and
+      wrong at the same time, and why more confident phrasing is not more evidence.</li>
+    <li><b>Choose with criteria.</b> Understanding the cost structure of inference turns "which model is best?" into "which
+      model is adequate for this load, this budget and this quality bar?".</li>
+    <li><b>Avoid lock-in.</b> When you know what the model does and what your application does, moving to another vendor or to a
+      self-hosted model is an engineering task, not a rewrite.</li>
+  </ul>
+  <p>
+    In an ecosystem where names change every quarter, conceptual knowledge is the asset with the longest shelf life. The rest
+    of this article builds that knowledge in the order an engineer needs it: first the layers, then the mechanism, then the
+    criteria, then the system.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec2">2. Where LLMs sit: generative AI, machine learning and deep learning</div>
+  <p>
+    The terms are often used interchangeably, and that is the first source of shallow decisions. They are nested. <b>Machine
+    learning</b> is the field of programs that improve from data instead of being written rule by rule. <b>Deep learning</b> is
+    the subset that uses neural networks with many layers to learn representations directly from raw data.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+    <b>Generative models</b> are models, usually deep, trained to produce new samples that follow the patterns of their
+    training data. <b>Large language models</b> (LLMs) are one family of generative models, built on the Transformer
+    architecture and trained on text at very large scale.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> A chat assistant is none of these: it is an
+    <b>application</b> built on top of an LLM.
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">Nested layers and the three levels of a decision <span class="figNum">&mdash; Figure 1</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 250" width="860" height="250" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Nested layers from artificial intelligence to LLMs on the left; on the right, the three levels of a decision: application, model family and field">
+<defs><linearGradient id="gN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient><linearGradient id="gH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfArr1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker></defs>
+<rect x="0" y="0" width="860" height="250" fill="#ffffff"/>
+<rect x="16" y="16" width="470" height="218" rx="6" fill="#f7f9fc" stroke="#8fa6c0"/>
+<text x="28" y="34" font-size="10" font-weight="bold" fill="#15497e">Artificial intelligence</text>
+<rect x="32" y="48" width="438" height="170" rx="6" fill="#eef3f8" stroke="#8fa6c0"/>
+<text x="44" y="66" font-size="10" font-weight="bold" fill="#15497e">Machine learning</text>
+<rect x="48" y="80" width="406" height="122" rx="6" fill="#e4ecf5" stroke="#8fa6c0"/>
+<text x="60" y="98" font-size="10" font-weight="bold" fill="#15497e">Deep learning</text>
+<rect x="64" y="112" width="374" height="74" rx="6" fill="#d6e3f1" stroke="#8fa6c0"/>
+<text x="76" y="130" font-size="10" font-weight="bold" fill="#15497e">Generative models</text>
+<rect x="80" y="144" width="200" height="30" rx="3" fill="url(#gH)" stroke="#2e5378"/><text x="180" y="163" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">LLMs (text, code)</text>
+<rect x="292" y="144" width="134" height="30" rx="3" fill="#ffffff" stroke="#7d8fa2"/><text x="359" y="163" font-size="10" fill="#1a2836" text-anchor="middle">Diffusion (images)</text>
+<text x="520" y="20" font-size="9" fill="#6b90b6" letter-spacing="1.2">THE THREE LEVELS OF A DECISION</text>
+<rect x="520" y="30" width="320" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="680.0" y="49.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Application</text>
+<text x="680.0" y="62.5" font-size="9" fill="#5b6b7a" text-anchor="middle">chatbot, copilot, assistant — what the user touches</text>
+<rect x="520" y="104" width="320" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="680.0" y="123.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Model family</text>
+<text x="680.0" y="136.5" font-size="9" fill="#5b6b7a" text-anchor="middle">an LLM, a diffusion model — what you choose</text>
+<rect x="520" y="178" width="320" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="680.0" y="197.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Field</text>
+<text x="680.0" y="210.5" font-size="9" fill="#5b6b7a" text-anchor="middle">ML / DL: data, training, representation — how it learns</text>
+<path d="M680 74 L680 104" stroke="#44566a" marker-end="url(#cfArr1)"/>
+<path d="M680 148 L680 178" stroke="#44566a" marker-end="url(#cfArr1)"/>
+<text x="688" y="93" font-size="9" fill="#5b6b7a">runs on</text>
+<text x="688" y="167" font-size="9" fill="#5b6b7a">is built with</text>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figure 1</b> &mdash; On the left, each term is a subset of the one around it; LLMs and diffusion models are two families inside generative models. On the right, the level you are reasoning at when you use a chatbot (application), pick a model (model family) or discuss training and representation (field). Most confusion comes from answering a question at the wrong level.</div>
+  </div>
+  <p>
+    The hierarchy matters because each level answers a different question. When someone uses a chatbot they are interacting
+    with an application: prompts, memory, tools and interface are application decisions. When they choose an LLM they are
+    choosing a model family: size, licence, context window and cost are model decisions. When they discuss training data,
+    loss functions or how meaning is represented in vectors, they are at the level of machine learning and deep learning.
+    Separating the layers makes technical analysis sharper and stops a product feature from being mistaken for a property of
+    the field.
+  </p>
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:150px;">Level</th>
+        <th>Question it answers</th>
+        <th style="width:220px;">Typical decision</th>
+        <th style="width:190px;">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><b>Application</b></td><td>What does the user get, and how is the model wrapped?</td><td>Prompts, tools, retrieval, review flow, interface</td><td>Support assistant, coding copilot</td></tr>
+      <tr class="band"><td><b>Model family</b></td><td>Which kind of model, at what size and cost?</td><td>LLM vs diffusion, hosted vs open, context window</td><td>A 70B open LLM, a hosted frontier model</td></tr>
+      <tr><td><b>Generative modelling</b></td><td>How does it produce something new?</td><td>Objective, sampling strategy, temperature</td><td>Next-token prediction, denoising</td></tr>
+      <tr class="band"><td><b>ML / DL field</b></td><td>How does it learn at all?</td><td>Data, loss, architecture, representation</td><td>Transformer, embeddings, gradient descent</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Table 1 &mdash; The four levels, the question each answers and the decisions that belong there. A benchmark score is a model-level fact; a good answer in your product is an application-level result.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup></p>
+
+  <div class="af-subHeader" id="sec3">3. The mechanism behind generative models</div>
+  <p>
+    A generative model is a system trained to learn the patterns of a data distribution and to produce new outputs consistent
+    with those patterns. For text the recipe is concrete: the model is trained to predict the next token given the previous
+    ones, over an enormous corpus; at inference, a prompt sets the context and the model <b>samples</b> one token at a time,
+    feeding each choice back as context for the next.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> The previous article of this series introduced that
+    factorization; here the interest is in what it implies for the engineer.
+  </p>
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="var">p</span>(<span class="var">x</span><sub>1</sub>, &hellip;, <span class="var">x</span><sub><span class="var">T</span></sub> | <span class="var">prompt</span>)
+    <span class="op">=</span>
+    <span style="font-size:18px; vertical-align:-2px;">&prod;</span><sub><span class="var">t</span>=1</sub><sup><span class="var">T</span></sup>&nbsp;
+    <span class="var">p</span>(<span class="var">x</span><sub><span class="var">t</span></sub> | <span class="var">prompt</span>, <span class="var">x</span><sub>&lt;<span class="var">t</span></sub>)
+  </div>
+  <p>
+    Three consequences follow directly from equation (1). First, the model has no notion of truth, only of likelihood under
+    the data it saw: a plausible continuation is preferred to an accurate one when the two differ. Second, everything the
+    model "knows" is frozen in its parameters at training time; what happened afterwards has to be supplied through the
+    prompt. Third, the output depends on a random draw, so the same prompt can produce different answers, and the sampling
+    settings are part of the engineering surface, not a detail.
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">The pipeline, and where each stage breaks <span class="figNum">&mdash; Figure 2</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Pipeline from data to output, and under each stage the way it typically breaks">
+<defs><linearGradient id="gN2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient><linearGradient id="gH2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfArr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker></defs>
+<rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
+<text x="16" y="74" font-size="10" font-weight="bold" fill="#15497e">Pipeline</text>
+<text x="16" y="184" font-size="10" font-weight="bold" fill="#8c1c13">Where it breaks</text>
+<rect x="104" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="172.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Data</text>
+<text x="172.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">text, code, images</text>
+<text x="172.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">at very large scale</text>
+<rect x="258" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="326.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Training</text>
+<text x="326.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">adjust parameters</text>
+<text x="326.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">to reduce the error</text>
+<rect x="412" y="40" width="136" height="60" rx="3" fill="url(#gH2)" stroke="#2e5378"/>
+<text x="480.0" y="61.5" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Model</text>
+<text x="480.0" y="74.5" font-size="9" fill="#dbe6f2" text-anchor="middle">learned patterns</text>
+<text x="480.0" y="86.5" font-size="9" fill="#dbe6f2" text-anchor="middle">in frozen weights</text>
+<rect x="566" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="634.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Inference</text>
+<text x="634.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">prompt + sampling</text>
+<text x="634.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">one token at a time</text>
+<rect x="720" y="40" width="136" height="60" rx="3" fill="url(#gN2)" stroke="#7d8fa2"/>
+<text x="788.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Output</text>
+<text x="788.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">a new artifact</text>
+<text x="788.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">shaped by the prompt</text>
+<path d="M240 70 L258 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<path d="M394 70 L412 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<path d="M548 70 L566 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<path d="M702 70 L720 70" stroke="#44566a" marker-end="url(#cfArr2)"/>
+<rect x="104" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="172.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Coverage and bias</text>
+<text x="172.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">it only knows what</text>
+<text x="172.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">the data contained</text>
+<rect x="258" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="326.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Under/overfitting</text>
+<text x="326.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">memorizes examples</text>
+<text x="326.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">or learns too little</text>
+<rect x="412" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="480.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Knowledge cutoff</text>
+<text x="480.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">the world moves,</text>
+<text x="480.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">the weights do not</text>
+<rect x="566" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="634.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">Sampling errors</text>
+<text x="634.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">fluent, confident</text>
+<text x="634.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">and wrong</text>
+<rect x="720" y="150" width="136" height="60" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+<text x="788.0" y="171.5" font-size="10" font-weight="bold" fill="#6b5a1e" text-anchor="middle">No review</text>
+<text x="788.0" y="184.5" font-size="9" fill="#6b5a1e" text-anchor="middle">published without</text>
+<text x="788.0" y="196.5" font-size="9" fill="#6b5a1e" text-anchor="middle">being inspected</text>
+<path d="M172 100 L172 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M326 100 L326 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M480 100 L480 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M634 100 L634 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+<path d="M788 100 L788 150" stroke="#b08f3e" stroke-dasharray="3 3" marker-end="url(#cfArr2)"/>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figure 2</b> &mdash; Data is collected, training adjusts parameters to reduce prediction error, the resulting weights are frozen, inference samples from them under a prompt, and the output is a new artifact. Each stage has a characteristic failure: coverage and bias in the data, under- or overfitting in training, a knowledge cutoff in the model, sampling errors at inference, and the absence of review at the end. Knowing the stage tells you which fix applies.</div>
+  </div>
+  <p>
+    This is why understanding the mechanism changes how you use the tool. A model that answers well in one context and fails
+    in another is not being capricious: the first context resembled its training data and the second did not, or the prompt
+    left out what the weights could not contain. The response is then a design decision — retrieve the missing context,
+    constrain the output format, lower the temperature, add a validation step — rather than a better-phrased request. The
+    question is never only "what did it answer?" but "where does this capability come from, and what limits come with
+    it?".<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec4">4. Comparing architectures by engineering criteria</div>
+  <p>
+    Choosing a model by popularity, or by the impression left by a demo, is the application-level equivalent of picking a
+    database because it is trending. A mature comparison looks at engineering criteria: what the model costs to run at the
+    expected load, how long a request takes, how well it can be specialized, what quality it reaches on <i>your</i> task, and
+    how well it fits the constraints of the case — privacy, licence, deployment, language.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup> A model that
+    leads a public benchmark can be the wrong choice for production if it is too expensive or too slow for the traffic, and a
+    modest model can be the right one if the task is narrow and the volume is high.
+  </p>
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:130px;">Criterion</th>
+        <th>What to measure</th>
+        <th style="width:130px;">Weight in production</th>
+        <th style="width:250px;">Typical failure when ignored</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><b>Quality</b></td><td>Accuracy on a sample of <i>your</i> requests, judged by people or by a rubric; not only public benchmarks</td><td><span class="st ok">High</span></td><td>Great demo, unreliable product</td></tr>
+      <tr class="band"><td><b>Cost</b></td><td>Price per million tokens in and out, or GPU-hours per request when self-hosted; multiplied by the real volume</td><td><span class="st ok">High</span></td><td>Bill grows faster than usage</td></tr>
+      <tr><td><b>Latency</b></td><td>Time to first token and tokens per second, at the 95th percentile, under concurrent load</td><td><span class="st warn">Depends on the use</span></td><td>Interactive feature that feels broken</td></tr>
+      <tr class="band"><td><b>Specialization</b></td><td>Gain from domain data via retrieval, fine-tuning or adapters, against the cost of maintaining it</td><td><span class="st warn">Depends on the task</span></td><td>General model that never learns your vocabulary</td></tr>
+      <tr><td><b>Fit and lock-in</b></td><td>Licence, data residency, context window, structured output, ease of replacement</td><td><span class="st ok">High</span></td><td>Migration becomes a rewrite</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Table 2 &mdash; Engineering criteria for comparing generative models. "What to measure" is deliberately about your workload: a public leaderboard measures a different distribution of requests than the one your product will see.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>,<a href="#" onclick="gotoRefs(); return false;">11</a>]</sup></p>
+  <div class="af-panelBox light" id="boxBench">
+    <div class="boxHdr" onclick="toggleBox('boxBench')"><span class="disc">&#9660;</span>Why "best on the benchmark" is not "best for you"</div>
+    <div class="boxBody">
+      A benchmark is a fixed set of questions with a scoring rule, and a model that scores well on it has learned to answer
+      <i>that</i> distribution. Your product asks different questions, in a different language register, with different
+      failure costs. The most useful evaluation is therefore a small, honest sample of real requests with expected answers,
+      re-run every time a candidate model changes. It costs an afternoon to build and it is the only number that predicts
+      what users will see.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec5">5. Trade-offs: quality, cost, speed and specialization</div>
+  <p>
+    There is no model that is ideal in every scenario; there are trade-offs. Raising quality usually means a larger model,
+    which raises the cost per request and the time to answer. Chasing speed means a smaller model or shorter outputs, which
+    can lower precision. Specializing a solution to a domain can deliver more value than the most general model available,
+    at the price of keeping the specialized version current. Scaling results make the shape of these curves explicit:
+    capability grows smoothly with parameters, data and compute, and so does the bill.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>,<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">Trade-off profiles of three model archetypes <span class="figNum">&mdash; Figure 3</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 250" width="860" height="250" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Trade-off profiles of three model archetypes across quality, cost, latency, specialization and lock-in">
+<rect x="0" y="0" width="860" height="250" fill="#ffffff"/>
+<text x="305" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Quality (general)</text>
+<text x="427" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Cost per request</text>
+<text x="549" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Latency</text>
+<text x="671" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Specialization</text>
+<text x="793" y="44" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">Vendor lock-in</text>
+<text x="16" y="78" font-size="10" font-weight="bold" fill="#1a2836">Large general-purpose model (API)</text>
+<text x="16" y="92" font-size="9" fill="#5b6b7a">hundreds of billions of parameters, hosted</text>
+<rect x="250" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="250" y="72" width="104" height="12" rx="2" fill="#3d6791"/>
+<text x="250" y="100" font-size="9" fill="#5b6b7a">high</text>
+<rect x="372" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="372" y="72" width="94" height="12" rx="2" fill="#3d6791"/>
+<text x="372" y="100" font-size="9" fill="#5b6b7a">high</text>
+<rect x="494" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="494" y="72" width="82" height="12" rx="2" fill="#3d6791"/>
+<text x="494" y="100" font-size="9" fill="#5b6b7a">high</text>
+<rect x="616" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="616" y="72" width="38" height="12" rx="2" fill="#3d6791"/>
+<text x="616" y="100" font-size="9" fill="#5b6b7a">low</text>
+<rect x="738" y="72" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="738" y="72" width="94" height="12" rx="2" fill="#3d6791"/>
+<text x="738" y="100" font-size="9" fill="#5b6b7a">high</text>
+<text x="16" y="140" font-size="10" font-weight="bold" fill="#1a2836">Mid-size open model (self-hosted)</text>
+<text x="16" y="154" font-size="9" fill="#5b6b7a">7–70B parameters, your infrastructure</text>
+<rect x="250" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="250" y="134" width="82" height="12" rx="2" fill="#3d6791"/>
+<text x="250" y="162" font-size="9" fill="#5b6b7a">high</text>
+<rect x="372" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="372" y="134" width="55" height="12" rx="2" fill="#3d6791"/>
+<text x="372" y="162" font-size="9" fill="#5b6b7a">medium</text>
+<rect x="494" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="494" y="134" width="55" height="12" rx="2" fill="#3d6791"/>
+<text x="494" y="162" font-size="9" fill="#5b6b7a">medium</text>
+<rect x="616" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="616" y="134" width="66" height="12" rx="2" fill="#3d6791"/>
+<text x="616" y="162" font-size="9" fill="#5b6b7a">medium</text>
+<rect x="738" y="134" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="738" y="134" width="33" height="12" rx="2" fill="#3d6791"/>
+<text x="738" y="162" font-size="9" fill="#5b6b7a">low</text>
+<text x="16" y="202" font-size="10" font-weight="bold" fill="#1a2836">Small specialized model (fine-tuned)</text>
+<text x="16" y="216" font-size="9" fill="#5b6b7a">1–8B parameters, tuned to one domain</text>
+<rect x="250" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="250" y="196" width="61" height="12" rx="2" fill="#3d6791"/>
+<text x="250" y="224" font-size="9" fill="#5b6b7a">medium</text>
+<rect x="372" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="372" y="196" width="22" height="12" rx="2" fill="#3d6791"/>
+<text x="372" y="224" font-size="9" fill="#5b6b7a">low</text>
+<rect x="494" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="494" y="196" width="22" height="12" rx="2" fill="#3d6791"/>
+<text x="494" y="224" font-size="9" fill="#5b6b7a">low</text>
+<rect x="616" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="616" y="196" width="99" height="12" rx="2" fill="#3d6791"/>
+<text x="616" y="224" font-size="9" fill="#5b6b7a">high</text>
+<rect x="738" y="196" width="110" height="12" rx="2" fill="#eef2f7" stroke="#c9d4df"/>
+<rect x="738" y="196" width="22" height="12" rx="2" fill="#3d6791"/>
+<text x="738" y="224" font-size="9" fill="#5b6b7a">low</text>
+<text x="16" y="244" font-size="9" fill="#6b7a89">Bars show the relative position of each archetype (longer = more of it). Illustrative, not a benchmark.</text>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figure 3</b> &mdash; Each row is an archetype, each column a criterion, and the bar shows how much of that criterion the archetype carries. The large hosted model leads on general quality and also on cost, latency and lock-in; the small fine-tuned model is cheap, fast and strong on its own domain but weaker outside it; the mid-size open model sits between them and buys independence. Illustrative positions, not measurements.</div>
+  </div>
+  <p>
+    Two formulas make the cost and speed side concrete. The cost of one request is the number of input tokens times the input
+    price plus the number of output tokens times the output price; output tokens are typically several times more expensive
+    than input, so verbose answers cost more than long prompts. The latency of one request is the time to the first token
+    plus the number of output tokens divided by the generation rate; that second term is why a 500-token answer feels slow
+    even from a fast model.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">11</a>]</sup>
+  </p>
+  <div class="cf-formula">
+    <span class="eqNum">(2)</span>
+    <span class="var">cost</span> <span class="op">=</span> <span class="var">n</span><sub>in</sub> &middot; <span class="var">c</span><sub>in</sub> <span class="op">+</span> <span class="var">n</span><sub>out</sub> &middot; <span class="var">c</span><sub>out</sub>
+  </div>
+  <div class="cf-formula">
+    <span class="eqNum">(3)</span>
+    <span class="var">latency</span> <span class="op">&asymp;</span> <span class="var">t</span><sub>first</sub> <span class="op">+</span> <span class="frac"><span class="num"><span class="var">n</span><sub>out</sub></span><span class="den"><span class="var">r</span><sub>gen</sub></span></span>
+  </div>
+  <p>
+    The engineering work consists of balancing these variables against the business goal, the budget and the experience the
+    user expects. A useful habit is to write the constraints down before looking at any model: a maximum latency, a maximum
+    cost per request, a minimum quality on the evaluation sample. Candidates that violate a constraint are out, whatever
+    their reputation; the remaining ones are ranked by a weighted score. The script below does exactly that, with the
+    weights as an explicit, reviewable input.
+  </p>
+  <div class="cf-codeBox">
+    <div class="codeHdr">choose_model.py <span class="lang">&mdash; Python</span><button class="af-button small" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="k">from</span> dataclasses <span class="k">import</span> dataclass
+
+<span class="k">@dataclass</span>
+<span class="k">class</span> Candidate:
+    name: str
+    quality: float        <span class="c"># 0–1, accuracy on YOUR evaluation sample</span>
+    cost: float           <span class="c"># currency per request, from equation (2)</span>
+    latency_p95: float    <span class="c"># seconds, from equation (3) measured under load</span>
+    lock_in: float        <span class="c"># 0–1, how hard it is to replace (licence, formats, hosting)</span>
+
+<span class="k">def</span> rank(candidates, max_cost, max_latency, min_quality, w):
+    <span class="s">"""Drops every candidate that violates a hard constraint, then ranks the rest
+    by a weighted score. w = weights for quality, cost, latency and lock-in."""</span>
+    feasible = [c <span class="k">for</span> c <span class="k">in</span> candidates
+                <span class="k">if</span> c.cost &lt;= max_cost <span class="k">and</span> c.latency_p95 &lt;= max_latency <span class="k">and</span> c.quality &gt;= min_quality]
+    <span class="k">if</span> <span class="k">not</span> feasible:
+        <span class="k">raise</span> ValueError(<span class="s">"no candidate satisfies the constraints: relax them or change the design"</span>)
+    <span class="c"># normalize cost and latency against the worst feasible value, so that lower is better</span>
+    worst_cost = max(c.cost <span class="k">for</span> c <span class="k">in</span> feasible)
+    worst_lat  = max(c.latency_p95 <span class="k">for</span> c <span class="k">in</span> feasible)
+    <span class="k">def</span> score(c):
+        <span class="k">return</span> (w[<span class="s">"quality"</span>] * c.quality
+                + w[<span class="s">"cost"</span>]    * (<span class="n">1</span> - c.cost / worst_cost)
+                + w[<span class="s">"latency"</span>] * (<span class="n">1</span> - c.latency_p95 / worst_lat)
+                + w[<span class="s">"lock_in"</span>] * (<span class="n">1</span> - c.lock_in))
+    <span class="k">return</span> sorted(feasible, key=score, reverse=<span class="k">True</span>)
+
+<span class="c"># example: an internal support assistant, 50k requests/day, interactive</span>
+weights = {<span class="s">"quality"</span>: <span class="n">0.45</span>, <span class="s">"cost"</span>: <span class="n">0.25</span>, <span class="s">"latency"</span>: <span class="n">0.20</span>, <span class="s">"lock_in"</span>: <span class="n">0.10</span>}
+ranked = rank([
+    Candidate(<span class="s">"large hosted"</span>,     quality=<span class="n">0.93</span>, cost=<span class="n">0.012</span>, latency_p95=<span class="n">4.8</span>, lock_in=<span class="n">0.8</span>),
+    Candidate(<span class="s">"mid open"</span>,         quality=<span class="n">0.84</span>, cost=<span class="n">0.004</span>, latency_p95=<span class="n">2.9</span>, lock_in=<span class="n">0.3</span>),
+    Candidate(<span class="s">"small fine-tuned"</span>, quality=<span class="n">0.88</span>, cost=<span class="n">0.001</span>, latency_p95=<span class="n">1.1</span>, lock_in=<span class="n">0.2</span>),
+], max_cost=<span class="n">0.010</span>, max_latency=<span class="n">3.0</span>, min_quality=<span class="n">0.80</span>, w=weights)
+print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   <span class="c"># the large hosted model is out: too slow and too expensive for this case</span></pre>
+  </div>
+  <p>
+    The point of the script is not the arithmetic but the discipline: constraints first, weights explicit, quality measured
+    on your own sample. With those three in place, "we chose model X" becomes a statement someone can audit and revisit when
+    the numbers change.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec6">6. Building real solutions with AI</div>
+  <p>
+    Building a real solution means leaving the passive use of a tool and designing an application that solves a concrete
+    problem in someone's day. The model is one component of that application, and rarely the largest one. Around it sit the
+    code that assembles the prompt from the user's request and the relevant context, the retrieval that brings in documents
+    the weights could not contain, the tools the model is allowed to call, the validation that checks the output before it
+    reaches anyone, and the observability that tells you what it costs and how often it fails.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+  <div class="cf-figure">
+    <div class="figHdr">An application with a generative model as one component <span class="figNum">&mdash; Figure 4</span></div>
+    <div class="figBody">
+<svg viewBox="0 0 860 280" width="860" height="280" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Architecture of an application with a generative model as one component: user, application with prompt assembly, retrieval and validation, the model, data sources, observability and the response">
+<defs><linearGradient id="gN4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient><linearGradient id="gH4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><marker id="cfArr4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker></defs>
+<rect x="0" y="0" width="860" height="280" fill="#ffffff"/>
+<rect x="16" y="112" width="96" height="48" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="64.0" y="133.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">User</text>
+<text x="64.0" y="146.5" font-size="9" fill="#5b6b7a" text-anchor="middle">a request</text>
+<rect x="150" y="40" width="250" height="150" rx="6" fill="#f4f7fb" stroke="#8fa6c0"/>
+<text x="162" y="58" font-size="10" font-weight="bold" fill="#15497e">Application (your code)</text>
+<rect x="166" y="66" width="218" height="32" rx="3" fill="url(#gN4)" stroke="#7d8fa2"/><text x="275" y="86" font-size="10" fill="#1a2836" text-anchor="middle">Prompt assembly</text>
+<rect x="166" y="104" width="218" height="32" rx="3" fill="url(#gN4)" stroke="#7d8fa2"/><text x="275" y="124" font-size="10" fill="#1a2836" text-anchor="middle">Retrieval and tools</text>
+<rect x="166" y="142" width="218" height="32" rx="3" fill="url(#gN4)" stroke="#7d8fa2"/><text x="275" y="162" font-size="10" fill="#1a2836" text-anchor="middle">Validation and guardrails</text>
+<rect x="450" y="96" width="170" height="64" rx="3" fill="url(#gH4)" stroke="#2e5378"/>
+<text x="535.0" y="119.5" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Generative model</text>
+<text x="535.0" y="132.5" font-size="9" fill="#dbe6f2" text-anchor="middle">API or self-hosted</text>
+<text x="535.0" y="144.5" font-size="9" fill="#dbe6f2" text-anchor="middle">one replaceable component</text>
+<rect x="150" y="222" width="250" height="44" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="275.0" y="241.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Data sources</text>
+<text x="275.0" y="254.5" font-size="9" fill="#5b6b7a" text-anchor="middle">documents, databases, APIs</text>
+<rect x="660" y="40" width="184" height="60" rx="3" fill="url(#gN)" stroke="#7d8fa2"/>
+<text x="752.0" y="61.5" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">Observability</text>
+<text x="752.0" y="74.5" font-size="9" fill="#5b6b7a" text-anchor="middle">logs, evaluations,</text>
+<text x="752.0" y="86.5" font-size="9" fill="#5b6b7a" text-anchor="middle">cost and latency</text>
+<rect x="660" y="120" width="184" height="52" rx="3" fill="#cfe2f7" stroke="#15497e"/>
+<text x="752.0" y="143.5" font-size="10" font-weight="bold" fill="#15497e" text-anchor="middle">Response</text>
+<text x="752.0" y="156.5" font-size="9" fill="#5b6b7a" text-anchor="middle">reviewed and traceable</text>
+<path d="M112 136 L150 136" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M384 118 L450 118" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M450 140 L384 140" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M275 222 L275 190" stroke="#44566a" marker-end="url(#cfArr4)"/>
+<path d="M535 96 L535 70 L660 70" stroke="#44566a" fill="none" marker-end="url(#cfArr4)"/>
+<path d="M384 166 L640 166 L640 146 L660 146" stroke="#44566a" fill="none" marker-end="url(#cfArr4)"/>
+<text x="390" y="111" font-size="9" fill="#5b6b7a">prompt + context</text>
+<text x="390" y="154" font-size="9" fill="#5b6b7a">candidate output</text>
+<text x="281" y="210" font-size="9" fill="#5b6b7a">retrieval</text>
+<text x="560" y="64" font-size="9" fill="#5b6b7a">traces</text>
+<text x="400" y="180" font-size="9" fill="#5b6b7a">validated result</text>
+</svg>
+    </div>
+    <div class="figCaption"><b>Figure 4</b> &mdash; The user's request enters your code, which assembles the prompt, retrieves context from your data sources and calls the model; the candidate output passes through validation and guardrails before becoming a response, and every step leaves traces for evaluation, cost and latency. The model box is deliberately replaceable: everything that makes the product yours lives outside it.</div>
+  </div>
+  <p>
+    This is where the fundamentals pay off. Selecting the model is one decision among several: evaluating the architecture,
+    understanding the impact on the workflow, deciding what the model may do on its own and what a person must confirm, and
+    aligning the solution with the kind of task the team or the product actually performs. A professional who has these
+    fundamentals stops consuming AI and starts designing systems with AI as a component. That step is what separates
+    experimentation from applied engineering, and it is also what keeps the system alive when a model is swapped: the
+    prompts, the retrieval, the checks and the metrics stay.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec7">7. A fast-moving ecosystem: adapt without starting over</div>
+  <p>
+    The generative AI ecosystem moves quickly: new models, tools and techniques appear continuously, and a leaderboard from
+    six months ago is history. Following the field is therefore not optional; it is part of the technical competence needed
+    to stay relevant. But following it does not mean memorizing product names. It means keeping <b>stable criteria</b> for
+    judging novelty, maturity and usefulness, so that each release can be read quickly: what changed at the model level, what
+    it costs, what it would change in your application, and whether your evaluation sample confirms the claim.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">12</a>]</sup>
+  </p>
+  <div class="af-panelBox light" id="boxRelease">
+    <div class="boxHdr" onclick="toggleBox('boxRelease')"><span class="disc">&#9660;</span>A checklist for reading a new model release</div>
+    <div class="boxBody">
+      <ul style="margin:0; padding-left:18px;">
+        <li><b>Level.</b> Is this a new model family, a new size of an existing one, or an application feature dressed as a model?</li>
+        <li><b>Cost and latency.</b> Price per token in and out; measured throughput; hardware needed if self-hosted.</li>
+        <li><b>Context and format.</b> Context window, structured output, tool calling — the things your application depends on.</li>
+        <li><b>Licence and deployment.</b> Open weights or API only; data residency; terms that affect your product.</li>
+        <li><b>Your sample.</b> Run the evaluation set from section 4. If the number does not move, the release does not matter to you yet.</li>
+      </ul>
+    </div>
+  </div>
+  <p>
+    Someone who understands the fundamentals absorbs these changes without restarting from zero with each new technology. The
+    Transformer of 2017 is still the architecture under the models of today; the scaling behaviour described in 2020 still
+    explains why larger models cost more; the pipeline in Figure 2 has not changed. What changes is the position of each
+    product on the trade-off chart, and that is exactly what stable criteria are for.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec8">8. From user to builder</div>
+  <p>
+    Mastering generative AI means taking an active position in the creation of applications, not only using ready-made
+    interfaces. That mastery combines technical understanding of the mechanism, the ability to read a context — the task, the
+    users, the constraints — and the craft of turning a model into a useful solution. In software teams it translates into
+    more conscious decisions about adoption, integration and practical return: which tasks gain, what the gain costs, and what
+    has to be reviewed. The expected result is not just individual productivity; it is the capacity to build better products
+    and better workflows, with the model as one well-understood part of them.
+  </p>
+  <p>
+    The <b>next article</b> goes one level down, to the mechanism that all of this rests on: <b>self-attention</b> — how a
+    Transformer decides, token by token, where to look.
+  </p>
+
+</div><!-- /cf-article -->
+
+<!-- references -->
+<ul class="cf-refList">
+  <li><span class="refNum">[1]</span><span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016, ch. 1 and 5. <span class="refSrc">ISBN 978-0262035613</span></span><span class="refType cf-label">Book</span></li>
+  <li><span class="refNum">[2]</span><span>A. Vaswani; N. Shazeer; N. Parmar <i>et al.</i> &mdash; <cite>Attention Is All You Need</cite>, NeurIPS 2017. <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a> <span class="refSrc">(accessed on 09/09/2026)</span></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[3]</span><span>T. B. Brown; B. Mann; N. Ryder <i>et al.</i> &mdash; <cite>Language Models are Few-Shot Learners</cite>, NeurIPS 2020. <a href="https://arxiv.org/abs/2005.14165">arXiv:2005.14165</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[4]</span><span>J. Kaplan; S. McCandlish; T. Henighan <i>et al.</i> &mdash; <cite>Scaling Laws for Neural Language Models</cite>, 2020. <a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[5]</span><span>J. Hoffmann; S. Borgeaud; A. Mensch <i>et al.</i> &mdash; <cite>Training Compute-Optimal Large Language Models</cite>, NeurIPS 2022. <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[6]</span><span>P. Liang; R. Bommasani; T. Lee <i>et al.</i> &mdash; <cite>Holistic Evaluation of Language Models</cite>, 2022. <a href="https://arxiv.org/abs/2211.09110">arXiv:2211.09110</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[7]</span><span>P. Lewis; E. Perez; A. Piktus <i>et al.</i> &mdash; <cite>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</cite>, NeurIPS 2020. <a href="https://arxiv.org/abs/2005.11401">arXiv:2005.11401</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[8]</span><span>E. J. Hu; Y. Shen; P. Wallis <i>et al.</i> &mdash; <cite>LoRA: Low-Rank Adaptation of Large Language Models</cite>, ICLR 2022. <a href="https://arxiv.org/abs/2106.09685">arXiv:2106.09685</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[9]</span><span>R. Bommasani; D. A. Hudson; E. Adeli <i>et al.</i> &mdash; <cite>On the Opportunities and Risks of Foundation Models</cite>, 2021. <a href="https://arxiv.org/abs/2108.07258">arXiv:2108.07258</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[10]</span><span>D. Sculley; G. Holt; D. Golovin <i>et al.</i> &mdash; <cite>Hidden Technical Debt in Machine Learning Systems</cite>, NeurIPS 2015. <a href="https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems">papers.nips.cc</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[11]</span><span>R. Pope; S. Douglas; A. Chowdhery <i>et al.</i> &mdash; <cite>Efficiently Scaling Transformer Inference</cite>, 2022. <a href="https://arxiv.org/abs/2211.05102">arXiv:2211.05102</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[12]</span><span>H. Touvron; L. Martin; K. Stone <i>et al.</i> &mdash; <cite>Llama 2: Open Foundation and Fine-Tuned Chat Models</cite>, 2023. <a href="https://arxiv.org/abs/2307.09288">arXiv:2307.09288</a></span><span class="refType cf-label">Academic paper</span></li>
+</ul>
+<div class="af-spacer"></div>
+<div class="af-subHeader" style="margin-top:0;">Further reading</div>
+<ul class="cf-refList">
+  <li><span class="refNum">[a]</span><span>A. Karpathy &mdash; <cite>Intro to Large Language Models</cite>, talk, 2023. <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">youtube.com</a></span><span class="refType cf-label">Talk</span></li>
+  <li><span class="refNum">[b]</span><span>C. Huyen &mdash; <cite>Building LLM applications for production</cite>, 2023. <a href="https://huyenchip.com/2023/04/11/llm-engineering.html">huyenchip.com</a></span><span class="refType cf-label">Article</span></li>
+  <li><span class="refNum">[c]</span><span>E. Yan &mdash; <cite>Patterns for Building LLM-based Systems &amp; Products</cite>, 2023. <a href="https://eugeneyan.com/writing/llm-patterns/">eugeneyan.com</a></span><span class="refType cf-label">Article</span></li>
+</ul>
+<p class="tip" style="margin-top:8px;">References verified on 09/09/2026 and checked during technical review. External links open outside Codeflow.</p>
