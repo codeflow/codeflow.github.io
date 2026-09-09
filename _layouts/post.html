@@ -35,7 +35,7 @@ layout: default
       <span class="item">{{ t.ui.author }} <b>{{ page.author }}</b></span>
     </div>
 
-    <div class="cf-chipRow">
+    <div class="cf-chipRow cf-postLabels">
       <span class="rowLabel">{{ t.ui.labels }}</span>
       <span class="cf-label primary">{{ t.labels[page.category] | default: page.category }}</span>
       {%- if page.stub %}<span class="cf-label">{{ t.ui.draft }}</span>{% endif %}

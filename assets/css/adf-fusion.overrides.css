@@ -129,6 +129,7 @@ a.cf-tag:hover {
   margin: 0 0 6px;
 }
 .cf-chipRow .rowLabel { color: #3e4b58; margin-right: 2px; }
+.cf-postLabels { margin-bottom: 14px; }   /* respiro entre a linha de Labels e o primeiro painel do artigo */
 
 .cf-langBar {
   display: flex;

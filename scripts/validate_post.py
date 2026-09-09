@@ -114,7 +114,8 @@ def main():
     rep("TAGS", not missing, f"{len(post['tags'])} tags counted; visible in Popular Tags (top 10): {visible or 'none'}")
     # ARCHIVE
     y, mth, _ = post["date"].split("-")
-    months = json.loads(re.search(r"months:\s*(\[.*?\])", dom).group(1))
+    i18n_js = fetch(f"{site}/assets/js/i18n/{a.lang}.js")          # month names live in the language script file
+    months = json.loads(re.search(r"months:\s*(\[.*?\])", i18n_js).group(1))
     label = f"{months[int(mth)-1]} {y}"
     arch = re.search(r'id="archList">(.*?)</div>\s*</div>', dom, flags=re.S); arch = arch.group(1) if arch else ""
     rep("ARCHIVE", label in arch and f"'{y}-{mth}'" in arch, f"month entry “{label}”")

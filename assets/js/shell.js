@@ -1,5 +1,12 @@
 /* Codeflow — shell.js: comportamento comum a todas as páginas (sidebar, filtros, menu móvel, splitter, gavetas). */
-var CF = window.CODEFLOW || {};
+var CF = window.CODEFLOW = (function () {
+  var cat = window.CODEFLOW_CATALOG || {}, i18n = window.CODEFLOW_I18N || {}, d = document.body.dataset;
+  return {
+    lang: d.lang || i18n.lang || cat.defaultLang || 'en', defaultLang: cat.defaultLang, home: d.home || '/',
+    homes: cat.homes || {}, langs: cat.langs || {}, searchUrl: cat.searchUrl || '/search.json', posts: cat.posts || [],
+    i18n: i18n.ui || {}, labels: i18n.labels || {}, months: i18n.months || [], pageKey: d.key || null
+  };
+})();
 var LANG = CF.lang || 'en';
 var T = CF.i18n || {};
 var ALL_POSTS = CF.posts || [];
@@ -307,4 +314,9 @@ if (document.getElementById('postList')) {
   if (state.type === 'text') { var sb = document.getElementById('searchBox'); if (sb) sb.value = state.value; }
   render();
   loadSearchIndex(function () { if (state.type === 'text') render(); });   // conteúdo completo entra na busca quando o índice chega
+}
+
+/* Progressive web app: register the service worker once the page has loaded. */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('/service-worker.js'); });
 }
