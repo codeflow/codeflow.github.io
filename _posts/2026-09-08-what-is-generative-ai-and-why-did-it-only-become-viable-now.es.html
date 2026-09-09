@@ -12,6 +12,7 @@ reading_time: 12
 level: Introductory
 series_next: { title: "Fundamentos antes que herramientas: cómo evaluar y construir con IA generativa", url: "/es/articles/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai/" }
 excerpt: "La IA generativa no apareció de la nada: se volvió viable cuando convergieron tres cosas — cómputo paralelo barato, datos en forma utilizable y una arquitectura que modela el contexto a gran escala. Este artículo traza la línea entre predecir un elemento existente y sintetizar uno nuevo, explica por qué generar no es copiar, por qué el prompt es el mecanismo de control, dónde ya funciona la tecnología en texto, imagen, vídeo y código, y por qué la revisión humana sigue siendo obligatoria…"
+image: "/assets/social/what-is-generative-ai-and-why-did-it-only-become-viable-now.es.png"
 description: "Una introducción a la IA generativa: los tres factores que la hicieron viable, la diferencia con la IA tradicional, por qué generar no es copiar, el prompt como control, aplicaciones en texto, imagen, vídeo y código, y la revisión humana obligatoria."
 references_count: 10
 key_concepts: ["Predecir vs generar", "Predicción del siguiente token", "Prompt como especificación", "Generar, inspeccionar, corregir", "Atención y contexto"]
@@ -75,7 +76,7 @@ history:
     confiar en la tecnología hoy.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec1">1. Por qué ahora: tres factores que convergieron</div>
+  <h2 class="af-subHeader" id="sec1">1. Por qué ahora: tres factores que convergieron</h2>
   <p>
     La IA generativa se volvió viable cuando se encontraron tres líneas independientes de progreso. Ninguna es nueva por sí
     sola; lo nuevo es que las tres maduraron al mismo tiempo.
@@ -138,7 +139,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec2">2. De la IA tradicional a la IA generativa</div>
+  <h2 class="af-subHeader" id="sec2">2. De la IA tradicional a la IA generativa</h2>
   <p>
     La IA tradicional trabaja sobre todo con <b>reconocimiento de patrones, clasificación y predicción</b> sobre datos que ya
     existen. Un sistema de recomendación aprende los hábitos de un usuario y estima la siguiente acción probable — vino en
@@ -223,7 +224,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec3">3. Generar no es copiar</div>
+  <h2 class="af-subHeader" id="sec3">3. Generar no es copiar</h2>
   <p>
     Generar no significa cortar y pegar ejemplos del conjunto de entrenamiento. Significa producir una <b>combinación nueva,
     coherente con la petición</b>. Si alguien pide un libro &ldquo;basado en&rdquo; muchos libros anteriores, el sistema no debe
@@ -266,7 +267,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec4">4. Creación, inteligencia y el debate filosófico</div>
+  <h2 class="af-subHeader" id="sec4">4. Creación, inteligencia y el debate filosófico</h2>
   <p>
     Llamar a estos sistemas &ldquo;no inteligentes&rdquo; porque no crean como un artista humano mezcla <b>criterios
     filosóficos</b> con <b>criterios operativos</b>. En el uso cotidiano, la inteligencia se infiere del comportamiento: la
@@ -282,7 +283,7 @@ history:
     creación manifiesta</b> — y dónde queda la responsabilidad por el resultado.
   </p>
 
-  <div class="af-subHeader" id="sec5">5. El prompt como mecanismo de control</div>
+  <h2 class="af-subHeader" id="sec5">5. El prompt como mecanismo de control</h2>
   <p>
     El <b>prompt</b> es la especificación de entrada: le dice al modelo qué generar, en qué estilo y bajo qué restricciones.
     Como el prompt forma parte del condicionamiento en la ecuación (1), moldea cada token posterior. Cuanto más clara la
@@ -308,7 +309,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec6">6. Dónde ya funciona: texto, imagen, vídeo y código</div>
+  <h2 class="af-subHeader" id="sec6">6. Dónde ya funciona: texto, imagen, vídeo y código</h2>
   <p>
     Los modelos generativos ya producen libros, correos, respuestas automáticas y otros artefactos textuales con buena
     coherencia y estilo consistente. El valor práctico está en un <b>primer borrador útil</b>, adaptado al formato y al tono
@@ -354,7 +355,7 @@ history:
     última columna es el punto de la sección 7: cuanto más consecuencias tiene el medio, menos opcional es la revisión.
   </p>
 
-  <div class="af-subHeader" id="sec7">7. La revisión humana no es opcional</div>
+  <h2 class="af-subHeader" id="sec7">7. La revisión humana no es opcional</h2>
   <p>
     Las salidas generativas pueden parecer correctas y aun así contener errores sutiles. En imágenes aparece como texto con
     acentos incorrectos, proporciones extrañas o detalles anatómicos inconsistentes; en vídeo, como artefactos de movimiento y de
@@ -400,7 +401,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec8">8. Bajo el capó: deep learning, atención y contexto</div>
+  <h2 class="af-subHeader" id="sec8">8. Bajo el capó: deep learning, atención y contexto</h2>
   <p>
     El deep learning permite que un sistema aprenda <b>representaciones complejas</b> a partir de grandes volúmenes de datos, en
     vez de depender solo de reglas explícitas: nadie escribe qué hace coherente una frase o plausible una imagen; la red lo aprende
@@ -480,7 +481,7 @@ history:
     <span class="k">return</span> tokens</pre>
   </div>
 
-  <div class="af-subHeader" id="sec9">9. Conclusión</div>
+  <h2 class="af-subHeader" id="sec9">9. Conclusión</h2>
   <p>
     La IA generativa no es magia ni una máquina de copiar. Es una distribución de probabilidad aprendida sobre artefactos,
     muestreada un paso a la vez bajo la guía de un prompt — hecha viable por la convergencia de cómputo paralelo, datos
@@ -509,7 +510,7 @@ history:
   <li><span class="refNum">[10]</span><span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016, cap. 1 y 6. <span class="refSrc">ISBN 978-0262035613</span></span><span class="refType cf-label">Libro</span></li>
 </ul>
 <div class="af-spacer"></div>
-<div class="af-subHeader" style="margin-top:0;">Lecturas complementarias</div>
+<h2 class="af-subHeader" style="margin-top:0;">Lecturas complementarias</h2>
 <ul class="cf-refList">
   <li><span class="refNum">[a]</span><span>J. Alammar &mdash; <cite>The Illustrated GPT-2</cite>. <a href="https://jalammar.github.io/illustrated-gpt2/">jalammar.github.io</a></span><span class="refType cf-label">Tutorial</span></li>
   <li><span class="refNum">[b]</span><span>A. Karpathy &mdash; <cite>Intro to Large Language Models</cite>, charla, 2023. <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">youtube.com</a></span><span class="refType cf-label">Charla</span></li>

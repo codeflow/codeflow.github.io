@@ -12,6 +12,7 @@ reading_time: 12
 level: Introductory
 series_prev: { title: "O que é IA generativa, e por que ela só se tornou viável agora?", url: "/pt-BR/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
 excerpt: "Uma caixa de prompt é a superfície da IA generativa, não a substância. Este artigo separa as camadas — aplicação, família de modelo, machine learning e deep learning —, explica o mecanismo que faz um modelo gerar e transforma a escolha de modelo numa decisão de engenharia com critérios: qualidade, custo, latência, especialização e dependência de fornecedor. Fecha com o que muda quando o modelo vira um componente de um sistema que você projeta, e como critérios estáveis permitem absorver um ecossistema em movimento sem recomeçar do zero…"
+image: "/assets/social/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai.pt-BR.png"
 description: "Por que entender os fundamentos da IA generativa vale mais do que a familiaridade com ferramentas: as camadas de LLMs a deep learning, o mecanismo generativo, critérios de engenharia e trade-offs para escolher modelos, e como construir soluções reais com o modelo como um componente."
 references_count: 12
 key_concepts: ["Camadas: aplicação, modelo, campo", "Distribuição aprendida", "Critérios de engenharia", "Trade-off qualidade-custo-latência", "Modelo como componente"]
@@ -68,7 +69,7 @@ history:
     algum momento, construir aplicações com um modelo dentro delas, em vez de apenas digitar na aplicação de outra pessoa.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec1">1. Fundamentos duram mais que ferramentas</div>
+  <h2 class="af-subHeader" id="sec1">1. Fundamentos duram mais que ferramentas</h2>
   <p>
     A IA generativa costuma ser conhecida por uma interface: uma caixa de texto, um complemento no editor, um botão que
     redige um e-mail. A interface é conveniente e também enganosa, porque esconde a única coisa que se transfere entre
@@ -90,7 +91,7 @@ history:
     o mecanismo, depois os critérios, depois o sistema.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec2">2. Onde os LLMs se encaixam: IA generativa, machine learning e deep learning</div>
+  <h2 class="af-subHeader" id="sec2">2. Onde os LLMs se encaixam: IA generativa, machine learning e deep learning</h2>
   <p>
     Os termos costumam ser usados como sinônimos, e essa é a primeira fonte de decisões superficiais. Eles são aninhados.
     <b>Machine learning</b> é o campo dos programas que melhoram a partir de dados em vez de serem escritos regra por regra.
@@ -160,7 +161,7 @@ history:
   </table>
   <p class="tip" style="margin-bottom:12px;">Tabela 1 &mdash; Os quatro níveis, a pergunta que cada um responde e as decisões que pertencem a ele. Uma pontuação de benchmark é um fato no nível do modelo; uma boa resposta no seu produto é um resultado no nível da aplicação.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup></p>
 
-  <div class="af-subHeader" id="sec3">3. O mecanismo por trás dos modelos generativos</div>
+  <h2 class="af-subHeader" id="sec3">3. O mecanismo por trás dos modelos generativos</h2>
   <p>
     Um modelo generativo é um sistema treinado para aprender os padrões de uma distribuição de dados e produzir saídas novas
     coerentes com esses padrões. Para texto, a receita é concreta: o modelo é treinado para prever o próximo token dados os
@@ -252,7 +253,7 @@ history:
     junto com ela?".<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec4">4. Comparação de arquiteturas por critérios de engenharia</div>
+  <h2 class="af-subHeader" id="sec4">4. Comparação de arquiteturas por critérios de engenharia</h2>
   <p>
     Escolher um modelo por popularidade, ou pela impressão deixada por uma demonstração, é o equivalente, no nível da
     aplicação, a escolher um banco de dados porque está na moda. Uma comparação madura olha para critérios de engenharia:
@@ -290,7 +291,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec5">5. Trade-offs: qualidade, custo, velocidade e especialização</div>
+  <h2 class="af-subHeader" id="sec5">5. Trade-offs: qualidade, custo, velocidade e especialização</h2>
   <p>
     Não existe modelo ideal em todos os cenários; existem trade-offs. Aumentar a qualidade normalmente significa um modelo
     maior, o que eleva o custo por requisição e o tempo de resposta. Buscar velocidade significa um modelo menor ou saídas
@@ -430,7 +431,7 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
     quando os números mudarem.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec6">6. Construção de soluções reais com IA</div>
+  <h2 class="af-subHeader" id="sec6">6. Construção de soluções reais com IA</h2>
   <p>
     Construir uma solução real significa sair do uso passivo de uma ferramenta e projetar uma aplicação que resolve um
     problema concreto do dia a dia de alguém. O modelo é um componente dessa aplicação, e raramente o maior. Em volta dele
@@ -490,7 +491,7 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
     as métricas permanecem.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec7">7. Um ecossistema em movimento rápido: adaptar sem recomeçar</div>
+  <h2 class="af-subHeader" id="sec7">7. Um ecossistema em movimento rápido: adaptar sem recomeçar</h2>
   <p>
     O ecossistema de IA generativa se move rápido: novos modelos, ferramentas e técnicas surgem continuamente, e um ranking
     de seis meses atrás é história. Acompanhar o campo, portanto, não é opcional; faz parte da competência técnica necessária
@@ -518,7 +519,7 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
     trade-offs, e é exatamente para isso que servem critérios estáveis.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec8">8. Da condição de usuário à linha de frente da criação</div>
+  <h2 class="af-subHeader" id="sec8">8. Da condição de usuário à linha de frente da criação</h2>
   <p>
     Dominar IA generativa significa assumir uma posição ativa na criação de aplicações, e não apenas usar interfaces
     prontas. Esse domínio combina o entendimento técnico do mecanismo, a leitura de um contexto — a tarefa, os usuários, as
@@ -546,7 +547,7 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
   <li><span class="refNum">[12]</span><span>H. Touvron; L. Martin; K. Stone <i>et al.</i> &mdash; <cite>Llama 2: Open Foundation and Fine-Tuned Chat Models</cite>, 2023. <a href="https://arxiv.org/abs/2307.09288">arXiv:2307.09288</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
 </ul>
 <div class="af-spacer"></div>
-<div class="af-subHeader" style="margin-top:0;">Leitura complementar</div>
+<h2 class="af-subHeader" style="margin-top:0;">Leitura complementar</h2>
 <ul class="cf-refList">
   <li><span class="refNum">[a]</span><span>A. Karpathy &mdash; <cite>Intro to Large Language Models</cite>, palestra, 2023. <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">youtube.com</a></span><span class="refType cf-label">Palestra</span></li>
   <li><span class="refNum">[b]</span><span>C. Huyen &mdash; <cite>Building LLM applications for production</cite>, 2023. <a href="https://huyenchip.com/2023/04/11/llm-engineering.html">huyenchip.com</a></span><span class="refType cf-label">Artigo</span></li>

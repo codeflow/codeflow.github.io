@@ -1,0 +1,34 @@
+{%- comment -%} Atom feed of one language; `flang` is set by the calling file. {%- endcomment -%}
+{%- assign flang = flang | default: site.lang -%}
+{%- if flang == site.lang %}{% assign fhome = "/" %}{% else %}{% assign fhome = "/" | append: flang | append: "/" %}{% endif -%}
+{%- assign ft = site.data.i18n[flang] | default: site.data.i18n.en -%}
+{%- assign fposts = "" | split: "" -%}
+{%- for p in site.posts %}{% assign plang = p.lang | default: site.lang %}{% if plang == flang and p.stub != true %}{% assign fposts = fposts | push: p %}{% endif %}{% endfor -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ flang }}">
+  <title>{{ site.title | xml_escape }}</title>
+  <subtitle>{{ ft.ui.footer_tagline | xml_escape }}</subtitle>
+  <id>{{ fhome | absolute_url }}</id>
+  <link rel="alternate" type="text/html" href="{{ fhome | absolute_url }}"/>
+  <link rel="self" type="application/atom+xml" href="{{ fhome | append: 'feed.xml' | absolute_url }}"/>
+  <updated>{% if fposts.first %}{{ fposts.first.updated | default: fposts.first.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}</updated>
+  <author><name>{{ site.author_name | xml_escape }}</name><uri>{{ site.github }}</uri></author>
+  <icon>{{ '/assets/icons/icon-192.png' | absolute_url }}</icon>
+  <logo>{{ site.og_image | absolute_url }}</logo>
+  <rights>{{ site.title | xml_escape }} © {{ site.time | date: "%Y" }}</rights>
+{%- for p in fposts %}
+  <entry>
+    <title>{{ p.title | xml_escape }}</title>
+    <id>{{ p.url | absolute_url }}</id>
+    <link rel="alternate" type="text/html" href="{{ p.url | absolute_url }}"/>
+    <published>{{ p.date | date_to_xmlschema }}</published>
+    <updated>{{ p.updated | default: p.date | date_to_xmlschema }}</updated>
+    <author><name>{{ site.author_name | xml_escape }}</name></author>
+    {%- assign plabel = ft.labels[p.category] | default: p.category %}
+    <category term="{{ p.category | xml_escape }}" label="{{ plabel | xml_escape }}"/>
+    {%- for tg in p.tags %}
+    <category term="{{ tg | xml_escape }}"/>{% endfor %}
+    <summary type="text">{{ p.description | default: p.excerpt | strip_html | strip_newlines | xml_escape }}</summary>
+  </entry>
+{%- endfor %}
+</feed>

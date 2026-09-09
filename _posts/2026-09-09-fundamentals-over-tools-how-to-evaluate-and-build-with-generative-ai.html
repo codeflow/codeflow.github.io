@@ -10,6 +10,7 @@ reading_time: 12
 level: Introductory
 series_prev: { title: "What is Generative AI, and why did it only become viable now?", url: "/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
 excerpt: "A prompt box is the surface of generative AI, not its substance. This article separates the layers — application, model family, machine learning and deep learning — explains the mechanism that makes a model generate, and turns model choice into an engineering decision with criteria: quality, cost, latency, specialization and lock-in. It closes with what changes when the model becomes one component of a system you design, and how stable criteria let you absorb a fast-moving ecosystem without starting over…"
+image: "/assets/social/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai.en.png"
 description: "Why understanding the fundamentals of generative AI beats tool familiarity: the layers from LLMs to deep learning, the generative mechanism, engineering criteria and trade-offs for choosing models, and how to build real solutions with a model as one component."
 references_count: 12
 key_concepts: ["Layers: application, model, field", "Learned distribution", "Engineering criteria", "Quality-cost-latency trade-off", "Model as a component"]
@@ -66,7 +67,7 @@ history:
     applications with a model inside them rather than only typing into someone else's.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec1">1. Fundamentals outlast tools</div>
+  <h2 class="af-subHeader" id="sec1">1. Fundamentals outlast tools</h2>
   <p>
     Generative AI is usually met through an interface: a text box, a completion in the editor, a button that drafts an e-mail.
     The interface is convenient and also misleading, because it hides the only thing that transfers between products: the
@@ -88,7 +89,7 @@ history:
     criteria, then the system.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec2">2. Where LLMs sit: generative AI, machine learning and deep learning</div>
+  <h2 class="af-subHeader" id="sec2">2. Where LLMs sit: generative AI, machine learning and deep learning</h2>
   <p>
     The terms are often used interchangeably, and that is the first source of shallow decisions. They are nested. <b>Machine
     learning</b> is the field of programs that improve from data instead of being written rule by rule. <b>Deep learning</b> is
@@ -158,7 +159,7 @@ history:
   </table>
   <p class="tip" style="margin-bottom:12px;">Table 1 &mdash; The four levels, the question each answers and the decisions that belong there. A benchmark score is a model-level fact; a good answer in your product is an application-level result.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup></p>
 
-  <div class="af-subHeader" id="sec3">3. The mechanism behind generative models</div>
+  <h2 class="af-subHeader" id="sec3">3. The mechanism behind generative models</h2>
   <p>
     A generative model is a system trained to learn the patterns of a data distribution and to produce new outputs consistent
     with those patterns. For text the recipe is concrete: the model is trained to predict the next token given the previous
@@ -250,7 +251,7 @@ history:
     it?".<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec4">4. Comparing architectures by engineering criteria</div>
+  <h2 class="af-subHeader" id="sec4">4. Comparing architectures by engineering criteria</h2>
   <p>
     Choosing a model by popularity, or by the impression left by a demo, is the application-level equivalent of picking a
     database because it is trending. A mature comparison looks at engineering criteria: what the model costs to run at the
@@ -288,7 +289,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec5">5. Trade-offs: quality, cost, speed and specialization</div>
+  <h2 class="af-subHeader" id="sec5">5. Trade-offs: quality, cost, speed and specialization</h2>
   <p>
     There is no model that is ideal in every scenario; there are trade-offs. Raising quality usually means a larger model,
     which raises the cost per request and the time to answer. Chasing speed means a smaller model or shorter outputs, which
@@ -428,7 +429,7 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
     the numbers change.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec6">6. Building real solutions with AI</div>
+  <h2 class="af-subHeader" id="sec6">6. Building real solutions with AI</h2>
   <p>
     Building a real solution means leaving the passive use of a tool and designing an application that solves a concrete
     problem in someone's day. The model is one component of that application, and rarely the largest one. Around it sit the
@@ -488,7 +489,7 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
     prompts, the retrieval, the checks and the metrics stay.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec7">7. A fast-moving ecosystem: adapt without starting over</div>
+  <h2 class="af-subHeader" id="sec7">7. A fast-moving ecosystem: adapt without starting over</h2>
   <p>
     The generative AI ecosystem moves quickly: new models, tools and techniques appear continuously, and a leaderboard from
     six months ago is history. Following the field is therefore not optional; it is part of the technical competence needed
@@ -515,7 +516,7 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
     product on the trade-off chart, and that is exactly what stable criteria are for.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec8">8. From user to builder</div>
+  <h2 class="af-subHeader" id="sec8">8. From user to builder</h2>
   <p>
     Mastering generative AI means taking an active position in the creation of applications, not only using ready-made
     interfaces. That mastery combines technical understanding of the mechanism, the ability to read a context — the task, the
@@ -543,7 +544,7 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
   <li><span class="refNum">[12]</span><span>H. Touvron; L. Martin; K. Stone <i>et al.</i> &mdash; <cite>Llama 2: Open Foundation and Fine-Tuned Chat Models</cite>, 2023. <a href="https://arxiv.org/abs/2307.09288">arXiv:2307.09288</a></span><span class="refType cf-label">Academic paper</span></li>
 </ul>
 <div class="af-spacer"></div>
-<div class="af-subHeader" style="margin-top:0;">Further reading</div>
+<h2 class="af-subHeader" style="margin-top:0;">Further reading</h2>
 <ul class="cf-refList">
   <li><span class="refNum">[a]</span><span>A. Karpathy &mdash; <cite>Intro to Large Language Models</cite>, talk, 2023. <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">youtube.com</a></span><span class="refType cf-label">Talk</span></li>
   <li><span class="refNum">[b]</span><span>C. Huyen &mdash; <cite>Building LLM applications for production</cite>, 2023. <a href="https://huyenchip.com/2023/04/11/llm-engineering.html">huyenchip.com</a></span><span class="refType cf-label">Article</span></li>

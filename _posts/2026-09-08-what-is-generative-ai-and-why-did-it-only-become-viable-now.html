@@ -10,6 +10,7 @@ reading_time: 12
 level: Introductory
 series_next: { title: "Fundamentals over tools: how to evaluate and build with generative AI", url: "/articles/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai/" }
 excerpt: "Generative AI did not appear out of nowhere: it became viable when three things converged — cheap parallel compute, data in usable form, and an architecture that models context at scale. This article draws the line between predicting an existing item and synthesizing a new one, explains why generation is not copying, why the prompt is the control mechanism, where the technology already works in text, image, video and code, and why human review stays mandatory…"
+image: "/assets/social/what-is-generative-ai-and-why-did-it-only-become-viable-now.en.png"
 description: "An introduction to generative AI: the three factors that made it viable, the difference from traditional AI, why generation is not copying, prompts as control, applications in text, image, video and code, and the mandatory human review."
 references_count: 10
 key_concepts: ["Predict vs generate", "Next-token prediction", "Prompt as specification", "Generate, inspect, correct", "Attention and context"]
@@ -75,7 +76,7 @@ history:
     the technology can and cannot be trusted to do today.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec1">1. Why now: three factors that converged</div>
+  <h2 class="af-subHeader" id="sec1">1. Why now: three factors that converged</h2>
   <p>
     Generative AI became viable when three independent lines of progress met. None of them is new on its own; what is new
     is that all three matured at the same time.
@@ -141,7 +142,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec2">2. From traditional AI to generative AI</div>
+  <h2 class="af-subHeader" id="sec2">2. From traditional AI to generative AI</h2>
   <p>
     Traditional AI works mainly with <b>pattern recognition, classification and prediction</b> over data that already
     exists. A recommendation system learns a user's habits and estimates the next probable action — wine on cold days,
@@ -229,7 +230,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec3">3. Generation is not copying</div>
+  <h2 class="af-subHeader" id="sec3">3. Generation is not copying</h2>
   <p>
     Generating does not mean cutting and pasting examples from the training set. It means producing a <b>new combination
     that is coherent with the request</b>. If someone asks for a book &ldquo;based on&rdquo; many earlier books, the system
@@ -271,7 +272,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec4">4. Creation, intelligence and the philosophical debate</div>
+  <h2 class="af-subHeader" id="sec4">4. Creation, intelligence and the philosophical debate</h2>
   <p>
     Calling these systems &ldquo;not intelligent&rdquo; because they do not create the way a human artist does mixes
     <b>philosophical criteria</b> with <b>operational ones</b>. In everyday use, intelligence is inferred from behaviour: the
@@ -287,7 +288,7 @@ history:
     manifests</b> — and where the responsibility for the result stays.
   </p>
 
-  <div class="af-subHeader" id="sec5">5. The prompt as the control mechanism</div>
+  <h2 class="af-subHeader" id="sec5">5. The prompt as the control mechanism</h2>
   <p>
     The <b>prompt</b> is the input specification: it tells the model what to generate, in what style and under which
     constraints. Because the prompt is part of the conditioning in equation (1), it shapes every token that follows. The
@@ -313,7 +314,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec6">6. Where it already works: text, image, video and code</div>
+  <h2 class="af-subHeader" id="sec6">6. Where it already works: text, image, video and code</h2>
   <p>
     Generative models already produce books, e-mails, automatic replies and other textual artifacts with good coherence and
     consistent style. The practical value lies in a <b>useful first draft</b>, adapted to the desired format and tone. Because
@@ -358,7 +359,7 @@ history:
     the point of section 7: the more consequential the medium, the less optional the review.
   </p>
 
-  <div class="af-subHeader" id="sec7">7. Human review is not optional</div>
+  <h2 class="af-subHeader" id="sec7">7. Human review is not optional</h2>
   <p>
     Generative outputs can look correct and still contain subtle errors. In images this shows up as text with wrong
     accents, strange proportions or inconsistent anatomical details; in video, as motion and finishing artifacts; in text and
@@ -406,7 +407,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec8">8. Under the hood: deep learning, attention and context</div>
+  <h2 class="af-subHeader" id="sec8">8. Under the hood: deep learning, attention and context</h2>
   <p>
     Deep learning lets a system learn <b>complex representations</b> from large volumes of data instead of depending only on
     explicit rules: nobody writes down what makes a sentence coherent or an image plausible; the network learns it from
@@ -490,7 +491,7 @@ history:
     <span class="k">return</span> tokens</pre>
   </div>
 
-  <div class="af-subHeader" id="sec9">9. Conclusion</div>
+  <h2 class="af-subHeader" id="sec9">9. Conclusion</h2>
   <p>
     Generative AI is not magic and not a copying machine. It is a learned probability distribution over artifacts, sampled
     one step at a time under the guidance of a prompt — made viable by the convergence of parallel compute, organized data
@@ -518,7 +519,7 @@ history:
   <li><span class="refNum">[10]</span><span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016, ch. 1 and 6. <span class="refSrc">ISBN 978-0262035613</span></span><span class="refType cf-label">Book</span></li>
 </ul>
 <div class="af-spacer"></div>
-<div class="af-subHeader" style="margin-top:0;">Further reading</div>
+<h2 class="af-subHeader" style="margin-top:0;">Further reading</h2>
 <ul class="cf-refList">
   <li><span class="refNum">[a]</span><span>J. Alammar &mdash; <cite>The Illustrated GPT-2</cite>. <a href="https://jalammar.github.io/illustrated-gpt2/">jalammar.github.io</a></span><span class="refType cf-label">Tutorial</span></li>
   <li><span class="refNum">[b]</span><span>A. Karpathy &mdash; <cite>Intro to Large Language Models</cite>, talk, 2023. <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">youtube.com</a></span><span class="refType cf-label">Talk</span></li>

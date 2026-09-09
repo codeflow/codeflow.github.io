@@ -130,7 +130,7 @@ history:
     Before 2017, to know that the pronoun &ldquo;it&rdquo; refers to &ldquo;cat&rdquo; and not to &ldquo;street&rdquo;, a recurrent network had to carry that information in a hidden state across the whole sentence, step by step. <b>Self-attention</b> solves the same problem another way: it lets every token query all the others directly and weigh, with learned weights, which of them matter. It is an associative-retrieval mechanism disguised as matrix multiplication &mdash; and it underpins practically every language model in production today.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec1">1. The problem: context without recurrence</div>
+  <h2 class="af-subHeader" id="sec1">1. The problem: context without recurrence</h2>
   <p>
     Recurrent networks (RNN, LSTM, GRU) process the sequence in order: the token at position
     <code>t</code> only sees the past through a fixed-size state vector. That brings two costs which became prohibitive at scale:
@@ -175,7 +175,7 @@ history:
     <b>quadratic</b> in sequence length &mdash; the subject of section 7.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
   </p>
 
-  <div class="af-subHeader" id="sec2">2. Query, Key and Value: the dictionary intuition</div>
+  <h2 class="af-subHeader" id="sec2">2. Query, Key and Value: the dictionary intuition</h2>
   <p>
     The most useful metaphor is that of a <b>lookup in an associative dictionary</b>. When you query an ordinary dictionary you supply an exact key and get back a value. In self-attention the lookup is
     <i>soft</i>: you supply a query, it is compared against <i>all</i> the available keys, and what comes back is an average of the values weighted by the similarity of each comparison.
@@ -311,7 +311,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec3">3. Scaled Dot-Product Attention</div>
+  <h2 class="af-subHeader" id="sec3">3. Scaled Dot-Product Attention</h2>
   <p>
     With Q, K and V defined, the whole mechanism fits on one line. It is the central equation of the original paper:<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
   </p>
@@ -343,7 +343,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec4">4. Masks: causal and padding</div>
+  <h2 class="af-subHeader" id="sec4">4. Masks: causal and padding</h2>
   <p>
     Equation (1) lets every position see all the others. That is what you want in an
     <b>encoder</b> (classification, sentence <i>embeddings</i>), but it is fatal in an autoregressive <b>decoder</b>: during training the model would see the token it is meant to predict. The fix is to add a mask to the <i>scores</i> <b>before</b> the <i>softmax</i>, with &minus;&infin; at the forbidden positions &mdash; in practice a very negative number such as <code>-1e9</code>, which the <i>softmax</i> turns into a weight of zero.
@@ -573,7 +573,7 @@ history:
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec5">5. Minimal implementation</div>
+  <h2 class="af-subHeader" id="sec5">5. Minimal implementation</h2>
   <p>
     All of section 3 fits in about ten lines of PyTorch. This is the core &mdash; no
     <i>dropout</i>, no <i>multi-head</i>, no optimization &mdash; and it is useful precisely because it is readable enough to check against equation (1):
@@ -623,7 +623,7 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec6">6. Multi-Head Attention</div>
+  <h2 class="af-subHeader" id="sec6">6. Multi-Head Attention</h2>
   <p>
     A single application of equation (1) produces <b>one</b> attention distribution per token &mdash; and a distribution, by definition, has to choose. But the relevant relation between two words is rarely single: &ldquo;it&rdquo; links to &ldquo;cat&rdquo; by coreference, to the verb by syntactic function, and to the previous token by proximity. Forcing all of that into a single weight vector is a bottleneck.
   </p>
@@ -840,7 +840,7 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
     <span class="k">return</span> self.w_o(z)</pre>
   </div>
 
-  <div class="af-subHeader" id="sec7">7. The quadratic cost and how the industry attacks it</div>
+  <h2 class="af-subHeader" id="sec7">7. The quadratic cost and how the industry attacks it</h2>
   <p>
     The attention matrix has <i>n</i>&sup2; entries. Doubling the context quadruples both the work and the activation memory &mdash; which is why &ldquo;context window&rdquo; became a marketing metric and an engineering battlefield at the same time. The approaches that dominate today fall into three families:
   </p>
@@ -897,7 +897,7 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
     </div>
   </div>
 
-  <div class="af-subHeader" id="sec8">8. Conclusion</div>
+  <h2 class="af-subHeader" id="sec8">8. Conclusion</h2>
   <p>
     Self-attention is not a complicated mechanism: it is a soft associative lookup, expressed as two matrix multiplications with a <i>softmax</i> in the middle. Its strength comes from three combined properties &mdash; constant-length path between any two positions, full parallelism along the sequence, and a parameter cost independent of context length.
   </p>
@@ -964,7 +964,7 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
 </li>
           </ul>
           <div class="af-spacer"></div>
-          <div class="af-subHeader" style="margin-top:0;">Further reading</div>
+          <h2 class="af-subHeader" style="margin-top:0;">Further reading</h2>
           <ul class="cf-refList">
 <li>
   <span class="refNum">[a]</span>

@@ -11,6 +11,9 @@ github: "https://github.com/rafaelsantos"
 author_name: "Rafael Santos"
 theme_color: "#3a5c86"                 # meio do degradê da barra de branding (PWA / barra do navegador)
 og_image: /assets/og-default.png       # imagem social padrão (1200x630), gerada por scripts/make_icons.py
+# Verificação de propriedade: cole o token que cada ferramenta fornece (a meta só é emitida quando preenchido)
+google_site_verification: ""          # Google Search Console → Métodos de verificação → Tag HTML (só o content)
+bing_site_verification: ""            # Bing Webmaster Tools → meta tag msvalidate.01 (só o content)
 
 # Comentários (giscus, sobre GitHub Discussions). Mesmos identificadores do site atual;
 # mapping "pathname" dá uma discussão por URL de post (no site antigo tudo era index.html#…).
