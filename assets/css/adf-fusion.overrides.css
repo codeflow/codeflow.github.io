@@ -682,9 +682,32 @@ body {
 .cf-tableScroll > .af-table { margin-bottom: 0 !important; }
 .cf-tableScroll { margin-bottom: 10px; }
 @media (max-width: 768px) {
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }   /* sem "font boosting" em células largas */
   .af-panelMain { overflow-x: hidden; }            /* nada pode alargar a página */
-  .cf-tableScroll > .af-table { min-width: 560px; }/* colunas legíveis; o contêiner rola */
   .cf-formula { overflow-x: auto; }
+
+  /* Tabelas com cabeçalho viram cartões: uma linha = um bloco, cada célula com o nome da coluna à esquerda */
+  .cf-stack, .cf-stack tbody, .cf-stack tr, .cf-stack td { display: block; }
+  .cf-stack thead { display: none; }
+  .cf-stack tr { border: 1px solid #a9b8c7; margin-bottom: 8px; background: #fff; }
+  .cf-stack tr:last-child { margin-bottom: 0; }
+  .cf-stack td {
+    display: flex; gap: 8px; padding: 4px 7px;
+    border-right: 0; border-bottom: 1px solid #e9edf1; white-space: normal;
+  }
+  .cf-stack td:last-child { border-bottom: 0; }
+  .cf-stack td::before { content: attr(data-label); flex: 0 0 38%; color: #20456b; }
+  .cf-stack td[data-label=""]::before { display: none; }
+  .cf-stack td.cf-rowTitle {
+    background: linear-gradient(#fafcfd, #e4eaf1); border-bottom: 1px solid #a9b8c7;
+    font-weight: bold; color: #20456b;
+  }
+  .cf-stack td.cf-rowTitle::before { font-weight: normal; }
+  .cf-stack tbody tr.band td, .cf-stack tbody tr:hover td { background: transparent; }
+  .cf-stack tbody tr.band td.cf-rowTitle, .cf-stack tbody tr:hover td.cf-rowTitle { background: linear-gradient(#fafcfd, #e4eaf1); }
+  .cf-stack td.num { text-align: left; }
+  /* tabelas sem cabeçalho (sem cartões) continuam rolando na horizontal */
+  .cf-tableScroll > .af-table:not(.cf-stack) { min-width: 560px; }
 }
 
 

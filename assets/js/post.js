@@ -134,6 +134,17 @@ document.querySelectorAll('.cf-codeBox pre').forEach(function (pre) {
 (function wrapTables() {
   document.querySelectorAll('#mainPanel table.af-table').forEach(function (tb) {
     if (tb.parentNode.classList.contains('cf-tableScroll')) return;
+    /* Label every cell with its column header so narrow screens can stack each row as a card. */
+    var heads = [].map.call(tb.querySelectorAll('thead th'), function (th) { return th.textContent.trim(); });
+    if (heads.length && !tb.querySelector('.rowHdr')) {
+      tb.classList.add('cf-stack');
+      [].forEach.call(tb.querySelectorAll('tbody tr'), function (tr) {
+        [].forEach.call(tr.children, function (td, i) {
+          td.setAttribute('data-label', heads[i] || '');
+          if (i === 0) td.classList.add('cf-rowTitle');
+        });
+      });
+    }
     var w = document.createElement('div');
     w.className = 'cf-tableScroll';
     tb.parentNode.insertBefore(w, tb);
