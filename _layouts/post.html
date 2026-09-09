@@ -59,7 +59,7 @@ layout: default
     <!-- Article tabs: references, tags, related, versions -->
     <div class="af-panelTabbed" id="artTabs" style="margin-top:12px;">
       <div class="af-tabBar">
-        <span class="af-tab selected" id="artTabBtnRefs" onclick="selectTab(this,'artTabRefs')">{{ t.ui.references }}{% if page.references_count %}<span class="cf-count">{{ page.references_count }}</span>{% endif %}</span>
+        <span class="af-tab selected" id="artTabBtnRefs" onclick="selectTab(this,'artTabRefs')">{{ t.ui.references }}{% if page.references_count %} ({{ page.references_count }}){% endif %}</span>
         <span class="af-tab" onclick="selectTab(this,'artTabTags')">{{ t.ui.tags }}</span>
         <span class="af-tab" onclick="selectTab(this,'artTabRel')">{{ t.ui.related }}</span>
         <span class="af-tab" onclick="selectTab(this,'artTabHist')">{{ t.ui.versions }}</span>

@@ -169,14 +169,14 @@ function buildSidebar() {
         '<div class="af-treeRow" data-topic="' + esc(tp) + '">' +
           '<span class="tw" onclick="event.stopPropagation(); toggleTree(\'' + id + '\')">' + TW_OPEN + '</span>' +
           '<span onclick="setFilter(\'topic\',\'' + esc(tp) + '\')" style="display:inline-flex; align-items:center; gap:4px;">' +
-            ICO_FOLDER + esc(label(tp)) + '<span class="cf-count">' + tItems.length + '</span></span>' +
+            ICO_FOLDER + esc(label(tp)) + ' <span class="tip">(' + tItems.length + ')</span></span>' +
         '</div><ul>' + tItems.map(leaf).join('') + '</ul></li>';
     }).join('') + items.filter(function (a) { return !a.topic; }).map(leaf).join('');
     return '<li class="af-treeNode' + (open ? '' : ' closed') + '" id="tn' + i + '">' +
       '<div class="af-treeRow" data-cat="' + esc(c) + '">' +
         '<span class="tw" onclick="event.stopPropagation(); toggleTree(\'tn' + i + '\')">' + (open ? TW_OPEN : TW_CLOSED) + '</span>' +
         '<span onclick="toggleTree(\'tn' + i + '\'); setFilter(\'cat\',\'' + esc(c) + '\')" style="display:inline-flex; align-items:center; gap:4px;">' +
-          ICO_FOLDER + esc(label(c)) + '<span class="cf-count">' + items.length + '</span></span>' +
+          ICO_FOLDER + esc(label(c)) + ' <span class="tip">(' + items.length + ')</span></span>' +
       '</div><ul>' + inner + '</ul></li>';
   }).join('');
 
@@ -190,14 +190,14 @@ function buildSidebar() {
   ARTICLES.forEach(function (a) { a.tags.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
   var tags = Object.keys(counts).sort(function (x, y) { return counts[y] - counts[x] || x.localeCompare(y); }).slice(0, 10);
   document.getElementById('tagCloud').innerHTML = tags.map(function (t) {
-    return '<a class="cf-tag" href="#" onclick="setFilter(\'tag\',\'' + esc(t) + '\'); return false;">' + esc(t) + '<span class="cf-count">' + counts[t] + '</span></a>';
+    return '<a class="cf-tag" href="#" onclick="setFilter(\'tag\',\'' + esc(t) + '\'); return false;">' + esc(t) + ' <span class="cnt">(' + counts[t] + ')</span></a>';
   }).join('');
 
   // archive by month, newest first
   var months = {};
   ARTICLES.forEach(function (a) { var k = monthKey(a); months[k] = (months[k] || 0) + 1; });
   document.getElementById('archList').innerHTML = Object.keys(months).sort().reverse().map(function (k) {
-    return '<div><a href="#" onclick="setFilter(\'month\',\'' + k + '\'); return false;">' + monthLabel(k) + '</a><span class="cf-count">' + months[k] + '</span></div>';
+    return '<div><a href="#" onclick="setFilter(\'month\',\'' + k + '\'); return false;">' + monthLabel(k) + '</a> <span class="tip">(' + months[k] + ')</span></div>';
   }).join('');
 }
 function selectTreeRow(row) {

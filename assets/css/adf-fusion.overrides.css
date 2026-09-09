@@ -60,26 +60,7 @@ a.cf-tag:hover {
   background: linear-gradient(#ffffff, #f2f6fb 45%, #e2ebf4);
   color: #0d3a6b;
 }
-a.cf-tag .cf-count { margin-right: -4px; }
-
-/* Contador Fusion: bolinha com o degradê escuro e número branco */
-.cf-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 14px;
-  height: 14px;
-  padding: 0 4px;
-  margin-left: 5px;
-  border: 1px solid #2e5378;
-  border-radius: 8px;
-  background: linear-gradient(#6b90b6, #3d6791);
-  color: #fff;
-  font: bold 9px Tahoma, Verdana, sans-serif;
-  line-height: 12px;
-  vertical-align: middle;
-  box-sizing: border-box;
-}
+.cf-tag .cnt { color: #6b7a89; font-weight: normal; }
 
 .cf-label {
   display: inline-block;
