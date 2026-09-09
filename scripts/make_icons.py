@@ -97,15 +97,17 @@ w, h = alpha.size
 pix = alpha.load()
 pts = [(x, y) for y in range(h) for x in range(w) if pix[x, y] > 128]
 hull = convex_hull(pts)
-PAD = 40                                   # source px around the 200px logo (= 4px around the 20px logo on screen)
+PAD = 60                                   # source px around the 200px logo (= 6px around the 20px logo on screen)
 S = w + 2 * PAD
 shape = Image.new("L", (S, S), 0)
 ImageDraw.Draw(shape).polygon([(x + PAD, y + PAD) for x, y in hull], fill=255)
-outer = shape.filter(ImageFilter.MaxFilter(31))          # contour grown by 15px (1.5px on screen)
+outer = shape.filter(ImageFilter.MaxFilter(41))          # contour grown by 20px (2px on screen)
 ring = Image.new("L", (S, S), 0)
 ring.paste(outer)
 ring.paste(0, mask=shape)                                # subtract the hexagon itself: nothing inside the contour
-ring = ring.filter(ImageFilter.GaussianBlur(9))          # soft edge
+ring = ring.filter(ImageFilter.GaussianBlur(12))         # soft falloff outwards: light, not a line
+ring.paste(0, mask=shape.filter(ImageFilter.MinFilter(9)))  # keep the inside of the hexagon dark after the blur
+ring = ring.point(lambda v: min(255, int(v * 1.5)))       # brighten the core so the glow still reads after the blur
 glow = Image.new("RGBA", (S, S), (250, 253, 255, 0))       # near-white light
 glow.putalpha(ring)
 glow.save(os.path.join(ROOT, "assets", "logo-glow.png"), optimize=True)
