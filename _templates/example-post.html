@@ -1,0 +1,997 @@
+---
+title: "Self-Attention: how Transformers decide where to look"
+date: "2026-09-04 08:20:00 -0300"
+updated: "2026-09-04 11:05:00 -0300"
+category: "Artificial Intelligence"
+topic: "Transformer Architecture"
+section: "Transformer Architecture"
+tags: ["self-attention", "transformers", "attention", "multi-head", "softmax", "pytorch", "llm", "nlp", "deep-learning", "flashattention"]
+reading_time: 16
+level: "Intermediate"
+prerequisite: "Linear Algebra"
+series:
+  name: "Transformer Architecture"
+  index: 3
+  total: 6
+series_prev:
+  title: "Embeddings and Tokenization"
+  url: "/articles/embeddings-and-tokenization-from-text-to-vector/"
+series_next:
+  title: "Positional Encoding"
+  url: "/articles/positional-encoding-rope-alibi-and-the-ordering-problem/"
+excerpt: "Before 2017, to know that the pronoun “it” refers to “cat” and not to “street”, a recurrent network had to carry that information in a hidden state across the whole sentence, step by step. Self-attention solves the same problem another way: it lets every token query all the others directly and weigh, with learned weights, which of them matter. It is an associative-retrieval mechanism disguised as matrix multiplication — and it underpins practically every language model in production today…"
+description: "Anatomy of the self-attention mechanism: Query, Key and Value, the scaled dot product, causal masks, multi-head and the quadratic cost."
+references_count: 9
+key_concepts: ["Query / Key / Value", "Scaled dot product", "Causal mask", "O(n²) cost"]
+version: 2
+history:
+  - when: "09/04/2026 09:48"
+    what: "Added section 7 (quadratic cost) and Table 2"
+  - when: "09/04/2026 08:35"
+    what: "Reference validation completed (9 of 9 reachable)"
+  - when: "09/04/2026 08:20"
+    what: "Initial publication of the article"
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    What you will find in this article
+  </div>
+  <ul>
+    <li>The intuition behind <b>Query</b>, <b>Key</b> and <b>Value</b> &mdash; and why there are three matrices, not one.</li>
+    <li>The derivation of the scaled dot product and the reason for the factor <span style="font-family:Cambria,Georgia,serif;">1/&radic;d<sub>k</sub></span>.</li>
+    <li>Causal and <i>padding</i> masks, with the heat map of the attention matrix.</li>
+    <li>A minimal PyTorch implementation, <i>multi-head</i> and the quadratic cost &mdash; with the variants that attack it.</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+<svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Article banner: the word it querying the other tokens in the sentence">
+<defs><linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient><linearGradient id="cfHeroTok" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6edf5"/></linearGradient><linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient></defs>
+<rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/>
+<rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+<text x="26" y="26" font-size="9" letter-spacing="1.4" fill="#6b90b6">CODEFLOW &#183; ARTIFICIAL INTELLIGENCE &#183; TRANSFORMER SERIES 3/6</text>
+<text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">Self-Attention</text>
+<text x="26" y="74" font-size="12" fill="#44566a">Query, Key and Value: how each token decides where to look</text>
+<path d="M 491 116 C 392 70, 230 70, 131 116" fill="none" stroke="#15497e" stroke-opacity="0.95" stroke-width="2.4"/>
+<path d="M 491 116 C 451 92, 387 92, 347 116" fill="none" stroke="#15497e" stroke-opacity="0.45" stroke-width="1.6"/>
+<path d="M 491 116 C 412 76, 282 76, 203 116" fill="none" stroke="#15497e" stroke-opacity="0.28" stroke-width="1.4"/>
+<path d="M 491 116 C 372 70, 178 70, 59 116" fill="none" stroke="#15497e" stroke-opacity="0.16" stroke-width="1.2"/>
+<rect x="26" y="116" width="66" height="20" rx="2" fill="url(#cfHeroTok)" stroke="#a9b8c7"/>
+<text x="59" y="130" font-size="11"  text-anchor="middle" fill="#1a2836">The</text>
+<rect x="98" y="116" width="66" height="20" rx="2" fill="#cfe2f7" stroke="#15497e"/>
+<text x="131" y="130" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a2836">cat</text>
+<rect x="170" y="116" width="66" height="20" rx="2" fill="url(#cfHeroTok)" stroke="#a9b8c7"/>
+<text x="203" y="130" font-size="11"  text-anchor="middle" fill="#1a2836">left</text>
+<rect x="242" y="116" width="66" height="20" rx="2" fill="url(#cfHeroTok)" stroke="#a9b8c7"/>
+<text x="275" y="130" font-size="11"  text-anchor="middle" fill="#1a2836">the</text>
+<rect x="314" y="116" width="66" height="20" rx="2" fill="url(#cfHeroTok)" stroke="#a9b8c7"/>
+<text x="347" y="130" font-size="11"  text-anchor="middle" fill="#1a2836">street</text>
+<rect x="386" y="116" width="66" height="20" rx="2" fill="url(#cfHeroTok)" stroke="#a9b8c7"/>
+<text x="419" y="130" font-size="11"  text-anchor="middle" fill="#1a2836">because</text>
+<rect x="458" y="116" width="66" height="20" rx="2" fill="url(#cfHeroSel)" stroke="#2e5378"/>
+<text x="491" y="130" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">it</text>
+<text x="592" y="24" font-size="9" fill="#5b6b7a">attention matrix (causal)</text>
+<rect x="592" y="30" width="14" height="14" fill="#15497e" fill-opacity="0.96" stroke="#c3cedb"/>
+<rect x="606" y="30" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="620" y="30" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="634" y="30" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="648" y="30" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="662" y="30" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="676" y="30" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="592" y="44" width="14" height="14" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<rect x="606" y="44" width="14" height="14" fill="#15497e" fill-opacity="0.76" stroke="#c3cedb"/>
+<rect x="620" y="44" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="634" y="44" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="648" y="44" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="662" y="44" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="676" y="44" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="592" y="58" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="606" y="58" width="14" height="14" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<rect x="620" y="58" width="14" height="14" fill="#15497e" fill-opacity="0.66" stroke="#c3cedb"/>
+<rect x="634" y="58" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="648" y="58" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="662" y="58" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="676" y="58" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="592" y="72" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="606" y="72" width="14" height="14" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<rect x="620" y="72" width="14" height="14" fill="#15497e" fill-opacity="0.26" stroke="#c3cedb"/>
+<rect x="634" y="72" width="14" height="14" fill="#15497e" fill-opacity="0.56" stroke="#c3cedb"/>
+<rect x="648" y="72" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="662" y="72" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="676" y="72" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="592" y="86" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="606" y="86" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="620" y="86" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="634" y="86" width="14" height="14" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<rect x="648" y="86" width="14" height="14" fill="#15497e" fill-opacity="0.66" stroke="#c3cedb"/>
+<rect x="662" y="86" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="676" y="86" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="592" y="100" width="14" height="14" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/>
+<rect x="606" y="100" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="620" y="100" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="634" y="100" width="14" height="14" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<rect x="648" y="100" width="14" height="14" fill="#15497e" fill-opacity="0.26" stroke="#c3cedb"/>
+<rect x="662" y="100" width="14" height="14" fill="#15497e" fill-opacity="0.56" stroke="#c3cedb"/>
+<rect x="676" y="100" width="14" height="14" fill="#eef2f7" stroke="#dde5ee"/>
+<rect x="592" y="114" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="606" y="114" width="14" height="14" fill="#15497e" fill-opacity="0.66" stroke="#c3cedb"/>
+<rect x="620" y="114" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="634" y="114" width="14" height="14" fill="#15497e" fill-opacity="0.26" stroke="#c3cedb"/>
+<rect x="648" y="114" width="14" height="14" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<rect x="662" y="114" width="14" height="14" fill="#15497e" fill-opacity="0.26" stroke="#c3cedb"/>
+<rect x="676" y="114" width="14" height="14" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<text x="700" y="86" font-size="13" font-style="italic" fill="#2e5378" font-family="Cambria, Georgia, serif">softmax(QK&#7488; / &#8730;d&#8342;) V</text>
+</svg>      </div>
+
+  <p class="lead">
+    Before 2017, to know that the pronoun &ldquo;it&rdquo; refers to &ldquo;cat&rdquo; and not to &ldquo;street&rdquo;, a recurrent network had to carry that information in a hidden state across the whole sentence, step by step. <b>Self-attention</b> solves the same problem another way: it lets every token query all the others directly and weigh, with learned weights, which of them matter. It is an associative-retrieval mechanism disguised as matrix multiplication &mdash; and it underpins practically every language model in production today.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec1">1. The problem: context without recurrence</div>
+  <p>
+    Recurrent networks (RNN, LSTM, GRU) process the sequence in order: the token at position
+    <code>t</code> only sees the past through a fixed-size state vector. That brings two costs which became prohibitive at scale:
+  </p>
+  <ul>
+    <li><b>Long gradient path.</b> Information between two positions <i>d</i>
+      apart crosses <i>d</i> multiplication steps; the signal vanishes or explodes before it arrives.</li>
+    <li><b>Serialization.</b> Because the state <code>h(t)</code> depends on <code>h(t-1)</code>, there is no way to parallelize over the sequence length &mdash; precisely the dimension the GPU would like to parallelize.</li>
+  </ul>
+  <p>
+    Attention was introduced as a patch for the first problem, still within recurrent translation architectures: instead of compressing the source sentence into a single vector, the decoder learned to look selectively at the encoder states.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+    The contribution of <cite>Attention Is All You Need</cite> was to go all the way: discard recurrence entirely and let attention be the only mechanism that mixes positions.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+  </p>
+
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:170px;">Layer</th>
+        <th style="width:130px;">Cost per layer</th>
+        <th style="width:130px;">Sequential operations</th>
+        <th>Maximum path between two positions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Recurrent</td><td>O(n &middot; d&sup2;)</td>
+        <td><span class="st err">O(n)</span></td><td>O(n)</td>
+      </tr>
+      <tr class="band">
+        <td>Convolutional (kernel k)</td><td>O(k &middot; n &middot; d&sup2;)</td>
+        <td><span class="st ok">O(1)</span></td><td>O(log<sub>k</sub> n)</td>
+      </tr>
+      <tr>
+        <td>Self-attention</td><td><span class="st warn">O(n&sup2; &middot; d)</span></td>
+        <td><span class="st ok">O(1)</span></td><td><span class="st ok">O(1)</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">
+    Table 1 &mdash; Comparison adapted from Vaswani et al. (2017), section 4. Note the central trade-off:
+    attention buys a constant path and full parallelism at the price of a cost that is
+    <b>quadratic</b> in sequence length &mdash; the subject of section 7.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec2">2. Query, Key and Value: the dictionary intuition</div>
+  <p>
+    The most useful metaphor is that of a <b>lookup in an associative dictionary</b>. When you query an ordinary dictionary you supply an exact key and get back a value. In self-attention the lookup is
+    <i>soft</i>: you supply a query, it is compared against <i>all</i> the available keys, and what comes back is an average of the values weighted by the similarity of each comparison.
+  </p>
+  <p>
+    Each input token &mdash; already converted into an embedding vector
+    <span style="font-family:Cambria,Georgia,serif;"><i>x<sub>i</sub></i> &isin; &#8477;<sup>d</sup></span>
+    &mdash; is projected into three distinct roles by three learned weight matrices:
+  </p>
+  <dl class="af-nameValue cf-symbols" style="max-width:640px; margin-bottom:10px;">
+    <dt>Q = X W<sup>Q</sup></dt>
+    <dd><b>Query</b> &mdash; &ldquo;what kind of information am I, this token, looking for?&rdquo;</dd>
+    <dt>K = X W<sup>K</sup></dt>
+    <dd><b>Key</b> &mdash; &ldquo;what kind of information do I offer to whoever looks for me?&rdquo;</dd>
+    <dt>V = X W<sup>V</sup></dt>
+    <dd><b>Value</b> &mdash; &ldquo;what content do I actually deliver if I am selected?&rdquo;</dd>
+  </dl>
+  <p>
+    The separation between <i>key</i> and <i>value</i> is the detail that usually goes unnoticed, and it is essential: the criterion by which a token is <b>found</b> need not be the same content it <b>delivers</b>. The token &ldquo;cat&rdquo; can be found by a query looking for &ldquo;singular animate noun&rdquo; and still deliver a value carrying feline semantics. Were key and value the same thing, the model would have to resolve both roles in the same subspace.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">
+      From input to output: the path of a token
+      <span class="figNum">&mdash; Figure 1</span>
+      <button class="af-button small" onclick="window.print()">Print</button>
+    </div>
+    <div class="figBody">
+<svg viewBox="0 0 860 252" width="860" height="252" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Self-attention flow diagram: embeddings X projected into Q, K and V, product of Q and K transposed, scaling, mask, softmax and multiplication by V">
+  <defs>
+<marker id="cfArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+  <path d="M0 0 L7 3 L0 6 z" fill="#44566a"/>
+</marker>
+<linearGradient id="cfNode" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/>
+</linearGradient>
+<linearGradient id="cfNodeHi" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/>
+</linearGradient>
+<linearGradient id="cfNodeW" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#fdf7e6"/><stop offset="1" stop-color="#f2e3bd"/>
+</linearGradient>
+  </defs>
+  <rect x="0" y="0" width="860" height="252" fill="#ffffff"/>
+
+  <!-- Input X -->
+  <rect x="12" y="96" width="76" height="88" fill="url(#cfNode)" stroke="#7d8fa2"/>
+  <rect x="20" y="104" width="60" height="16" fill="#e8f0fa" stroke="#a9b8c7"/>
+  <rect x="20" y="124" width="60" height="16" fill="#e8f0fa" stroke="#a9b8c7"/>
+  <rect x="20" y="144" width="60" height="16" fill="#cfe2f7" stroke="#15497e"/>
+  <rect x="20" y="164" width="60" height="16" fill="#e8f0fa" stroke="#a9b8c7"/>
+  <text x="50" y="92" font-size="11" font-weight="bold" fill="#15497e" text-anchor="middle">X</text>
+  <text x="50" y="200" font-size="9" fill="#5b6b7a" text-anchor="middle">embeddings</text>
+  <text x="50" y="211" font-size="9" fill="#5b6b7a" text-anchor="middle">(n &#215; d)</text>
+
+  <!-- Branch into the three projections -->
+  <path d="M88 140 L104 140" stroke="#44566a" fill="none"/>
+  <path d="M104 57 L104 221" stroke="#44566a" fill="none"/>
+  <path d="M104 57 L114 57"   stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+  <path d="M104 139 L114 139" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+  <path d="M104 221 L114 221" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <!-- Weight matrices -->
+  <rect x="118" y="44" width="64" height="26" fill="url(#cfNodeW)" stroke="#b08f3e"/>
+  <text x="150" y="61" font-size="12" fill="#6b5a1e" text-anchor="middle" font-family="Cambria, Georgia, serif">W<tspan font-size="9" dy="-5">Q</tspan></text>
+  <rect x="118" y="126" width="64" height="26" fill="url(#cfNodeW)" stroke="#b08f3e"/>
+  <text x="150" y="143" font-size="12" fill="#6b5a1e" text-anchor="middle" font-family="Cambria, Georgia, serif">W<tspan font-size="9" dy="-5">K</tspan></text>
+  <rect x="118" y="208" width="64" height="26" fill="url(#cfNodeW)" stroke="#b08f3e"/>
+  <text x="150" y="225" font-size="12" fill="#6b5a1e" text-anchor="middle" font-family="Cambria, Georgia, serif">W<tspan font-size="9" dy="-5">V</tspan></text>
+  <text x="150" y="38" font-size="9" fill="#8a7524" text-anchor="middle">learned weights</text>
+
+  <path d="M182 57 L200 57"   stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+  <path d="M182 139 L200 139" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+  <path d="M182 221 L200 221" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <!-- Q, K, V -->
+  <rect x="206" y="44" width="52" height="26" fill="url(#cfNodeHi)" stroke="#2e5378"/>
+  <text x="232" y="62" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Q</text>
+  <rect x="206" y="126" width="52" height="26" fill="url(#cfNodeHi)" stroke="#2e5378"/>
+  <text x="232" y="144" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">K</text>
+  <rect x="206" y="208" width="52" height="26" fill="url(#cfNodeHi)" stroke="#2e5378"/>
+  <text x="232" y="226" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">V</text>
+  <text x="232" y="80" font-size="9" fill="#5b6b7a" text-anchor="middle">n &#215; d&#8342;</text>
+  <text x="232" y="162" font-size="9" fill="#5b6b7a" text-anchor="middle">n &#215; d&#8342;</text>
+  <text x="232" y="244" font-size="9" fill="#5b6b7a" text-anchor="middle">n &#215; d&#7515;</text>
+
+  <!-- Q and K converge -->
+  <path d="M258 57 L272 57 L272 90 L280 90"   stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+  <path d="M258 139 L272 139 L272 104 L280 104" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <!-- Chain of operations -->
+  <rect x="286" y="82" width="76" height="30" fill="url(#cfNode)" stroke="#7d8fa2"/>
+  <text x="324" y="102" font-size="12" fill="#1a2836" text-anchor="middle" font-family="Cambria, Georgia, serif">Q K&#7488;</text>
+  <text x="324" y="126" font-size="9" fill="#5b6b7a" text-anchor="middle">similarity</text>
+  <text x="324" y="137" font-size="9" fill="#5b6b7a" text-anchor="middle">(n &#215; n)</text>
+  <path d="M362 97 L374 97" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <rect x="380" y="82" width="76" height="30" fill="url(#cfNode)" stroke="#7d8fa2"/>
+  <text x="418" y="102" font-size="12" fill="#1a2836" text-anchor="middle" font-family="Cambria, Georgia, serif">&#247; &#8730;d&#8342;</text>
+  <text x="418" y="126" font-size="9" fill="#5b6b7a" text-anchor="middle">scaling</text>
+  <path d="M456 97 L468 97" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <rect x="474" y="82" width="76" height="30" fill="url(#cfNode)" stroke="#7d8fa2" stroke-dasharray="3 2"/>
+  <text x="512" y="102" font-size="11" fill="#1a2836" text-anchor="middle">+ mask</text>
+  <text x="512" y="126" font-size="9" fill="#5b6b7a" text-anchor="middle">optional (causal)</text>
+  <path d="M550 97 L562 97" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <rect x="568" y="82" width="76" height="30" fill="url(#cfNode)" stroke="#7d8fa2"/>
+  <text x="606" y="102" font-size="11" font-weight="bold" fill="#15497e" text-anchor="middle">softmax</text>
+  <text x="606" y="126" font-size="9" fill="#5b6b7a" text-anchor="middle">row-wise</text>
+  <path d="M644 97 L656 97" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <rect x="662" y="82" width="76" height="30" fill="#cfe2f7" stroke="#15497e"/>
+  <text x="700" y="102" font-size="12" font-weight="bold" fill="#15497e" text-anchor="middle">A</text>
+  <text x="700" y="126" font-size="9" fill="#5b6b7a" text-anchor="middle">attention weights</text>
+  <text x="700" y="137" font-size="9" fill="#5b6b7a" text-anchor="middle">(n &#215; n, rows sum to 1)</text>
+
+  <!-- Combination with V -->
+  <path d="M700 112 L700 152" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+  <path d="M258 221 L700 221 L700 182" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+  <circle cx="700" cy="167" r="13" fill="#ffffff" stroke="#44566a"/>
+  <text x="700" y="172" font-size="14" fill="#44566a" text-anchor="middle">&#215;</text>
+  <path d="M713 167 L742 167" stroke="#44566a" fill="none" marker-end="url(#cfArr)"/>
+
+  <rect x="748" y="149" width="98" height="36" fill="url(#cfNodeHi)" stroke="#2e5378"/>
+  <text x="797" y="166" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Z = A V</text>
+  <text x="797" y="179" font-size="9" fill="#dbe6f2" text-anchor="middle">contextualized output</text>
+  <text x="797" y="197" font-size="9" fill="#5b6b7a" text-anchor="middle">(n &#215; d&#7515;)</text>
+</svg>
+    </div>
+    <div class="figCaption">
+      <b>Figure 1</b> &mdash; The same input matrix <b>X</b> goes through three independent linear projections. Q and K produce the similarity matrix <i>n</i>&times;<i>n</i>; after scaling, masking and <i>softmax</i>, it becomes the weight matrix <b>A</b>, which regroups the vectors of <b>V</b>. Only the three weight matrices (in yellow) are learned.
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec3">3. Scaled Dot-Product Attention</div>
+  <p>
+    With Q, K and V defined, the whole mechanism fits on one line. It is the central equation of the original paper:<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="fName">Attention</span>(<span class="var">Q</span>,&nbsp;<span class="var">K</span>,&nbsp;<span class="var">V</span>)
+    <span class="op">=</span>
+    <span class="fName">softmax</span><big>(</big><span class="frac"><span class="num"><span class="var">Q&nbsp;K</span><sup>T</sup></span><span class="den">&radic;<span class="var">d</span><sub class="var">k</sub></span></span><big>)</big>&nbsp;<span class="var">V</span>
+  </div>
+
+  <p>
+    It is worth taking it apart in four steps, because each answers a distinct design question:
+  </p>
+  <ol>
+    <li><b>QK<sup>T</sup> &mdash; measure affinity.</b> The dot product between the query at position
+      <i>i</i> and the key at position <i>j</i> is large when the two vectors point in the same direction. The result is an <i>n</i>&times;<i>n</i> of raw <i>scores</i> matrix, one per pair of positions.</li>
+    <li><b>&divide; &radic;d<sub>k</sub> &mdash; stabilize the scale.</b> If the components of q and k are independent with mean 0 and variance 1, the dot product of dimension <i>d<sub>k</sub></i> has variance <i>d<sub>k</sub></i>. With <i>d<sub>k</sub></i> = 64, <i>scores</i> around &plusmn;8 are common; the <i>softmax</i> saturates, becomes almost an <i>argmax</i>, and the gradient disappears. Dividing by &radic;d<sub>k</sub> restores variance to 1 and keeps the
+      <i>softmax</i> in its useful region.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup></li>
+    <li><b>row-wise softmax &mdash; normalize.</b> Each row becomes a probability distribution: positive values summing to 1. Row <i>i</i> says &ldquo;of all the context I queried, this is the fraction of attention I devote to each position&rdquo;.</li>
+    <li><b>&times; V &mdash; retrieve the content.</b> The output at position <i>i</i> is the average of the value vectors weighted by that distribution. No new parameter enters here &mdash; it is just a convex combination.</li>
+  </ol>
+
+  <div class="af-panelBox light" id="boxEscala">
+    <div class="boxHdr" onclick="toggleBox('boxEscala')"><span class="disc">▼</span>Why &radic;d<sub>k</sub>, and not d<sub>k</sub>?</div>
+    <div class="boxBody">
+      Because what needs normalizing is the <b>standard deviation</b>, not the variance. With
+      <i>q</i> e <i>k</i> vectors of <i>d<sub>k</sub></i> i.i.d. components of variance 1, Var(q&middot;k) = <i>d<sub>k</sub></i> and therefore standard deviation &radic;<i>d<sub>k</sub></i>. Dividing the <i>score</i> by that deviation restores unit variance at the input of the <i>softmax</i>. Dividing by <i>d<sub>k</sub></i> would shrink the <i>scores</i> too much, flattening the distribution toward the uniform mean &mdash; the opposite error, and equally bad for learning.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec4">4. Masks: causal and padding</div>
+  <p>
+    Equation (1) lets every position see all the others. That is what you want in an
+    <b>encoder</b> (classification, sentence <i>embeddings</i>), but it is fatal in an autoregressive <b>decoder</b>: during training the model would see the token it is meant to predict. The fix is to add a mask to the <i>scores</i> <b>before</b> the <i>softmax</i>, with &minus;&infin; at the forbidden positions &mdash; in practice a very negative number such as <code>-1e9</code>, which the <i>softmax</i> turns into a weight of zero.
+  </p>
+  <ul>
+    <li><b>Causal mask</b> (upper triangular): position <i>i</i> attends only to positions
+      <i>j</i> &le; <i>i</i>. This is what makes training in parallel over the whole sequence equivalent to generating token by token.</li>
+    <li><b>Padding mask</b>: in a batch with sentences of different lengths, it zeroes out the filler positions so they do not contaminate the average.</li>
+  </ul>
+  <p>
+    The figure below shows the resulting matrix <b>A</b> for a short sentence, with the causal mask applied. Look at the highlighted row: when processing &ldquo;it&rdquo;, the model concentrates
+    <b>41%</b> of the weight on &ldquo;cat&rdquo; &mdash; coreference resolution emerges as a by-product of training, with no explicit grammatical rule.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">
+      Attention matrix with causal mask
+      <span class="figNum">&mdash; Figure 2</span>
+      <button class="af-button small" onclick="toggleBox('boxLeitura')">How to read</button>
+    </div>
+    <div class="figBody">
+<svg viewBox="0 0 664 304" width="664" height="304" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Heat map of the causal attention matrix for the sentence The cat did not cross the street because it">
+<defs><linearGradient id="cfScale" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#15497e"/></linearGradient></defs>
+<rect x="0" y="0" width="664" height="304" fill="#ffffff"/>
+<text x="96" y="16" font-size="10" font-weight="bold" fill="#15497e">Key &#8212; token being looked at</text>
+<text x="14" y="157" font-size="10" font-weight="bold" fill="#15497e" transform="rotate(-90 14 157)" text-anchor="middle">Query</text>
+<text x="121" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">The</text>
+<text x="171" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">cat</text>
+<text x="221" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">did</text>
+<text x="271" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">not</text>
+<text x="321" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">cross</text>
+<text x="371" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">the</text>
+<text x="421" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">street</text>
+<text x="471" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">because</text>
+<text x="521" y="34" font-size="10" fill="#3e4b58" text-anchor="middle">it</text>
+<text x="88" y="57" font-size="10" fill="#3e4b58" text-anchor="end">The</text>
+<rect x="96" y="40" width="50" height="26" fill="#15497e" fill-opacity="1.00" stroke="#c3cedb"/>
+<text x="121" y="57" font-size="9" fill="#ffffff" text-anchor="middle">1.00</text>
+<rect x="146" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="171" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="196" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="221" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="246" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="271" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="296" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="321" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="346" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="371" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="396" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="421" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="446" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="471" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="496" y="40" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="57" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="83" font-size="10" fill="#3e4b58" text-anchor="end">cat</text>
+<rect x="96" y="66" width="50" height="26" fill="#15497e" fill-opacity="0.34" stroke="#c3cedb"/>
+<text x="121" y="83" font-size="9" fill="#1a2836" text-anchor="middle">.34</text>
+<rect x="146" y="66" width="50" height="26" fill="#15497e" fill-opacity="0.66" stroke="#c3cedb"/>
+<text x="171" y="83" font-size="9" fill="#ffffff" text-anchor="middle">.66</text>
+<rect x="196" y="66" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="221" y="83" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="246" y="66" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="271" y="83" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="296" y="66" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="321" y="83" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="346" y="66" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="371" y="83" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="396" y="66" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="421" y="83" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="446" y="66" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="471" y="83" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="496" y="66" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="83" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="109" font-size="10" fill="#3e4b58" text-anchor="end">did</text>
+<rect x="96" y="92" width="50" height="26" fill="#15497e" fill-opacity="0.12" stroke="#c3cedb"/>
+<text x="121" y="109" font-size="9" fill="#1a2836" text-anchor="middle">.12</text>
+<rect x="146" y="92" width="50" height="26" fill="#15497e" fill-opacity="0.29" stroke="#c3cedb"/>
+<text x="171" y="109" font-size="9" fill="#1a2836" text-anchor="middle">.29</text>
+<rect x="196" y="92" width="50" height="26" fill="#15497e" fill-opacity="0.59" stroke="#c3cedb"/>
+<text x="221" y="109" font-size="9" fill="#ffffff" text-anchor="middle">.59</text>
+<rect x="246" y="92" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="271" y="109" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="296" y="92" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="321" y="109" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="346" y="92" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="371" y="109" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="396" y="92" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="421" y="109" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="446" y="92" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="471" y="109" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="496" y="92" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="109" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="135" font-size="10" fill="#3e4b58" text-anchor="end">not</text>
+<rect x="96" y="118" width="50" height="26" fill="#15497e" fill-opacity="0.07" stroke="#c3cedb"/>
+<text x="121" y="135" font-size="9" fill="#1a2836" text-anchor="middle">.07</text>
+<rect x="146" y="118" width="50" height="26" fill="#15497e" fill-opacity="0.31" stroke="#c3cedb"/>
+<text x="171" y="135" font-size="9" fill="#1a2836" text-anchor="middle">.31</text>
+<rect x="196" y="118" width="50" height="26" fill="#15497e" fill-opacity="0.22" stroke="#c3cedb"/>
+<text x="221" y="135" font-size="9" fill="#1a2836" text-anchor="middle">.22</text>
+<rect x="246" y="118" width="50" height="26" fill="#15497e" fill-opacity="0.40" stroke="#c3cedb"/>
+<text x="271" y="135" font-size="9" fill="#1a2836" text-anchor="middle">.40</text>
+<rect x="296" y="118" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="321" y="135" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="346" y="118" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="371" y="135" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="396" y="118" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="421" y="135" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="446" y="118" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="471" y="135" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="496" y="118" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="135" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="161" font-size="10" fill="#3e4b58" text-anchor="end">cross</text>
+<rect x="96" y="144" width="50" height="26" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/>
+<text x="121" y="161" font-size="9" fill="#1a2836" text-anchor="middle">.05</text>
+<rect x="146" y="144" width="50" height="26" fill="#15497e" fill-opacity="0.11" stroke="#c3cedb"/>
+<text x="171" y="161" font-size="9" fill="#1a2836" text-anchor="middle">.11</text>
+<rect x="196" y="144" width="50" height="26" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/>
+<text x="221" y="161" font-size="9" fill="#1a2836" text-anchor="middle">.06</text>
+<rect x="246" y="144" width="50" height="26" fill="#15497e" fill-opacity="0.24" stroke="#c3cedb"/>
+<text x="271" y="161" font-size="9" fill="#1a2836" text-anchor="middle">.24</text>
+<rect x="296" y="144" width="50" height="26" fill="#15497e" fill-opacity="0.54" stroke="#c3cedb"/>
+<text x="321" y="161" font-size="9" fill="#ffffff" text-anchor="middle">.54</text>
+<rect x="346" y="144" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="371" y="161" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="396" y="144" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="421" y="161" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="446" y="144" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="471" y="161" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="496" y="144" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="161" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="187" font-size="10" fill="#3e4b58" text-anchor="end">the</text>
+<rect x="96" y="170" width="50" height="26" fill="#15497e" fill-opacity="0.04" stroke="#c3cedb"/>
+<text x="121" y="187" font-size="9" fill="#1a2836" text-anchor="middle">.04</text>
+<rect x="146" y="170" width="50" height="26" fill="#15497e" fill-opacity="0.09" stroke="#c3cedb"/>
+<text x="171" y="187" font-size="9" fill="#1a2836" text-anchor="middle">.09</text>
+<rect x="196" y="170" width="50" height="26" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/>
+<text x="221" y="187" font-size="9" fill="#1a2836" text-anchor="middle">.05</text>
+<rect x="246" y="170" width="50" height="26" fill="#15497e" fill-opacity="0.27" stroke="#c3cedb"/>
+<text x="271" y="187" font-size="9" fill="#1a2836" text-anchor="middle">.27</text>
+<rect x="296" y="170" width="50" height="26" fill="#15497e" fill-opacity="0.19" stroke="#c3cedb"/>
+<text x="321" y="187" font-size="9" fill="#1a2836" text-anchor="middle">.19</text>
+<rect x="346" y="170" width="50" height="26" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<text x="371" y="187" font-size="9" fill="#1a2836" text-anchor="middle">.36</text>
+<rect x="396" y="170" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="421" y="187" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="446" y="170" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="471" y="187" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="496" y="170" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="187" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="213" font-size="10" fill="#3e4b58" text-anchor="end">street</text>
+<rect x="96" y="196" width="50" height="26" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/>
+<text x="121" y="213" font-size="9" fill="#1a2836" text-anchor="middle">.03</text>
+<rect x="146" y="196" width="50" height="26" fill="#15497e" fill-opacity="0.10" stroke="#c3cedb"/>
+<text x="171" y="213" font-size="9" fill="#1a2836" text-anchor="middle">.10</text>
+<rect x="196" y="196" width="50" height="26" fill="#15497e" fill-opacity="0.08" stroke="#c3cedb"/>
+<text x="221" y="213" font-size="9" fill="#1a2836" text-anchor="middle">.08</text>
+<rect x="246" y="196" width="50" height="26" fill="#15497e" fill-opacity="0.21" stroke="#c3cedb"/>
+<text x="271" y="213" font-size="9" fill="#1a2836" text-anchor="middle">.21</text>
+<rect x="296" y="196" width="50" height="26" fill="#15497e" fill-opacity="0.04" stroke="#c3cedb"/>
+<text x="321" y="213" font-size="9" fill="#1a2836" text-anchor="middle">.04</text>
+<rect x="346" y="196" width="50" height="26" fill="#15497e" fill-opacity="0.16" stroke="#c3cedb"/>
+<text x="371" y="213" font-size="9" fill="#1a2836" text-anchor="middle">.16</text>
+<rect x="396" y="196" width="50" height="26" fill="#15497e" fill-opacity="0.38" stroke="#c3cedb"/>
+<text x="421" y="213" font-size="9" fill="#1a2836" text-anchor="middle">.38</text>
+<rect x="446" y="196" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="471" y="213" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<rect x="496" y="196" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="213" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="239" font-size="10" fill="#3e4b58" text-anchor="end">because</text>
+<rect x="96" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/>
+<text x="121" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.03</text>
+<rect x="146" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.08" stroke="#c3cedb"/>
+<text x="171" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.08</text>
+<rect x="196" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/>
+<text x="221" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.05</text>
+<rect x="246" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.14" stroke="#c3cedb"/>
+<text x="271" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.14</text>
+<rect x="296" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/>
+<text x="321" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.03</text>
+<rect x="346" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.09" stroke="#c3cedb"/>
+<text x="371" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.09</text>
+<rect x="396" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.22" stroke="#c3cedb"/>
+<text x="421" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.22</text>
+<rect x="446" y="222" width="50" height="26" fill="#15497e" fill-opacity="0.36" stroke="#c3cedb"/>
+<text x="471" y="239" font-size="9" fill="#1a2836" text-anchor="middle">.36</text>
+<rect x="496" y="222" width="50" height="26" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="521" y="239" font-size="9" fill="#a9b8c7" text-anchor="middle">−∞</text>
+<text x="88" y="265" font-size="10" fill="#3e4b58" text-anchor="end">it</text>
+<rect x="96" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/>
+<text x="121" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.05</text>
+<rect x="146" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.41" stroke="#c3cedb"/>
+<text x="171" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.41</text>
+<rect x="196" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.04" stroke="#c3cedb"/>
+<text x="221" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.04</text>
+<rect x="246" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/>
+<text x="271" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.06</text>
+<rect x="296" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.04" stroke="#c3cedb"/>
+<text x="321" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.04</text>
+<rect x="346" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/>
+<text x="371" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.03</text>
+<rect x="396" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.08" stroke="#c3cedb"/>
+<text x="421" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.08</text>
+<rect x="446" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.11" stroke="#c3cedb"/>
+<text x="471" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.11</text>
+<rect x="496" y="248" width="50" height="26" fill="#15497e" fill-opacity="0.18" stroke="#c3cedb"/>
+<text x="521" y="265" font-size="9" fill="#1a2836" text-anchor="middle">.18</text>
+<rect x="95" y="247" width="452" height="28" fill="none" stroke="#b3271b" stroke-width="2"/>
+<text x="554" y="260" font-size="9" fill="#b3271b">row discussed</text>
+<text x="554" y="270" font-size="9" fill="#b3271b">in the text &#9656;</text>
+<text x="574" y="36" font-size="9" fill="#5b6b7a">weight</text>
+<rect x="580" y="40" width="16" height="120" fill="url(#cfScale)" stroke="#a9b8c7"/>
+<text x="600" y="48" font-size="9" fill="#5b6b7a">1,0</text>
+<text x="600" y="160" font-size="9" fill="#5b6b7a">0,0</text>
+<rect x="580" y="174" width="16" height="16" fill="#f2f5f9" stroke="#dde5ee"/>
+<text x="600" y="186" font-size="9" fill="#5b6b7a">mask</text>
+</svg>        </div>
+    <div class="figCaption">
+      <b>Figure 2</b> &mdash; Attention weights from a single head for the sentence &ldquo;The cat did not cross the street because it was tired&rdquo; (truncated at &ldquo;it&rdquo;). Each row sums to 1.00. The pale cells above the diagonal received &minus;&infin; from the causal mask and, after the <i>softmax</i>, are zero. Illustrative values, consistent with patterns observed in coreference heads of real models.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-panelBox light collapsed" id="boxLeitura">
+    <div class="boxHdr" onclick="toggleBox('boxLeitura')"><span class="disc">▶</span>How to read the heat map</div>
+    <div class="boxBody">
+      Always read <b>row-wise</b>. The row is the querying token (<i>query</i>); the column is the token being queried (<i>key</i>). The value of cell (<i>i</i>,&nbsp;<i>j</i>) is the fraction of the output of
+      <i>i</i> that comes from the value of <i>j</i>. Columns do not sum to anything in particular &mdash; comparing vertically is the commonest mistake when reading these maps. It is also worth remembering that attention weights <b>are not explanations</b>: a high weight shows where information was copied from in that head, not the causal reason for the final prediction.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec5">5. Minimal implementation</div>
+  <p>
+    All of section 3 fits in about ten lines of PyTorch. This is the core &mdash; no
+    <i>dropout</i>, no <i>multi-head</i>, no optimization &mdash; and it is useful precisely because it is readable enough to check against equation (1):
+  </p>
+
+  <div class="cf-codeBox">
+    <div class="codeHdr">
+      scaled_dot_product_attention.py <span class="lang">&mdash; Python / PyTorch</span>
+      <button class="af-button small" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre><span class="k">import</span> math
+<span class="k">import</span> torch
+<span class="k">import</span> torch.nn.functional <span class="k">as</span> F
+
+<span class="k">def</span> attention(q, k, v, mask=<span class="k">None</span>):
+<span class="s">"""q, k: (B, n, d_k)   v: (B, n, d_v)   mask: (n, n) boolean."""</span>
+d_k = q.size(-<span class="n">1</span>)
+
+<span class="c"># 1. similarity: dot product of each query with each key</span>
+scores = q @ k.transpose(-<span class="n">2</span>, -<span class="n">1</span>)        <span class="c"># (B, n, n)</span>
+
+<span class="c"># 2. scaling: keeps the variance of the scores at ~1</span>
+scores = scores / math.sqrt(d_k)
+
+<span class="c"># 3. mask: -inf at forbidden positions, BEFORE the softmax</span>
+<span class="k">if</span> mask <span class="k">is not</span> <span class="k">None</span>:
+    scores = scores.masked_fill(mask, <span class="k">float</span>(<span class="s">"-inf"</span>))
+
+<span class="c"># 4. row-wise normalization: each query distributes 1.0 of attention</span>
+weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c"># (B, n, n)</span>
+
+<span class="c"># 5. weighted average of the values</span>
+<span class="k">return</span> weights @ v, weights            <span class="c"># (B, n, d_v), (B, n, n)</span>
+
+
+<span class="c"># Causal mask: True where attention must be blocked</span>
+<span class="k">def</span> causal_mask(n, device=<span class="k">None</span>):
+<span class="k">return</span> torch.ones(n, n, dtype=torch.bool, device=device).triu(<span class="n">1</span>)</pre>
+  </div>
+
+  <div class="af-panelBox light" id="boxProd">
+    <div class="boxHdr" onclick="toggleBox('boxProd')"><span class="disc">▼</span>In production, do not write this</div>
+    <div class="boxBody">
+      The code above materializes the whole <i>n</i>&times;<i>n</i> matrix in GPU memory. For
+      <i>n</i> = 8,192 and batch 8 in fp16 that is roughly <b>1&nbsp;GB of attention weights alone</b>, per head and per layer. In production use
+      <code>torch.nn.functional.scaled_dot_product_attention</code>, which dispatches to fused FlashAttention-style kernels: the same mathematical result, without ever writing the full matrix to global memory.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec6">6. Multi-Head Attention</div>
+  <p>
+    A single application of equation (1) produces <b>one</b> attention distribution per token &mdash; and a distribution, by definition, has to choose. But the relevant relation between two words is rarely single: &ldquo;it&rdquo; links to &ldquo;cat&rdquo; by coreference, to the verb by syntactic function, and to the previous token by proximity. Forcing all of that into a single weight vector is a bottleneck.
+  </p>
+  <p>
+    The solution is to run <i>h</i> mechanisms in parallel, each with its own projections and a reduced dimension <i>d<sub>k</sub></i> = <i>d</i>/<i>h</i>. The outputs are concatenated and passed through one final learned projection W<sup>O</sup>. The total cost stays close to that of a single full-dimension head &mdash; the parallelism comes for free:
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(2)</span>
+    <span class="fName">MultiHead</span>(<span class="var">Q</span>,&nbsp;<span class="var">K</span>,&nbsp;<span class="var">V</span>)
+    <span class="op">=</span>
+    <span class="fName">Concat</span>(<span class="var">head</span><sub>1</sub>,&nbsp;&hellip;,&nbsp;<span class="var">head</span><sub><span class="var">h</span></sub>)&nbsp;<span class="var">W</span><sup>O</sup>
+    <span style="display:block; margin-top:6px; font-size:12px;">
+      where&nbsp;&nbsp;<span class="var">head</span><sub><span class="var">i</span></sub>
+      <span class="op">=</span>
+      <span class="fName">Attention</span>(<span class="var">Q W</span><sub><span class="var">i</span></sub><sup>Q</sup>,&nbsp;<span class="var">K W</span><sub><span class="var">i</span></sub><sup>K</sup>,&nbsp;<span class="var">V W</span><sub><span class="var">i</span></sub><sup>V</sup>)
+    </span>
+  </div>
+
+  <div class="cf-figure">
+    <div class="figHdr">
+      Parallel heads and output projection
+      <span class="figNum">&mdash; Figure 3</span>
+    </div>
+    <div class="figBody">
+<svg viewBox="0 0 860 236" width="860" height="236" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Multi-head attention diagram: four parallel heads with distinct patterns, concatenated and projected by W superscript O">
+<defs><marker id="cfArr3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker><linearGradient id="cfN3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient><linearGradient id="cfH3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient><linearGradient id="cfW3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf7e6"/><stop offset="1" stop-color="#f2e3bd"/></linearGradient></defs>
+<rect x="0" y="0" width="860" height="236" fill="#ffffff"/>
+<rect x="12" y="106" width="70" height="52" fill="url(#cfN3)" stroke="#7d8fa2"/>
+<text x="47" y="128" font-size="12" font-weight="bold" fill="#15497e" text-anchor="middle">X</text>
+<text x="47" y="142" font-size="9" fill="#5b6b7a" text-anchor="middle">n &#215; d</text>
+<path d="M82 132 L104 132" stroke="#44566a" fill="none"/>
+<path d="M104 45 L104 219" stroke="#44566a" fill="none"/>
+<path d="M104 45 L126 45" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<path d="M104 103 L126 103" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<path d="M104 161 L126 161" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<path d="M104 219 L126 219" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<rect x="132" y="22" width="240" height="46" fill="url(#cfN3)" stroke="#7d8fa2"/>
+<text x="142" y="39" font-size="10" font-weight="bold" fill="#15497e">Head 1</text>
+<text x="142" y="53" font-size="9" fill="#5b6b7a">pattern: previous token</text>
+<text x="142" y="64" font-size="9" fill="#8a99a8" font-family="Cambria, Georgia, serif" font-style="italic">d&#8342; = d/h</text>
+<rect x="320" y="25" width="8" height="8" fill="#15497e" fill-opacity="0.85" stroke="#dde5ee"/>
+<rect x="328" y="25" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="336" y="25" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="25" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="25" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="33" width="8" height="8" fill="#15497e" fill-opacity="0.95" stroke="#dde5ee"/>
+<rect x="328" y="33" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="336" y="33" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="33" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="33" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="41" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="328" y="41" width="8" height="8" fill="#15497e" fill-opacity="0.95" stroke="#dde5ee"/>
+<rect x="336" y="41" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="344" y="41" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="41" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="49" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="328" y="49" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="336" y="49" width="8" height="8" fill="#15497e" fill-opacity="0.95" stroke="#dde5ee"/>
+<rect x="344" y="49" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="352" y="49" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="57" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="328" y="57" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="336" y="57" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="344" y="57" width="8" height="8" fill="#15497e" fill-opacity="0.95" stroke="#dde5ee"/>
+<rect x="352" y="57" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<path d="M372 45 L416 45" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<text x="396" y="40" font-size="9" fill="#5b6b7a" text-anchor="middle">Z1</text>
+<rect x="132" y="80" width="240" height="46" fill="url(#cfN3)" stroke="#7d8fa2"/>
+<text x="142" y="97" font-size="10" font-weight="bold" fill="#15497e">Head 2</text>
+<text x="142" y="111" font-size="9" fill="#5b6b7a">pattern: coreference</text>
+<text x="142" y="122" font-size="9" fill="#8a99a8" font-family="Cambria, Georgia, serif" font-style="italic">d&#8342; = d/h</text>
+<rect x="320" y="83" width="8" height="8" fill="#15497e" fill-opacity="0.85" stroke="#dde5ee"/>
+<rect x="328" y="83" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="336" y="83" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="83" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="83" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="91" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="328" y="91" width="8" height="8" fill="#15497e" fill-opacity="0.75" stroke="#dde5ee"/>
+<rect x="336" y="91" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="91" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="91" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="99" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="328" y="99" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="336" y="99" width="8" height="8" fill="#15497e" fill-opacity="0.75" stroke="#dde5ee"/>
+<rect x="344" y="99" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="99" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="107" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="328" y="107" width="8" height="8" fill="#15497e" fill-opacity="0.75" stroke="#dde5ee"/>
+<rect x="336" y="107" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="344" y="107" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="352" y="107" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="115" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="328" y="115" width="8" height="8" fill="#15497e" fill-opacity="0.65" stroke="#dde5ee"/>
+<rect x="336" y="115" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="344" y="115" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="352" y="115" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<path d="M372 103 L416 103" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<text x="396" y="98" font-size="9" fill="#5b6b7a" text-anchor="middle">Z2</text>
+<rect x="132" y="138" width="240" height="46" fill="url(#cfN3)" stroke="#7d8fa2"/>
+<text x="142" y="155" font-size="10" font-weight="bold" fill="#15497e">Head 3</text>
+<text x="142" y="169" font-size="9" fill="#5b6b7a">pattern: local syntax</text>
+<text x="142" y="180" font-size="9" fill="#8a99a8" font-family="Cambria, Georgia, serif" font-style="italic">d&#8342; = d/h</text>
+<rect x="320" y="141" width="8" height="8" fill="#15497e" fill-opacity="0.85" stroke="#dde5ee"/>
+<rect x="328" y="141" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="336" y="141" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="141" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="141" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="149" width="8" height="8" fill="#15497e" fill-opacity="0.45" stroke="#dde5ee"/>
+<rect x="328" y="149" width="8" height="8" fill="#15497e" fill-opacity="0.55" stroke="#dde5ee"/>
+<rect x="336" y="149" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="149" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="149" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="157" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="328" y="157" width="8" height="8" fill="#15497e" fill-opacity="0.45" stroke="#dde5ee"/>
+<rect x="336" y="157" width="8" height="8" fill="#15497e" fill-opacity="0.55" stroke="#dde5ee"/>
+<rect x="344" y="157" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="157" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="165" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="328" y="165" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="336" y="165" width="8" height="8" fill="#15497e" fill-opacity="0.45" stroke="#dde5ee"/>
+<rect x="344" y="165" width="8" height="8" fill="#15497e" fill-opacity="0.55" stroke="#dde5ee"/>
+<rect x="352" y="165" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="173" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="328" y="173" width="8" height="8" fill="#15497e" fill-opacity="0.05" stroke="#dde5ee"/>
+<rect x="336" y="173" width="8" height="8" fill="#15497e" fill-opacity="0.15" stroke="#dde5ee"/>
+<rect x="344" y="173" width="8" height="8" fill="#15497e" fill-opacity="0.45" stroke="#dde5ee"/>
+<rect x="352" y="173" width="8" height="8" fill="#15497e" fill-opacity="0.55" stroke="#dde5ee"/>
+<path d="M372 161 L416 161" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<text x="396" y="156" font-size="9" fill="#5b6b7a" text-anchor="middle">Z3</text>
+<rect x="132" y="196" width="240" height="46" fill="url(#cfN3)" stroke="#7d8fa2"/>
+<text x="142" y="213" font-size="10" font-weight="bold" fill="#15497e">Head 4</text>
+<text x="142" y="227" font-size="9" fill="#5b6b7a">pattern: diffuse / global</text>
+<text x="142" y="238" font-size="9" fill="#8a99a8" font-family="Cambria, Georgia, serif" font-style="italic">d&#8342; = d/h</text>
+<rect x="320" y="199" width="8" height="8" fill="#15497e" fill-opacity="0.85" stroke="#dde5ee"/>
+<rect x="328" y="199" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="336" y="199" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="199" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="199" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="207" width="8" height="8" fill="#15497e" fill-opacity="0.45" stroke="#dde5ee"/>
+<rect x="328" y="207" width="8" height="8" fill="#15497e" fill-opacity="0.45" stroke="#dde5ee"/>
+<rect x="336" y="207" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="344" y="207" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="207" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="215" width="8" height="8" fill="#15497e" fill-opacity="0.35" stroke="#dde5ee"/>
+<rect x="328" y="215" width="8" height="8" fill="#15497e" fill-opacity="0.35" stroke="#dde5ee"/>
+<rect x="336" y="215" width="8" height="8" fill="#15497e" fill-opacity="0.35" stroke="#dde5ee"/>
+<rect x="344" y="215" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="352" y="215" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="223" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="328" y="223" width="8" height="8" fill="#15497e" fill-opacity="0.35" stroke="#dde5ee"/>
+<rect x="336" y="223" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="344" y="223" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="352" y="223" width="8" height="8" fill="#f2f5f9" stroke="#e4eaf1"/>
+<rect x="320" y="231" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="328" y="231" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="336" y="231" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="344" y="231" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<rect x="352" y="231" width="8" height="8" fill="#15497e" fill-opacity="0.25" stroke="#dde5ee"/>
+<path d="M372 219 L416 219" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<text x="396" y="214" font-size="9" fill="#5b6b7a" text-anchor="middle">Z4</text>
+<rect x="422" y="22" width="34" height="220" fill="#cfe2f7" stroke="#15497e"/>
+<text x="439" y="132" font-size="11" font-weight="bold" fill="#15497e" text-anchor="middle" transform="rotate(-90 439 132)">Concat</text>
+<path d="M456 132 L488 132" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<text x="472" y="126" font-size="9" fill="#5b6b7a" text-anchor="middle">n &#215; d</text>
+<rect x="494" y="115" width="76" height="34" fill="url(#cfW3)" stroke="#b08f3e"/>
+<text x="532" y="137" font-size="13" fill="#6b5a1e" text-anchor="middle" font-family="Cambria, Georgia, serif">W<tspan font-size="9" dy="-5">O</tspan></text>
+<text x="532" y="162" font-size="9" fill="#8a7524" text-anchor="middle">output projection</text>
+<path d="M570 132 L594 132" stroke="#44566a" fill="none" marker-end="url(#cfArr3)"/>
+<rect x="600" y="112" width="248" height="40" fill="url(#cfH3)" stroke="#2e5378"/>
+<text x="724" y="130" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Output</text>
+<text x="724" y="144" font-size="9" fill="#dbe6f2" text-anchor="middle">n &#215; d</text>
+</svg>        </div>
+    <div class="figCaption">
+      <b>Figure 3</b> &mdash; Four heads operating on the same input, each with its own projections. The mini-maps illustrate patterns that emerge spontaneously during training: attention to the previous token, coreference, local syntactic dependency and a diffuse head. GPT-3 uses 96 heads per layer; Llama 3 70B uses 64.
+    </div>
+  </div>
+
+  <p>
+    This specialization is not imposed: nobody assigns a role to each head. It appears as a consequence of training and is reproducible across models &mdash; interpretability work has catalogued position heads, coreference heads, delimiter-matching heads and the so-called
+    <i>induction heads</i>, responsible for completing repeated patterns and associated with the emergence of in-context learning.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>,<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
+    It is also known that a good share of the heads is redundant: in trained models a significant fraction can be pruned with little loss of performance.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+  </p>
+
+  <div class="cf-codeBox">
+    <div class="codeHdr">
+      multi_head_attention.py <span class="lang">&mdash; Python / PyTorch</span>
+      <button class="af-button small" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre><span class="k">class</span> MultiHeadAttention(torch.nn.Module):
+<span class="k">def</span> __init__(self, d_model, n_heads):
+    super().__init__()
+    <span class="k">assert</span> d_model % n_heads == <span class="n">0</span>
+    self.h = n_heads
+    self.d_k = d_model // n_heads
+
+    <span class="c"># one single projection for all heads; sliced afterwards</span>
+    self.w_qkv = torch.nn.Linear(d_model, <span class="n">3</span> * d_model, bias=<span class="k">False</span>)
+    self.w_o   = torch.nn.Linear(d_model, d_model, bias=<span class="k">False</span>)
+
+<span class="k">def</span> forward(self, x, mask=<span class="k">None</span>):
+    B, n, d = x.shape
+    q, k, v = self.w_qkv(x).chunk(<span class="n">3</span>, dim=-<span class="n">1</span>)
+
+    <span class="c"># (B, n, d) -> (B, h, n, d_k): the head dimension becomes batch</span>
+    q, k, v = [t.view(B, n, self.h, self.d_k).transpose(<span class="n">1</span>, <span class="n">2</span>)
+               <span class="k">for</span> t <span class="k">in</span> (q, k, v)]
+
+    <span class="c"># fused kernel: does not materialize the n x n matrix</span>
+    z = F.scaled_dot_product_attention(q, k, v, is_causal=mask <span class="k">is</span> <span class="k">None</span>)
+
+    <span class="c"># concatenate the heads and project back to d_model</span>
+    z = z.transpose(<span class="n">1</span>, <span class="n">2</span>).contiguous().view(B, n, d)
+    <span class="k">return</span> self.w_o(z)</pre>
+  </div>
+
+  <div class="af-subHeader" id="sec7">7. The quadratic cost and how the industry attacks it</div>
+  <p>
+    The attention matrix has <i>n</i>&sup2; entries. Doubling the context quadruples both the work and the activation memory &mdash; which is why &ldquo;context window&rdquo; became a marketing metric and an engineering battlefield at the same time. The approaches that dominate today fall into three families:
+  </p>
+
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:150px;">Technique</th>
+        <th style="width:100px;">Family</th>
+        <th style="width:110px;">Complexity</th>
+        <th style="width:120px;">Identical output?</th>
+        <th>What changes in practice</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>FlashAttention</td><td>I/O</td>
+        <td>O(n&sup2;)</td><td><span class="st ok">Exact</span></td>
+        <td>SRAM tiling: never writes the n&times;n matrix to HBM<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup></td>
+      </tr>
+      <tr class="band">
+        <td>MQA / GQA</td><td>Memory</td>
+        <td>O(n&sup2;)</td><td><span class="st warn">Approximate</span></td>
+        <td>Heads share K and V: shrinks the KV cache at inference<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup></td>
+      </tr>
+      <tr>
+        <td>Sliding window</td><td>Sparsity</td>
+        <td>O(n &middot; w)</td><td><span class="st err">Approximate</span></td>
+        <td>Each token sees only the <i>w</i> previous ones; long range comes from stacking layers</td>
+      </tr>
+      <tr class="band">
+        <td>Linear attention / kernels</td><td>Reformulation</td>
+        <td>O(n &middot; d&sup2;)</td><td><span class="st err">Approximate</span></td>
+        <td>Swaps the <i>softmax</i> for a factorizable kernel; still lower quality at scale</td>
+      </tr>
+      <tr>
+        <td>State space (SSM)</td><td>Architecture</td>
+        <td>O(n)</td><td><span class="st err">A different model</span></td>
+        <td>Abandons attention; hybrids with a few attention layers are the current standard</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">
+    Table 2 &mdash; Note the fundamental distinction between the first two rows and the rest. FlashAttention is an <b>I/O</b> optimization: the result is numerically the same as equation (1), just computed without needless traffic between HBM and SRAM. The others change what is computed, and therefore trade quality for cost.
+  </p>
+
+  <div class="af-panelBox highlight" id="boxKV">
+    <div class="boxHdr" onclick="toggleBox('boxKV')"><span class="disc">▼</span>At inference, the bottleneck moves</div>
+    <div class="boxBody">
+      During training the dominant cost is the O(<i>n</i>&sup2;) of computation. In autoregressive generation each new token performs only <i>n</i> comparisons &mdash; but requires re-reading
+      <b>the entire K and V cache</b> of the previous layers. The bottleneck stops being FLOPs and becomes
+      <b>memory bandwidth</b>. That shift is what explains why GQA, KV-cache quantization and <i>paged attention</i> have become mandatory in any modern inference <i>runtime</i> &mdash; the subject of the
+      <a href="#">next article in this series</a>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec8">8. Conclusion</div>
+  <p>
+    Self-attention is not a complicated mechanism: it is a soft associative lookup, expressed as two matrix multiplications with a <i>softmax</i> in the middle. Its strength comes from three combined properties &mdash; constant-length path between any two positions, full parallelism along the sequence, and a parameter cost independent of context length.
+  </p>
+  <p>
+    Its weakness is equally clear and equally structural: the quadratic cost in <i>n</i>. Almost all architecture research of the past decade can be read as attempts to keep the three properties while attacking the fourth. Understanding equation (1) line by line is therefore the prerequisite for critically assessing any announcement of a &ldquo;one-million-token context&rdquo;: the right question is never how many tokens fit, but <b>what was approximated</b> to make them fit.
+  </p>
+  <p>
+    In the <b>next article</b> in the series we cover positional encoding &mdash; because, as you notice on rereading equation (1), self-attention is <i>permutation-equivariant</i>: without explicit positional information it would see &ldquo;the cat bit the dog&rdquo; and &ldquo;the dog bit the cat&rdquo; in exactly the same way.
+  </p>
+
+</div><!-- /cf-article -->
+
+<!-- references -->
+          <ul class="cf-refList">
+<li>
+  <span class="refNum">[1]</span>
+  <span>A. Vaswani; N. Shazeer; N. Parmar <i>et al.</i> &mdash; <cite>Attention Is All You Need</cite>,
+    NeurIPS 2017. <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a>
+    <span class="refSrc">(accessed on 09/04/2026)</span></span>
+  <span class="refType cf-label">Academic paper</span>
+</li>
+<li>
+  <span class="refNum">[2]</span>
+  <span>D. Bahdanau; K. Cho; Y. Bengio &mdash; <cite>Neural Machine Translation by Jointly Learning to Align and Translate</cite>,
+    ICLR 2015. <a href="https://arxiv.org/abs/1409.0473">arXiv:1409.0473</a></span>
+  <span class="refType cf-label">Academic paper</span>
+</li>
+<li>
+  <span class="refNum">[3]</span>
+  <span>M. Phuong; M. Hutter &mdash; <cite>Formal Algorithms for Transformers</cite>, DeepMind, 2022.
+    <a href="https://arxiv.org/abs/2207.09238">arXiv:2207.09238</a>
+    <span class="refSrc">Formal pseudocode for each component.</span></span>
+  <span class="refType cf-label">Academic paper</span>
+</li>
+<li>
+  <span class="refNum">[4]</span>
+  <span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016, ch. 6 and 10.
+    <span class="refSrc">ISBN 978-0262035613</span></span>
+  <span class="refType cf-label">Book</span>
+</li>
+<li>
+  <span class="refNum">[5]</span>
+  <span>K. Clark; U. Khandelwal; O. Levy; C. D. Manning &mdash; <cite>What Does BERT Look At? An Analysis of BERT's Attention</cite>,
+    BlackboxNLP 2019. <a href="https://arxiv.org/abs/1906.04341">arXiv:1906.04341</a></span>
+  <span class="refType cf-label">Academic paper</span>
+</li>
+<li>
+  <span class="refNum">[6]</span>
+  <span>S. Jain; B. C. Wallace &mdash; <cite>Attention is not Explanation</cite>, NAACL 2019.
+    <a href="https://arxiv.org/abs/1902.10186">arXiv:1902.10186</a></span>
+  <span class="refType cf-label">Academic paper</span>
+</li>
+<li>
+  <span class="refNum">[7]</span>
+  <span>T. Dao; D. Y. Fu; S. Ermon; A. Rudra; C. Ré &mdash; <cite>FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</cite>,
+    NeurIPS 2022. <a href="https://arxiv.org/abs/2205.14135">arXiv:2205.14135</a></span>
+  <span class="refType cf-label">Academic paper</span>
+</li>
+<li>
+  <span class="refNum">[8]</span>
+  <span>C. Olsson; N. Elhage; N. Nanda <i>et al.</i> &mdash; <cite>In-context Learning and Induction Heads</cite>,
+    Transformer Circuits Thread, Anthropic, 2022.
+    <a href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/">transformer-circuits.pub</a></span>
+  <span class="refType cf-label">Applied research</span>
+</li>
+<li>
+  <span class="refNum">[9]</span>
+  <span>J. Ainslie; J. Lee-Thorp; M. de Jong <i>et al.</i> &mdash; <cite>GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints</cite>,
+    EMNLP 2023. <a href="https://arxiv.org/abs/2305.13245">arXiv:2305.13245</a></span>
+  <span class="refType cf-label">Academic paper</span>
+</li>
+          </ul>
+          <div class="af-spacer"></div>
+          <div class="af-subHeader" style="margin-top:0;">Further reading</div>
+          <ul class="cf-refList">
+<li>
+  <span class="refNum">[a]</span>
+  <span>J. Alammar &mdash; <cite>The Illustrated Transformer</cite>.
+    <a href="https://jalammar.github.io/illustrated-transformer/">jalammar.github.io</a></span>
+  <span class="refType cf-label">Tutorial</span>
+</li>
+<li>
+  <span class="refNum">[b]</span>
+  <span>A. Karpathy &mdash; <cite>nanoGPT</cite>, reference implementation in ~300 lines.
+    <a href="https://github.com/karpathy/nanoGPT">github.com/karpathy/nanoGPT</a></span>
+  <span class="refType cf-label">Code</span>
+</li>
+<li>
+  <span class="refNum">[c]</span>
+  <span>PyTorch &mdash; <cite>torch.nn.functional.scaled_dot_product_attention</cite>, official documentation.
+    <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html">docs.pytorch.org</a></span>
+  <span class="refType cf-label">Documentation</span>
+</li>
+          </ul>
+          <p class="tip" style="margin-top:8px;">
+References verified on 09/04/2026 and checked during technical review. External links open outside Codeflow.
+          </p>

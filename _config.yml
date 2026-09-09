@@ -1,0 +1,46 @@
+# Codeflow — site Jekyll (GitHub Pages)
+title: Codeflow
+tagline: Technology Articles and References
+description: Technology articles and references, with a clear focus on Artificial Intelligence.
+url: "https://codeflow.com.br"
+baseurl: ""
+lang: en
+author: "@rafaelsantos"
+version: "1.0.0"
+github: "https://github.com/rafaelsantos"
+
+# Comentários (giscus, sobre GitHub Discussions). Mesmos identificadores do site atual;
+# mapping "pathname" dá uma discussão por URL de post (no site antigo tudo era index.html#…).
+giscus:
+  repo: codeflow/codeflow.github.io
+  repo_id: MDEwOlJlcG9zaXRvcnkxNzUwOTMxNjk=
+  category: Announcements
+  category_id: DIC_kwDOCm-1sc4CyEBv
+  mapping: pathname
+  theme: light
+  lang: en
+
+permalink: /articles/:title/
+markdown: kramdown
+timezone: America/Sao_Paulo
+
+# Protótipos ficam em _prototipos/ (pastas com _ não entram no build)
+include: []
+exclude:
+  - prd
+  - _templates
+  - scripts
+  - serve.sh
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - README.md
+
+defaults:
+  - scope: { path: "", type: posts }
+    values:
+      layout: post
+      author: "@rafaelsantos"
+      status: Published
+      lang: en            # idioma padrão dos posts; versões em outro idioma declaram lang + permalink /<lang>/articles/<slug>/

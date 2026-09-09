@@ -1,0 +1,37 @@
+{%- comment %} O conteúdo da página renderiza antes do layout: o include precisa do seu próprio t. {% endcomment -%}
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] | default: site.data.i18n.en -%}
+    <div class="af-panelHeader">
+      <h1>
+        <svg class="cf-infoIcon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <defs>
+            <linearGradient id="cfInfoGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#8fbde6"/>
+              <stop offset="45%" stop-color="#3d7ab5"/>
+              <stop offset="100%" stop-color="#1c4b7c"/>
+            </linearGradient>
+          </defs>
+          <circle cx="8" cy="8" r="7.5" fill="#ffffff"/>
+          <circle cx="8" cy="8" r="7" fill="url(#cfInfoGrad)" stroke="#17406b"/>
+          <ellipse cx="8" cy="4.1" rx="4.6" ry="2.4" fill="#ffffff" fill-opacity=".26"/>
+          <circle cx="8" cy="4.6" r="1.15" fill="#ffffff"/>
+          <rect x="6.9" y="6.7" width="2.2" height="5.4" rx="0.5" fill="#ffffff"/>
+        </svg>
+        {{ t.ui.welcome }}
+      </h1>
+    </div>
+
+    <div class="af-subHeader">{{ t.ui.published_articles }}</div>
+
+    <div class="af-panelCollection">
+      <div class="cf-postList" id="postList"></div>
+      <div class="af-statusBar">
+        <span id="statusText"></span>
+        <a href="#" id="clearFilter" onclick="setFilter('', ''); return false;" hidden>{{ t.ui.clear_filter }}</a>
+        <span class="pager">
+          <a href="#" id="pgPrev" onclick="gotoPage(state.page - 1); return false;">&#9664; {{ t.ui.previous }}</a>
+          <span id="pgInfo"></span>
+          <a href="#" id="pgNext" onclick="gotoPage(state.page + 1); return false;">{{ t.ui.next }} &#9654;</a>
+        </span>
+      </div>
+    </div>

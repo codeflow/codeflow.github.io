@@ -1,0 +1,88 @@
+# Interface strings — English (site default). Every language file must define the same keys.
+code: en
+name: English
+native: English
+locale: en_US
+ui:
+  language: "Language:"
+  home: Home
+  menu: Menu
+  cancel: Cancel
+  close_menu: Close menu
+  search: Search
+  search_content: Search content
+  search_placeholder: e.g. attention
+  content_navigator: Content Navigator
+  popular_tags: Popular Tags
+  archive: Archive
+  welcome: Welcome to Codeflow
+  published_articles: Published Articles
+  clear_filter: Clear filter
+  previous: Previous
+  next: Next
+  read_more: Read more
+  published_on: Published on
+  updated_on: Updated on
+  reading_time: "Reading time:"
+  min: min
+  author: "Author:"
+  labels: "Labels:"
+  draft: Draft
+  reviewed: Reviewed
+  level: "Level:"
+  prerequisite: "Prerequisite:"
+  series: "Series:"
+  contents: Contents
+  print: Print
+  help: Help
+  article_contents: Article Contents
+  figures: Figures
+  figure_abbr: Fig.
+  references: References
+  tags: Tags
+  related: Related Articles
+  versions: Versions and History
+  tags_and_history: Tags and History
+  no_references: No references listed for this article yet.
+  tags_for: "Tags for this article:"
+  key_concepts: "Key concepts:"
+  click_tag: Click a tag to list all related articles.
+  title: Title
+  category: Category
+  reading: Reading
+  published: Published
+  status: Status
+  no_related: No other articles in this category yet.
+  related_count: "{n} related article(s) in {cat}"
+  article_version: Article version
+  source_language: Source language
+  draft_notice_title: This article is still being written
+  draft_notice: The summary below outlines what it will cover. The full text will replace this page when it is published.
+  prev_article: "Previous:"
+  next_article: "Next:"
+  comments: Comments
+  comments_note: "Comments are GitHub Discussions on {repo}. Sign in with GitHub to post; each article has its own thread."
+  showing: "Showing {first}–{last} of {total} articles"
+  page_of: "Page {page} of {pages}"
+  no_articles: No articles
+  filter_in: " in {v}"
+  filter_topic: " on {v}"
+  filter_tag: " tagged “{v}”"
+  filter_month: " from {v}"
+  filter_text: " matching “{v}”"
+  toc_note: The contents reflect the article open in the main area.
+  help_how_to_read: How to read an article
+  help_p1: The <b>labels</b> at the top indicate the category, level and review stage of the content. Numbered citations <sup>[1]</sup> point to the <b>References</b> tab at the end of the article.
+  help_p2: The <b>formulas</b> are numbered on the right and referenced in the text as “equation (n)”. The <b>figures</b> are SVG&#58; they follow browser zoom without loss.
+  help_p3: Use the language selector at the top to switch between versions of the same article, when they exist.
+  lang_unavailable_title: Language not available
+  lang_unavailable: "This article is not yet available in <b>{lang}</b>."
+  lang_unavailable_hint: You can keep reading it in the current language or go to the Home page in the selected language.
+  go_home: Go to Home
+  stay: Stay here
+  nothing_yet: No articles yet
+  footer_tagline: Technology Articles and References
+# Category / topic / section names: the key (as written in the posts' front matter) stays shared across
+# languages; only the text shown to the reader changes. Missing keys fall back to the key itself.
+labels: {}
+months: [January, February, March, April, May, June, July, August, September, October, November, December]

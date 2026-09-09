@@ -1,0 +1,721 @@
+/* ============================================================
+   Codeflow — overrides do skin ADF Fusion
+   Ajustes específicos do projeto. O adf-fusion.css base
+   permanece intacto; tudo daqui usa o prefixo cf-.
+   ============================================================ */
+
+/* ---------- Branding ---------- */
+.cf-brandLogo {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.af-branding .cf-brandName {
+  font: bold 14px Tahoma, Verdana, sans-serif;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+/* "CODEFLOW" e todo caixa-alta; o nome da aplicacao ao lado tem descendentes
+   (g, c-cedilha), o que joga sua massa visual ~1px abaixo do centro optico do
+   logotipo, embora as caixas de linha estejam centradas. O -1px realinha os dois. */
+.af-branding .app-name {
+  position: relative;
+  top: -1px;
+}
+
+/* O select herda o visual do adf-fusion.css (appearance:none + zona de botão
+   desenhada); a seta vem do wrapper .af-selectWrap — não sobrescrever
+   background/padding aqui, senão a zona do botão some. */
+.af-branding .af-selectWrap { vertical-align: middle; }
+.cf-langSelect { vertical-align: middle; }
+
+/* ---------- Alternância de visões (protótipo) ---------- */
+.cf-view { display: none; }
+.cf-view.active { display: block; }
+
+/* ---------- Chips: tags e labels ---------- */
+.cf-tag,
+a.cf-tag {
+  display: inline-block;
+  padding: 0 5px 1px;
+  border: 1px solid #9cafc2;
+  border-radius: 2px;
+  background: linear-gradient(#fefefe, #e9eef4);
+  color: #145fa8;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 14px;
+}
+a.cf-tag:hover {
+  border-color: #88aed6;
+  background: linear-gradient(#ffffff, #eef4fa);
+  color: #0d3a6b;
+}
+.cf-tag .cnt { color: #6b7a89; }
+
+.cf-label {
+  display: inline-block;
+  padding: 0 6px 1px;
+  border: 1px solid #8098b2;
+  border-radius: 2px;
+  background: linear-gradient(#fefefe, #edf1f6 45%, #d9e2ec);
+  color: #3e4b58;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 14px;
+}
+.cf-label.primary {
+  background: linear-gradient(#6b90b6, #3d6791);
+  border-color: #2e5378;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+}
+
+/* ---------- Cabeçalho do artigo ---------- */
+.cf-articleMeta {
+  color: #6b7a89;
+  margin: 2px 0 6px;
+}
+.cf-articleMeta b { color: #3e4b58; }
+.cf-articleMeta .sep { margin: 0 5px; color: #a9b8c7; }
+
+.cf-chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 0 0 6px;
+}
+.cf-chipRow .rowLabel { color: #3e4b58; margin-right: 2px; }
+
+.cf-langBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  border: 1px solid #b0bdcb;
+  background: linear-gradient(#f6f9fc, #e9eff5);
+  margin: 0 0 10px;
+}
+.cf-langBar .cur {
+  font-weight: bold;
+  color: #15497e;
+  background: #cfe2f7;
+  border: 1px solid #91b6e0;
+  padding: 0 5px 1px;
+  border-radius: 2px;
+}
+.cf-langBar .sep { color: #a9b8c7; }
+.cf-langBar .note { color: #6b7a89; margin-left: auto; }
+
+/* ---------- Corpo do artigo ---------- */
+.cf-article { max-width: none; }   /* corpo do post ocupa toda a largura do painel */
+.cf-article p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+.cf-article .lead { color: #44566a; }
+sup.cf-cite { line-height: 0; }
+sup.cf-cite a {
+  font-size: 9px;
+  text-decoration: none;
+}
+sup.cf-cite a:hover { text-decoration: underline; }
+
+/* ---------- Bloco de código ---------- */
+.cf-codeBox {
+  border: 1px solid #a9b8c7;
+  background: #fbfcfe;
+  margin: 0 0 10px;
+}
+.cf-codeBox .codeHdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  background: linear-gradient(#fafcfd, #e4eaf1);
+  border-bottom: 1px solid #c3cedb;
+  color: #15497e;
+  font-weight: bold;
+}
+.cf-codeBox .codeHdr .lang {
+  font-weight: normal;
+  color: #6b7a89;
+}
+.cf-codeBox .codeHdr .af-button.small { margin-left: auto; }
+.cf-codeBox pre {
+  margin: 0;
+  padding: 7px 9px;
+  overflow-x: auto;
+  font: 11px Consolas, "Courier New", monospace;
+  line-height: 1.45;
+  color: #1a1a1a;
+}
+.cf-codeBox .k { color: #00308f; font-weight: bold; } /* palavra-chave */
+.cf-codeBox .c { color: #3f7f3f; }                    /* comentário   */
+.cf-codeBox .s { color: #8a3e1f; }                    /* string       */
+.cf-codeBox .n { color: #7a4a9b; }                    /* número       */
+
+/* ---------- Referências ---------- */
+.cf-refList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cf-refList li {
+  display: flex;
+  gap: 7px;
+  padding: 4px 2px;
+  border-bottom: 1px dotted #c3cedb;
+}
+.cf-refList li:last-child { border-bottom: none; }
+.cf-refList .refNum {
+  flex: none;
+  width: 22px;
+  font-weight: bold;
+  color: #15497e;
+}
+.cf-refList .refType {
+  flex: none;
+  margin-left: auto;
+  align-self: flex-start;
+}
+.cf-refList cite { font-style: italic; }
+.cf-refList .refSrc { color: #6b7a89; }
+
+/* ---------- Sumário (gaveta) ---------- */
+.cf-toc a {
+  display: block;
+  padding: 2px 4px;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+.cf-toc a:hover { background: #e4eefa; border-color: #b9d2ee; }
+.cf-toc .lvl2 { padding-left: 18px; }
+
+/* ---------- Painel esquerdo ---------- */
+.cf-tagCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.cf-archList div { margin: 0 0 3px; }
+
+/* ---------- Tabelas de listagem ---------- */
+.af-table td .cf-tag { margin-right: 2px; }
+.cf-langCell { white-space: nowrap; color: #3e4b58; }
+
+/* ---------- Descrição de abertura com ícone informativo ---------- */
+.cf-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.cf-intro .cf-infoIcon { flex: none; margin-top: 1px; }
+.cf-intro .introText { min-width: 0; }
+.cf-intro p {
+  margin: 0 0 7px;
+  line-height: 1.55;
+  color: #44566a;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.cf-intro p:last-child { margin-bottom: 0; }
+.cf-intro b { color: #15497e; }
+
+/* ---------- Figuras e diagramas (páginas de artigo) ---------- */
+.cf-figure {
+  border: 1px solid #a9b8c7;
+  background: #fbfcfe;
+  margin: 0 0 10px;
+}
+.cf-figure .figHdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  background: linear-gradient(#fafcfd, #e4eaf1);
+  border-bottom: 1px solid #c3cedb;
+  color: #15497e;
+  font-weight: bold;
+}
+.cf-figure .figHdr .figNum { color: #6b7a89; font-weight: normal; }
+.cf-figure .figHdr .af-button.small { margin-left: auto; }
+.cf-figure .figBody {
+  padding: 9px 8px;
+  background: #fff;
+  text-align: center;
+  overflow-x: auto;
+}
+.cf-figure .figBody svg { max-width: 100%; height: auto; }
+.cf-figure .figCaption {
+  padding: 4px 7px;
+  border-top: 1px solid #c3cedb;
+  background: #f4f7fa;
+  color: #5b6b7a;
+  text-align: left;
+  line-height: 1.45;
+}
+.cf-figure .figCaption b { color: #3e4b58; }
+
+/* Banner de abertura do artigo */
+.cf-hero {
+  border: 1px solid #a9b8c7;
+  background: #eef3f8;
+  margin: 0 0 10px;
+  line-height: 0;
+}
+.cf-hero svg { display: block; width: 100%; height: auto; }
+
+/* ---------- Fórmulas ---------- */
+.cf-formula {
+  border: 1px solid #c3cedb;
+  background: linear-gradient(#fdfeff, #f3f7fb);
+  padding: 10px 9px;
+  margin: 0 0 10px;
+  text-align: center;
+  font: 14px Cambria, Georgia, "Times New Roman", serif;
+  color: #1a2836;
+}
+.cf-formula .var { font-style: italic; }
+.cf-formula .op { margin: 0 4px; color: #44566a; }
+.cf-formula .frac {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 2px;
+}
+.cf-formula .frac .num { display: block; padding: 0 4px; }
+.cf-formula .frac .den {
+  display: block;
+  padding: 0 4px;
+  border-top: 1px solid #44566a;
+}
+.cf-formula .fName { font-variant: small-caps; color: #15497e; }
+.cf-formula .eqNum { float: right; color: #8a99a8; font: 11px Tahoma, sans-serif; }
+
+/* ---------- Glossário de símbolos ---------- */
+.cf-symbols dt { font: italic 12px Cambria, Georgia, serif; color: #15497e; }
+
+/* ---------- Corpo do artigo: listas ---------- */
+.cf-article ul, .cf-article ol { margin: 0 0 8px; padding-left: 20px; }
+.cf-article li { margin: 0 0 3px; line-height: 1.5; }
+.cf-article code {
+  font: 11px Consolas, "Courier New", monospace;
+  background: #f2f5f9;
+  border: 1px solid #dde5ee;
+  padding: 0 3px;
+  color: #1a3a5c;
+}
+
+/* ---------- Lista de posts com excerto (Home) ---------- */
+.cf-postList { padding: 0 9px; background: #fff; }
+.cf-post {
+  padding: 10px 0 12px;
+  border-bottom: 1px dotted #c3cedb;
+}
+.cf-post:first-child { padding-top: 8px; }
+.cf-post:last-child { border-bottom: none; }
+.cf-post .postTitle {
+  margin: 0 0 3px;
+  font: bold 12px Tahoma, sans-serif;
+}
+.cf-post .postTitle a { color: #15497e; }
+.cf-post .postTitle a:hover { color: #0d3a6b; }
+.cf-post .cf-articleMeta { margin: 0 0 10px; }   /* respiro entre a linha de metadados e o excerto */
+.cf-post p {
+  margin: 0 0 9px;   /* respiro antes do Read more */
+  line-height: 1.55;
+  color: #1a1a1a;
+}
+.cf-post .postFoot {
+  display: flex;
+  align-items: baseline;   /* texto das tags na mesma linha de base do Read more (medido) */
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.cf-post .readMore {
+  font-weight: bold;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.cf-postList .empty { padding: 14px 0; color: #6b7a89; }
+.af-statusBar .pager a.disabled { pointer-events: none; text-decoration: none; }
+.af-statusBar .pager a.disabled { pointer-events: none; text-decoration: none; }
+.af-statusBar #clearFilter { margin-left: 4px; }
+
+/* ---------- Árvore: títulos longos não podem esmagar o ícone ---------- */
+.af-treeRow > svg,
+.af-treeRow .tw { flex: none; }
+.af-treeRow .lbl {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- Árvore: twisties [+]/[-] em vez de setas ---------- */
+.af-treeRow .tw {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 11px;
+  height: 14px;
+  cursor: pointer;
+}
+.af-treeRow .tw svg { display: block; }
+.af-treeRow .tw:hover svg rect { stroke: #35618f; fill: #eef4fa; }
+
+/* ---------- Accordion: triângulo menor e centrado com o texto ---------- */
+.af-accHeader .disc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 14px;
+  font-size: 7px;
+  line-height: 1;
+  position: relative;
+  top: 1px;    /* ajuste fino visual; 1px abaixo do centro geométrico da mancha do texto */
+}
+
+/* ---------- Splitter: linha fina; grip só no hover; arrasta e colapsa ---------- */
+.af-panelLeft { border-right: none; }   /* a única linha entre menu e conteúdo é a do splitter */
+.af-splitter {
+  width: 5px;                       /* área de clique; a linha visível tem 1px */
+  margin-left: -2px;                /* monta 2px sobre o painel: a linha encosta no gradiente dos cabeçalhos */
+  border-right: none;
+  background: linear-gradient(90deg, transparent 2px, #b9c6d3 2px, #b9c6d3 3px, transparent 3px);
+  cursor: col-resize;
+}
+.af-splitter:hover,
+.af-splitter.dragging {
+  background: linear-gradient(90deg, transparent 2px, #6b90b6 2px, #6b90b6 3px, transparent 3px);
+}
+.af-splitter .grip {
+  position: sticky;             /* 50% da JANELA, não do splitter: em posts longos o 50% do splitter fica fora da tela */
+  top: calc(50vh - 19px);
+  left: auto;                   /* o skin base traz left:0 (absolute); no sticky seria ancoragem horizontal */
+  display: flex;                /* mantém a seta centrada, como no skin base */
+  width: 11px;
+  height: 38px;
+  margin: 0 0 0 -3px;           /* centra os 11px sobre os 5px do splitter */
+  transform: none;
+  border: 1px solid #9fb2c4;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #f6f9fc, #d7e1ec);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .18);
+  color: #35597d;
+  font-size: 7px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .12s;
+}
+.af-splitter:hover .grip,
+.af-splitter.dragging .grip,
+.af-shell.collapsed .af-splitter .grip { opacity: 1; }
+.af-splitter .grip:hover { background: linear-gradient(90deg, #ffffff, #cfe0f2); color: #15497e; }
+
+/* menu recolhido: o painel some, a linha fica na borda e o grip inteiro dentro da tela */
+.af-shell.collapsed .af-panelLeft { display: none; }
+.af-shell.collapsed .af-splitter {
+  cursor: default;
+  margin-left: 0;
+  background: linear-gradient(90deg, #b9c6d3 1px, transparent 1px);
+}
+.af-shell.collapsed .af-splitter .grip {
+  margin-left: 1px;              /* inteiro dentro da tela quando o menu some */
+}
+body.cf-resizing { cursor: col-resize; user-select: none; }
+body.cf-resizing .af-panelMain { pointer-events: none; }
+
+/* ============================================================
+   Mobile (<= 768px): mesmo visual ADF, layout reflui.
+   O painel lateral vira gaveta deslizante; o resto empilha.
+   ============================================================ */
+.cf-menuBtn { display: none; }            /* só aparece no mobile */
+.cf-drawerHead { display: none; }
+.cf-backdrop { display: none; }
+
+@media (max-width: 768px) {
+  body { min-width: 0; font-size: 12px; }
+  input[type="text"], input[type="password"], select, .af-button, .af-toolButton {
+    font-size: 12px;
+  }
+  input[type="text"], input[type="password"] { height: 26px; }
+  select { min-height: 26px; }
+  .af-button { padding: 4px 12px 5px; }
+
+  /* --- barra de branding: logo + idioma; o resto some --- */
+  .af-branding { padding: 0 8px; }
+  .af-globalLinks > *:not(.af-selectWrap) { display: none; }   /* fica só o seletor de idioma */
+  .af-globalLinks { font-size: 0; }                             /* engole qualquer texto solto */
+  .af-globalLinks .af-selectWrap, .af-globalLinks select { font-size: 12px; }
+  .af-globalLinks .af-selectWrap { display: none; }               /* no celular usa a folha inferior */
+  .af-globalLinks .cf-langBtn { display: inline-flex; font-size: 12px; }
+
+  /* --- abas + botão de menu --- */
+  .af-navTabs { align-items: flex-end; padding: 7px 8px 0; }
+  .cf-menuBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0 0 4px auto;
+    padding: 3px 9px 4px;
+  }
+  .cf-menuBtn .bars { font-size: 20px; line-height: 1; position: relative; top: -2px; }
+  .cf-menuBtn { padding: 2px 9px; }
+
+  /* --- shell empilhado: sem splitter, painel principal ocupa tudo --- */
+  .af-shell { display: block; min-height: 0; }
+  .af-splitter { display: none; }
+  .af-panelMain { padding: 8px 10px 16px; overflow: visible; }
+
+  /* --- painel lateral vira gaveta --- */
+  .af-panelLeft,
+  .af-shell.collapsed .af-panelLeft {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: min(300px, 86vw);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border-right: 1px solid #8fa6c0;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, .25);
+    transform: translateX(-102%);
+    transition: transform .2s ease-out;
+    z-index: 60;
+  }
+  .af-shell.menu-open .af-panelLeft { transform: none; }
+  .cf-backdrop {
+    display: block;
+    position: fixed; inset: 0;
+    background: rgba(20, 40, 70, .35);
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s;
+    z-index: 55;
+  }
+  .af-shell.menu-open .cf-backdrop { opacity: 1; pointer-events: auto; }
+  body.cf-menuOpen { overflow: hidden; }
+
+  /* cabeçalho da gaveta, no estilo da barra de branding */
+  .cf-drawerHead {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 8px 0 10px;
+    background: linear-gradient(#54749b 0%, #3a5c86 48%, #1f3f63 100%);
+    border-bottom: 1px solid #122a44;
+    color: #fff;
+    font: bold 12px Tahoma, Verdana, sans-serif;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+    position: sticky; top: 0; z-index: 1;
+  }
+  .cf-drawerHead .close {
+    margin-left: auto;
+    width: 26px; height: 26px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid #7f9bbd;
+    border-radius: 3px;
+    background: linear-gradient(#6b90b6, #3d6791);
+    color: #fff; font-size: 13px; cursor: pointer;
+  }
+
+  /* alvos de toque maiores dentro da gaveta */
+  .af-accHeader { padding: 8px 8px; }
+  .af-treeRow { padding: 4px 3px; }
+  .af-tree ul { padding-left: 14px; }
+  .cf-tagCloud { gap: 5px; }
+  .cf-tag, a.cf-tag { padding: 3px 7px 4px; }
+  .cf-archList div { margin: 0 0 7px; }
+
+  /* --- cabeçalho da página: título e filtro empilham --- */
+  .af-panelHeader { flex-wrap: wrap; gap: 6px 0; }
+  .af-panelHeader h1 { font-size: 15px; }
+
+  /* --- lista de posts --- */
+  .cf-postList { padding: 0 8px; }
+  .cf-post .postTitle { font-size: 13px; line-height: 1.35; }
+  .cf-post .cf-articleMeta { line-height: 1.6; }
+  .cf-post p { line-height: 1.6; }
+  .cf-post .postFoot { gap: 6px; }
+  .cf-post .readMore { padding: 3px 0; }
+
+  /* --- barra de status: contador em cima, paginação embaixo --- */
+  .af-statusBar { flex-wrap: wrap; padding: 6px 8px; row-gap: 5px; }
+  .af-statusBar .pager { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+  .af-statusBar .pager a { padding: 4px 6px; }
+
+  /* --- rodapé --- */
+  :root { --cf-footer-h: 30px; }
+  .af-footer { padding: 0 10px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .af-footer .links { margin-left: 0; width: 100%; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .af-footer .links a { margin-left: 0; }
+}
+
+@media (max-width: 400px) {
+  .af-branding .cf-brandName { font-size: 13px; }
+  .af-panelMain { padding: 8px 6px 14px; }
+  .cf-postList { padding: 0 6px; }
+}
+
+/* ---------- Badge de versão na barra de branding ---------- */
+.af-branding .app-name .release {
+  display: inline-block;
+  margin-left: 0;
+  padding: 0 6px 1px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 9px;
+  background: linear-gradient(rgba(255, 255, 255, .24), rgba(255, 255, 255, .08));
+  color: #fff;
+  font: bold 9px Tahoma, Verdana, sans-serif;
+  letter-spacing: .3px;
+  line-height: 13px;
+  vertical-align: 1px;
+  position: relative;
+  top: 1.5px;        /* centro do badge no centro das capitais de CODEFLOW (medido; move 1:1, ao contrário do vertical-align dentro do flex) */
+  text-shadow: none;
+}
+
+/* ---------- Rodapé: separador vertical, como o da barra de branding ---------- */
+.af-footer .sep {
+  margin: 0 7px;
+  color: #a9b8c7;
+}
+
+/* ---------- Barra de branding fixa no topo ao rolar ---------- */
+.af-branding {
+  position: sticky;
+  top: 0;
+  z-index: 30;   /* acima do conteúdo e do splitter; abaixo das gavetas (40+), do backdrop (55) e do diálogo (500) */
+}
+
+/* ---------- Ícone de info no título da página ---------- */
+.af-panelHeader h1 .cf-infoIcon {
+  vertical-align: -3px;
+  margin-right: 6px;
+}
+
+/* ---------- Navegação da série (Previous / Next) ao fim do post ---------- */
+.cf-seriesNav {
+  margin-top: 12px;
+  border: 1px solid #a9b8c7;      /* a af-statusBar só traz border-top; aqui ela está solta, sem panelCollection */
+}
+.cf-seriesNav .pager:first-child { margin-left: 0; }   /* Previous encostado à esquerda; o auto do 2º empurra o Next à direita */
+
+/* ---------- Bloco de código: calha de números de linha ---------- */
+.cf-codeBox .cf-codeBody { display: flex; align-items: stretch; }
+.cf-codeBox .cf-lineNums {
+  flex: none;
+  padding: 7px 7px 7px 9px;
+  overflow: visible;
+  text-align: right;
+  color: #8a99a8;
+  background: #f2f5f9;
+  border-right: 1px solid #dde5ee;
+  user-select: none;
+}
+.cf-codeBox .cf-codeBody pre:not(.cf-lineNums) { flex: 1; min-width: 0; }
+
+/* ---------- Tabelas soltas (fora de af-panelCollection) recebem a moldura completa ----------
+   As células do skin só desenham border-right/border-bottom; a moldura externa vem do
+   af-panelCollection. Uma af-table solta ficava sem a linha esquerda e a do topo. */
+.af-table:not(.af-panelCollection > .af-table) { border: 1px solid #a9b8c7; }
+.af-table:not(.af-panelCollection > .af-table) th:last-child,
+.af-table:not(.af-panelCollection > .af-table) td:last-child { border-right-color: #a9b8c7; }
+.af-table:not(.af-panelCollection > .af-table) tbody tr:last-child td { border-bottom-color: #a9b8c7; }
+
+/* ---------- Gavetas laterais (post): acompanham a rolagem e ficam abaixo da barra fixa ----------
+   No skin base o dock é uma coluna do flex (relative, z 41) e as gavetas são absolute no shell:
+   rolam com a página e, com z-index acima dos 30 da barra sticky, tampavam a barra. */
+.af-drawerDock {
+  position: sticky;
+  top: 38px;                     /* altura da barra de branding */
+  align-self: flex-start;        /* sem isso o item é esticado e o sticky não tem para onde ir */
+  height: calc(100vh - 38px);
+  z-index: 26;                   /* abaixo da barra (30): nem a sombra a invade */
+}
+.af-drawer {
+  position: fixed;
+  top: 38px;
+  bottom: 0;
+  right: 26px;                   /* largura do dock */
+  z-index: 25;
+}
+
+/* ---------- Comentários (giscus) ao fim do post ---------- */
+.cf-comments { margin-top: 14px; }
+.cf-comments .boxBody { padding: 8px 10px 10px; }
+.cf-giscus { margin-top: 6px; }
+.cf-giscus .giscus, .cf-giscus .giscus-frame { width: 100%; }
+
+/* ---------- Rodapé fixo no fim da janela (espelho da barra de branding no topo) ----------
+   position: fixed (e não sticky): sticky depende de nenhum ancestral ter overflow, e no mobile o body
+   recebe overflow:hidden com a gaveta aberta — o rodapé "soltava". A altura do rodapé fica numa variável
+   para reservar espaço no fim do conteúdo e recuar gavetas e dock. 100dvh acompanha a barra de endereço do celular. */
+:root { --cf-footer-h: 24px; }
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--cf-footer-h);   /* o conteúdo termina acima do rodapé fixo */
+}
+.af-shell { flex: 1 0 auto; }
+.af-footer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 30;                          /* mesmo nível da barra do topo */
+  box-sizing: border-box;
+  height: var(--cf-footer-h);
+  align-items: center;
+}
+.af-drawer { bottom: var(--cf-footer-h); }
+.af-drawerDock { height: calc(100vh - 38px - var(--cf-footer-h)); height: calc(100dvh - 38px - var(--cf-footer-h)); }
+
+/* ---------- Tabelas: rolagem horizontal própria em telas estreitas ---------- */
+.cf-tableScroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.cf-tableScroll > .af-table { margin-bottom: 0 !important; }
+.cf-tableScroll { margin-bottom: 10px; }
+@media (max-width: 768px) {
+  .af-panelMain { overflow-x: hidden; }            /* nada pode alargar a página */
+  .cf-tableScroll > .af-table { min-width: 560px; }/* colunas legíveis; o contêiner rola */
+  .cf-formula { overflow-x: auto; }
+}
+
+
+/* ---------- Seletor de idioma no celular: botão + folha inferior (bottom sheet) ---------- */
+.cf-langBtn {
+  display: none;                          /* só no mobile */
+  align-items: center; gap: 6px;
+  height: 22px; padding: 0 6px 0 8px;
+  font: 12px Tahoma, Verdana, Helvetica, sans-serif; color: #1f3a5a;
+  background: linear-gradient(#ffffff, #dde7f1); border: 1px solid #7a9bbf; border-radius: 3px;
+  vertical-align: middle; cursor: pointer;
+}
+.cf-langBtn .arrow { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #35597d; }
+.cf-sheetOverlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(60, 76, 94, .35); }
+.cf-sheetOverlay.open { display: block; }
+body.cf-sheetOpen { overflow: hidden; }
+.cf-sheet {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: #fff; border-top: 1px solid #5c7fa6; box-shadow: 0 -4px 14px rgba(20, 40, 70, .5);
+  padding-bottom: env(safe-area-inset-bottom);
+  animation: cfSheetUp .18s ease-out;
+}
+@keyframes cfSheetUp { from { transform: translateY(100%); } to { transform: none; } }
+.cf-sheet .sheetTitle {
+  padding: 6px 10px; font-weight: bold; color: #173f6b;
+  background: linear-gradient(#e7eff8, #c4d6e9); border-bottom: 1px solid #9fb5cc;
+}
+.cf-sheet .sheetList { list-style: none; margin: 0; padding: 4px 0; max-height: 60vh; overflow-y: auto; }
+.cf-sheet .sheetItem { display: flex; align-items: center; gap: 8px; padding: 11px 12px; font-size: 14px; color: #1f3a5a; border-bottom: 1px solid #e6edf4; cursor: pointer; }
+.cf-sheet .sheetItem:last-child { border-bottom: 0; }
+.cf-sheet .sheetItem:active { background: #e3ecf6; }
+.cf-sheet .sheetItem.current { font-weight: bold; color: #173f6b; }
+.cf-sheet .sheetItem .chk { width: 16px; text-align: center; color: #2a6db3; }
+.cf-sheet .sheetFoot { padding: 6px 8px; background: #eff3f7; border-top: 1px solid #d3dce5; text-align: right; }

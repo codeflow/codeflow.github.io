@@ -1,0 +1,512 @@
+---
+title: "O que é IA generativa, e por que ela só se tornou viável agora?"
+date: 2026-09-08 09:00:00 -0300
+lang: pt-BR
+key: what-is-generative-ai-and-why-did-it-only-become-viable-now
+permalink: /pt-BR/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/
+category: "Artificial Intelligence"
+section: "Generative AI"
+tags: [generative-ai, llm, transformers, prompt-engineering, deep-learning, attention, gpu, human-in-the-loop]
+reading_time: 12
+level: Introdutório
+excerpt: "A IA generativa não surgiu do nada: ela se tornou viável quando três coisas convergiram — computação paralela barata, dados em forma utilizável e uma arquitetura que modela contexto em larga escala. Este artigo traça a linha entre prever um item existente e sintetizar um novo, explica por que geração não é cópia, por que o prompt é o mecanismo de controle, onde a tecnologia já funciona em texto, imagem, vídeo e código, e por que a revisão humana continua obrigatória…"
+description: "Uma introdução à IA generativa: os três fatores que a tornaram viável, a diferença para a IA tradicional, por que geração não é cópia, o prompt como controle, aplicações em texto, imagem, vídeo e código, e a revisão humana obrigatória."
+references_count: 10
+key_concepts: ["Prever vs gerar", "Previsão do próximo token", "Prompt como especificação", "Gerar, inspecionar, corrigir", "Atenção e contexto"]
+version: 1
+history:
+  - { when: "08/09/2026 09:00", what: "Publicação inicial do artigo (tradução da versão em inglês)" }
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    O que você vai encontrar neste artigo
+  </div>
+  <ul>
+    <li>Os três fatores — <b>computação</b>, <b>dados</b> e <b>arquiteturas</b> — cuja convergência tornou a IA generativa viável, com as datas que marcam cada virada.</li>
+    <li>A diferença real entre a <b>IA tradicional</b> (reconhecer, classificar, prever) e a <b>IA generativa</b> (sintetizar algo novo), e por que geração não é cópia.</li>
+    <li>O <b>prompt</b> como mecanismo de controle, o que cada mídia (texto, imagem, vídeo, código) já entrega, e por que a <b>revisão humana</b> não é opcional.</li>
+    <li>Um primeiro olhar por baixo do capô: deep learning, <b>atenção</b> e como o contexto transforma uma previsão local em uma saída coerente.</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+    <svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Banner do artigo: três pilares — computação, dados e arquiteturas — convergindo para a IA generativa">
+      <defs>
+        <linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+        <linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        <marker id="cfHeroArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+      </defs>
+      <rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+      <text x="26" y="26" font-size="9" letter-spacing="1.4" fill="#6b90b6">CODEFLOW &#183; INTELIG&#202;NCIA ARTIFICIAL &#183; IA GENERATIVA</text>
+      <text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">IA generativa</text>
+      <text x="26" y="74" font-size="12" fill="#44566a">De prever o pr&#243;ximo item a sintetizar algo que n&#227;o existia</text>
+      <g font-size="10" fill="#1a2836">
+        <rect x="28" y="96" width="112" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="84" y="112" text-anchor="middle">Computa&#231;&#227;o (GPUs)</text>
+        <rect x="150" y="96" width="112" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="206" y="112" text-anchor="middle">Dados em escala</text>
+        <rect x="272" y="96" width="112" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="328" y="112" text-anchor="middle">Transformers</text>
+      </g>
+      <path d="M140 108 L150 108 M262 108 L272 108" stroke="#3d6791" stroke-width="1.4"/>
+      <path d="M384 108 L440 108" stroke="#3d6791" stroke-width="1.6" marker-end="url(#cfHeroArr)"/>
+      <rect x="446" y="94" width="150" height="28" rx="4" fill="url(#cfHeroSel)" stroke="#2e5378"/>
+      <text x="521" y="112" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Modelos generativos</text>
+      <g font-size="9" fill="#5b6b7a">
+        <text x="640" y="40">IA tradicional</text>
+        <rect x="640" y="46" width="60" height="18" rx="2" fill="#e8f0fa" stroke="#a9b8c7"/><text x="670" y="58" text-anchor="middle" fill="#1a2836">hist&#243;rico</text>
+        <path d="M700 55 L724 55" stroke="#5b6b7a" marker-end="url(#cfHeroArr)"/>
+        <rect x="730" y="46" width="70" height="18" rx="2" fill="#e8f0fa" stroke="#a9b8c7"/><text x="765" y="58" text-anchor="middle" fill="#1a2836">"cerveja" 0,81</text>
+        <text x="640" y="96">IA generativa</text>
+        <rect x="640" y="102" width="60" height="18" rx="2" fill="#cfe2f7" stroke="#15497e"/><text x="670" y="114" text-anchor="middle" fill="#1a2836">prompt</text>
+        <path d="M700 111 L724 111" stroke="#15497e" marker-end="url(#cfHeroArr)"/>
+        <rect x="730" y="102" width="120" height="18" rx="2" fill="#cfe2f7" stroke="#15497e"/><text x="790" y="114" text-anchor="middle" fill="#15497e" font-weight="bold">um artefato novo</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="lead">
+    Pergunte a um sistema de recomendação o que você vai beber na sexta-feira e ele responderá com algo que você já
+    comprou. Peça a um modelo generativo um conto sobre essa sexta-feira e ele entregará um texto que nunca existiu. Os
+    dois sistemas compartilham boa parte da matemática e, ainda assim, respondem a perguntas diferentes. Este artigo explica
+    o que mudou para tornar o segundo tipo viável, onde fica de fato a linha entre <b>prever</b> e <b>gerar</b>, e no que a
+    tecnologia pode e não pode ser confiada hoje.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+  </p>
+
+  <div class="af-subHeader" id="sec1">1. Por que agora: três fatores que convergiram</div>
+  <p>
+    A IA generativa se tornou viável quando três linhas independentes de progresso se encontraram. Nenhuma delas é nova
+    por si só; o que é novo é que as três amadureceram ao mesmo tempo.
+  </p>
+  <ul>
+    <li><b>Computação.</b> Treinar uma rede neural é, na maior parte, multiplicação de matrizes, e as placas gráficas foram
+      construídas exatamente para fazer isso em paralelo. Quando uma rede convolucional treinada em duas GPUs de consumo venceu a
+      competição ImageNet de 2012 por larga margem, operações que eram lentas e caras demais para escalar viraram rotina.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup></li>
+    <li><b>Dados.</b> O volume de texto, imagens e código digitais cresceu, mas a mudança decisiva foi de <i>forma</i>: dados
+      organizados, rotulados ou ao menos rastreáveis de um jeito que um pipeline de treinamento consegue consumir. O próprio
+      ImageNet — milhões de imagens com rótulos estruturados — foi o molde dessa virada.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup></li>
+    <li><b>Arquiteturas.</b> Redes recorrentes modelavam sequências, mas as processavam um passo por vez e sofriam com
+      contextos longos. O Transformer substituiu a recorrência pela atenção, que olha para o contexto inteiro de uma vez e
+      paraleliza ao longo da sequência. Linguagem e contexto finalmente puderam ser modelados em escala.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup></li>
+  </ul>
+  <p>
+    Com os três no lugar, um fato empírico assumiu o comando: o desempenho melhora de forma previsível conforme tamanho do
+    modelo, dados e computação crescem juntos — as chamadas leis de escala.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+    É por isso que o campo passou tão rápido de curiosidade de pesquisa a produto.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Três linhas de progresso se encontrando <span class="figNum">&mdash; Figura 1</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 236" width="860" height="236" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Linha do tempo dos marcos de computação, dados e arquitetura convergindo para a IA generativa">
+        <defs>
+          <marker id="cfArr1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker>
+          <linearGradient id="cfN1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient>
+          <linearGradient id="cfH1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="860" height="236" fill="#ffffff"/>
+        <path d="M60 200 L700 200" stroke="#a9b8c7" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <g font-size="9" fill="#5b6b7a" text-anchor="middle">
+          <text x="120" y="216">2009</text><text x="240" y="216">2012</text><text x="420" y="216">2017</text><text x="560" y="216">2020</text><text x="660" y="216">2022</text>
+        </g>
+        <g font-size="10" font-weight="bold" fill="#15497e">
+          <text x="12" y="52">Computa&#231;&#227;o</text><text x="12" y="112">Dados</text><text x="12" y="172">Arquitetura</text>
+        </g>
+        <g stroke="#dde5ee"><path d="M88 48 L352 48"/><path d="M88 108 L660 108"/><path d="M88 168 L718 168"/></g>
+        <g font-size="9" fill="#1a2836">
+          <rect x="172" y="34" width="180" height="28" rx="3" fill="url(#cfN1)" stroke="#7d8fa2"/><text x="262" y="46" text-anchor="middle" font-weight="bold">AlexNet em 2 GPUs</text><text x="262" y="57" text-anchor="middle" fill="#5b6b7a">redes profundas vi&#225;veis de treinar</text>
+          <rect x="66" y="94" width="132" height="28" rx="3" fill="url(#cfN1)" stroke="#7d8fa2"/><text x="132" y="106" text-anchor="middle" font-weight="bold">ImageNet</text><text x="132" y="117" text-anchor="middle" fill="#5b6b7a">14 mi de imagens rotuladas</text>
+          <rect x="490" y="94" width="170" height="28" rx="3" fill="url(#cfN1)" stroke="#7d8fa2"/><text x="575" y="106" text-anchor="middle" font-weight="bold">Texto da web</text><text x="575" y="117" text-anchor="middle" fill="#5b6b7a">centenas de bilh&#245;es de tokens</text>
+          <rect x="350" y="154" width="156" height="28" rx="3" fill="url(#cfN1)" stroke="#7d8fa2"/><text x="428" y="166" text-anchor="middle" font-weight="bold">Transformer</text><text x="428" y="177" text-anchor="middle" fill="#5b6b7a">aten&#231;&#227;o substitui recorr&#234;ncia</text>
+          <rect x="606" y="154" width="112" height="28" rx="3" fill="url(#cfN1)" stroke="#7d8fa2"/><text x="662" y="166" text-anchor="middle" font-weight="bold">Modelos de difus&#227;o</text><text x="662" y="177" text-anchor="middle" fill="#5b6b7a">imagens a partir de texto</text>
+        </g>
+        <path d="M352 48 C 700 48, 720 60, 748 96" fill="none" stroke="#6b90b6" stroke-width="1.4"/>
+        <path d="M660 108 C 700 108, 720 100, 748 106" fill="none" stroke="#6b90b6" stroke-width="1.4"/>
+        <path d="M718 168 C 734 168, 742 138, 748 116" fill="none" stroke="#6b90b6" stroke-width="1.4"/>
+        <rect x="750" y="88" width="100" height="36" rx="4" fill="url(#cfH1)" stroke="#2e5378"/>
+        <text x="800" y="104" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">IA generativa</text>
+        <text x="800" y="116" font-size="8.5" fill="#dbe6f2" text-anchor="middle">vi&#225;vel em escala</text>
+      </svg>
+    </div>
+    <div class="figCaption">
+      <b>Figura 1</b> &mdash; Cada faixa amadureceu no seu próprio ritmo. Foi a convergência, e não um marco isolado, que tornou os
+      sistemas generativos práticos: as GPUs baratearam o treinamento, os dados organizados deram algo para aprender, e o
+      Transformer deu um jeito de usar contextos longos.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>,<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec2">2. Da IA tradicional para a IA generativa</div>
+  <p>
+    A IA tradicional trabalha principalmente com <b>reconhecimento de padrões, classificação e previsão</b> sobre dados que
+    já existem. Um sistema de recomendação aprende os hábitos de um usuário e estima a próxima ação provável — vinho em dias
+    frios, cerveja na sexta-feira. A saída é uma escolha entre itens conhecidos, ou um número associado a um deles.
+  </p>
+  <p>
+    A IA generativa muda o objetivo. Em vez de prever um item existente, ela <b>sintetiza uma saída nova</b> a partir dos
+    padrões que aprendeu: um parágrafo, uma imagem, uma função. A maquinaria por baixo costuma ser a mesma família de redes
+    neurais; o que difere é o que se pede ao modelo e como sua saída é julgada. Essa mudança de objetivo é o que atraiu tanta
+    atenção para o campo.
+  </p>
+
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:150px;"></th>
+        <th>IA tradicional (preditiva)</th>
+        <th>IA generativa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><b>Pergunta respondida</b></td><td>Qual item ou rótulo conhecido cabe nesta entrada?</td><td>Como seria um artefato novo e plausível, dado este pedido?</td></tr>
+      <tr class="band"><td><b>Saída</b></td><td>Uma classe, uma pontuação, um ranking</td><td>Texto, imagem, áudio, vídeo, código</td></tr>
+      <tr><td><b>Tarefa típica</b></td><td>Filtro de spam, score de crédito, recomendação</td><td>Redigir, resumir, ilustrar, programar</td></tr>
+      <tr class="band"><td><b>Como é avaliada</b></td><td><span class="st ok">Acurácia contra respostas conhecidas</span></td><td><span class="st warn">Utilidade e coerência, julgadas por uma pessoa</span></td></tr>
+      <tr><td><b>Falha típica</b></td><td>Um rótulo errado</td><td>Uma resposta fluente, confiante e errada</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">
+    Tabela 1 &mdash; A linha da avaliação é a que importa na prática: um sistema preditivo pode ser pontuado automaticamente contra
+    o gabarito; um generativo produz coisas para as quais não existe gabarito, e é por isso que o julgamento humano volta a entrar
+    no circuito (seção 7).
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Prever um item versus gerar um artefato <span class="figNum">&mdash; Figura 2</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 210" width="860" height="210" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Dois fluxos: histórico entrando num modelo preditivo que produz uma pontuação, e um prompt entrando num modelo generativo que produz um artefato novo">
+        <defs>
+          <marker id="cfArr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker>
+          <linearGradient id="cfN2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient>
+          <linearGradient id="cfH2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="860" height="210" fill="#ffffff"/>
+        <text x="16" y="40" font-size="10" font-weight="bold" fill="#15497e">IA tradicional</text>
+        <rect x="140" y="24" width="150" height="46" rx="3" fill="url(#cfN2)" stroke="#7d8fa2"/>
+        <text x="215" y="42" font-size="10" text-anchor="middle" fill="#1a2836">hist&#243;rico de compras</text>
+        <text x="215" y="56" font-size="9" text-anchor="middle" fill="#5b6b7a">sex: cerveja &#183; s&#225;b: vinho &#8230;</text>
+        <path d="M290 47 L330 47" stroke="#44566a" marker-end="url(#cfArr2)"/>
+        <rect x="336" y="24" width="120" height="46" rx="3" fill="url(#cfH2)" stroke="#2e5378"/>
+        <text x="396" y="43" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">classificador</text>
+        <text x="396" y="57" font-size="9" fill="#dbe6f2" text-anchor="middle">padr&#245;es aprendidos</text>
+        <path d="M456 47 L496 47" stroke="#44566a" marker-end="url(#cfArr2)"/>
+        <rect x="502" y="24" width="180" height="46" rx="3" fill="#e8f0fa" stroke="#a9b8c7"/>
+        <text x="592" y="43" font-size="10" text-anchor="middle" fill="#1a2836">&#8220;cerveja&#8221; &mdash; probabilidade 0,81</text>
+        <text x="592" y="57" font-size="9" text-anchor="middle" fill="#5b6b7a">uma escolha entre itens que j&#225; existem</text>
+        <text x="16" y="140" font-size="10" font-weight="bold" fill="#15497e">IA generativa</text>
+        <rect x="140" y="112" width="150" height="58" rx="3" fill="#cfe2f7" stroke="#15497e"/>
+        <text x="215" y="130" font-size="10" text-anchor="middle" fill="#1a2836">prompt</text>
+        <text x="215" y="144" font-size="9" text-anchor="middle" fill="#5b6b7a">&#8220;um conto sobre uma sexta-feira</text>
+        <text x="215" y="156" font-size="9" text-anchor="middle" fill="#5b6b7a">que come&#231;a com uma cerveja&#8221;</text>
+        <path d="M290 141 L330 141" stroke="#44566a" marker-end="url(#cfArr2)"/>
+        <rect x="336" y="112" width="120" height="58" rx="3" fill="url(#cfH2)" stroke="#2e5378"/>
+        <text x="396" y="134" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">modelo generativo</text>
+        <text x="396" y="148" font-size="9" fill="#dbe6f2" text-anchor="middle">padr&#245;es aprendidos +</text>
+        <text x="396" y="160" font-size="9" fill="#dbe6f2" text-anchor="middle">o pedido</text>
+        <path d="M456 141 L496 141" stroke="#44566a" marker-end="url(#cfArr2)"/>
+        <rect x="502" y="112" width="180" height="58" rx="3" fill="#e8f0fa" stroke="#15497e"/>
+        <text x="592" y="132" font-size="10" text-anchor="middle" fill="#15497e" font-weight="bold">um texto novo</text>
+        <text x="592" y="146" font-size="9" text-anchor="middle" fill="#5b6b7a">coerente com o pedido,</text>
+        <text x="592" y="158" font-size="9" text-anchor="middle" fill="#5b6b7a">n&#227;o copiado de nenhum exemplo</text>
+        <rect x="712" y="60" width="132" height="70" rx="3" fill="#fdf7e6" stroke="#b08f3e"/>
+        <text x="778" y="80" font-size="9" fill="#6b5a1e" text-anchor="middle">Mesma fam&#237;lia de</text>
+        <text x="778" y="92" font-size="9" fill="#6b5a1e" text-anchor="middle">redes neurais.</text>
+        <text x="778" y="108" font-size="9" fill="#6b5a1e" text-anchor="middle">O que muda &#233; o</text>
+        <text x="778" y="120" font-size="9" fill="#6b5a1e" text-anchor="middle">objetivo e a sa&#237;da.</text>
+      </svg>
+    </div>
+    <div class="figCaption">
+      <b>Figura 2</b> &mdash; O fluxo preditivo termina numa escolha entre itens conhecidos; o generativo termina num artefato
+      que não existia. O próprio pedido passa a fazer parte da entrada do modelo, e é por isso que o prompt importa tanto (seção 5).
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec3">3. Geração não é cópia</div>
+  <p>
+    Gerar não significa recortar e colar exemplos do conjunto de treinamento. Significa produzir uma <b>combinação nova,
+    coerente com o pedido</b>. Se alguém pede um livro &ldquo;com base&rdquo; em muitos livros anteriores, o sistema não deve
+    devolver um trecho copiado; deve devolver um artefato novo, orientado pela instrução.
+  </p>
+  <p>
+    A originalidade aqui é <b>estatística e composicional</b>, não criação do nada. Um modelo de linguagem aprendeu uma
+    distribuição de probabilidade sobre sequências de palavras; gerar é percorrer essa distribuição um passo de cada vez,
+    condicionado a tudo o que veio antes — inclusive o prompt:
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="var">p</span>(<span class="var">x</span><sub>1</sub>, &hellip;, <span class="var">x</span><sub><span class="var">T</span></sub> | <span class="var">prompt</span>)
+    <span class="op">=</span>
+    <span style="font-size:18px; vertical-align:-2px;">&prod;</span><sub><span class="var">t</span>=1</sub><sup><span class="var">T</span></sup>&nbsp;
+    <span class="var">p</span>(<span class="var">x</span><sub><span class="var">t</span></sub> | <span class="var">prompt</span>, <span class="var">x</span><sub>&lt;<span class="var">t</span></sub>)
+  </div>
+
+  <p>
+    Cada fator à direita é uma distribuição sobre o próximo token dado o prompt e os tokens já produzidos. O modelo nunca
+    armazena frases para recuperar; armazena os parâmetros que dão forma a essas distribuições. A reprodução literal ainda
+    pode acontecer quando uma passagem apareceu muitas vezes no treinamento — um modo de falha conhecido e estudado<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup> —,
+    mas é a exceção para a qual o mecanismo precisa ser empurrado, não seu comportamento normal.
+  </p>
+  <p>
+    Isso também aproxima a discussão de como as pessoas criam. A criação humana normalmente reorganiza referências, influências e
+    repertório; um romancista leu romances, um designer viu designs. A diferença é de grau e de intenção, não uma linha
+    limpa entre &ldquo;original&rdquo; e &ldquo;derivado&rdquo;.
+  </p>
+
+  <div class="af-panelBox light" id="boxSampling">
+    <div class="boxHdr" onclick="toggleBox('boxSampling')"><span class="disc">&#9660;</span>Por que o mesmo prompt dá respostas diferentes</div>
+    <div class="boxBody">
+      A equação (1) dá uma distribuição, não uma resposta única. A cada passo o sistema <i>amostra</i> dela. Um parâmetro de
+      <b>temperatura</b> achata ou afina a distribuição antes da amostragem: perto de zero, o modelo quase sempre escolhe o
+      token mais provável e as respostas ficam repetitivas e determinísticas; valores mais altos deixam passar tokens menos
+      prováveis e as respostas ficam mais variadas — e mais propensas a divagar. O código da seção 8 mostra a operação em poucas linhas.
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec4">4. Criação, inteligência e a discussão filosófica</div>
+  <p>
+    Chamar esses sistemas de &ldquo;não inteligentes&rdquo; porque não criam como um artista humano mistura <b>critérios
+    filosóficos</b> com <b>critérios operacionais</b>. No uso cotidiano, inteligência é inferida pelo comportamento: a
+    capacidade de aprender, de aplicar padrões e de produzir respostas adequadas a um contexto. É exatamente o tipo de
+    comportamento que esses sistemas exibem — e é, não por acaso, o teste operacional que Turing propôs ao trocar &ldquo;as
+    máquinas podem pensar?&rdquo; por uma pergunta sobre comportamento.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
+  </p>
+  <p>
+    Reconhecer isso não torna o sistema equivalente a um ser humano. Ele não tem objetivos próprios, nenhuma experiência do
+    mundo além dos dados de treinamento, e nenhum jeito de conferir sua saída contra a realidade a menos que uma ferramenta lhe dê
+    um. Mas também impede o erro oposto: reduzir seu funcionamento a automação mecânica sem aprendizado. A discussão útil,
+    portanto, não é se o sistema é capaz, e sim <b>que tipo de inteligência e que tipo de criação ele manifesta</b> — e onde
+    fica a responsabilidade pelo resultado.
+  </p>
+
+  <div class="af-subHeader" id="sec5">5. O prompt como mecanismo de controle</div>
+  <p>
+    O <b>prompt</b> é a especificação de entrada: diz ao modelo o que gerar, em que estilo e sob quais restrições. Como o
+    prompt faz parte do condicionamento na equação (1), ele molda cada token que vem depois. Quanto mais claro o pedido,
+    melhor o sistema consegue alinhar a saída ao objetivo — para texto, imagem ou código igualmente.
+  </p>
+  <p>
+    Em aplicações reais, &ldquo;saber promptar&rdquo; não é um truque superficial. É a habilidade de transformar intenção humana em
+    instrução operacional para o modelo: público, formato, tamanho, tom, o que incluir, o que deixar de fora, e exemplos do
+    resultado esperado. A observação de que alguns exemplos resolvidos dentro do prompt bastam para direcionar um modelo grande a
+    uma tarefa nova — o <i>few-shot</i> — foi uma das descobertas que tornaram a geração atual de modelos útil na prática.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+    Um prompt ruim produz saídas vagas ou erradas; um prompt bem formulado aumenta utilidade, coerência e aderência ao contexto.
+  </p>
+
+  <div class="af-panelBox light" id="boxPrompt">
+    <div class="boxHdr" onclick="toggleBox('boxPrompt')"><span class="disc">&#9660;</span>Anatomia de um prompt útil</div>
+    <div class="boxBody">
+      <b>Papel e público</b> (&ldquo;você escreve para alunos do primeiro ano de engenharia&rdquo;) &middot;
+      <b>Tarefa</b> (&ldquo;explique X&rdquo;) &middot; <b>Restrições</b> (tamanho, formato, o que evitar) &middot;
+      <b>Contexto</b> (os dados ou o texto de partida) &middot; <b>Exemplos</b> da saída esperada &middot;
+      <b>Critério de sucesso</b> (&ldquo;quem ler deve conseguir fazer Y depois&rdquo;). A maioria das respostas vagas vem de
+      uma dessas peças faltando.
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec6">6. Onde já funciona: texto, imagem, vídeo e código</div>
+  <p>
+    Modelos generativos já produzem livros, e-mails, respostas automáticas e outros artefatos textuais com boa coerência e
+    estilo consistente. O valor prático está num <b>primeiro rascunho útil</b>, adaptado ao formato e ao tom desejados. Como a
+    saída depende do prompt, estratégia, estrutura e nível de formalidade podem ser direcionados. Texto tende a sair mais
+    consistente do que outras mídias, mas ainda exige validação humana.
+  </p>
+  <p>
+    A geração de imagem passou de resultados visivelmente defeituosos a composições convincentes em poucos anos, em boa parte
+    graças aos modelos de difusão, que aprendem a transformar ruído em imagem guiados por uma descrição em texto.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup>
+    Um prompt curto já produz capas, cenas e conceitos visuais próximos de referências conhecidas; os modelos vêm com
+    <i>guardrails</i> contra certos usos indevidos, como imagens enganosas ou pessoas reais em contextos problemáticos. A
+    qualidade em vídeo também avançou rápido, mas ainda aparecem erros de finalização, proporções erradas e detalhes
+    inconsistentes. Esses erros mostram que uma saída pode ser impressionante sem ser automaticamente confiável.
+  </p>
+  <p>
+    Geradores de código — Copilot, Devin e seus pares — já produzem trechos completos de utilidade prática real. Um modelo
+    treinado em código público resolve uma parcela significativa de tarefas de programação só a partir de uma descrição em
+    linguagem natural.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
+    Isso não elimina a necessidade de saber programar: quem não entende o problema tende a pedir errado e a aceitar soluções
+    incorretas. No desenvolvimento de software o modelo acelera implementação, exploração e boilerplate; a revisão de lógica,
+    segurança, arquitetura e aderência ao requisito continua com o engenheiro.
+    <b>Código gerado sem revisão é risco operacional, não produtividade.</b>
+  </p>
+
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead>
+      <tr>
+        <th style="width:110px;">Mídia</th>
+        <th style="width:130px;">Maturidade hoje</th>
+        <th>Defeito típico a procurar</th>
+        <th style="width:170px;">Revisão necessária</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Texto</td><td><span class="st ok">Alta</span></td><td>Afirmações plausíveis mas falsas; referências inventadas; desvio do briefing</td><td>Fatos, tom, intenção</td></tr>
+      <tr class="band"><td>Imagem</td><td><span class="st ok">Alta</span></td><td>Letras embaralhadas, proporções estranhas, anatomia inconsistente</td><td>Detalhes, direitos, uso indevido</td></tr>
+      <tr><td>Vídeo</td><td><span class="st warn">Média</span></td><td>Artefatos de movimento, quadros inacabados, erros de continuidade</td><td>Cada quadro que importa</td></tr>
+      <tr class="band"><td>Código</td><td><span class="st ok">Alta</span></td><td>Lógica errada que compila; padrões inseguros; requisito errado</td><td><span class="st err">Obrigatória: lógica, segurança, arquitetura</span></td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">
+    Tabela 2 &mdash; Maturidade descreve com que frequência a primeira saída é aproveitável, não com que frequência está correta. A
+    última coluna é o ponto da seção 7: quanto mais consequente a mídia, menos opcional a revisão.
+  </p>
+
+  <div class="af-subHeader" id="sec7">7. Revisão humana não é opcional</div>
+  <p>
+    Saídas generativas podem parecer corretas e ainda conter erros sutis. Em imagens isso aparece como texto com acentuação
+    errada, proporções estranhas ou detalhes anatômicos inconsistentes; em vídeo, como artefatos de movimento e finalização; em
+    texto e código, como incoerências ou respostas plausíveis, porém erradas. A falha raramente é barulhenta. Ela é fluente.
+  </p>
+  <p>
+    O fluxo correto, então, não é &ldquo;gerar e publicar&rdquo;, mas <b>&ldquo;gerar, inspecionar e corrigir&rdquo;</b>. A IA
+    generativa é mais útil quando entra no processo como <b>coprodutora sob supervisão humana</b>: ela rascunha, a pessoa julga, e a
+    correção alimenta o pedido seguinte. O ganho de produtividade é real, mas se realiza na etapa de inspeção, não na de geração.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Dois fluxos de trabalho para a mesma saída <span class="figNum">&mdash; Figura 3</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 150" width="860" height="150" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Gerar e publicar versus gerar, inspecionar e corrigir em ciclo">
+        <defs>
+          <marker id="cfArr3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#44566a"/></marker>
+          <linearGradient id="cfN3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient>
+          <linearGradient id="cfH3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="860" height="150" fill="#ffffff"/>
+        <text x="16" y="40" font-size="10" font-weight="bold" fill="#b3271b">Gerar e publicar</text>
+        <rect x="170" y="22" width="110" height="30" rx="3" fill="url(#cfH3)" stroke="#2e5378"/><text x="225" y="41" font-size="10" fill="#ffffff" text-anchor="middle">gerar</text>
+        <path d="M280 37 L330 37" stroke="#44566a" marker-end="url(#cfArr3)"/>
+        <rect x="336" y="22" width="110" height="30" rx="3" fill="#fbe9e6" stroke="#b3271b"/><text x="391" y="41" font-size="10" fill="#7a1d14" text-anchor="middle">publicar</text>
+        <text x="460" y="41" font-size="9" fill="#7a1d14">erros fluentes chegam ao leitor, ao cliente ou &#224; produ&#231;&#227;o</text>
+        <text x="16" y="110" font-size="10" font-weight="bold" fill="#3d8b2f">Gerar, inspecionar, corrigir</text>
+        <rect x="170" y="92" width="110" height="30" rx="3" fill="url(#cfH3)" stroke="#2e5378"/><text x="225" y="111" font-size="10" fill="#ffffff" text-anchor="middle">gerar</text>
+        <path d="M280 107 L330 107" stroke="#44566a" marker-end="url(#cfArr3)"/>
+        <rect x="336" y="92" width="110" height="30" rx="3" fill="url(#cfN3)" stroke="#7d8fa2"/><text x="391" y="111" font-size="10" fill="#1a2836" text-anchor="middle">inspecionar (humano)</text>
+        <path d="M446 107 L496 107" stroke="#44566a" marker-end="url(#cfArr3)"/>
+        <rect x="502" y="92" width="110" height="30" rx="3" fill="url(#cfN3)" stroke="#7d8fa2"/><text x="557" y="111" font-size="10" fill="#1a2836" text-anchor="middle">corrigir / re-promptar</text>
+        <path d="M557 122 L557 136 L225 136 L225 124" fill="none" stroke="#44566a" marker-end="url(#cfArr3)"/>
+        <path d="M612 107 L662 107" stroke="#44566a" marker-end="url(#cfArr3)"/>
+        <rect x="668" y="92" width="110" height="30" rx="3" fill="#e6f4e3" stroke="#3d8b2f"/><text x="723" y="111" font-size="10" fill="#1f5a17" text-anchor="middle">publicar</text>
+        <text x="786" y="111" font-size="9" fill="#5b6b7a">revisado</text>
+      </svg>
+    </div>
+    <div class="figCaption">
+      <b>Figura 3</b> &mdash; Os dois fluxos produzem a mesma primeira saída; diferem em onde os erros vão parar. O ciclo de baixo é
+      onde as ferramentas generativas de fato compensam — cada correção é também um prompt melhor para a rodada seguinte.
+    </div>
+  </div>
+
+  <div class="af-subHeader" id="sec8">8. Por baixo do capô: deep learning, atenção e contexto</div>
+  <p>
+    Deep learning permite que um sistema aprenda <b>representações complexas</b> a partir de grandes volumes de dados, em vez de
+    depender apenas de regras explícitas: ninguém escreve o que torna uma frase coerente ou uma imagem plausível; a rede aprende
+    isso dos exemplos, camada por camada.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+  <p>
+    Em modelos modernos, mecanismos de <b>atenção</b> decidem quais partes do contexto importam mais para gerar a próxima parte da
+    saída.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup> É por isso que o sistema consegue
+    distinguir os sentidos de uma mesma palavra — <i>manga</i> como fruta ou como parte da camisa — pesando o restante da
+    frase. Contexto e atenção são o que transforma uma <b>previsão local</b> (o próximo token) em uma <b>geração
+    coerente</b> (um parágrafo que mantém o assunto).
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Uma palavra, dois sentidos, dois padrões de atenção <span class="figNum">&mdash; Figura 4</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 170" width="860" height="170" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Duas frases com a palavra manga; o sombreado mostra para quais palavras a palavra manga presta atenção em cada uma">
+        <rect x="0" y="0" width="860" height="170" fill="#ffffff"/>
+        <text x="16" y="30" font-size="10" fill="#5b6b7a">Para onde &#8220;manga&#8221; olha (mais escuro = mais peso)</text>
+        <g font-size="10" text-anchor="middle">
+          <rect x="16" y="46" width="42" height="24" rx="2" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="37" y="62" fill="#1a2836">A</text>
+          <rect x="64" y="46" width="60" height="24" rx="2" fill="#2e5378" stroke="#2e5378"/><text x="94" y="62" fill="#ffffff" font-weight="bold">manga</text>
+          <rect x="130" y="46" width="42" height="24" rx="2" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="151" y="62" fill="#1a2836">da</text>
+          <rect x="178" y="46" width="66" height="24" rx="2" fill="#15497e" fill-opacity="0.50" stroke="#c3cedb"/><text x="211" y="62" fill="#ffffff">camisa</text>
+          <rect x="250" y="46" width="64" height="24" rx="2" fill="#15497e" fill-opacity="0.24" stroke="#c3cedb"/><text x="282" y="62" fill="#1a2836">rasgou</text>
+          <rect x="320" y="46" width="42" height="24" rx="2" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="341" y="62" fill="#1a2836">no</text>
+          <rect x="368" y="46" width="70" height="24" rx="2" fill="#15497e" fill-opacity="0.09" stroke="#c3cedb"/><text x="403" y="62" fill="#1a2836">cotovelo</text>
+        </g>
+        <text x="530" y="62" font-size="9" fill="#5b6b7a">&#8594; sentido: parte da roupa</text>
+        <g font-size="10" text-anchor="middle">
+          <rect x="16" y="110" width="42" height="24" rx="2" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="37" y="126" fill="#1a2836">A</text>
+          <rect x="64" y="110" width="60" height="24" rx="2" fill="#2e5378" stroke="#2e5378"/><text x="94" y="126" fill="#ffffff" font-weight="bold">manga</text>
+          <rect x="130" y="110" width="66" height="24" rx="2" fill="#15497e" fill-opacity="0.12" stroke="#c3cedb"/><text x="163" y="126" fill="#1a2836">estava</text>
+          <rect x="202" y="110" width="66" height="24" rx="2" fill="#15497e" fill-opacity="0.46" stroke="#c3cedb"/><text x="235" y="126" fill="#ffffff">madura</text>
+          <rect x="274" y="110" width="42" height="24" rx="2" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="295" y="126" fill="#1a2836">e</text>
+          <rect x="322" y="110" width="60" height="24" rx="2" fill="#15497e" fill-opacity="0.31" stroke="#c3cedb"/><text x="352" y="126" fill="#1a2836">doce</text>
+        </g>
+        <text x="530" y="126" font-size="9" fill="#5b6b7a">&#8594; sentido: a fruta</text>
+        <text x="16" y="158" font-size="9" fill="#8a99a8">Pesos ilustrativos, coerentes com os padr&#245;es de desambigua&#231;&#227;o observados em cabe&#231;as de aten&#231;&#227;o de modelos reais.</text>
+      </svg>
+    </div>
+    <div class="figCaption">
+      <b>Figura 4</b> &mdash; O mesmo token, <i>manga</i>, recolhe a maior parte do seu peso de <i>camisa</i> na primeira frase e de
+      <i>madura</i> e <i>doce</i> na segunda. Nada no modelo armazena &ldquo;dois significados de manga&rdquo;; o significado é
+      montado a partir do contexto a cada uso. O mecanismo em si é o assunto do próximo artigo.
+    </div>
+  </div>
+
+  <p>
+    A equação (1) e a Figura 4 se encontram num pequeno trecho de código. Dadas as pontuações que um modelo atribui a cada
+    próximo token possível, isso é tudo o que a geração faz a cada passo:
+  </p>
+
+  <div class="cf-codeBox">
+    <div class="codeHdr">amostrar_proximo_token.py <span class="lang">&mdash; Python / NumPy</span><button class="af-button small" onclick="copyCode(this)">Copiar</button></div>
+    <pre><span class="k">import</span> numpy <span class="k">as</span> np
+
+<span class="k">def</span> amostrar_proximo_token(logits, temperatura=<span class="n">1.0</span>, rng=np.random.default_rng()):
+    <span class="s">"""logits: uma pontuação por entrada do vocabulário, produzida pelo modelo para o contexto atual.
+    Devolve o índice do token escolhido para este passo."""</span>
+    <span class="c"># 1. a temperatura remodela a distribuição: &lt; 1 afina, &gt; 1 achata</span>
+    z = logits / max(temperatura, <span class="n">1e-6</span>)
+
+    <span class="c"># 2. o softmax transforma pontuações em probabilidades que somam 1 (isto é p(x_t | prompt, x_&lt;t))</span>
+    z = z - z.max()                       <span class="c"># estabilidade numérica</span>
+    p = np.exp(z) / np.exp(z).sum()
+
+    <span class="c"># 3. amostragem: o mesmo contexto pode produzir continuações diferentes</span>
+    <span class="k">return</span> rng.choice(len(p), p=p)
+
+
+<span class="c"># Gerar uma sequência é este passo em laço: cada token escolhido entra no contexto do próximo.</span>
+<span class="k">def</span> gerar(modelo, tokens_do_prompt, max_novos_tokens, temperatura=<span class="n">0.8</span>):
+    tokens = list(tokens_do_prompt)
+    <span class="k">for</span> _ <span class="k">in</span> range(max_novos_tokens):
+        logits = modelo(tokens)           <span class="c"># pontuações do próximo token, dado tudo até aqui</span>
+        tokens.append(amostrar_proximo_token(logits, temperatura))
+    <span class="k">return</span> tokens</pre>
+  </div>
+
+  <div class="af-subHeader" id="sec9">9. Conclusão</div>
+  <p>
+    IA generativa não é mágica nem máquina de copiar. É uma distribuição de probabilidade aprendida sobre artefatos, amostrada um
+    passo de cada vez sob a orientação de um prompt — viabilizada pela convergência de computação paralela, dados organizados e
+    uma arquitetura que lê contexto em escala. Suas saídas são novas, coerentes e úteis, e também fluentes quando estão erradas; é
+    por isso que o prompt carrega a intenção e o humano carrega o julgamento.
+  </p>
+  <p>
+    O <b>próximo artigo</b> abre o mecanismo que a Figura 4 só insinuou: o <b>self-attention</b> — como um modelo decide, token
+    a token, para onde olhar.
+  </p>
+
+</div><!-- /cf-article -->
+
+<!-- references -->
+<ul class="cf-refList">
+  <li><span class="refNum">[1]</span><span>A. Vaswani; N. Shazeer; N. Parmar <i>et al.</i> &mdash; <cite>Attention Is All You Need</cite>, NeurIPS 2017. <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a> <span class="refSrc">(acessado em 08/09/2026)</span></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[2]</span><span>A. Krizhevsky; I. Sutskever; G. E. Hinton &mdash; <cite>ImageNet Classification with Deep Convolutional Neural Networks</cite>, NeurIPS 2012. <a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">papers.nips.cc</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[3]</span><span>J. Deng; W. Dong; R. Socher; L.-J. Li; K. Li; L. Fei-Fei &mdash; <cite>ImageNet: A Large-Scale Hierarchical Image Database</cite>, CVPR 2009. <a href="https://ieeexplore.ieee.org/document/5206848">ieeexplore.ieee.org</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[4]</span><span>T. B. Brown; B. Mann; N. Ryder <i>et al.</i> &mdash; <cite>Language Models are Few-Shot Learners</cite>, NeurIPS 2020. <a href="https://arxiv.org/abs/2005.14165">arXiv:2005.14165</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[5]</span><span>J. Kaplan; S. McCandlish; T. Henighan <i>et al.</i> &mdash; <cite>Scaling Laws for Neural Language Models</cite>, 2020. <a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[6]</span><span>R. Rombach; A. Blattmann; D. Lorenz; P. Esser; B. Ommer &mdash; <cite>High-Resolution Image Synthesis with Latent Diffusion Models</cite>, CVPR 2022. <a href="https://arxiv.org/abs/2112.10752">arXiv:2112.10752</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[7]</span><span>M. Chen; J. Tworek; H. Jun <i>et al.</i> &mdash; <cite>Evaluating Large Language Models Trained on Code</cite>, 2021. <a href="https://arxiv.org/abs/2107.03374">arXiv:2107.03374</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[8]</span><span>E. M. Bender; T. Gebru; A. McMillan-Major; S. Shmitchell &mdash; <cite>On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?</cite>, FAccT 2021. <a href="https://dl.acm.org/doi/10.1145/3442188.3445922">dl.acm.org</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[9]</span><span>A. M. Turing &mdash; <cite>Computing Machinery and Intelligence</cite>, Mind 59(236), 1950. <a href="https://doi.org/10.1093/mind/LIX.236.433">doi:10.1093/mind/LIX.236.433</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[10]</span><span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016, cap. 1 e 6. <span class="refSrc">ISBN 978-0262035613</span></span><span class="refType cf-label">Livro</span></li>
+</ul>
+<div class="af-spacer"></div>
+<div class="af-subHeader" style="margin-top:0;">Leitura complementar</div>
+<ul class="cf-refList">
+  <li><span class="refNum">[a]</span><span>J. Alammar &mdash; <cite>The Illustrated GPT-2</cite>. <a href="https://jalammar.github.io/illustrated-gpt2/">jalammar.github.io</a></span><span class="refType cf-label">Tutorial</span></li>
+  <li><span class="refNum">[b]</span><span>A. Karpathy &mdash; <cite>Intro to Large Language Models</cite>, palestra, 2023. <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">youtube.com</a></span><span class="refType cf-label">Palestra</span></li>
+  <li><span class="refNum">[c]</span><span>OpenAI &mdash; <cite>Prompt engineering guide</cite>, documentação oficial. <a href="https://platform.openai.com/docs/guides/prompt-engineering">platform.openai.com</a></span><span class="refType cf-label">Documentação</span></li>
+</ul>
+<p class="tip" style="margin-top:8px;">Referências verificadas em 08/09/2026 e conferidas na revisão técnica. Links externos abrem fora do Codeflow.</p>

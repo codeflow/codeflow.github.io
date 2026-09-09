@@ -1,0 +1,27 @@
+{%- if site.giscus.repo_id and page.comments != false and page.stub != true %}
+    <!-- Comments: one GitHub Discussion per post (giscus maps by pathname) -->
+    <div class="af-panelBox cf-comments" id="boxComments">
+      <div class="boxHdr" onclick="toggleBox('boxComments')"><span class="disc">&#9660;</span>{{ t.ui.comments }}</div>
+      <div class="boxBody">
+        {%- assign ph_repo = "{repo}" %}
+        <p class="tip">{{ t.ui.comments_note | replace: ph_repo, site.giscus.repo }}</p>
+        <div class="cf-giscus">
+          <script src="https://giscus.app/client.js"
+                  data-repo="{{ site.giscus.repo }}"
+                  data-repo-id="{{ site.giscus.repo_id }}"
+                  data-category="{{ site.giscus.category }}"
+                  data-category-id="{{ site.giscus.category_id }}"
+                  data-mapping="{{ site.giscus.mapping | default: 'pathname' }}"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="{{ site.giscus.theme | default: 'light' }}"
+                  data-lang="{{ lang | split: "-" | first }}"
+                  data-loading="lazy"
+                  crossorigin="anonymous"
+                  async></script>
+        </div>
+      </div>
+    </div>
+{%- endif %}

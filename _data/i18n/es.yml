@@ -1,0 +1,90 @@
+# Textos de la interfaz — Español. Debe tener las mismas claves que en.yml.
+code: es
+name: Spanish
+native: Español
+locale: es_ES
+ui:
+  language: "Idioma:"
+  home: Inicio
+  menu: Menú
+  cancel: Cancelar
+  close_menu: Cerrar menú
+  search: Buscar
+  search_content: Buscar contenido
+  search_placeholder: "p. ej. atención"
+  content_navigator: Navegador de Contenido
+  popular_tags: Etiquetas Populares
+  archive: Archivo
+  welcome: Bienvenido a Codeflow
+  published_articles: Artículos Publicados
+  clear_filter: Quitar filtro
+  previous: Anterior
+  next: Siguiente
+  read_more: Leer más
+  published_on: Publicado el
+  updated_on: Actualizado el
+  reading_time: "Lectura:"
+  min: min
+  author: "Autor:"
+  labels: "Etiquetas:"
+  draft: Borrador
+  reviewed: Revisado
+  level: "Nivel:"
+  prerequisite: "Requisito previo:"
+  series: "Serie:"
+  contents: Índice
+  print: Imprimir
+  help: Ayuda
+  article_contents: Índice del Artículo
+  figures: Figuras
+  figure_abbr: Fig.
+  references: Referencias
+  tags: Etiquetas
+  related: Artículos Relacionados
+  versions: Versiones e Historial
+  tags_and_history: Etiquetas e Historial
+  no_references: Este artículo aún no lista referencias.
+  tags_for: "Etiquetas de este artículo:"
+  key_concepts: "Conceptos clave:"
+  click_tag: Haz clic en una etiqueta para listar todos los artículos relacionados.
+  title: Título
+  category: Categoría
+  reading: Lectura
+  published: Publicado
+  status: Estado
+  no_related: Aún no hay otros artículos en esta categoría.
+  related_count: "{n} artículo(s) relacionado(s) en {cat}"
+  article_version: Versión del artículo
+  source_language: Idioma de origen
+  draft_notice_title: Este artículo todavía se está escribiendo
+  draft_notice: El resumen de abajo muestra lo que va a cubrir. El texto completo reemplazará esta página cuando se publique.
+  prev_article: "Anterior:"
+  next_article: "Siguiente:"
+  comments: Comentarios
+  comments_note: "Los comentarios son GitHub Discussions en {repo}. Inicia sesión con GitHub para comentar; cada artículo tiene su propio hilo."
+  showing: "Mostrando {first}–{last} de {total} artículos"
+  page_of: "Página {page} de {pages}"
+  no_articles: Ningún artículo
+  filter_in: " en {v}"
+  filter_topic: " sobre {v}"
+  filter_tag: " con la etiqueta “{v}”"
+  filter_month: " de {v}"
+  filter_text: " que contienen “{v}”"
+  toc_note: El índice refleja el artículo abierto en el área principal.
+  help_how_to_read: Cómo leer un artículo
+  help_p1: Las <b>etiquetas</b> de arriba indican la categoría, el nivel y la etapa de revisión del contenido. Las llamadas numeradas <sup>[1]</sup> apuntan a la pestaña <b>Referencias</b> al final del artículo.
+  help_p2: Las <b>fórmulas</b> están numeradas a la derecha y se citan en el texto como “ecuación (n)”. Las <b>figuras</b> son SVG&#58; siguen el zoom del navegador sin pérdida.
+  help_p3: Usa el selector de idioma de arriba para cambiar entre las versiones del mismo artículo, cuando existan.
+  lang_unavailable_title: Idioma no disponible
+  lang_unavailable: "Este artículo todavía no está disponible en <b>{lang}</b>."
+  lang_unavailable_hint: Puedes seguir leyéndolo en el idioma actual o ir a la página de inicio en el idioma seleccionado.
+  go_home: Ir al Inicio
+  stay: Quedarme aquí
+  nothing_yet: Todavía no hay artículos
+  footer_tagline: Artículos y Referencias de Tecnología
+# Category / topic / section names: the key (as written in the posts' front matter) stays shared across
+# languages; only the text shown to the reader changes. Missing keys fall back to the key itself.
+labels:
+  "Artificial Intelligence": "Inteligencia Artificial"
+  "Generative AI": "IA generativa"
+months: [Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre]

@@ -1,48 +1,33 @@
 # Codeflow
 
-Structured learning platform for programming technologies, starting with Java.
+Technology articles and references, with a clear focus on Artificial Intelligence.
+Live at [codeflow.com.br](https://codeflow.com.br).
 
-## 🌐 Access
+## Stack
 
-Access at: [https://codeflow.com.br](https://codeflow.com.br)
+- Jekyll (the `github-pages` gem, built by GitHub Pages from `main`)
+- Oracle ADF Faces "Fusion" look (`assets/css/adf-fusion.css` + project overrides)
+- Vanilla JavaScript; search runs client-side over `search.json`
+- Comments with [giscus](https://giscus.app) (one GitHub Discussion per post)
 
-## 📚 About
+## Layout
 
-Codeflow is a structured learning platform that offers complete and organized content about programming technologies.
+| Path | Purpose |
+|------|---------|
+| `_layouts/` | `default.html` (site chassis) and `post.html` (article page) |
+| `_includes/` | sidebar, drawers, home, comments, language dialog and sheet |
+| `_posts/` | articles; translations share the same `key` and use `lang` + `permalink` |
+| `_data/i18n/` | one dictionary per language (chrome, months, category labels) |
+| `<lang>/index.html` | home page of each additional language |
+| `_templates/` | post skeleton and example post (not built) |
+| `scripts/validate_post.py` | checks a post (tree, search, tags, archive, list, figures, language) |
 
-## 🚀 Technologies
+## Run locally
 
-- HTML5
-- CSS3 (RichFaces BlueSky Theme)
-- JavaScript (Vanilla)
-- GitHub Pages
+Requires Docker. The container uses the same `jekyll/jekyll:pages` image versions as GitHub Pages.
 
-## 📖 Structure
-
+```bash
+./serve.sh          # http://localhost:4000 with live reload
+./serve.sh build    # one-off build into _site/
+./serve.sh stop
 ```
-codeflow.github.io/
-├── index.html              # Main page
-├── content/              # Generated HTML content
-├── resources/
-│   ├── css/                # Styles
-│   ├── js/                 # JavaScript
-│   └── img/                # Images
-```
-
-## 🌍 Languages
-
-All content is available in:
-- 🇧🇷 Portuguese (BR)
-- 🇺🇸 English (EN)
-
-## 📝 How to Contribute
-
-1. Fork the repository
-2. Create a branch for your feature (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under MIT.

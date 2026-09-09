@@ -1,26 +1,11 @@
-# OS
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+vendor/
 .DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Logs
-*.log
-npm-debug.log*
-
-# Temporary files
-*.tmp
-*.temp
-
-# Documentation (não versionado)
-DEPLOY.md
-
-.cursor/*
-ementas/*
-
-setup/*
+_site-emu/
+# local only
+prd/
+_prototipos/
+/adf-fusion.overrides.css

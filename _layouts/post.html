@@ -1,0 +1,151 @@
+---
+layout: default
+---
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] | default: site.data.i18n.en -%}
+{%- if lang == site.lang %}{% assign home_url = '/' | relative_url %}{% else %}{% assign home_url = '/' | append: lang | append: '/' | relative_url %}{% endif -%}
+{%- assign parts = content | split: "<!-- references -->" -%}
+{%- assign article = parts[0] -%}
+{%- assign references = parts[1] -%}
+    <div class="af-breadCrumbs">
+      <a href="{{ home_url }}">{{ t.ui.home }}</a><span class="sep">&gt;</span>
+      <a href="{{ home_url }}?type=cat&amp;value={{ page.category | url_encode }}">{{ t.labels[page.category] | default: page.category }}</a><span class="sep">&gt;</span>
+      {%- if page.topic %}
+      <a href="{{ home_url }}?type=topic&amp;value={{ page.topic | url_encode }}">{{ t.labels[page.topic] | default: page.topic }}</a><span class="sep">&gt;</span>
+      {%- elsif page.section %}
+      <a href="#">{{ t.labels[page.section] | default: page.section }}</a><span class="sep">&gt;</span>
+      {%- endif %}
+      {{ page.short_title | default: page.title | split: ":" | first }}
+    </div>
+
+    <div class="af-panelHeader">
+      <h1>{{ page.title }}</h1>
+      <span class="hdrToolbar">
+        <button class="af-button small" onclick="toggleDrawer('drSumario')">{{ t.ui.contents }}</button>
+        <button class="af-button small" onclick="window.print()">{{ t.ui.print }}</button>
+      </span>
+    </div>
+
+    <div class="cf-articleMeta">
+      {{ t.ui.published_on }} <b>{{ page.date | date: "%m/%d/%Y %H:%M" }}</b><span class="sep">·</span>
+      {%- if page.updated %}
+      {{ t.ui.updated_on }} <b>{{ page.updated | date: "%m/%d/%Y %H:%M" }}</b><span class="sep">·</span>
+      {%- endif %}
+      {{ t.ui.reading_time }} <b>{{ page.reading_time }} {{ t.ui.min }}</b><span class="sep">·</span>
+      {{ t.ui.author }} <b>{{ page.author }}</b>
+    </div>
+
+    <div class="cf-chipRow">
+      <span class="rowLabel">{{ t.ui.labels }}</span>
+      <span class="cf-label primary">{{ t.labels[page.category] | default: page.category }}</span>
+      {%- if page.stub %}<span class="cf-label">{{ t.ui.draft }}</span>{% else %}<span class="cf-label">{{ t.ui.reviewed }}</span>{% endif %}
+      {%- if page.level %}<span class="cf-label">{{ t.ui.level }} {{ page.level }}</span>{% endif %}
+      {%- if page.prerequisite %}<span class="cf-label">{{ t.ui.prerequisite }} {{ page.prerequisite }}</span>{% endif %}
+      {%- if page.series %}<span class="cf-label">{{ t.ui.series }} {{ page.series.name }} &mdash; {{ page.series.index }}/{{ page.series.total }}</span>{% endif %}
+    </div>
+
+{%- if page.stub %}
+    <div class="af-messages">
+      <div class="msgHead">
+        <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+        {{ t.ui.draft_notice_title }}
+      </div>
+      <ul><li>{{ t.ui.draft_notice }}</li></ul>
+    </div>
+{%- endif %}
+
+{{ article }}
+
+    <!-- Article tabs: references, tags, related, versions -->
+    <div class="af-panelTabbed" id="artTabs" style="margin-top:12px;">
+      <div class="af-tabBar">
+        <span class="af-tab selected" id="artTabBtnRefs" onclick="selectTab(this,'artTabRefs')">{{ t.ui.references }}{% if page.references_count %} ({{ page.references_count }}){% endif %}</span>
+        <span class="af-tab" onclick="selectTab(this,'artTabTags')">{{ t.ui.tags }}</span>
+        <span class="af-tab" onclick="selectTab(this,'artTabRel')">{{ t.ui.related }}</span>
+        <span class="af-tab" onclick="selectTab(this,'artTabHist')">{{ t.ui.versions }}</span>
+      </div>
+      <div class="af-tabContent">
+
+        <div class="af-tabPanel active" id="artTabRefs">
+{%- if references and references != "" %}
+{{ references }}
+{%- else %}
+          <p class="tip">{{ t.ui.no_references }}</p>
+{%- endif %}
+        </div>
+
+        <div class="af-tabPanel" id="artTabTags">
+          <div class="cf-chipRow" style="margin:2px 0 8px;">
+            <span class="rowLabel">{{ t.ui.tags_for }}</span>
+            {%- for tg in page.tags %}
+            <a class="cf-tag" href="{{ home_url }}?type=tag&amp;value={{ tg | url_encode }}">{{ tg }}</a>
+            {%- endfor %}
+          </div>
+          {%- if page.key_concepts %}
+          <div class="cf-chipRow" style="margin:2px 0 8px;">
+            <span class="rowLabel">{{ t.ui.key_concepts }}</span>
+            {%- for c in page.key_concepts %}<span class="cf-label">{{ c }}</span>{% endfor %}
+          </div>
+          {%- endif %}
+          <p class="tip">{{ t.ui.click_tag }}</p>
+        </div>
+
+        <div class="af-tabPanel" id="artTabRel">
+          {%- assign related = site.posts | where: "category", page.category | where: "lang", lang %}
+          {%- assign shown = 0 %}
+          <table class="af-table">
+            <thead>
+              <tr>
+                <th>{{ t.ui.title }}</th>
+                <th style="width:150px;">{{ t.ui.category }}</th>
+                <th style="width:80px;">{{ t.ui.reading }}</th>
+                <th style="width:100px;">{{ t.ui.published }}</th>
+                <th style="width:100px;">{{ t.ui.status }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for r in related %}{% if r.url != page.url and shown < 5 %}{% assign shown = shown | plus: 1 %}
+              <tr{% cycle '', ' class="band"' %}>
+                <td><a href="{{ r.url | relative_url }}">{{ r.title }}</a></td>
+                <td>{{ t.labels[r.category] | default: r.category }}</td><td>{{ r.reading_time }} {{ t.ui.min }}</td>
+                <td>{{ r.date | date: "%m/%d/%Y" }}</td>
+                <td>{% if r.stub %}<span class="st warn">{{ t.ui.draft }}</span>{% else %}<span class="st ok">{{ t.ui.published }}</span>{% endif %}</td>
+              </tr>
+              {%- endif %}{% endfor %}
+              {%- if shown == 0 %}<tr><td colspan="5" class="tip">{{ t.ui.no_related }}</td></tr>{% endif %}
+            </tbody>
+          </table>
+          {%- assign ph_n = "{n}" %}{% assign ph_cat = "{cat}" %}
+          <div class="af-statusBar"><span>{%- assign cat_label = t.labels[page.category] | default: page.category %}{{ t.ui.related_count | replace: ph_n, shown | replace: ph_cat, cat_label }}</span></div>
+        </div>
+
+        <div class="af-tabPanel" id="artTabHist">
+          <dl class="af-nameValue" style="max-width:480px;">
+            <dt>{{ t.ui.article_version }}</dt><dd>{{ page.version | default: 1 }}</dd>
+            <dt>{{ t.ui.published_on }}</dt><dd>{{ page.date | date: "%m/%d/%Y %H:%M" }}</dd>
+            {%- if page.updated %}<dt>{{ t.ui.updated_on }}</dt><dd>{{ page.updated | date: "%m/%d/%Y %H:%M" }}</dd>{% endif %}
+            <dt>{{ t.ui.author | remove: ":" }}</dt><dd>{{ page.author }}</dd>
+            <dt>{{ t.ui.source_language }}</dt><dd>{{ site.data.i18n[lang].native }}</dd>
+          </dl>
+          {%- if page.history %}
+          <div class="af-spacer"></div>
+          <p class="tip">
+            {%- for e in page.history %}
+            {{ e.when }} &mdash; {{ e.what }}.{% unless forloop.last %}<br>{% endunless %}
+            {%- endfor %}
+          </p>
+          {%- endif %}
+        </div>
+
+      </div>
+    </div>
+
+{%- if page.series_prev or page.series_next %}
+    <!-- Series navigation -->
+    <div class="af-statusBar cf-seriesNav">
+      <span class="pager">{% if page.series_prev %}<a href="{{ page.series_prev.url | relative_url }}">&#9664; {{ t.ui.prev_article }} {{ page.series_prev.title }}</a>{% endif %}</span>
+      <span class="pager">{% if page.series_next %}<a href="{{ page.series_next.url | relative_url }}">{{ t.ui.next_article }} {{ page.series_next.title }} &#9654;</a>{% endif %}</span>
+    </div>
+{%- endif %}
+
+{% include comments.html %}

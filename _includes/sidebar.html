@@ -1,0 +1,41 @@
+  <div class="af-panelLeft" id="sidePanel">
+    <div class="cf-drawerHead">{{ t.ui.menu }}
+      <span class="close" onclick="toggleMenu(false)" title="{{ t.ui.close_menu }}" role="button">&#10005;</span>
+    </div>
+
+    <div class="af-accSection" id="accBusca">
+      <div class="af-accHeader" onclick="toggleAcc('accBusca')"><span class="disc">&#9660;</span>{{ t.ui.search }}</div>
+      <div class="af-accBody">
+        <div style="margin-bottom:5px; color:#3e4b58;">{{ t.ui.search_content }}</div>
+        <div style="display:flex; gap:4px;">
+          <input type="text" id="searchBox" style="flex:1; min-width:0;" placeholder="{{ t.ui.search_placeholder }}"
+                 onkeydown="if(event.key==='Enter'){setFilter('text', this.value);}">
+          <button class="af-button small" onclick="setFilter('text', document.getElementById('searchBox').value)">{{ t.ui.search }}</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="af-accSection" id="accNav">
+      <div class="af-accHeader" onclick="toggleAcc('accNav')"><span class="disc">&#9660;</span>{{ t.ui.content_navigator }}</div>
+      <div class="af-accBody" style="padding:4px;">
+        <ul class="af-tree" id="navTree"></ul>
+      </div>
+    </div>
+
+    <div class="af-accSection" id="accTags">
+      <div class="af-accHeader" onclick="toggleAcc('accTags')"><span class="disc">&#9660;</span>{{ t.ui.popular_tags }}</div>
+      <div class="af-accBody">
+        <div class="cf-tagCloud" id="tagCloud"></div>
+      </div>
+    </div>
+
+    <div class="af-accSection" id="accArq">
+      <div class="af-accHeader" onclick="toggleAcc('accArq')"><span class="disc">&#9660;</span>{{ t.ui.archive }}</div>
+      <div class="af-accBody">
+        <div class="cf-archList" id="archList"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cf-backdrop" onclick="toggleMenu(false)"></div>

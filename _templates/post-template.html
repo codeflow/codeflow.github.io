@@ -1,0 +1,138 @@
+---
+# ===== Codeflow post template =====  (copy to _posts/YYYY-MM-DD-<slug>.html and fill in)
+# Reference implementation of every block: _posts/2026-09-04-self-attention-how-transformers-decide-where-to-look.html
+title: "Title: what the reader will be able to do after reading"
+date: 2026-01-01 08:00:00 -0300           # publication date/time (drives the Archive month and the list order)
+lang: en                                  # en | pt-BR | es … — MUST match the language of every sentence below
+# key: same-slug-as-the-english-version   # only for translations: shared key across languages (default: the file slug)
+# permalink: /pt-BR/articles/<slug>/      # only for non-default languages (default language uses /articles/<slug>/)
+category: "Artificial Intelligence"       # top level of the Content Navigator
+topic: "Transformer Architecture"         # optional: groups related posts under the category (omit if the post stands alone)
+section: "Transformer Architecture"       # optional: shown in the breadcrumbs when there is no topic
+tags: [tag-one, tag-two, tag-three]       # lowercase, hyphenated; 5–10 tags
+reading_time: 12                          # minutes ≈ words / 200
+level: Intermediate                       # Introductory | Intermediate | Advanced
+prerequisite: "Linear Algebra"            # optional
+series: { name: "Series name", index: 1, total: 6 }        # optional
+series_prev: { title: "Previous post title", url: "/articles/previous-slug/" }   # optional
+series_next: { title: "Next post title",     url: "/articles/next-slug/" }       # optional
+excerpt: "3–4 sentences, ending with an ellipsis…  Shown on the Home list and used by the search index."
+description: "One sentence for <meta name=description>."
+references_count: 6                       # numbered references only (further reading not counted)
+key_concepts: ["Concept one", "Concept two"]
+version: 1
+history:
+  - { when: "01/01/2026 08:00", what: "Initial publication of the article" }
+---
+<!-- 1. What the reader will find (af-messages with the Fusion info icon) -->
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    What you will find in this article
+  </div>
+  <ul>
+    <li>Bullet one — the core idea, with the key terms in <b>bold</b>.</li>
+    <li>Bullet two — the derivation or mechanism.</li>
+    <li>Bullet three — the practical side (implementation, cost, trade-offs).</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <!-- 2. Hero banner: inline SVG 880x152, palette #15497e / #3d6791 / #6b90b6 / #cfe2f7 / #dae6f2, Tahoma. Kicker · title · subtitle · a small diagram on the right. -->
+  <div class="cf-hero">
+    <svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Describe the banner">
+      <defs><linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient></defs>
+      <rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+      <text x="26" y="26" font-size="9" letter-spacing="1.4" fill="#6b90b6">CODEFLOW &#183; CATEGORY &#183; SERIES 1/6</text>
+      <text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">Short title</text>
+      <text x="26" y="74" font-size="12" fill="#44566a">One-line subtitle</text>
+      <!-- right side: a small diagram related to the subject -->
+    </svg>
+  </div>
+
+  <!-- 3. Lead paragraph: the problem, in concrete terms, with the first citation -->
+  <p class="lead">
+    Open with the concrete problem the technique solves.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+  </p>
+
+  <!-- 4. Numbered sections. Each heading needs an id sec1..secN: the Contents drawer is generated from them. -->
+  <div class="af-subHeader" id="sec1">1. The problem</div>
+  <p>Why this exists. What came before and what it cost.</p>
+  <ul>
+    <li><b>Point.</b> Explanation.</li>
+  </ul>
+
+  <!-- Comparison table (af-table with status dots: st ok / st warn / st err) -->
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead><tr><th style="width:170px;">Approach</th><th style="width:130px;">Cost</th><th>Trade-off</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td><span class="st ok">Low</span></td><td>…</td></tr>
+      <tr class="band"><td>B</td><td><span class="st warn">Medium</span></td><td>…</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Table 1 &mdash; caption with the source.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup></p>
+
+  <div class="af-subHeader" id="sec2">2. The mechanism</div>
+  <p>Explain the concept before the implementation.</p>
+
+  <!-- Figure: inline SVG inside cf-figure (header · body · caption). Prefer generating heat maps/diagrams with a script for exact numbers.
+       Geometry rules (validated): connectors start/end ON box edges (re-anchor them when a box is resized); a connector never
+       runs over another box (leave from the LAST milestone of a lane); guide lines start after their label and end at their
+       last element; draw order guide lines → boxes → connectors → labels; size boxes for the longest translation. -->
+  <div class="cf-figure">
+    <div class="figHdr">Figure title <span class="figNum">&mdash; Figure 1</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 240" width="860" height="240" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Describe the figure">
+        <rect x="0" y="0" width="860" height="240" fill="#ffffff"/>
+        <!-- nodes: fill url(#cfNode) / learned weights in yellow #f2e3bd / highlighted #2e5378 -->
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 1</b> &mdash; What the figure shows and how to read it.</div>
+  </div>
+
+  <!-- Formula: cf-formula, numbered on the right, referenced in the text as "equation (1)" -->
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="fName">Name</span>(<span class="var">x</span>) <span class="op">=</span> <span class="frac"><span class="num"><span class="var">a</span></span><span class="den">&radic;<span class="var">b</span></span></span>
+  </div>
+
+  <!-- Collapsible note (af-panelBox light) -->
+  <div class="af-panelBox light" id="boxNote1">
+    <div class="boxHdr" onclick="toggleBox('boxNote1')"><span class="disc">&#9660;</span>Why this detail matters</div>
+    <div class="boxBody">Short aside that would interrupt the main thread.</div>
+  </div>
+
+  <div class="af-subHeader" id="sec3">3. Minimal implementation</div>
+  <p>Code that can be checked against the equation. Line numbers and the Copy button are automatic.</p>
+  <div class="cf-codeBox">
+    <div class="codeHdr">file_name.py <span class="lang">&mdash; Python</span><button class="af-button small" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="k">def</span> example(x):
+    <span class="c"># comment in the article's language</span>
+    <span class="k">return</span> x * <span class="n">2</span></pre>
+  </div>
+
+  <div class="af-subHeader" id="sec4">4. Cost and trade-offs</div>
+  <p>What it costs, where it breaks, what the industry does about it.</p>
+
+  <div class="af-subHeader" id="sec5">5. Conclusion</div>
+  <p>The one idea to keep, and what the next post in the series covers.</p>
+
+</div><!-- /cf-article -->
+
+<!-- references -->
+<!-- Numbered references first (count them in references_count), then optional further reading with [a] [b] … -->
+<ul class="cf-refList">
+  <li>
+    <span class="refNum">[1]</span>
+    <span>A. Author; B. Author &mdash; <cite>Paper or book title</cite>, Venue, Year. <a href="https://arxiv.org/abs/0000.00000">arXiv:0000.00000</a>
+      <span class="refSrc">(accessed on 01/01/2026)</span></span>
+    <span class="refType cf-label">Academic paper</span>
+  </li>
+</ul>
+<div class="af-spacer"></div>
+<div class="af-subHeader" style="margin-top:0;">Further reading</div>
+<ul class="cf-refList">
+  <li><span class="refNum">[a]</span><span>Author &mdash; <cite>Title</cite>. <a href="https://example.org">example.org</a></span><span class="refType cf-label">Tutorial</span></li>
+</ul>
+<p class="tip" style="margin-top:8px;">References verified on 01/01/2026 and checked during technical review. External links open outside Codeflow.</p>

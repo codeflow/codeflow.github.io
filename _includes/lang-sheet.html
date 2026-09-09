@@ -1,0 +1,14 @@
+<!-- ================= Mobile language picker: bottom sheet (ADF Fusion style) ================= -->
+<div class="cf-sheetOverlay" id="langSheet" role="dialog" aria-modal="true" aria-label="{{ t.ui.language | remove: ':' }}" onclick="if (event.target === this) closeLangSheet()">
+  <div class="cf-sheet">
+    <div class="sheetTitle">{{ t.ui.language | remove: ":" }}</div>
+    <ul class="sheetList">
+      {%- for l in site.data.i18n %}
+      <li class="sheetItem{% if l[0] == lang %} current{% endif %}" onclick="pickLanguage('{{ l[0] }}')" role="button">
+        <span class="chk" aria-hidden="true">{% if l[0] == lang %}&#10003;{% endif %}</span>{{ l[1].native }}
+      </li>
+      {%- endfor %}
+    </ul>
+    <div class="sheetFoot"><button class="af-button" onclick="closeLangSheet()">{{ t.ui.cancel }}</button></div>
+  </div>
+</div>

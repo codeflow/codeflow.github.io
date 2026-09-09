@@ -1,0 +1,23 @@
+<!-- ================= Dialog: language not available (ADF Fusion style) ================= -->
+<div class="af-dialogOverlay" id="dlgLang">
+  <div class="af-dialog">
+    <div class="dlgTitle">{{ t.ui.lang_unavailable_title }}
+      <span class="dlgClose" title="{{ t.ui.stay }}" onclick="closeLangDialog()">&#10005;</span>
+    </div>
+    <div class="dlgBody">
+      <div style="display:flex; gap:10px; align-items:flex-start;">
+        <svg width="28" height="28" viewBox="0 0 16 16" aria-hidden="true">
+          <defs><linearGradient id="cfDlgInfoGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fbde6"/><stop offset="45%" stop-color="#3d7ab5"/><stop offset="100%" stop-color="#1c4b7c"/></linearGradient></defs>
+          <circle cx="8" cy="8" r="7.5" fill="#ffffff"/><circle cx="8" cy="8" r="7" fill="url(#cfDlgInfoGrad)" stroke="#17406b"/>
+          <ellipse cx="8" cy="4.1" rx="4.6" ry="2.4" fill="#ffffff" fill-opacity=".26"/>
+          <circle cx="8" cy="4.6" r="1.15" fill="#ffffff"/><rect x="6.9" y="6.7" width="2.2" height="5.4" rx="0.5" fill="#ffffff"/>
+        </svg>
+        <div><span id="dlgLangMsg"></span><br><br><span class="tip">{{ t.ui.lang_unavailable_hint }}</span></div>
+      </div>
+    </div>
+    <div class="dlgFoot">
+      <button class="af-button" id="dlgLangGo" onclick="goHomeInLanguage()">{{ t.ui.go_home }}</button>
+      <button class="af-button" onclick="closeLangDialog()">{{ t.ui.stay }}</button>
+    </div>
+  </div>
+</div>
