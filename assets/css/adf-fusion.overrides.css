@@ -538,6 +538,7 @@ body.cf-resizing .af-panelMain { pointer-events: none; }
   /* --- cabeçalho da página: título e filtro empilham --- */
   .af-panelHeader { flex-wrap: wrap; gap: 6px 0; }
   .af-panelHeader h1 { font-size: 15px; }
+  .af-panelMain .af-subHeader { font-size: 14px; margin: 18px 0 8px; }   /* títulos de seção acima dos cabeçalhos de painel (12px) */
 
   /* --- lista de posts --- */
   .cf-postList { padding: 0 8px; }
