@@ -7,7 +7,7 @@
       <div class="af-accHeader" onclick="toggleAcc('accBusca')"><span class="disc">&#9660;</span>{{ t.ui.search }}</div>
       <div class="af-accBody">
         <div style="margin-bottom:5px; color:#3e4b58;">{{ t.ui.search_content }}</div>
-        <div style="display:flex; gap:4px;">
+        <div class="cf-searchRow" style="display:flex; gap:4px;">
           <input type="text" id="searchBox" style="flex:1; min-width:0;" placeholder="{{ t.ui.search_placeholder }}"
                  onkeydown="if(event.key==='Enter'){setFilter('text', this.value);}">
           <button class="af-button small" onclick="setFilter('text', document.getElementById('searchBox').value)">{{ t.ui.search }}</button>

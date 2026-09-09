@@ -474,7 +474,7 @@ body.cf-resizing .af-panelMain { pointer-events: none; }
   }
   input[type="text"], input[type="password"] { height: 26px; }
   select { min-height: 26px; }
-  .af-button { padding: 4px 12px 5px; }
+  .af-button, .cf-searchRow .af-button.small { height: 26px; padding: 0 12px; box-sizing: border-box; }   /* mesma altura dos campos */
 
   /* --- barra de branding: logo + idioma; o resto some --- */
   .af-branding { padding: 0 8px; }
