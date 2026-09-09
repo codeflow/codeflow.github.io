@@ -769,3 +769,18 @@ body.cf-sheetOpen { overflow: hidden; }
 .cf-sheet .sheetItem.current { font-weight: bold; color: #173f6b; }
 .cf-sheet .sheetItem .chk { width: 16px; text-align: center; color: #2a6db3; }
 .cf-sheet .sheetFoot { padding: 6px 8px; background: #eff3f7; border-top: 1px solid #d3dce5; text-align: right; }
+
+/* Meta do artigo: cada par rótulo+valor não quebra no meio ("Autor:" numa linha e o nome na outra) */
+.cf-articleMeta .item { white-space: nowrap; }
+
+/* ---------- Gavetas no celular: sem dock lateral; a gaveta Sumário abre em tela cheia pelo botão do cabeçalho ---------- */
+@media (max-width: 768px) {
+  .af-drawerDock { display: none; }
+  .af-drawer {
+    left: 0; right: 0; width: auto;
+    top: 38px; bottom: var(--cf-footer-h);
+    z-index: 70;                       /* acima do menu lateral (60) */
+    border-left: 0; box-shadow: none;
+  }
+  .af-drawer .drExpand { display: none; }   /* já ocupa a tela toda */
+}

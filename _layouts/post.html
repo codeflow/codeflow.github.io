@@ -27,18 +27,18 @@ layout: default
     </div>
 
     <div class="cf-articleMeta">
-      {{ t.ui.published_on }} <b>{{ page.date | date: "%m/%d/%Y %H:%M" }}</b><span class="sep">·</span>
+      <span class="item">{{ t.ui.published_on }} <b>{{ page.date | date: "%m/%d/%Y %H:%M" }}</b></span><span class="sep">·</span>
       {%- if page.updated %}
-      {{ t.ui.updated_on }} <b>{{ page.updated | date: "%m/%d/%Y %H:%M" }}</b><span class="sep">·</span>
+      <span class="item">{{ t.ui.updated_on }} <b>{{ page.updated | date: "%m/%d/%Y %H:%M" }}</b></span><span class="sep">·</span>
       {%- endif %}
-      {{ t.ui.reading_time }} <b>{{ page.reading_time }} {{ t.ui.min }}</b><span class="sep">·</span>
-      {{ t.ui.author }} <b>{{ page.author }}</b>
+      <span class="item">{{ t.ui.reading_time }} <b>{{ page.reading_time }} {{ t.ui.min }}</b></span><span class="sep">·</span>
+      <span class="item">{{ t.ui.author }} <b>{{ page.author }}</b></span>
     </div>
 
     <div class="cf-chipRow">
       <span class="rowLabel">{{ t.ui.labels }}</span>
       <span class="cf-label primary">{{ t.labels[page.category] | default: page.category }}</span>
-      {%- if page.stub %}<span class="cf-label">{{ t.ui.draft }}</span>{% else %}<span class="cf-label">{{ t.ui.reviewed }}</span>{% endif %}
+      {%- if page.stub %}<span class="cf-label">{{ t.ui.draft }}</span>{% endif %}
       {%- if page.level %}<span class="cf-label">{{ t.ui.level }} {{ page.level }}</span>{% endif %}
       {%- if page.prerequisite %}<span class="cf-label">{{ t.ui.prerequisite }} {{ page.prerequisite }}</span>{% endif %}
       {%- if page.series %}<span class="cf-label">{{ t.ui.series }} {{ page.series.name }} &mdash; {{ page.series.index }}/{{ page.series.total }}</span>{% endif %}
