@@ -11,10 +11,11 @@
   <id>{{ fhome | absolute_url }}</id>
   <link rel="alternate" type="text/html" href="{{ fhome | absolute_url }}"/>
   <link rel="self" type="application/atom+xml" href="{{ fhome | append: 'feed.xml' | absolute_url }}"/>
-  <updated>{% if fposts.first %}{{ fposts.first.updated | default: fposts.first.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}</updated>
+{%- assign fmax = site.time %}{% if fposts.first %}{% assign fmax = fposts.first.updated | default: fposts.first.date %}{% endif %}
+{%- for p in fposts %}{% assign pu = p.updated | default: p.date %}{% if pu > fmax %}{% assign fmax = pu %}{% endif %}{% endfor %}
+  <updated>{{ fmax | date_to_xmlschema }}</updated>
   <author><name>{{ site.author_name | xml_escape }}</name><uri>{{ site.github }}</uri></author>
   <icon>{{ '/assets/icons/icon-192.png' | absolute_url }}</icon>
-  <logo>{{ site.og_image | absolute_url }}</logo>
   <rights>{{ site.title | xml_escape }} © {{ site.time | date: "%Y" }}</rights>
 {%- for p in fposts %}
   <entry>
