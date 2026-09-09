@@ -5,6 +5,13 @@
    ============================================================ */
 
 /* ---------- Branding ---------- */
+.af-branding .cf-brandLink {           /* logo + nome levam à Home do idioma; visual idêntico ao texto anterior */
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+.af-branding .cf-brandLink:hover .cf-brandName { color: #e8f0fa; }
 .cf-brandLogo {
   width: 20px;
   height: 20px;

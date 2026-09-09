@@ -27,10 +27,10 @@
 
 <!-- ================= Branding bar ================= -->
 <div class="af-branding">
-  <span class="logo" style="display:inline-flex; align-items:center;">
+  <a class="logo cf-brandLink" href="{{ home_url }}" title="{{ t.ui.home }}">
     <span class="cf-logoHalo"><img class="cf-brandLogo" src="{{ '/assets/codeflow.png' | relative_url }}" alt="{{ site.title }}"></span>
     <span class="cf-brandName">CODEFLOW</span>
-  </span>
+  </a>
   <span class="app-name"><span class="release">{{ site.version }}</span></span>
   <div class="af-globalLinks">
     <span class="lbl">{{ t.ui.language }}</span>
