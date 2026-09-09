@@ -834,3 +834,7 @@ body.cf-sheetOpen { overflow: hidden; }
   .af-tabBar::-webkit-scrollbar { display: none; }
   .af-tab { flex: none; padding-left: 9px; padding-right: 9px; }
 }
+
+/* ---------- Dock das gavetas sem painel: só as abas Sumário/Ajuda, coladas na margem direita (todos os posts) ---------- */
+.af-drawerDock { background: transparent; border-left: 0; align-items: flex-end; }   /* abas coladas na margem direita */
+.af-drawerTab { margin-left: 0; margin-right: -1px; border-right: none; border-radius: 4px 0 0 4px; box-shadow: -1px 1px 2px rgba(20, 40, 70, .12); }
