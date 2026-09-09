@@ -124,6 +124,7 @@ a.cf-tag:hover {
   margin: 0 0 8px;
   line-height: 1.5;
 }
+.cf-article .af-panelBox { margin: 0 0 10px; }   /* nota recolhível: mesmo respiro das figuras antes do próximo parágrafo */
 .cf-article .lead { color: #44566a; }
 sup.cf-cite { line-height: 0; }
 sup.cf-cite a {
