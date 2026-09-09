@@ -79,7 +79,8 @@ history:
   <!-- Figure: inline SVG inside cf-figure (header · body · caption). Prefer generating heat maps/diagrams with a script for exact numbers.
        Geometry rules (validated): connectors start/end ON box edges (re-anchor them when a box is resized); a connector never
        runs over another box (leave from the LAST milestone of a lane); guide lines start after their label and end at their
-       last element; draw order guide lines → boxes → connectors → labels; size boxes for the longest translation. -->
+       last element; draw order guide lines → boxes → connectors → labels; size boxes for the longest translation;
+       a label beside a box sits on the box's vertical centre (baseline = centre + 3.5 for 10px text). -->
   <div class="cf-figure">
     <div class="figHdr">Figure title <span class="figNum">&mdash; Figure 1</span></div>
     <div class="figBody">
