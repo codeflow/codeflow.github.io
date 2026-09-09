@@ -34,7 +34,7 @@
 }
 @keyframes cfLogoHalo {
   0%, 58%   { opacity: 0; }
-  74%       { opacity: .7; }
+  74%       { opacity: .45; }
   93%, 100% { opacity: 0; }
 }
 .af-branding .cf-brandName {
