@@ -21,7 +21,7 @@ series_next:
   url: "/articles/positional-encoding-rope-alibi-and-the-ordering-problem/"
 excerpt: "Before 2017, to know that the pronoun “it” refers to “cat” and not to “street”, a recurrent network had to carry that information in a hidden state across the whole sentence, step by step. Self-attention solves the same problem another way: it lets every token query all the others directly and weigh, with learned weights, which of them matter. It is an associative-retrieval mechanism disguised as matrix multiplication — and it underpins practically every language model in production today…"
 description: "Anatomy of the self-attention mechanism: Query, Key and Value, the scaled dot product, causal masks, multi-head and the quadratic cost."
-references_count: 9
+references_count: 8
 key_concepts: ["Query / Key / Value", "Scaled dot product", "Causal mask", "O(n²) cost"]
 version: 2
 history:
@@ -804,7 +804,7 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
 
   <p>
     This specialization is not imposed: nobody assigns a role to each head. It appears as a consequence of training and is reproducible across models &mdash; interpretability work has catalogued position heads, coreference heads, delimiter-matching heads and the so-called
-    <i>induction heads</i>, responsible for completing repeated patterns and associated with the emergence of in-context learning.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>,<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
+    <i>induction heads</i>, responsible for completing repeated patterns and associated with the emergence of in-context learning.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
     It is also known that a good share of the heads is redundant: in trained models a significant fraction can be pruned with little loss of performance.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
   </p>
 
@@ -864,7 +864,7 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
       <tr class="band">
         <td>MQA / GQA</td><td>Memory</td>
         <td>O(n&sup2;)</td><td><span class="st warn">Approximate</span></td>
-        <td>Heads share K and V: shrinks the KV cache at inference<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup></td>
+        <td>Heads share K and V: shrinks the KV cache at inference<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup></td>
       </tr>
       <tr>
         <td>Sliding window</td><td>Sparsity</td>
@@ -893,7 +893,7 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
       During training the dominant cost is the O(<i>n</i>&sup2;) of computation. In autoregressive generation each new token performs only <i>n</i> comparisons &mdash; but requires re-reading
       <b>the entire K and V cache</b> of the previous layers. The bottleneck stops being FLOPs and becomes
       <b>memory bandwidth</b>. That shift is what explains why GQA, KV-cache quantization and <i>paged attention</i> have become mandatory in any modern inference <i>runtime</i> &mdash; the subject of the
-      <a href="#">next article in this series</a>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
+      <a href="#">next article in this series</a>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
     </div>
   </div>
 
@@ -958,13 +958,6 @@ weights = F.softmax(scores, dim=-<span class="n">1</span>)        <span class="c
 </li>
 <li>
   <span class="refNum">[8]</span>
-  <span>C. Olsson; N. Elhage; N. Nanda <i>et al.</i> &mdash; <cite>In-context Learning and Induction Heads</cite>,
-    Transformer Circuits Thread, Anthropic, 2022.
-    <a href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/">transformer-circuits.pub</a></span>
-  <span class="refType cf-label">Applied research</span>
-</li>
-<li>
-  <span class="refNum">[9]</span>
   <span>J. Ainslie; J. Lee-Thorp; M. de Jong <i>et al.</i> &mdash; <cite>GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints</cite>,
     EMNLP 2023. <a href="https://arxiv.org/abs/2305.13245">arXiv:2305.13245</a></span>
   <span class="refType cf-label">Academic paper</span>
