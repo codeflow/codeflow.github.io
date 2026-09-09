@@ -71,8 +71,10 @@ function render() {
   var html = slice.map(function (a) {
     return '<div class="cf-post">' +
       '<div class="postTitle"><a href="' + a.href + '">' + esc(a.title) + '</a></div>' +
-      '<div class="cf-articleMeta">' + t('published_on') + ' <b>' + a.date + '</b><span class="sep">·</span>' +
-        '<b>' + esc(label(a.cat)) + '</b><span class="sep">·</span>' + t('reading_time') + ' <b>' + a.min + ' ' + t('min') + '</b></div>' +
+      '<div class="cf-articleMeta">' +
+        '<span class="item">' + t('published_on') + ' <b>' + a.date + '</b></span><span class="sep">·</span> ' +
+        '<span class="item"><b>' + esc(label(a.cat)) + '</b></span><span class="sep">·</span> ' +
+        '<span class="item">' + t('reading_time') + ' <b>' + a.min + ' ' + t('min') + '</b></span></div>' +
       '<p>' + esc(a.excerpt) + '</p>' +
       '<div class="postFoot"><a class="readMore" href="' + a.href + '">' + t('read_more') + ' ▸</a>' +
         a.tags.map(function (t) {
