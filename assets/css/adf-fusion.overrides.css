@@ -38,22 +38,48 @@
 /* ---------- Chips: tags e labels ---------- */
 .cf-tag,
 a.cf-tag {
-  display: inline-block;
-  padding: 0 5px 1px;
-  border: 1px solid #9cafc2;
-  border-radius: 2px;
-  background: linear-gradient(#fefefe, #e9eef4);
+  /* badge Fusion: pílula com o degradê de rótulo e borda de botão */
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 16px;
+  padding: 0 7px;
+  border: 1px solid #8098b2;
+  border-radius: 9px;
+  background: linear-gradient(#fefefe, #edf1f6 45%, #d9e2ec);
   color: #145fa8;
+  font-weight: bold;
   text-decoration: none;
   white-space: nowrap;
   line-height: 14px;
+  vertical-align: middle;
+  box-sizing: border-box;
 }
 a.cf-tag:hover {
   border-color: #88aed6;
-  background: linear-gradient(#ffffff, #eef4fa);
+  background: linear-gradient(#ffffff, #f2f6fb 45%, #e2ebf4);
   color: #0d3a6b;
 }
-.cf-tag .cnt { color: #6b7a89; }
+a.cf-tag .cf-count { margin-right: -4px; }
+
+/* Contador Fusion: bolinha com o degradê escuro e número branco */
+.cf-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 4px;
+  margin-left: 5px;
+  border: 1px solid #2e5378;
+  border-radius: 8px;
+  background: linear-gradient(#6b90b6, #3d6791);
+  color: #fff;
+  font: bold 9px Tahoma, Verdana, sans-serif;
+  line-height: 12px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
 
 .cf-label {
   display: inline-block;
