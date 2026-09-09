@@ -1,0 +1,31 @@
+{%- comment -%} Web app manifest; `mlang` is set by the calling file (one manifest per language, same app id). {%- endcomment -%}
+{%- assign mlang = mlang | default: site.lang -%}
+{%- if mlang == site.lang %}{% assign mhome = "/" %}{% else %}{% assign mhome = "/" | append: mlang | append: "/" %}{% endif -%}
+{%- assign mt = site.data.i18n[mlang] | default: site.data.i18n.en -%}
+{
+  "name": "{{ site.title }}",
+  "short_name": "{{ site.title }}",
+  "description": "{% if mlang == site.lang %}{{ site.description }}{% else %}{{ mt.ui.footer_tagline }}{% endif %}",
+  "id": "/",
+  "start_url": "{{ mhome }}",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#e9eef3",
+  "theme_color": "{{ site.theme_color }}",
+  "lang": "{{ mlang }}",
+  "dir": "ltr",
+  "categories": ["education", "technology"],
+  "icons": [
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {%- for l in site.data.i18n %}
+    {%- if l[0] == site.lang %}{% assign hu = "/" %}{% else %}{% assign hu = "/" | append: l[0] | append: "/" %}{% endif %}
+    { "name": "{{ l[1].native }}", "url": "{{ hu }}", "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]
+}

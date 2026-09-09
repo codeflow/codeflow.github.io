@@ -74,3 +74,39 @@ draw.text((tx + 4, 390), "Artificial Intelligence  ·  Generative AI", font=font
 draw.text((tx + 4, 470), "codeflow.com.br", font=font("Tahoma Bold", 30), fill=(0xFF, 0xFF, 0xFF, 230))
 card.convert("RGB").save(os.path.join(ROOT, "assets", "og-default.png"), optimize=True)
 print("icons and social card written")
+
+# ---- logo glow: a soft light ring hugging the OUTER contour of the hexagon (the inside stays dark) ----
+# The outline of the logo is made of separate chevrons, so the outer contour is the convex hull of its opaque pixels.
+from PIL import ImageFilter
+def convex_hull(points):
+    points = sorted(set(points))
+    if len(points) <= 2: return points
+    def cross(o, a, b): return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    lower = []
+    for pt in points:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], pt) <= 0: lower.pop()
+        lower.append(pt)
+    upper = []
+    for pt in reversed(points):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], pt) <= 0: upper.pop()
+        upper.append(pt)
+    return lower[:-1] + upper[:-1]
+
+alpha = logo.getchannel("A")
+w, h = alpha.size
+pix = alpha.load()
+pts = [(x, y) for y in range(h) for x in range(w) if pix[x, y] > 128]
+hull = convex_hull(pts)
+PAD = 40                                   # source px around the 200px logo (= 4px around the 20px logo on screen)
+S = w + 2 * PAD
+shape = Image.new("L", (S, S), 0)
+ImageDraw.Draw(shape).polygon([(x + PAD, y + PAD) for x, y in hull], fill=255)
+outer = shape.filter(ImageFilter.MaxFilter(31))          # contour grown by 15px (1.5px on screen)
+ring = Image.new("L", (S, S), 0)
+ring.paste(outer)
+ring.paste(0, mask=shape)                                # subtract the hexagon itself: nothing inside the contour
+ring = ring.filter(ImageFilter.GaussianBlur(9))          # soft edge
+glow = Image.new("RGBA", (S, S), (205, 230, 255, 0))
+glow.putalpha(ring)
+glow.save(os.path.join(ROOT, "assets", "logo-glow.png"), optimize=True)
+print("logo glow written (%dx%d, ring hugging the outer contour)" % (S, S))

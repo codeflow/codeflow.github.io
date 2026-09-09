@@ -9,15 +9,30 @@
   width: 20px;
   height: 20px;
   vertical-align: middle;
-  margin-right: 6px;
-  filter: drop-shadow(0 0 2px rgba(190, 220, 255, .45));   /* halo discreto e constante */
+  display: block;
+  position: relative;          /* fica acima do halo */
+  z-index: 1;
 }
-/* brilho suave pulsando ao redor do logo; desligado para quem prefere menos movimento */
+/* Halo: anel de luz que segue o contorno externo do hexágono (assets/logo-glow.png, gerado por scripts/make_icons.py
+   a partir do logo); o interior do desenho não acende. Pulsa devagar; fica parado para quem prefere menos movimento. */
+.cf-logoHalo {
+  position: relative;
+  display: inline-flex;
+  margin-right: 6px;
+}
+.cf-logoHalo::before {
+  content: "";
+  position: absolute;
+  inset: -4px;                 /* a imagem do halo tem 4px de margem em volta do logo de 20px */
+  background: url("../logo-glow.png") center / 100% 100% no-repeat;   /* anel que segue o contorno externo do hexágono */
+  opacity: .6;
+  pointer-events: none;
+}
 @media (prefers-reduced-motion: no-preference) {
-  .cf-brandLogo { animation: cfLogoGlow 4.5s ease-in-out infinite; }
-  @keyframes cfLogoGlow {
-    0%, 100% { filter: drop-shadow(0 0 1.5px rgba(190, 220, 255, .35)); }
-    50%      { filter: drop-shadow(0 0 4px rgba(205, 230, 255, .8)) drop-shadow(0 0 9px rgba(130, 185, 240, .35)); }
+  .cf-logoHalo::before { animation: cfLogoHalo 4.5s ease-in-out infinite; }
+  @keyframes cfLogoHalo {
+    0%, 100% { opacity: .3; }
+    50%      { opacity: .95; }
   }
 }
 .af-branding .cf-brandName {

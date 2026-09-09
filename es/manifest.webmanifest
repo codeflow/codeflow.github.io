@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /es/manifest.webmanifest
+---
+{% assign mlang = "es" %}{% include manifest.json %}

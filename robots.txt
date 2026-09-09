@@ -4,6 +4,5 @@ permalink: /robots.txt
 ---
 User-agent: *
 Allow: /
-Disallow: /offline/
 
 Sitemap: {{ site.url }}/sitemap.xml

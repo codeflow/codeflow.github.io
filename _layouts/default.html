@@ -15,7 +15,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
+<link rel="manifest" href="{{ home_url }}manifest.webmanifest">
 <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="48x48">
 <link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
 <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/icons/apple-touch-icon.png' | relative_url }}">
@@ -28,7 +28,7 @@
 <!-- ================= Branding bar ================= -->
 <div class="af-branding">
   <span class="logo" style="display:inline-flex; align-items:center;">
-    <img class="cf-brandLogo" src="{{ '/assets/codeflow.png' | relative_url }}" alt="{{ site.title }}">
+    <span class="cf-logoHalo"><img class="cf-brandLogo" src="{{ '/assets/codeflow.png' | relative_url }}" alt="{{ site.title }}"></span>
     <span class="cf-brandName">CODEFLOW</span>
   </span>
   <span class="app-name"><span class="release">{{ site.version }}</span></span>
