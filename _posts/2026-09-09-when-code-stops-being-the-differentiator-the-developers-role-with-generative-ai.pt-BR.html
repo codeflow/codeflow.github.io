@@ -7,12 +7,13 @@ permalink: /pt-BR/articles/when-code-stops-being-the-differentiator-the-develope
 category: "Artificial Intelligence"
 section: "Generative AI"
 topic: "Generative AI"
+order: 2                     # position in the Content Navigator (within the category/topic); date order when absent
 tags: [generative-ai, developer-role, productivity, technical-leadership, prompt-engineering, ai-agents, continuous-learning, software-engineering, human-in-the-loop, llm]
 reading_time: 13
 level: Introductory
 series_prev: { title: "Fundamentos antes de ferramentas: como avaliar e construir com IA generativa", url: "/pt-BR/articles/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai/" }
-excerpt: "Escrever código continua necessário, mas deixou de ser vantagem suficiente por si só: as ferramentas já produzem uma parte relevante do trabalho operacional. Este artigo segue as consequências para a profissão — para onde migra o diferencial, por que a IA amplia competência em vez de corrigir a sua falta, o que esta transição tem em comum com as anteriores, como o aprendizado contínuo vira triagem, por que fazer diferente vale mais do que fazer mais rápido, como a liderança técnica passa a orquestrar pessoas e IA, para onde vão os produtos e por que isso não é modismo…"
 image: "/assets/social/when-code-stops-being-the-differentiator-the-developers-role-with-generative-ai.pt-BR.png"
+excerpt: "Escrever código continua necessário, mas deixou de ser vantagem suficiente por si só: as ferramentas já produzem uma parte relevante do trabalho operacional. Este artigo segue as consequências para a profissão — para onde migra o diferencial, por que a IA amplia competência em vez de corrigir a sua falta, o que esta transição tem em comum com as anteriores, como o aprendizado contínuo vira triagem, por que fazer diferente vale mais do que fazer mais rápido, como a liderança técnica passa a orquestrar pessoas e IA, para onde vão os produtos e por que isso não é modismo…"
 description: "Por que escrever código já não basta: para onde migra o diferencial do desenvolvedor, como a IA amplia competência e o que muda para liderança e produto."
 references_count: 12
 key_concepts: ["Julgamento acima da execução", "Amplificação, não correção", "Transições de abstração", "Aprendizado como triagem", "Orquestração humano-IA"]
@@ -344,7 +345,8 @@ print([i.nome <span class="k">for</span> i <span class="k">in</span> estudar])  
   <p>
     Os dados de campo sustentam a cautela embutida na figura. Uma grande pesquisa anual com times de engenharia encontrou
     que maior adoção de IA veio com ganhos em documentação e qualidade de código e, ao mesmo tempo, com uma queda mensurável
-    na estabilidade e na vazão das entregas onde as práticas em volta eram fracas.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">12</a>]</sup> Delegação sem
+    na estabilidade e na vazão das entregas — um trade-off que o relatório atribui a fundamentos negligenciados, como lotes
+    pequenos e testes robustos.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">12</a>]</sup> Delegação sem
     portões de qualidade move o custo da escrita para a depuração. Liderar bem passa a incluir compor esse arranjo híbrido:
     saber quais tarefas toleram um primeiro rascunho gerado, quais exigem uma pessoa desde o início e como o resultado é
     rastreado até quem o aceitou.
@@ -440,11 +442,11 @@ print([i.nome <span class="k">for</span> i <span class="k">in</span> estudar])  
   <li><span class="refNum">[2]</span><span>S. Peng; E. Kalliamvakou; P. Cihon; M. Demirer &mdash; <cite>The Impact of AI on Developer Productivity: Evidence from GitHub Copilot</cite>, 2023. <a href="https://arxiv.org/abs/2302.06590">arXiv:2302.06590</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
   <li><span class="refNum">[3]</span><span>F. Dell'Acqua; E. McFowland III; E. Mollick <i>et al.</i> &mdash; <cite>Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on Knowledge Worker Productivity and Quality</cite>, Harvard Business School Working Paper 24-013, 2023. <a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=64700">hbs.edu</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
   <li><span class="refNum">[4]</span><span>S. Noy; W. Zhang &mdash; <cite>Experimental evidence on the productivity effects of generative artificial intelligence</cite>, Science 381(6654), 2023. <a href="https://doi.org/10.1126/science.adh2586">doi:10.1126/science.adh2586</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
-  <li><span class="refNum">[5]</span><span>F. P. Brooks Jr. &mdash; <cite>No Silver Bullet — Essence and Accident in Software Engineering</cite>, IEEE Computer 20(4), 1987. <a href="https://doi.org/10.1109/MC.1987.1663532">doi:10.1109/MC.1987.1663532</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
+  <li><span class="refNum">[5]</span><span>F. P. Brooks Jr. &mdash; <cite>No Silver Bullet — Essence and Accidents of Software Engineering</cite>, IEEE Computer 20(4), 1987. <a href="https://doi.org/10.1109/MC.1987.1663532">doi:10.1109/MC.1987.1663532</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
   <li><span class="refNum">[6]</span><span>R. Bommasani; D. A. Hudson; E. Adeli <i>et al.</i> &mdash; <cite>On the Opportunities and Risks of Foundation Models</cite>, 2021. <a href="https://arxiv.org/abs/2108.07258">arXiv:2108.07258</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
   <li><span class="refNum">[7]</span><span>A. Karpathy &mdash; <cite>Software 2.0</cite>, 2017. <a href="https://karpathy.medium.com/software-2-0-a64152b37c35">karpathy.medium.com</a></span><span class="refType cf-label">Artigo</span></li>
   <li><span class="refNum">[8]</span><span>T. Eloundou; S. Manning; P. Mishkin; D. Rock &mdash; <cite>GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models</cite>, 2023. <a href="https://arxiv.org/abs/2303.10130">arXiv:2303.10130</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
-  <li><span class="refNum">[9]</span><span>Stanford Institute for Human-Centered AI &mdash; <cite>Artificial Intelligence Index Report 2024</cite>, 2024. <a href="https://aiindex.stanford.edu/report/">aiindex.stanford.edu</a></span><span class="refType cf-label">Relatório</span></li>
+  <li><span class="refNum">[9]</span><span>Stanford Institute for Human-Centered AI &mdash; <cite>Artificial Intelligence Index Report 2024</cite>, 2024. <a href="https://hai.stanford.edu/ai-index/2024-ai-index-report">hai.stanford.edu</a></span><span class="refType cf-label">Relatório</span></li>
   <li><span class="refNum">[10]</span><span>McKinsey Global Institute &mdash; <cite>The economic potential of generative AI: The next productivity frontier</cite>, 2023. <a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier">mckinsey.com</a></span><span class="refType cf-label">Relatório</span></li>
   <li><span class="refNum">[11]</span><span>D. Sculley; G. Holt; D. Golovin <i>et al.</i> &mdash; <cite>Hidden Technical Debt in Machine Learning Systems</cite>, NeurIPS 2015. <a href="https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems">papers.nips.cc</a></span><span class="refType cf-label">Artigo acadêmico</span></li>
   <li><span class="refNum">[12]</span><span>Google Cloud DORA &mdash; <cite>Accelerate State of DevOps Report 2024</cite>, 2024. <a href="https://dora.dev/research/2024/dora-report/">dora.dev</a></span><span class="refType cf-label">Relatório</span></li>
