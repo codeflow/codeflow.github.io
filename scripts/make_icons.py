@@ -106,7 +106,7 @@ ring = Image.new("L", (S, S), 0)
 ring.paste(outer)
 ring.paste(0, mask=shape)                                # subtract the hexagon itself: nothing inside the contour
 ring = ring.filter(ImageFilter.GaussianBlur(9))          # soft edge
-glow = Image.new("RGBA", (S, S), (205, 230, 255, 0))
+glow = Image.new("RGBA", (S, S), (250, 253, 255, 0))       # near-white light
 glow.putalpha(ring)
 glow.save(os.path.join(ROOT, "assets", "logo-glow.png"), optimize=True)
 print("logo glow written (%dx%d, ring hugging the outer contour)" % (S, S))

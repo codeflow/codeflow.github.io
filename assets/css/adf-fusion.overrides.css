@@ -25,14 +25,16 @@
   position: absolute;
   inset: -4px;                 /* a imagem do halo tem 4px de margem em volta do logo de 20px */
   background: url("../logo-glow.png") center / 100% 100% no-repeat;   /* anel que segue o contorno externo do hexágono */
-  opacity: .6;
+  opacity: .35;                /* sem animação (prefers-reduced-motion): halo fraco e constante */
   pointer-events: none;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .cf-logoHalo::before { animation: cfLogoHalo 4.5s ease-in-out infinite; }
+  /* ciclo de 7s: logo normal por ~4s, o brilho acende (1s), fica aceso (0,7s), apaga (0,9s) e repete */
+  .cf-logoHalo::before { opacity: 0; animation: cfLogoHalo 7s ease-in-out infinite; }
   @keyframes cfLogoHalo {
-    0%, 100% { opacity: .3; }
-    50%      { opacity: .95; }
+    0%, 58%   { opacity: 0; }
+    72%, 82%  { opacity: 1; }
+    95%, 100% { opacity: 0; }
   }
 }
 .af-branding .cf-brandName {
