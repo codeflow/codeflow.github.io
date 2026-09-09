@@ -162,7 +162,8 @@ function buildSidebar() {
     return '<li><div class="af-treeRow" title="' + esc(a.title) + '" onclick="location.href=\'' + a.href + '\'"><span class="tw"></span>' + ICO_DOC + '<span class="lbl">' + esc(a.title) + '</span></div></li>';
   }
   document.getElementById('navTree').innerHTML = cats.map(function (c, i) {
-    var items = ARTICLES.filter(function (a) { return a.cat === c; });
+    // the tree reads like a table of contents: oldest first, the newest post at the bottom (the list on the Home is the reverse)
+    var items = ARTICLES.filter(function (a) { return a.cat === c; }).slice().sort(function (x, y) { return x.iso < y.iso ? -1 : x.iso > y.iso ? 1 : 0; });
     var topics = []; items.forEach(function (a) { if (a.topic && topics.indexOf(a.topic) < 0) topics.push(a.topic); });
     var open = (i === 0);
     var inner = topics.map(function (tp, j) {
