@@ -39,7 +39,7 @@ layout: default
       <span class="rowLabel">{{ t.ui.labels }}</span>
       <span class="cf-label primary">{{ t.labels[page.category] | default: page.category }}</span>
       {%- if page.stub %}<span class="cf-label">{{ t.ui.draft }}</span>{% endif %}
-      {%- if page.level %}<span class="cf-label">{{ t.ui.level }} {{ page.level }}</span>{% endif %}
+      {%- if page.level %}<span class="cf-label">{{ t.ui.level }} {{ t.labels[page.level] | default: page.level }}</span>{% endif %}
       {%- if page.prerequisite %}<span class="cf-label">{{ t.ui.prerequisite }} {{ page.prerequisite }}</span>{% endif %}
       {%- if page.series %}<span class="cf-label">{{ t.ui.series }} {{ page.series.name }} &mdash; {{ page.series.index }}/{{ page.series.total }}</span>{% endif %}
     </div>

@@ -85,6 +85,9 @@ ui:
 # Category / topic / section names: the key (as written in the posts' front matter) stays shared across
 # languages; only the text shown to the reader changes. Missing keys fall back to the key itself.
 labels:
+  "Introductory": "Introdutório"
+  "Intermediate": "Intermediário"
+  "Advanced": "Avançado"
   "Artificial Intelligence": "Inteligência Artificial"
   "Generative AI": "IA generativa"
 months: [Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
