@@ -150,8 +150,8 @@ history:
   <h2 class="af-subHeader" id="sec2">2. IA tradicional: aprender de ejemplos etiquetados</h2>
   <p>
     Los <b>datos etiquetados</b> son registros en los que cada ejemplo ya viene asociado a la categoría o al valor esperado: una
-    transacción marcada como <i>fraude</i> o <i>normal</i>, un pasajero marcado como <i>sobrevivió</i> o <i>no sobrevivió</i>, un
-    día marcado con el número de visitantes que realmente aparecieron. Las etiquetas existen porque el modelo necesita una referencia
+    transacción marcada como <i>fraude</i> o <i>normal</i>, un cliente marcado como <i>canceló</i> o <i>se quedó</i>, un día
+    marcado con el número de visitantes que realmente aparecieron. Las etiquetas existen porque el modelo necesita una referencia
     explícita para aprender a asignar entrada a salida sin ambigüedad. Esto es <b>aprendizaje supervisado</b>: el procedimiento de
     entrenamiento ajusta los parámetros <span class="var">&theta;</span> de una función
     <span class="var">f</span><sub><span class="var">&theta;</span></sub> para que sus predicciones se acerquen lo más posible a las
@@ -188,7 +188,7 @@ history:
 
   <h2 class="af-subHeader" id="sec3">3. Clasificación y regresión: las dos formas de una predicción</h2>
   <p>
-    La <b>clasificación</b> es la tarea de elegir entre categorías discretas: sobrevivir o no sobrevivir, spam o legítimo, fraude u
+    La <b>clasificación</b> es la tarea de elegir entre categorías discretas: cancelar o quedarse, spam o legítimo, fraude u
     operación normal. La <b>regresión</b> estima una cantidad continua: volumen de tráfico, demanda futura, el número de personas
     esperado en la playa. Las dos usan patrones observados en el histórico, pero difieren en el tipo de salida — clase cerrada en la
     clasificación, valor numérico en la regresión.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup> Los
@@ -260,13 +260,14 @@ history:
     <div class="figCaption"><b>Figura 2</b> &mdash; Izquierda: un clasificador aprende una frontera que separa las clases etiquetadas; cada transacción nueva cae a uno de los dos lados. Derecha: una regresión aprende la recta de mínimos cuadrados <span class="var">&#375;</span> = 0,494&middot;<span class="var">T</span> &minus; 8,08 sobre diez días etiquetados y lee un número en ella; los diez puntos y la recta son exactos, el escenario es ilustrativo.</div>
   </div>
 
-  <div class="af-panelBox light" id="boxTitanic">
-    <div class="boxHdr" onclick="toggleBox('boxTitanic')"><span class="disc">&#9660;</span>Sobrevivir o no sobrevivir: por qué el Titanic es el ejercicio clásico de clasificación</div>
+  <div class="af-panelBox light" id="boxChurn">
+    <div class="boxHdr" onclick="toggleBox('boxChurn')"><span class="disc">&#9660;</span>Cancelar o quedarse: por qué el churn de clientes es el ejercicio clásico de clasificación</div>
     <div class="boxBody">
-      La lista de pasajeros del Titanic es una tabla pequeña y totalmente etiquetada: clase, sexo, edad, tarifa y el desenlace. Es el
-      primer ejercicio estándar de clasificación precisamente porque todos los ingredientes del paradigma se ven a la vez — entradas
-      conocidas, una etiqueta binaria conocida y un modelo que aprende qué combinaciones de entradas acompañaron a qué desenlace.
-      Nada se genera; el modelo solo aprende dónde está la frontera.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+      La tabla de clientes de una operadora de telefonía es pequeña y está totalmente etiquetada: plan, meses como cliente, importe de
+      la factura mensual, número de llamadas al soporte y si el cliente canceló al mes siguiente. Es el primer ejercicio estándar de
+      clasificación precisamente porque todos los ingredientes del paradigma se ven a la vez — entradas conocidas, una etiqueta binaria
+      conocida y un modelo que aprende qué combinaciones de entradas acompañaron a qué desenlace. Nada se genera; el modelo solo
+      aprende dónde está la frontera, y el negocio actúa sobre ella contactando a los clientes con más probabilidad de irse.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
     </div>
   </div>
 

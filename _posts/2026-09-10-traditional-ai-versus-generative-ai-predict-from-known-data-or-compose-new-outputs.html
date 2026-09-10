@@ -148,8 +148,8 @@ history:
   <h2 class="af-subHeader" id="sec2">2. Traditional AI: learning from labeled examples</h2>
   <p>
     <b>Labeled data</b> are records in which every example already carries the category or the value expected for it: a transaction
-    marked <i>fraud</i> or <i>normal</i>, a passenger marked <i>survived</i> or <i>did not survive</i>, a day marked with the number
-    of visitors that actually showed up. Labels exist because the model needs an explicit reference to learn how to map input to
+    marked <i>fraud</i> or <i>normal</i>, a customer marked <i>cancelled</i> or <i>stayed</i>, a day marked with the number of
+    visitors that actually showed up. Labels exist because the model needs an explicit reference to learn how to map input to
     output without ambiguity. This is <b>supervised learning</b>: the training procedure adjusts the parameters
     <span class="var">&theta;</span> of a function <span class="var">f</span><sub><span class="var">&theta;</span></sub> so that its
     predictions get as close as possible to the labels over the whole training set.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
@@ -184,8 +184,8 @@ history:
 
   <h2 class="af-subHeader" id="sec3">3. Classification and regression: the two shapes of a prediction</h2>
   <p>
-    <b>Classification</b> is the task of choosing among discrete categories: survive or not survive, spam or legitimate, fraud or
-    normal operation. <b>Regression</b> estimates a continuous quantity: traffic volume, future demand, the number of people expected
+    <b>Classification</b> is the task of choosing among discrete categories: cancel or stay, spam or legitimate, fraud or normal
+    operation. <b>Regression</b> estimates a continuous quantity: traffic volume, future demand, the number of people expected
     at the beach. Both use patterns observed in the history, but they differ in the type of output — a closed class in
     classification, a numeric value in regression.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
     The simplest models of each family make the contrast explicit:
@@ -256,13 +256,14 @@ history:
     <div class="figCaption"><b>Figure 2</b> &mdash; Left: a classifier learns a boundary that separates the labeled classes; every new transaction falls on one side. Right: a regression learns the least-squares line <span class="var">&#375;</span> = 0.494&middot;<span class="var">T</span> &minus; 8.08 over ten labeled days and reads a number off it; the ten points and the line are exact, the scenario is illustrative.</div>
   </div>
 
-  <div class="af-panelBox light" id="boxTitanic">
-    <div class="boxHdr" onclick="toggleBox('boxTitanic')"><span class="disc">&#9660;</span>Survive or not survive: why the Titanic is the classic classification exercise</div>
+  <div class="af-panelBox light" id="boxChurn">
+    <div class="boxHdr" onclick="toggleBox('boxChurn')"><span class="disc">&#9660;</span>Cancel or stay: why customer churn is the classic classification exercise</div>
     <div class="boxBody">
-      The passenger list of the Titanic is a small, fully labeled table: class, sex, age, fare and the outcome. It is the standard
-      first exercise in classification precisely because every ingredient of the paradigm is visible at once — known inputs, a known
-      binary label, and a model that learns which combinations of inputs went with which outcome. Nothing is generated; the model
-      only learns where the boundary lies.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+      A telecom's customer table is small and fully labeled: plan, months as a customer, monthly bill, number of support calls, and
+      whether the customer cancelled in the following month. It is the standard first exercise in classification precisely because
+      every ingredient of the paradigm is visible at once — known inputs, a known binary label, and a model that learns which
+      combinations of inputs went with which outcome. Nothing is generated; the model only learns where the boundary lies, and the
+      business acts on it by contacting the customers most likely to leave.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
     </div>
   </div>
 

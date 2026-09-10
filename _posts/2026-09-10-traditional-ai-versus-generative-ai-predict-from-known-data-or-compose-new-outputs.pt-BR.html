@@ -150,7 +150,7 @@ history:
   <h2 class="af-subHeader" id="sec2">2. IA tradicional: aprender com exemplos rotulados</h2>
   <p>
     <b>Dados rotulados</b> são registros em que cada exemplo já vem associado à categoria ou ao valor esperado: uma transação marcada
-    como <i>fraude</i> ou <i>normal</i>, um passageiro marcado como <i>sobreviveu</i> ou <i>não sobreviveu</i>, um dia marcado com o
+    como <i>fraude</i> ou <i>normal</i>, um cliente marcado como <i>cancelou</i> ou <i>permaneceu</i>, um dia marcado com o
     número de visitantes que de fato apareceram. Os rótulos existem porque o modelo precisa de uma referência explícita para aprender
     a mapear entrada para saída sem ambiguidade. Isso é <b>aprendizado supervisionado</b>: o procedimento de treino ajusta os
     parâmetros <span class="var">&theta;</span> de uma função <span class="var">f</span><sub><span class="var">&theta;</span></sub>
@@ -187,7 +187,7 @@ history:
 
   <h2 class="af-subHeader" id="sec3">3. Classificação e regressão: as duas formas de uma previsão</h2>
   <p>
-    <b>Classificação</b> é a tarefa de escolher entre categorias discretas: sobreviver ou não sobreviver, spam ou legítimo, fraude ou
+    <b>Classificação</b> é a tarefa de escolher entre categorias discretas: cancelar ou permanecer, spam ou legítimo, fraude ou
     operação normal. <b>Regressão</b> estima uma quantidade contínua: volume de tráfego, demanda futura, o número de pessoas esperado
     na praia. As duas usam padrões observados no histórico, mas diferem no tipo de saída — classe fechada na classificação, valor
     numérico na regressão.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup> Os modelos mais simples de
@@ -259,13 +259,14 @@ history:
     <div class="figCaption"><b>Figura 2</b> &mdash; À esquerda: um classificador aprende uma fronteira que separa as classes rotuladas; cada transação nova cai de um dos lados. À direita: uma regressão aprende a reta de mínimos quadrados <span class="var">&#375;</span> = 0,494&middot;<span class="var">T</span> &minus; 8,08 sobre dez dias rotulados e lê um número nela; os dez pontos e a reta são exatos, o cenário é ilustrativo.</div>
   </div>
 
-  <div class="af-panelBox light" id="boxTitanic">
-    <div class="boxHdr" onclick="toggleBox('boxTitanic')"><span class="disc">&#9660;</span>Sobreviver ou não sobreviver: por que o Titanic é o exercício clássico de classificação</div>
+  <div class="af-panelBox light" id="boxChurn">
+    <div class="boxHdr" onclick="toggleBox('boxChurn')"><span class="disc">&#9660;</span>Cancelar ou permanecer: por que o churn de clientes é o exercício clássico de classificação</div>
     <div class="boxBody">
-      A lista de passageiros do Titanic é uma tabela pequena e totalmente rotulada: classe, sexo, idade, tarifa e o desfecho. É o
-      primeiro exercício padrão de classificação justamente porque todos os ingredientes do paradigma ficam visíveis de uma vez —
-      entradas conhecidas, um rótulo binário conhecido e um modelo que aprende quais combinações de entradas acompanharam qual
-      desfecho. Nada é gerado; o modelo só aprende onde fica a fronteira.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+      A tabela de clientes de uma operadora de telefonia é pequena e totalmente rotulada: plano, meses como cliente, valor da fatura
+      mensal, número de chamadas ao suporte e se o cliente cancelou no mês seguinte. É o primeiro exercício padrão de classificação
+      justamente porque todos os ingredientes do paradigma ficam visíveis de uma vez — entradas conhecidas, um rótulo binário
+      conhecido e um modelo que aprende quais combinações de entradas acompanharam qual desfecho. Nada é gerado; o modelo só aprende
+      onde fica a fronteira, e o negócio age sobre ela contatando os clientes com maior chance de sair.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
     </div>
   </div>
 
