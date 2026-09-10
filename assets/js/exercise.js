@@ -286,7 +286,7 @@
       txt.addEventListener('input', function () { saveState(ex, { text: txt.value }); });
       txt.addEventListener('keydown', function (e) { if (e.key === 'Enter') validate(ex); });
     }
-    if (st.validated) validate(ex);                          // rebuild the last result from the restored answers
+    if (st.validated && (st.code || st.blanks || st.quiz || st.text)) validate(ex);   // rebuild the last result from the restored answers
     ex.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-act]'); if (!b) return;
       if (b.dataset.act === 'check') validate(ex);

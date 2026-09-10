@@ -919,6 +919,7 @@ body.cf-sheetOpen { overflow: hidden; }
 
 /* ---------- Lab drawer: the post's exercises, with a chip nav and progress ---------- */
 .af-drawer.cf-labDrawer { width: 560px; }
+.af-drawer.cf-labDrawer.expanded { width: auto; }   /* expandido: da margem esquerda até o dock, como as outras gavetas */
 .af-drawer.cf-labDrawer .drBody { padding: 8px 10px 14px; }
 .af-drawer .drHeader .labProgress { margin-left: 6px; font-weight: normal; color: #6b7a89; font-size: 10px; }
 .cf-labNav { display: flex; flex-wrap: wrap; gap: 4px; margin: -8px -10px 10px; padding: 6px 10px; position: sticky; top: 0; z-index: 1; background: #fff; border-bottom: 1px solid #e4eaf1; }   /* fica visível enquanto a gaveta rola */
