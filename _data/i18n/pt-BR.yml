@@ -43,6 +43,8 @@ ui:
   contents: Sumário
   print: Imprimir
   help: Ajuda
+  lab: Lab
+  lab_title: Laboratório de Exercícios
   article_contents: Sumário do Artigo
   figures: Figuras
   figure_abbr: Fig.

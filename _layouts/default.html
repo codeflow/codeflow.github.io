@@ -83,7 +83,7 @@
 <script src="{{ '/assets/js/catalog.js' | relative_url }}?v={{ v }}"></script>
 <script src="{{ '/assets/js/i18n/' | append: lang | append: '.js' | relative_url }}?v={{ v }}"></script>
 <script src="{{ '/assets/js/shell.js' | relative_url }}?v={{ v }}"></script>
-{% if page.layout == "post" %}<script src="{{ '/assets/js/post.js' | relative_url }}?v={{ v }}"></script>{% endif %}
+{% if page.layout == "post" %}<script src="{{ '/assets/js/post.js' | relative_url }}?v={{ v }}"></script><script src="{{ '/assets/js/exercise.js' | relative_url }}?v={{ v }}"></script>{% endif %}
 {% for s in page.scripts %}<script src="{{ s | relative_url }}"></script>{% endfor %}
 
 </body>

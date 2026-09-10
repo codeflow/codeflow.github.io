@@ -162,6 +162,7 @@ history:
     </tbody>
   </table>
   <p class="tip" style="margin-bottom:12px;">Tabela 1 &mdash; Os quatro níveis, a pergunta que cada um responde e as decisões que pertencem a ele. Uma pontuação de benchmark é um fato no nível do modelo; uma boa resposta no seu produto é um resultado no nível da aplicação.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup></p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex1">abrir no Lab: Exercício 1, Onde ficam os LLMs</a></p>
 
   <h2 class="af-subHeader" id="sec3">3. O mecanismo por trás dos modelos generativos</h2>
   <p>
@@ -254,6 +255,7 @@ history:
     mais bem redigido. A pergunta nunca é só "o que ele respondeu?", mas "de onde vem essa capacidade, e que limites vêm
     junto com ela?".<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
   </p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex2">abrir no Lab: Exercício 2, O que o modelo prevê</a></p>
 
   <h2 class="af-subHeader" id="sec4">4. Comparação de arquiteturas por critérios de engenharia</h2>
   <p>
@@ -432,6 +434,7 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
     própria amostra. Com esses três no lugar, "escolhemos o modelo X" vira uma afirmação que alguém pode auditar e revisitar
     quando os números mudarem.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
   </p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex3">abrir no Lab: Exercício 3, Critérios de trade-off</a></p>
 
   <h2 class="af-subHeader" id="sec6">6. Construção de soluções reais com IA</h2>
   <p>
@@ -492,6 +495,7 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
     aplicada, e é também o que mantém o sistema vivo quando um modelo é trocado: os prompts, a recuperação, as verificações e
     as métricas permanecem.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
   </p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex4">abrir no Lab: Exercício 4, Restrições duras</a></p>
 
   <h2 class="af-subHeader" id="sec7">7. Um ecossistema em movimento rápido: adaptar sem recomeçar</h2>
   <p>
@@ -520,6 +524,7 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
     que modelos maiores custam mais; o pipeline da Figura 2 não mudou. O que muda é a posição de cada produto no gráfico de
     trade-offs, e é exatamente para isso que servem critérios estáveis.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
   </p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex5">abrir no Lab: Exercício 5, Ecossistema acelerado</a></p>
 
   <h2 class="af-subHeader" id="sec8">8. Da condição de usuário à linha de frente da criação</h2>
   <p>
@@ -534,6 +539,145 @@ print([c.nome <span class="k">for</span> c <span class="k">in</span> ordenados])
   </p>
 
 </div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec2" data-short="Onde ficam os LLMs">
+    <div class="exHdr">Exercício 1 &mdash; onde ficam os LLMs <span class="lang">&mdash; múltipla escolha</span></div>
+    <p class="exTask">Qual afirmação descreve o encaixe que o artigo usa?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Machine learning é um ramo do deep learning, que é um ramo dos LLMs</label></li>
+      <li><label><input type="radio" name="ex1"> LLMs são um tipo de deep learning, que é um tipo de machine learning, que faz parte da IA</label></li>
+      <li><label><input type="radio" name="ex1"> IA generativa e machine learning são campos sem relação</label></li>
+      <li><label><input type="radio" name="ex1"> Deep learning substituiu machine learning em 2017</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "Cada nível está contido no anterior: IA ⊃ machine learning ⊃ deep learning ⊃ LLMs e outros modelos generativos."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex2" data-kind="text" data-lang="Concept" data-section="sec3" data-short="O que o modelo prevê">
+    <div class="exHdr">Exercício 2 &mdash; o que o modelo prevê <span class="lang">&mdash; resposta em texto</span></div>
+    <p class="exTask">A cada passo da geração, o que um modelo de linguagem prevê?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "accept": [
+                "o próximo token",
+                "próximo token",
+                "a próxima palavra",
+                "próxima palavra",
+                "um token"
+          ],
+          "hint": "É uma única unidade de texto, escolhida um passo de cada vez.",
+          "explain": "O modelo devolve uma distribuição de probabilidade sobre o próximo token; encadear esses passos compõe a resposta inteira.",
+          "regex": "token|palavra"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex3" data-kind="quiz" data-lang="Concept" data-section="sec5" data-short="Critérios de trade-off">
+    <div class="exHdr">Exercício 3 &mdash; os critérios de trade-off <span class="lang">&mdash; múltipla escolha</span></div>
+    <p class="exTask">Quais critérios o artigo usa para comparar modelos para um sistema real? Marque todos os que se aplicam.</p>
+    <ul class="exOptions">
+      <li><label><input type="checkbox" name="ex3"> Qualidade na sua própria amostra de avaliação</label></li>
+      <li><label><input type="checkbox" name="ex3"> Custo por requisição</label></li>
+      <li><label><input type="checkbox" name="ex3"> Latência sob carga</label></li>
+      <li><label><input type="checkbox" name="ex3"> Grau de especialização e dependência (lock-in)</label></li>
+      <li><label><input type="checkbox" name="ex3"> O ranking de marketing do fornecedor</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                0,
+                1,
+                2,
+                3
+          ],
+          "explain": "Qualidade, custo, velocidade e especialização são medidos no seu caso; o ranking do fornecedor não é critério."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex4" data-kind="run" data-lang="JavaScript" data-section="sec6" data-short="Restrições duras">
+    <div class="exHdr">Exercício 4 &mdash; restrições duras <span class="lang">&mdash; JavaScript, execução com testes</span></div>
+    <p class="exTask">Implemente <code>viaveis</code>: recebe os candidatos e as restrições duras (custo máximo, latência máxima, qualidade mínima) e devolve os nomes dos candidatos que atendem às três, na ordem original.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">function viaveis(candidatos, custoMax, latenciaMax, qualidadeMin) {
+    // devolva os nomes dos candidatos que atendem a todas as restrições duras
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+      <button class="af-button" data-act="solution">Ver solução</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "tests": [
+                {
+                      "call": "viaveis([{nome:\"grande hospedado\", qualidade:0.93, custo:0.012, latencia:4.8}, {nome:\"médio aberto\", qualidade:0.84, custo:0.004, latencia:2.9}, {nome:\"pequeno ajustado\", qualidade:0.88, custo:0.001, latencia:1.1}], 0.010, 3.0, 0.80)",
+                      "expect": [
+                            "médio aberto",
+                            "pequeno ajustado"
+                      ],
+                      "msg": "o caso do assistente de suporte mantém o médio e o pequeno"
+                },
+                {
+                      "call": "viaveis([{nome:\"grande hospedado\", qualidade:0.93, custo:0.012, latencia:4.8}, {nome:\"médio aberto\", qualidade:0.84, custo:0.004, latencia:2.9}, {nome:\"pequeno ajustado\", qualidade:0.88, custo:0.001, latencia:1.1}], 0.010, 3.0, 0.85)",
+                      "expect": [
+                            "pequeno ajustado"
+                      ],
+                      "msg": "subir o piso de qualidade para 0,85 deixa só o pequeno ajustado"
+                },
+                {
+                      "call": "viaveis([{nome:\"grande hospedado\", qualidade:0.93, custo:0.012, latencia:4.8}, {nome:\"médio aberto\", qualidade:0.84, custo:0.004, latencia:2.9}, {nome:\"pequeno ajustado\", qualidade:0.88, custo:0.001, latencia:1.1}], 0.020, 5.0, 0.90)",
+                      "expect": [
+                            "grande hospedado"
+                      ],
+                      "msg": "com orçamento folgado e qualidade 0,90, só o grande hospedado passa"
+                },
+                {
+                      "call": "viaveis([{nome:\"grande hospedado\", qualidade:0.93, custo:0.012, latencia:4.8}, {nome:\"médio aberto\", qualidade:0.84, custo:0.004, latencia:2.9}, {nome:\"pequeno ajustado\", qualidade:0.88, custo:0.001, latencia:1.1}], 0.0005, 1.0, 0.99)",
+                      "expect": [],
+                      "msg": "restrições impossíveis devolvem uma lista vazia"
+                }
+          ],
+          "solution": "function viaveis(candidatos, custoMax, latenciaMax, qualidadeMin) {\n    return candidatos\n        .filter(x => x.custo <= custoMax && x.latencia <= latenciaMax && x.qualidade >= qualidadeMin)\n        .map(x => x.nome);\n}"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex5" data-kind="quiz" data-lang="Concept" data-section="sec7" data-short="Ecossistema acelerado">
+    <div class="exHdr">Exercício 5 &mdash; um ecossistema acelerado <span class="lang">&mdash; múltipla escolha</span></div>
+    <p class="exTask">Um modelo novo é anunciado todo mês. O que o artigo recomenda?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex5"> Reconstruir o sistema em torno de cada modelo novo</label></li>
+      <li><label><input type="radio" name="ex5"> Manter os fundamentos e a avaliação; trocar a ferramenta atrás de uma interface estável quando ela merecer</label></li>
+      <li><label><input type="radio" name="ex5"> Congelar a stack e ignorar os lançamentos</label></li>
+      <li><label><input type="radio" name="ex5"> Escolher o maior modelo disponível e parar de avaliar</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "Fundamentos e a sua própria avaliação duram mais que ferramentas; lançamentos são absorvidos atrás de uma interface estável, não recomeçando do zero."
+    }</script>
+  </div>
+</div>
+
 
 <!-- references -->
 <ul class="cf-refList">

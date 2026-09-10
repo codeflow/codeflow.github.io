@@ -1,0 +1,307 @@
+---
+title: "Protótipo: exercícios interativos com validação de código"
+date: 2026-09-10 09:00:00 -0300
+lang: pt-BR
+key: exercicios-interativos-prototipo
+permalink: /pt-BR/articles/exercicios-interativos-prototipo/
+published: false             # só aparece no servidor local (./serve.sh usa --unpublished); nunca vai para o GitHub Pages
+robots: noindex, nofollow
+sitemap: false
+category: "Java"
+tags: [java, javascript, exercicios, prototipo]
+reading_time: 6
+level: Introductory
+cover: "/assets/covers/fundamentals-over-tools-how-to-evaluate-and-build-with-generative-ai.svg"
+excerpt: "Post de teste, não publicado, para revisar o Lab: uma gaveta ao lado de Sumário e Ajuda com todos os exercícios do post, e em cada seção um link que abre o Lab já no exercício certo. Cinco tipos: Java com regras, Java com lacunas, JavaScript executado com testes, múltipla escolha e resposta em texto. No fim, como o autor declara um exercício e o que ainda precisa ser decidido…"
+description: "Protótipo interno do Lab: gaveta de exercícios com validação no navegador."
+references_count: 0
+key_concepts: ["Lab", "Validação no navegador", "Regras sobre o código", "Lacunas", "Execução com testes", "Múltipla escolha"]
+version: 1
+history:
+  - { when: "10/09/2026 09:00", what: "Protótipo para revisão local" }
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    O que você vai encontrar neste artigo
+  </div>
+  <ul>
+    <li>O <b>Lab</b>: uma gaveta, ao lado de Sumário e Ajuda, com todos os exercícios do post, navegação por fichas e progresso.</li>
+    <li>Em cada seção, um link <b>abrir no Lab</b> que leva direto ao exercício daquele tópico; no Lab, um link de volta para a seção.</li>
+    <li>Cinco tipos de exercício: <b>Java com regras</b>, <b>Java com lacunas</b>, <b>JavaScript executado</b>, <b>múltipla escolha</b> e <b>resposta em texto</b>.</li>
+    <li>Como o autor <b>declara um exercício</b> e o que ainda falta decidir (compilar Java de verdade exige backend ou JVM no navegador).</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+    <svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Banner: um editor de código, o botão Validar e a lista de verificações">
+      <defs>
+        <linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+        <linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        <marker id="cfHeroArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+      </defs>
+      <rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+      <text x="26" y="26" font-size="9" letter-spacing="1.4" fill="#6b90b6">CODEFLOW &#183; PROT&#211;TIPO INTERNO &#183; N&#195;O PUBLICADO</text>
+      <text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">Lab de exerc&#237;cios</text>
+      <text x="26" y="74" font-size="12" fill="#44566a">O leitor abre o Lab, digita, clica em Validar e v&#234; o que passou e o que faltou</text>
+      <g font-size="10" fill="#1a2836" text-anchor="middle">
+        <rect x="520" y="92" width="110" height="30" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="575" y="111" font-family="Consolas, monospace">return true;</text>
+        <rect x="662" y="92" width="70" height="30" rx="3" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="697" y="111" fill="#ffffff" font-weight="bold">Validar</text>
+        <rect x="764" y="92" width="90" height="30" rx="3" fill="#eef8ea" stroke="#3d8b2f"/><text x="809" y="111" fill="#2f6f2f">4 de 5 ok</text>
+      </g>
+      <path d="M630 107 L656 107" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
+      <path d="M732 107 L758 107" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
+    </svg>
+  </div>
+
+  <p class="lead">
+    O Codeflow é um site estático servido pelo GitHub Pages: não existe servidor para compilar o que o leitor digita. Toda a
+    validação, portanto, acontece no navegador. Os exercícios não ficam espalhados pelo texto: moram no <b>Lab</b>, a gaveta que
+    abre pelo botão do cabeçalho ou pela aba na margem direita, ao lado de Sumário e Ajuda. Cada seção do artigo aponta para o
+    seu exercício, e cada exercício aponta de volta para a seção.
+  </p>
+
+  <h2 class="af-subHeader" id="sec1">1. Três níveis de validação num site estático</h2>
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead><tr><th style="width:170px;">Abordagem</th><th style="width:120px;">Linguagens</th><th>O que valida</th><th>Limite</th></tr></thead>
+    <tbody>
+      <tr><td>Regras sobre o código</td><td>Qualquer</td><td>Assinatura, construções obrigatórias ou proibidas, chaves balanceadas, ponto e vírgula</td><td><span class="st warn">Não compila</span> &mdash; aceita código que segue as regras mas está errado</td></tr>
+      <tr class="band"><td>Lacunas</td><td>Qualquer</td><td>Cada lacuna contra uma lista de respostas aceitas ou uma expressão regular</td><td><span class="st ok">Preciso</span> &mdash; mas o exercício é fechado por natureza</td></tr>
+      <tr><td>Execução com testes</td><td>JavaScript</td><td>Roda o código e compara o resultado de chamadas com o valor esperado</td><td><span class="st ok">Real</span> &mdash; só para JavaScript; precisa de sandbox antes de publicar</td></tr>
+      <tr class="band"><td>Múltipla escolha e texto</td><td>Qualquer</td><td>Alternativas marcadas ou resposta curta contra o gabarito (sem acentos e maiúsculas)</td><td><span class="st ok">Preciso</span> &mdash; para conceitos, não para código</td></tr>
+      <tr><td>Backend de compilação</td><td>Java, Python, C&hellip;</td><td>Compila e executa de verdade com testes de unidade</td><td><span class="st err">Exige serviço</span> &mdash; API externa (Piston, JDoodle) ou um servidor próprio</td></tr>
+      <tr class="band"><td>JVM no navegador</td><td>Java</td><td>Compila e executa Java via CheerpJ ou TeaVM, sem servidor</td><td><span class="st warn">Pesado</span> &mdash; dezenas de MB carregados na primeira execução</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Tabela 1 &mdash; As quatro primeiras linhas estão implementadas neste protótipo; as duas últimas são as opções para validar Java de verdade.</p>
+  <p>Teste o que entendeu da tabela: <a class="cf-labLink" href="#lab-ex1">abrir no Lab: Exercício 1</a></p>
+
+  <h2 class="af-subHeader" id="sec2">2. Java com regras: implemente o método</h2>
+  <p>
+    O leitor escreve o método inteiro. O validador não compila: aplica uma lista de verificações declaradas pelo autor
+    (assinatura, uso de determinadas construções, ausência de outras, chaves balanceadas e ponto e vírgula nas instruções). Cada
+    verificação vira uma linha do resultado, com uma dica quando falha. Espaços, quebras de linha, comentários e nomes de
+    variáveis não importam; só as construções exigidas.
+  </p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex2">abrir no Lab: Exercício 2, palíndromo</a></p>
+
+  <div class="af-panelBox light" id="boxRegras">
+    <div class="boxHdr" onclick="toggleBox('boxRegras')"><span class="disc">&#9660;</span>O que esse nível não pega</div>
+    <div class="boxBody">
+      Um código que use <code>charAt</code>, <code>toLowerCase</code> e <code>return true;</code> sem lógica nenhuma passa em todas
+      as regras. As regras servem para guiar o leitor ("faltou normalizar", "faltou o return"), não para provar que o método está
+      correto. Para exercícios em que a corretude importa, o caminho é a execução (nível 3) ou um backend de compilação.
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec3">3. Java com lacunas: complete o código</h2>
+  <p>
+    O autor escreve o código com marcadores <code>___</code>; o componente transforma cada um em um campo. A validação é exata por
+    lacuna: cada uma tem uma lista de respostas aceitas ou uma expressão regular. Funciona para qualquer linguagem porque não
+    depende de compilar, e é a forma mais confiável de exercitar sintaxe (palavras-chave, tipos, operadores).
+  </p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex3">abrir no Lab: Exercício 3, laço de contagem</a></p>
+
+  <h2 class="af-subHeader" id="sec4">4. JavaScript executado: o código roda de verdade</h2>
+  <p>
+    Quando a linguagem do exercício é JavaScript, o navegador é o próprio interpretador. O componente executa o que o leitor
+    escreveu e compara o resultado de cada chamada de teste com o valor esperado — o mesmo princípio de um teste de unidade. Aqui
+    a validação é real: qualquer implementação que devolva os valores certos passa; código bonito mas errado falha nos testes.
+  </p>
+  <p>Pratique: <a class="cf-labLink" href="#lab-ex4">abrir no Lab: Exercício 4, fatorial</a></p>
+
+  <div class="af-panelBox light" id="boxSandbox">
+    <div class="boxHdr" onclick="toggleBox('boxSandbox')"><span class="disc">&#9660;</span>Antes de publicar: sandbox e limite de tempo</div>
+    <div class="boxBody">
+      No protótipo o código roda na própria página. Um laço infinito trava a aba, e o código tem acesso ao DOM. A versão
+      publicável deve executar dentro de um <code>iframe</code> com <code>sandbox</code> ou de um Web Worker, com limite de tempo
+      (por exemplo, 2 segundos) e sem acesso à página. É uma mudança só no componente; os exercícios continuam iguais.
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec5">5. Como o autor declara um exercício</h2>
+  <p>
+    Os exercícios ficam num bloco <code>&lt;div class="cf-lab" hidden&gt;</code> depois do artigo. O script
+    <code>/assets/js/exercise.js</code>, carregado pelo layout de todo post, move esse bloco para a gaveta
+    do Lab, mostra a aba e o botão, monta as fichas de navegação e liga os links <code>cf-labLink</code> das seções. Cada
+    exercício é um <code>.cf-exercise</code> com <code>data-kind</code> (o tipo), <code>data-section</code> (a seção a que
+    pertence, para o link de volta) e um JSON com as verificações e a solução. O esqueleto do Exercício 2:
+  </p>
+  <div class="cf-codeBox">
+    <div class="codeHdr">exercicio.html <span class="lang">&mdash; HTML + JSON</span><button class="af-button small" onclick="copyCode(this)">Copiar</button></div>
+    <pre>&lt;!-- na seção do artigo --&gt;
+&lt;p&gt;Pratique: &lt;a class="cf-labLink" href="#lab-ex2"&gt;abrir no Lab: Exercício 2&lt;/a&gt;&lt;/p&gt;
+
+&lt;!-- depois de &lt;/div&gt;&lt;!-- /cf-article --&gt;, antes de &lt;!-- references --&gt; --&gt;
+&lt;div class="cf-lab" hidden&gt;
+  &lt;div class="cf-exercise" id="ex2" data-kind="code" data-lang="Java" data-section="sec2"&gt;
+    &lt;div class="exHdr"&gt;Exercício 2 &mdash; palíndromo &lt;span class="lang"&gt;&mdash; Java&lt;/span&gt;&lt;/div&gt;
+    &lt;p class="exTask"&gt;Enunciado.&lt;/p&gt;
+    &lt;div class="exEditor"&gt;&lt;pre class="exGutter"&gt;&lt;/pre&gt;&lt;textarea spellcheck="false"&gt;código inicial&lt;/textarea&gt;&lt;/div&gt;
+    &lt;div class="af-buttonBar"&gt;
+      &lt;button class="af-button" data-act="check"&gt;Validar&lt;/button&gt;
+      &lt;button class="af-button" data-act="reset"&gt;Recomeçar&lt;/button&gt;
+      &lt;button class="af-button" data-act="solution"&gt;Ver solução&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="exResult" hidden&gt;&lt;/div&gt;
+    &lt;script type="application/json" class="exSpec"&gt;{
+      "checks": [
+        { "type": "regex",      "pattern": "\\breturn\\b", "msg": "Devolve um resultado", "hint": "Falta o return." },
+        { "type": "regex",      "pattern": "System\\.out", "absent": true, "msg": "Não imprime nada" },
+        { "type": "balanced",   "msg": "Chaves e parênteses balanceados" },
+        { "type": "semicolons", "msg": "Instruções terminam com ponto e vírgula" }
+      ],
+      "solution": "public static boolean ehPalindromo(String s) { ... }"
+    }&lt;/script&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+  </div>
+  <ul>
+    <li><b>data-kind="code"</b> usa <code>checks</code>: <code>regex</code> (com <code>absent: true</code> para proibir algo), <code>balanced</code> e <code>semicolons</code>. Os padrões são aplicados ao código sem comentários e com espaços colapsados.</li>
+    <li><b>data-kind="blanks"</b> usa <code>&lt;pre class="exBlanks"&gt;</code> com <code>___</code> e uma lista <code>blanks</code>, uma entrada por lacuna: <code>accept</code> (lista) ou <code>regex</code>, mais <code>hint</code> e <code>width</code>.</li>
+    <li><b>data-kind="run"</b> usa <code>tests</code>: <code>call</code> é a expressão executada e <code>expect</code> o valor esperado (comparado como JSON, então funciona com números, strings, arrays e objetos).</li>
+    <li><b>data-kind="quiz"</b> usa <code>&lt;ul class="exOptions"&gt;</code> com <code>input</code> do tipo radio (uma resposta) ou checkbox (várias) e <code>answer</code> com os índices corretos, a partir de 0, mais <code>explain</code> mostrado depois de validar.</li>
+    <li><b>data-kind="text"</b> usa <code>&lt;input class="exText"&gt;</code> e <code>accept</code> (lista, comparada sem acentos, maiúsculas e espaços extras) ou <code>regex</code>, mais <code>hint</code> e <code>explain</code>.</li>
+    <li>O texto dos botões é escrito no idioma do post; as mensagens do resultado ("3 de 5 verificações passaram", "2 de 5 concluídos") vêm do script, em en, pt-BR e es.</li>
+  </ul>
+  <p>Confira: <a class="cf-labLink" href="#lab-ex5">abrir no Lab: Exercício 5, resposta em texto</a></p>
+
+  <h2 class="af-subHeader" id="sec6">6. O que falta decidir</h2>
+  <ul>
+    <li><b>Java de verdade ou regras?</b> Se os exercícios de Java precisam provar corretude, é preciso escolher entre uma API de compilação (custo, dependência externa, chave de API exposta ou proxy) e uma JVM no navegador (CheerpJ carrega dezenas de MB, mas funciona sem servidor).</li>
+    <li><b>Progresso do leitor.</b> A tentativa e os exercícios concluídos ficam no localStorage do navegador; o Lab mostra "n de m concluídos" e marca as fichas. Não há conta de usuário.</li>
+    <li><b>Validador do site.</b> Se o formato for aprovado, o <code>validate_post.py</code> pode ganhar uma checagem LAB: JSON válido, todo <code>cf-labLink</code> apontando para um exercício existente, e solução que passa nas próprias verificações e testes.</li>
+    <li><b>Template e skill.</b> O <code>/codeflow post</code> passaria a gerar a seção de exercícios e o bloco <code>cf-lab</code> quando o post for prático.</li>
+  </ul>
+
+</div><!-- /cf-article -->
+
+<!-- Lab: the exercises live here and are moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Conceito" data-section="sec1" data-short="Níveis de validação">
+    <div class="exHdr">Exercício 1 &mdash; níveis de validação <span class="lang">&mdash; múltipla escolha</span></div>
+    <p class="exTask">Num site estático, sem backend, qual abordagem consegue provar que uma função está correta?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Regras sobre o código Java (expressões regulares e chaves balanceadas)</label></li>
+      <li><label><input type="radio" name="ex1"> Lacunas com respostas aceitas</label></li>
+      <li><label><input type="radio" name="ex1"> Execução de JavaScript com testes que comparam o resultado</label></li>
+      <li><label><input type="radio" name="ex1"> Nenhuma: só um compilador no servidor valida código</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "answer": [2],
+      "explain": "Só a execução compara o resultado real com o esperado. Regras e lacunas verificam a forma do código, não o comportamento; e JavaScript roda no próprio navegador, sem servidor."
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex2" data-kind="code" data-lang="Java" data-section="sec2" data-short="Palíndromo">
+    <div class="exHdr">Exercício 2 &mdash; palíndromo <span class="lang">&mdash; Java, regras sobre o código</span></div>
+    <p class="exTask">Implemente <code>ehPalindromo</code>: devolve <code>true</code> quando a string se lê igual de trás para a frente, ignorando maiúsculas e caracteres que não sejam letras ou dígitos. Não imprima nada.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="8">public class Texto {
+    public static boolean ehPalindromo(String s) {
+        // escreva aqui
+    }
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+      <button class="af-button" data-act="solution">Ver solução</button>
+    </div>
+    <p class="exHint">Tab insere quatro espaços; Ctrl+Enter valida. O que você digita fica salvo neste navegador.</p>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "checks": [
+        { "type": "regex", "pattern": "public\\s+static\\s+boolean\\s+ehPalindromo\\s*\\(\\s*String\\s+\\w+\\s*\\)", "msg": "Assinatura public static boolean ehPalindromo(String s)", "hint": "Mantenha o método público, estático e devolvendo boolean." },
+        { "type": "regex", "pattern": "toLowerCase\\s*\\(|toUpperCase\\s*\\(", "msg": "Ignora maiúsculas e minúsculas", "hint": "Normalize com toLowerCase() ou toUpperCase() antes de comparar." },
+        { "type": "regex", "pattern": "charAt\\s*\\(|toCharArray\\s*\\(|new\\s+StringBuilder\\s*\\([^)]*\\)\\s*\\.reverse\\s*\\(", "msg": "Percorre os caracteres ou inverte a string", "hint": "Use charAt/toCharArray num laço, ou new StringBuilder(s).reverse()." },
+        { "type": "regex", "pattern": "\\breturn\\b", "msg": "Devolve um resultado com return", "hint": "O método é boolean: precisa devolver true ou false." },
+        { "type": "regex", "pattern": "System\\.out\\.print", "absent": true, "msg": "Não imprime nada", "hint": "Remova o System.out.print: o método devolve, não imprime." },
+        { "type": "balanced", "msg": "Chaves e parênteses balanceados", "hint": "Cada { e ( precisa do seu par." },
+        { "type": "semicolons", "msg": "Instruções terminam com ponto e vírgula" }
+      ],
+      "solution": "public class Texto {\n    public static boolean ehPalindromo(String s) {\n        String limpo = s.toLowerCase().replaceAll(\"[^a-z0-9]\", \"\");\n        int i = 0, j = limpo.length() - 1;\n        while (i < j) {\n            if (limpo.charAt(i) != limpo.charAt(j)) {\n                return false;\n            }\n            i++;\n            j--;\n        }\n        return true;\n    }\n}"
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex3" data-kind="blanks" data-lang="Java" data-section="sec3" data-short="Laço de contagem">
+    <div class="exHdr">Exercício 3 &mdash; laço de contagem <span class="lang">&mdash; Java, lacunas</span></div>
+    <p class="exTask">Complete o programa para que ele imprima <code>Codeflow 0</code>, <code>Codeflow 1</code> e <code>Codeflow 2</code>, uma linha por vez.</p>
+    <pre class="exBlanks">public class Contador {
+    public ___ void main(String[] ___) {
+        ___ i = 0;
+        while (i ___ 3) {
+            System.out.println("Codeflow " + i);
+            i___;
+        }
+    }
+}</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+      <button class="af-button" data-act="solution">Ver solução</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "blanks": [
+        { "accept": ["static"], "hint": "O main precisa rodar sem instanciar a classe.", "width": 6 },
+        { "regex": "^[A-Za-z_]\\w*$", "hint": "Qualquer nome válido de parâmetro; por convenção, args.", "width": 5 },
+        { "accept": ["int"], "hint": "Um contador inteiro.", "width": 4 },
+        { "accept": ["<"], "hint": "Imprime três vezes: 0, 1 e 2.", "width": 3 },
+        { "accept": ["++", "+=1", "+= 1", "=i+1", "= i + 1"], "hint": "Incremente o contador a cada volta.", "width": 5 }
+      ],
+      "solution": "public class Contador {\n    public static void main(String[] args) {\n        int i = 0;\n        while (i < 3) {\n            System.out.println(\"Codeflow \" + i);\n            i++;\n        }\n    }\n}"
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex4" data-kind="run" data-lang="JavaScript" data-section="sec4" data-short="Fatorial">
+    <div class="exHdr">Exercício 4 &mdash; fatorial <span class="lang">&mdash; JavaScript, execução com testes</span></div>
+    <p class="exTask">Implemente <code>fatorial(n)</code> para um inteiro <code>n &ge; 0</code>, com <code>fatorial(0) = 1</code>. Qualquer implementação correta passa.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">function fatorial(n) {
+    // devolva n!
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+      <button class="af-button" data-act="solution">Ver solução</button>
+    </div>
+    <p class="exHint">Os testes chamam a função com 0, 1, 5 e 10.</p>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "tests": [
+        { "call": "fatorial(0)", "expect": 1, "msg": "fatorial(0) devolve 1" },
+        { "call": "fatorial(1)", "expect": 1, "msg": "fatorial(1) devolve 1" },
+        { "call": "fatorial(5)", "expect": 120, "msg": "fatorial(5) devolve 120" },
+        { "call": "fatorial(10)", "expect": 3628800, "msg": "fatorial(10) devolve 3628800" }
+      ],
+      "solution": "function fatorial(n) {\n    let r = 1;\n    for (let i = 2; i <= n; i++) {\n        r *= i;\n    }\n    return r;\n}"
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex5" data-kind="text" data-lang="Conceito" data-section="sec5" data-short="Atributo do tipo">
+    <div class="exHdr">Exercício 5 &mdash; atributo do tipo <span class="lang">&mdash; resposta em texto</span></div>
+    <p class="exTask">Qual atributo HTML do bloco <code>.cf-exercise</code> define o tipo do exercício (code, blanks, run, quiz ou text)?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off" placeholder="digite o nome do atributo"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Recomeçar</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "accept": ["data-kind", "data-kind=\"\"", "atributo data-kind"],
+      "regex": "^\\s*data-kind\\b",
+      "hint": "É um atributo data-* do div; veja o esqueleto na seção 5.",
+      "explain": "data-kind escolhe o validador; data-section liga o exercício à seção do artigo."
+    }</script>
+  </div>
+
+</div>
+
+<!-- references -->
+<ul class="cf-refList"></ul>

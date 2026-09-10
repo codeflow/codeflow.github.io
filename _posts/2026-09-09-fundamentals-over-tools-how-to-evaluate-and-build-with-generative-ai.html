@@ -160,6 +160,7 @@ history:
     </tbody>
   </table>
   <p class="tip" style="margin-bottom:12px;">Table 1 &mdash; The four levels, the question each answers and the decisions that belong there. A benchmark score is a model-level fact; a good answer in your product is an application-level result.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup></p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex1">open in the Lab: Exercise 1, Where LLMs sit</a></p>
 
   <h2 class="af-subHeader" id="sec3">3. The mechanism behind generative models</h2>
   <p>
@@ -252,6 +253,7 @@ history:
     question is never only "what did it answer?" but "where does this capability come from, and what limits come with
     it?".<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
   </p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex2">open in the Lab: Exercise 2, What the model predicts</a></p>
 
   <h2 class="af-subHeader" id="sec4">4. Comparing architectures by engineering criteria</h2>
   <p>
@@ -430,6 +432,7 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
     on your own sample. With those three in place, "we chose model X" becomes a statement someone can audit and revisit when
     the numbers change.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
   </p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex3">open in the Lab: Exercise 3, Trade-off criteria</a></p>
 
   <h2 class="af-subHeader" id="sec6">6. Building real solutions with AI</h2>
   <p>
@@ -490,6 +493,7 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
     experimentation from applied engineering, and it is also what keeps the system alive when a model is swapped: the
     prompts, the retrieval, the checks and the metrics stay.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
   </p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex4">open in the Lab: Exercise 4, Hard constraints</a></p>
 
   <h2 class="af-subHeader" id="sec7">7. A fast-moving ecosystem: adapt without starting over</h2>
   <p>
@@ -517,6 +521,7 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
     explains why larger models cost more; the pipeline in Figure 2 has not changed. What changes is the position of each
     product on the trade-off chart, and that is exactly what stable criteria are for.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
   </p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex5">open in the Lab: Exercise 5, Fast ecosystem</a></p>
 
   <h2 class="af-subHeader" id="sec8">8. From user to builder</h2>
   <p>
@@ -531,6 +536,145 @@ print([c.name <span class="k">for</span> c <span class="k">in</span> ranked])   
   </p>
 
 </div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec2" data-short="Where LLMs sit">
+    <div class="exHdr">Exercise 1 &mdash; where LLMs sit <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">Which statement describes the nesting the article uses?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Machine learning is a branch of deep learning, which is a branch of LLMs</label></li>
+      <li><label><input type="radio" name="ex1"> LLMs are a kind of deep learning, which is a kind of machine learning, which is part of AI</label></li>
+      <li><label><input type="radio" name="ex1"> Generative AI and machine learning are unrelated fields</label></li>
+      <li><label><input type="radio" name="ex1"> Deep learning replaced machine learning in 2017</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "Each level is contained in the previous one: AI ⊃ machine learning ⊃ deep learning ⊃ LLMs and other generative models."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex2" data-kind="text" data-lang="Concept" data-section="sec3" data-short="What the model predicts">
+    <div class="exHdr">Exercise 2 &mdash; what the model predicts <span class="lang">&mdash; written answer</span></div>
+    <p class="exTask">At each step of generation, what does a language model predict?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "accept": [
+                "the next token",
+                "next token",
+                "the next word",
+                "next word",
+                "a token"
+          ],
+          "hint": "It is a single unit of text, chosen one step at a time.",
+          "explain": "The model outputs a probability distribution over the next token; chaining those steps composes the whole answer.",
+          "regex": "token|word"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex3" data-kind="quiz" data-lang="Concept" data-section="sec5" data-short="Trade-off criteria">
+    <div class="exHdr">Exercise 3 &mdash; the trade-off criteria <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">Which criteria does the article use to compare models for a real system? Mark every one that applies.</p>
+    <ul class="exOptions">
+      <li><label><input type="checkbox" name="ex3"> Quality on your own evaluation sample</label></li>
+      <li><label><input type="checkbox" name="ex3"> Cost per request</label></li>
+      <li><label><input type="checkbox" name="ex3"> Latency under load</label></li>
+      <li><label><input type="checkbox" name="ex3"> Degree of specialization and lock-in</label></li>
+      <li><label><input type="checkbox" name="ex3"> The vendor's marketing ranking</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                0,
+                1,
+                2,
+                3
+          ],
+          "explain": "Quality, cost, speed and specialization are measured on your case; a vendor's ranking is not a criterion."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex4" data-kind="run" data-lang="JavaScript" data-section="sec6" data-short="Hard constraints">
+    <div class="exHdr">Exercise 4 &mdash; hard constraints <span class="lang">&mdash; JavaScript, run with tests</span></div>
+    <p class="exTask">Implement <code>feasible</code>: it receives the candidates and the hard constraints (maximum cost, maximum latency, minimum quality) and returns the names of the candidates that satisfy all three, in the original order.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">function feasible(candidates, maxCost, maxLatency, minQuality) {
+    // return the names of the candidates that satisfy every hard constraint
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "tests": [
+                {
+                      "call": "feasible([{name:\"large hosted\", quality:0.93, cost:0.012, latency:4.8}, {name:\"mid open\", quality:0.84, cost:0.004, latency:2.9}, {name:\"small fine-tuned\", quality:0.88, cost:0.001, latency:1.1}], 0.010, 3.0, 0.80)",
+                      "expect": [
+                            "mid open",
+                            "small fine-tuned"
+                      ],
+                      "msg": "the support-assistant case keeps the mid and small models"
+                },
+                {
+                      "call": "feasible([{name:\"large hosted\", quality:0.93, cost:0.012, latency:4.8}, {name:\"mid open\", quality:0.84, cost:0.004, latency:2.9}, {name:\"small fine-tuned\", quality:0.88, cost:0.001, latency:1.1}], 0.010, 3.0, 0.85)",
+                      "expect": [
+                            "small fine-tuned"
+                      ],
+                      "msg": "raising the quality floor to 0.85 leaves only the small fine-tuned model"
+                },
+                {
+                      "call": "feasible([{name:\"large hosted\", quality:0.93, cost:0.012, latency:4.8}, {name:\"mid open\", quality:0.84, cost:0.004, latency:2.9}, {name:\"small fine-tuned\", quality:0.88, cost:0.001, latency:1.1}], 0.020, 5.0, 0.90)",
+                      "expect": [
+                            "large hosted"
+                      ],
+                      "msg": "with a loose budget and quality 0.90, only the large hosted model qualifies"
+                },
+                {
+                      "call": "feasible([{name:\"large hosted\", quality:0.93, cost:0.012, latency:4.8}, {name:\"mid open\", quality:0.84, cost:0.004, latency:2.9}, {name:\"small fine-tuned\", quality:0.88, cost:0.001, latency:1.1}], 0.0005, 1.0, 0.99)",
+                      "expect": [],
+                      "msg": "impossible constraints return an empty list"
+                }
+          ],
+          "solution": "function feasible(candidates, maxCost, maxLatency, minQuality) {\n    return candidates\n        .filter(x => x.cost <= maxCost && x.latency <= maxLatency && x.quality >= minQuality)\n        .map(x => x.name);\n}"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex5" data-kind="quiz" data-lang="Concept" data-section="sec7" data-short="Fast ecosystem">
+    <div class="exHdr">Exercise 5 &mdash; a fast-moving ecosystem <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">A new model is announced every month. What does the article recommend?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex5"> Rebuild the system around each new model</label></li>
+      <li><label><input type="radio" name="ex5"> Keep the fundamentals and the evaluation; swap the tool behind a stable interface when it earns its place</label></li>
+      <li><label><input type="radio" name="ex5"> Freeze the stack and ignore releases</label></li>
+      <li><label><input type="radio" name="ex5"> Pick the largest model available and stop evaluating</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "Fundamentals and your own evaluation outlast tools; releases are absorbed behind a stable interface, not by starting over."
+    }</script>
+  </div>
+</div>
+
 
 <!-- references -->
 <ul class="cf-refList">

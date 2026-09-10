@@ -146,6 +146,7 @@ history:
     </div>
     <div class="figCaption"><b>Figura 1</b> &mdash; El flujo tradicional asigna una entrada conocida a un tipo conocido de respuesta; el flujo generativo aprende patrones sin una etiqueta escrita a mano para cada ejemplo y compone la respuesta bajo la guía de un prompt.</div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex1">abrir en el Lab: Ejercicio 1, Forma de la respuesta</a></p>
 
   <h2 class="af-subHeader" id="sec2">2. IA tradicional: aprender de ejemplos etiquetados</h2>
   <p>
@@ -185,6 +186,7 @@ history:
       IA tradicional.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex2">abrir en el Lab: Ejercicio 2, Etiquetas erróneas</a></p>
 
   <h2 class="af-subHeader" id="sec3">3. Clasificación y regresión: las dos formas de una predicción</h2>
   <p>
@@ -270,6 +272,7 @@ history:
       aprende dónde está la frontera, y el negocio actúa sobre ella contactando a los clientes con más probabilidad de irse.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex3">abrir en el Lab: Ejercicio 3, Clase o número</a></p>
 
   <h2 class="af-subHeader" id="sec4">4. De la predicción a la decisión: scores, umbrales y triaje</h2>
   <p>
@@ -318,6 +321,7 @@ history:
     </div>
     <div class="figCaption"><b>Figura 3</b> &mdash; El modelo produce un score; la decisión sale de compararlo con umbrales elegidos por el negocio. No se crea nada: un patrón observado se convierte en un ranking, una alerta o una derivación.</div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex4">abrir en el Lab: Ejercicio 4, Del score a la decisión</a></p>
 
   <h2 class="af-subHeader" id="sec5">5. La limitación estructural: un espacio de respuestas cerrado</h2>
   <p>
@@ -377,6 +381,7 @@ history:
       cargando con todo lo que contiene el corpus, incluidos sus errores y sus sesgos.
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex5">abrir en el Lab: Ejercicio 5, Dos maneras de responder</a></p>
 
   <h2 class="af-subHeader" id="sec7">7. Composición condicionada: prompt, contexto y coherencia en entradas largas</h2>
   <p>
@@ -530,6 +535,155 @@ CLASES = [<span class="s">"normal"</span>, <span class="s">"fraude"</span>]     
   </p>
 
 </div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec1" data-short="Forma de la respuesta">
+    <div class="exHdr">Ejercicio 1 &mdash; la forma de la respuesta <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">¿Cuál de estas tareas necesita el paradigma generativo?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Decidir si un pago con tarjeta es fraude</label></li>
+      <li><label><input type="radio" name="ex1"> Estimar cuánta gente irá a la playa el sábado</label></li>
+      <li><label><input type="radio" name="ex1"> Redactar una respuesta para un cliente enfadado</label></li>
+      <li><label><input type="radio" name="ex1"> Ordenar los productos que un cliente tiene más probabilidad de comprar</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                2
+          ],
+          "explain": "Fraude, conteo de visitantes y ranking tienen una forma de respuesta fijada de antemano (una clase, un número, un orden). La respuesta al cliente hay que componerla."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concept" data-section="sec2" data-short="Etiquetas erróneas">
+    <div class="exHdr">Ejercicio 2 &mdash; etiquetas erróneas <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">Hay imágenes de perros etiquetadas como <i>humano</i> en el conjunto de entrenamiento. ¿Qué hace un modelo supervisado?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex2"> Detecta la inconsistencia y corrige las etiquetas</label></li>
+      <li><label><input type="radio" name="ex2"> Aprende la asociación equivocada: para el optimizador, la etiqueta es la verdad</label></li>
+      <li><label><input type="radio" name="ex2"> Ignora esos ejemplos automáticamente</label></li>
+      <li><label><input type="radio" name="ex2"> Se niega a entrenar</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "La pérdida solo compara predicciones con etiquetas; el modelo no tiene forma de juzgar la semántica del dato."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex3" data-kind="text" data-lang="Concept" data-section="sec3" data-short="Clase o número">
+    <div class="exHdr">Ejercicio 3 &mdash; clase o número <span class="lang">&mdash; respuesta escrita</span></div>
+    <p class="exTask">Estimar el número de visitantes de la playa a partir de la temperatura, ¿qué tipo de tarea es: clasificación o regresión?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "accept": [
+                "regresión",
+                "regresion"
+          ],
+          "hint": "La salida es una cantidad continua, no una categoría.",
+          "explain": "La regresión estima un valor numérico; la clasificación elige entre clases discretas, como fraude o normal.",
+          "regex": "^\\s*regresi[oó]n\\s*$"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex4" data-kind="run" data-lang="JavaScript" data-section="sec4" data-short="Del score a la decisión">
+    <div class="exHdr">Ejercicio 4 &mdash; del score a la decisión <span class="lang">&mdash; JavaScript, ejecución con pruebas</span></div>
+    <p class="exTask">Implementa <code>decidir</code>, que convierte un score de riesgo entre 0 y 1 en la decisión de la Figura 3: aprobar por debajo de 0,5, revisar a partir de 0,5, bloquear a partir de 0,8.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">function decidir(score) {
+    // devuelve "aprobar" por debajo de 0,5, "revisar" de 0,5 hasta (sin incluir) 0,8, "bloquear" a partir de 0,8
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+      <button class="af-button" data-act="solution">Ver solución</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "tests": [
+                {
+                      "call": "decidir(0.87)",
+                      "expect": "bloquear",
+                      "msg": "decidir(0.87) → bloquear"
+                },
+                {
+                      "call": "decidir(0.6)",
+                      "expect": "revisar",
+                      "msg": "decidir(0.6) → revisar"
+                },
+                {
+                      "call": "decidir(0.2)",
+                      "expect": "aprobar",
+                      "msg": "decidir(0.2) → aprobar"
+                },
+                {
+                      "call": "decidir(0.5)",
+                      "expect": "revisar",
+                      "msg": "decidir(0.5) → revisar"
+                },
+                {
+                      "call": "decidir(0.8)",
+                      "expect": "bloquear",
+                      "msg": "decidir(0.8) → bloquear"
+                }
+          ],
+          "solution": "function decidir(score) {\n    if (score < 0.5) return \"aprobar\";\n    if (score < 0.8) return \"revisar\";\n    return \"bloquear\";\n}"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex5" data-kind="blanks" data-lang="Python" data-section="sec6" data-short="Dos maneras de responder">
+    <div class="exHdr">Ejercicio 5 &mdash; dos maneras de responder <span class="lang">&mdash; Python, huecos</span></div>
+    <p class="exTask">Completa las tres líneas de la caja de código: la función logística, la decisión por umbral y el token que entra en el contexto.</p>
+    <pre class="exBlanks">score = 1 / (1 + exp(___z))                      # función logística, ecuación (2)
+return CLASES[int(score ___ umbral)], score       # una de las opciones conocidas
+contexto.___(token)                                # lo escrito pasa a ser contexto</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+      <button class="af-button" data-act="solution">Ver solución</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "blanks": [
+                {
+                      "accept": [
+                            "-"
+                      ],
+                      "hint": "El signo que hace que sigma(z) crezca con z.",
+                      "width": 2
+                },
+                {
+                      "accept": [
+                            ">=",
+                            ">"
+                      ],
+                      "hint": "Clase positiva cuando el score alcanza el umbral.",
+                      "width": 3
+                },
+                {
+                      "accept": [
+                            "append"
+                      ],
+                      "hint": "El método de lista que añade un elemento al final.",
+                      "width": 7
+                }
+          ],
+          "solution": "score = 1 / (1 + exp(-z))\nreturn CLASES[int(score >= umbral)], score\ncontexto.append(token)"
+    }</script>
+  </div>
+</div>
+
 
 <!-- references -->
 <ul class="cf-refList">

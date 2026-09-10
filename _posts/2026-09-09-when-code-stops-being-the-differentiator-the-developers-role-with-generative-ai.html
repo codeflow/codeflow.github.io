@@ -90,6 +90,7 @@ history:
     <li><b>Now:</b> a candidate implementation is cheap; the bottleneck is knowing what to ask for, and knowing whether what
       came back is right for this system.</li>
   </ul>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex1">open in the Lab: Exercise 1, What became cheap</a></p>
 
   <h2 class="af-subHeader" id="sec2">2. AI amplifies competence; it does not fix deficiency</h2>
   <p>
@@ -164,6 +165,7 @@ history:
       </ul>
     </div>
   </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex2">open in the Lab: Exercise 2, Amplifier</a></p>
 
   <h2 class="af-subHeader" id="sec3">3. A transition like the ones before it</h2>
   <p>
@@ -277,6 +279,7 @@ study, skip = triage([
 ])
 print([i.name <span class="k">for</span> i <span class="k">in</span> study])   <span class="c"># the RAG eval harness comes first: our stack, stable, changes practice</span></pre>
   </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex3">open in the Lab: Exercise 3, Continuous learning</a></p>
 
   <h2 class="af-subHeader" id="sec5">5. Doing differently matters more than doing faster</h2>
   <p>
@@ -304,6 +307,7 @@ print([i.name <span class="k">for</span> i <span class="k">in</span> study])   <
     </tbody>
   </table>
   <p class="tip" style="margin-bottom:12px;">Table 2 &mdash; Local acceleration versus redesign, by area. The first column is where most teams start and where most of them stop; the second is where the value is, and also where governance becomes necessary.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">12</a>]</sup></p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex4">open in the Lab: Exercise 4, Faster or different</a></p>
 
   <h2 class="af-subHeader" id="sec6">6. Technical leadership orchestrates people and AI</h2>
   <p>
@@ -351,6 +355,7 @@ print([i.name <span class="k">for</span> i <span class="k">in</span> study])   <
     knowing which tasks tolerate a generated first draft, which require a person from the start, and how the result is
     traced back to whoever accepted it.
   </p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex5">open in the Lab: Exercise 5, Triage by criteria</a></p>
 
   <h2 class="af-subHeader" id="sec7">7. Products tend to incorporate conversational interaction</h2>
   <p>
@@ -436,6 +441,133 @@ print([i.name <span class="k">for</span> i <span class="k">in</span> study])   <
   </p>
 
 </div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec1" data-short="What became cheap">
+    <div class="exHdr">Exercise 1 &mdash; what became cheap <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">According to the article, what stopped being a differentiator on its own?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Understanding the problem and the domain</label></li>
+      <li><label><input type="radio" name="ex1"> Writing code</label></li>
+      <li><label><input type="radio" name="ex1"> Judgement about architecture and trade-offs</label></li>
+      <li><label><input type="radio" name="ex1"> Communicating with the team</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "Producing code became cheap; what grew in value is defining the problem, judging trade-offs and verifying results."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concept" data-section="sec2" data-short="Amplifier">
+    <div class="exHdr">Exercise 2 &mdash; AI as an amplifier <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">A developer without fundamentals starts using a coding assistant. What does the article predict?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex2"> The assistant fills the gaps and the results improve</label></li>
+      <li><label><input type="radio" name="ex2"> The assistant amplifies what is there: more output, with the same mistakes, faster</label></li>
+      <li><label><input type="radio" name="ex2"> Nothing changes</label></li>
+      <li><label><input type="radio" name="ex2"> The developer no longer needs to review anything</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "AI amplifies competence; it does not fix deficiency. Without judgement, the errors scale with the output."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex3" data-kind="text" data-lang="Concept" data-section="sec4" data-short="Continuous learning">
+    <div class="exHdr">Exercise 3 &mdash; continuous learning <span class="lang">&mdash; written answer</span></div>
+    <p class="exTask">Complete the sentence from the article: continuous learning became a(n) ______ requirement.</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "accept": [
+                "operational",
+                "an operational",
+                "operational requirement"
+          ],
+          "hint": "Not optional, not a hobby: part of the job, like keeping the build green.",
+          "explain": "Learning continuously is now operational: part of the weekly routine, with a budget and a triage, not something left for spare time.",
+          "regex": "operational"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex4" data-kind="quiz" data-lang="Concept" data-section="sec5" data-short="Faster or different">
+    <div class="exHdr">Exercise 4 &mdash; faster or different <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">Which example is a redesign (doing it differently) rather than local acceleration (doing the same, faster)?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex4"> Using the assistant to write the same unit tests in half the time</label></li>
+      <li><label><input type="radio" name="ex4"> Autocompleting boilerplate in the IDE</label></li>
+      <li><label><input type="radio" name="ex4"> Restructuring the workflow so drafts are generated from the specification and humans spend their time on review and edge cases</label></li>
+      <li><label><input type="radio" name="ex4"> Generating commit messages</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                2
+          ],
+          "explain": "The first, second and fourth options keep the process and speed it up; only the third changes how the work is done, which is where most of the value is captured."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex5" data-kind="blanks" data-lang="Python" data-section="sec6" data-short="Triage by criteria">
+    <div class="exHdr">Exercise 5 &mdash; triage by explicit criteria <span class="lang">&mdash; Python, blanks</span></div>
+    <p class="exTask">Complete the triage code: the overlap with the team's stack, the descending sort and the split at the budget.</p>
+    <pre class="exBlanks">overlap = len(item.tags ___ MY_STACK) / max(len(item.tags), 1)   # share of the item that touches our stack
+ranked = sorted(items, key=score, reverse=___)                     # best first
+return ranked[:budget], ranked[___:]                               # study this week / note and skip</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "blanks": [
+                {
+                      "accept": [
+                            "&"
+                      ],
+                      "hint": "Set intersection in Python.",
+                      "width": 3
+                },
+                {
+                      "accept": [
+                            "True"
+                      ],
+                      "hint": "Descending order.",
+                      "width": 5
+                },
+                {
+                      "accept": [
+                            "budget"
+                      ],
+                      "hint": "The same cut used for the first slice.",
+                      "width": 7
+                }
+          ],
+          "solution": "overlap = len(item.tags & MY_STACK) / max(len(item.tags), 1)\nranked = sorted(items, key=score, reverse=True)\nreturn ranked[:budget], ranked[budget:]"
+    }</script>
+  </div>
+</div>
+
 
 <!-- references -->
 <ul class="cf-refList">

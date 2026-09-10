@@ -93,6 +93,7 @@ history:
     <li><b>Ahora:</b> una implementación candidata es barata; el cuello de botella es saber qué pedir y saber si lo que volvió
       es correcto para este sistema.</li>
   </ul>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex1">abrir en el Lab: Ejercicio 1, Qué se abarató</a></p>
 
   <h2 class="af-subHeader" id="sec2">2. La IA amplifica la competencia, no corrige la deficiencia</h2>
   <p>
@@ -168,6 +169,7 @@ history:
       </ul>
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex2">abrir en el Lab: Ejercicio 2, Amplificador</a></p>
 
   <h2 class="af-subHeader" id="sec3">3. Una transición como las anteriores</h2>
   <p>
@@ -280,6 +282,7 @@ estudiar, saltar = triaje([
 ])
 print([i.nombre <span class="k">for</span> i <span class="k">in</span> estudiar])   <span class="c"># el harness de RAG va primero: nuestro stack, estable, cambia la práctica</span></pre>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex3">abrir en el Lab: Ejercicio 3, Aprendizaje continuo</a></p>
 
   <h2 class="af-subHeader" id="sec5">5. Hacer distinto importa más que hacer más rápido</h2>
   <p>
@@ -307,6 +310,7 @@ print([i.nombre <span class="k">for</span> i <span class="k">in</span> estudiar]
     </tbody>
   </table>
   <p class="tip" style="margin-bottom:12px;">Tabla 2 &mdash; Aceleración local frente a rediseño, por área. La primera columna es donde la mayoría de los equipos empieza y donde la mayoría se queda; la segunda es donde está el valor, y también donde la gobernanza se vuelve necesaria.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>,<a href="#" onclick="gotoRefs(); return false;">12</a>]</sup></p>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex4">abrir en el Lab: Ejercicio 4, Más rápido o distinto</a></p>
 
   <h2 class="af-subHeader" id="sec6">6. El liderazgo técnico pasa a orquestar personas e IA</h2>
   <p>
@@ -354,6 +358,7 @@ print([i.nombre <span class="k">for</span> i <span class="k">in</span> estudiar]
     arreglo híbrido: saber qué tareas toleran un primer borrador generado, cuáles exigen una persona desde el inicio y cómo
     se rastrea el resultado hasta quien lo aceptó.
   </p>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex5">abrir en el Lab: Ejercicio 5, Triaje por criterios</a></p>
 
   <h2 class="af-subHeader" id="sec7">7. El producto tiende a incorporar interacción conversacional</h2>
   <p>
@@ -442,6 +447,134 @@ print([i.nombre <span class="k">for</span> i <span class="k">in</span> estudiar]
   </p>
 
 </div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec1" data-short="Qué se abarató">
+    <div class="exHdr">Ejercicio 1 &mdash; qué se abarató <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">Según el artículo, ¿qué dejó de ser un diferencial por sí solo?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Entender el problema y el dominio</label></li>
+      <li><label><input type="radio" name="ex1"> Escribir código</label></li>
+      <li><label><input type="radio" name="ex1"> El juicio sobre arquitectura y trade-offs</label></li>
+      <li><label><input type="radio" name="ex1"> Comunicarse con el equipo</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "Producir código se abarató; lo que ganó valor es definir el problema, juzgar trade-offs y verificar resultados."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concept" data-section="sec2" data-short="Amplificador">
+    <div class="exHdr">Ejercicio 2 &mdash; la IA como amplificador <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">Un desarrollador sin fundamentos empieza a usar un asistente de código. ¿Qué predice el artículo?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex2"> El asistente rellena los huecos y los resultados mejoran</label></li>
+      <li><label><input type="radio" name="ex2"> El asistente amplifica lo que hay: más salida, con los mismos errores, más rápido</label></li>
+      <li><label><input type="radio" name="ex2"> Nada cambia</label></li>
+      <li><label><input type="radio" name="ex2"> El desarrollador ya no necesita revisar nada</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "La IA amplifica la competencia; no arregla la deficiencia. Sin juicio, los errores escalan con la producción."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex3" data-kind="text" data-lang="Concept" data-section="sec4" data-short="Aprendizaje continuo">
+    <div class="exHdr">Ejercicio 3 &mdash; aprendizaje continuo <span class="lang">&mdash; respuesta escrita</span></div>
+    <p class="exTask">Completa la frase del artículo: el aprendizaje continuo pasó a ser un requisito ______.</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "accept": [
+                "operativo",
+                "operacional",
+                "requisito operativo",
+                "requisito operacional"
+          ],
+          "hint": "No es opcional ni un pasatiempo: forma parte del trabajo, como mantener el build en verde.",
+          "explain": "Aprender de forma continua ahora es operativo: parte de la rutina semanal, con presupuesto y triaje, y no algo que se deja para el tiempo libre.",
+          "regex": "operativo|operacional"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex4" data-kind="quiz" data-lang="Concept" data-section="sec5" data-short="Más rápido o distinto">
+    <div class="exHdr">Ejercicio 4 &mdash; más rápido o distinto <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">¿Qué ejemplo es un rediseño (hacerlo distinto) y no una aceleración local (hacer lo mismo, más rápido)?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex4"> Usar el asistente para escribir las mismas pruebas unitarias en la mitad del tiempo</label></li>
+      <li><label><input type="radio" name="ex4"> Autocompletar boilerplate en el IDE</label></li>
+      <li><label><input type="radio" name="ex4"> Reestructurar el flujo para que los borradores se generen a partir de la especificación y las personas dediquen su tiempo a revisar y a los casos límite</label></li>
+      <li><label><input type="radio" name="ex4"> Generar mensajes de commit</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                2
+          ],
+          "explain": "La primera, la segunda y la cuarta opción mantienen el proceso y lo aceleran; solo la tercera cambia cómo se hace el trabajo, que es donde se captura la mayor parte del valor."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex5" data-kind="blanks" data-lang="Python" data-section="sec6" data-short="Triaje por criterios">
+    <div class="exHdr">Ejercicio 5 &mdash; triaje por criterios explícitos <span class="lang">&mdash; Python, huecos</span></div>
+    <p class="exTask">Completa el código de triaje: el solapamiento con el stack del equipo, el orden descendente y el corte en el presupuesto.</p>
+    <pre class="exBlanks">solapamiento = len(item.tags ___ MI_STACK) / max(len(item.tags), 1)   # parte del ítem que toca nuestro stack
+ordenados = sorted(items, key=puntuacion, reverse=___)                  # mejores primero
+return ordenados[:presupuesto], ordenados[___:]                         # estudiar esta semana / anotar y saltar</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+      <button class="af-button" data-act="solution">Ver solución</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "blanks": [
+                {
+                      "accept": [
+                            "&"
+                      ],
+                      "hint": "Intersección de conjuntos en Python.",
+                      "width": 3
+                },
+                {
+                      "accept": [
+                            "True"
+                      ],
+                      "hint": "Orden descendente.",
+                      "width": 5
+                },
+                {
+                      "accept": [
+                            "presupuesto"
+                      ],
+                      "hint": "El mismo corte usado en la primera rebanada.",
+                      "width": 11
+                }
+          ],
+          "solution": "solapamiento = len(item.tags & MI_STACK) / max(len(item.tags), 1)\nordenados = sorted(items, key=puntuacion, reverse=True)\nreturn ordenados[:presupuesto], ordenados[presupuesto:]"
+    }</script>
+  </div>
+</div>
+
 
 <!-- references -->
 <ul class="cf-refList">

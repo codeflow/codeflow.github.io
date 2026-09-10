@@ -891,3 +891,61 @@ body.cf-sheetOpen { overflow: hidden; }
   .cf-post .cover { width: 144px; margin: 2px 10px 4px 0; }       /* 92px: 5 linhas de 18px */
   .cf-post p.excerpt { -webkit-line-clamp: 5; }
 }
+
+/* ---------- Interactive exercises (cf-exercise): editor, blanks, validation result ---------- */
+.cf-exercise { border: 1px solid #a9b8c7; background: #fbfcfe; margin: 0 0 14px; }
+.cf-exercise .exHdr { display: flex; align-items: center; gap: 6px; padding: 3px 6px; background: linear-gradient(#fafcfd, #e4eaf1); border-bottom: 1px solid #c3cedb; color: #15497e; font-weight: bold; }
+.cf-exercise .exHdr .lang { font-weight: normal; color: #6b7a89; }
+.cf-exercise .exHdr .exKind { margin-left: auto; font-weight: normal; color: #6b7a89; }
+.cf-exercise .exTask { margin: 7px 9px; }
+.cf-exercise .exEditor { display: flex; border-top: 1px solid #d4dce4; border-bottom: 1px solid #d4dce4; background: #fff; }
+.cf-exercise .exGutter { margin: 0; padding: 7px 6px; min-width: 22px; text-align: right; color: #8a99a8; background: #f2f5f8; border-right: 1px solid #d4dce4; font: 11px Consolas, "Courier New", monospace; line-height: 1.45; user-select: none; overflow: hidden; }
+.cf-exercise textarea { flex: 1; margin: 0; padding: 7px 9px; border: 0; outline: none; resize: vertical; min-height: 130px; font: 11px Consolas, "Courier New", monospace; line-height: 1.45; color: #1a1a1a; background: #fff; white-space: pre; overflow: auto; tab-size: 4; }
+.cf-exercise textarea:focus { background: #fffdf3; }
+.cf-exercise .exBlanks { margin: 0; padding: 7px 9px; border-top: 1px solid #d4dce4; border-bottom: 1px solid #d4dce4; background: #fff; font: 11px Consolas, "Courier New", monospace; line-height: 2; white-space: pre; overflow-x: auto; color: #1a1a1a; }
+.cf-exercise .exBlanks input { font: inherit; padding: 0 3px; border: 1px solid #a9b8c7; border-bottom: 2px solid #3d6791; background: #fffdf3; text-align: center; color: #00308f; }
+.cf-exercise .exBlanks input:focus { outline: none; border-color: #15497e; background: #fff; }
+.cf-exercise .exBlanks input.ok { border-color: #3d8b2f; background: #eef8ea; }
+.cf-exercise .exBlanks input.err { border-color: #b3271b; background: #fbeeec; }
+.cf-exercise .af-buttonBar { margin: 8px 9px; justify-content: flex-start; }
+.cf-exercise .exHint { margin: 0 9px 8px; color: #6b7a89; font-size: 10px; }
+.cf-exercise .exResult { margin: 0 9px 9px; border: 1px solid #b0bdcb; background: #fbfcfd; }
+.cf-exercise .exResult .msgHead { padding: 4px 8px; background: linear-gradient(#f6f8fa, #e8edf2); border-bottom: 1px solid #d4dce4; font-weight: bold; color: #b00000; }
+.cf-exercise .exResult.ok .msgHead { color: #2f6f2f; }
+.cf-exercise .exResult ul { margin: 5px 0 6px; padding-left: 12px; list-style: none; }
+.cf-exercise .exResult li { margin: 3px 0; }
+.cf-exercise .exResult .detail { display: block; margin-left: 15px; color: #6b7a89; font-size: 10px; }
+.cf-exercise .exSolution { margin: 0 9px 9px; }
+
+/* ---------- Lab drawer: the post's exercises, with a chip nav and progress ---------- */
+.af-drawer.cf-labDrawer { width: 560px; }
+.af-drawer.cf-labDrawer .drBody { padding: 8px 10px 14px; }
+.af-drawer .drHeader .labProgress { margin-left: 6px; font-weight: normal; color: #6b7a89; font-size: 10px; }
+.cf-labNav { display: flex; flex-wrap: wrap; gap: 4px; margin: -8px -10px 10px; padding: 6px 10px; position: sticky; top: 0; z-index: 1; background: #fff; border-bottom: 1px solid #e4eaf1; }   /* fica visível enquanto a gaveta rola */
+.cf-labNav .chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border: 1px solid #a9b8c7; border-radius: 10px; background: linear-gradient(#fafcfd, #e4eaf1); color: #15497e; cursor: pointer; font-size: 10px; white-space: nowrap; }
+.cf-labNav .chip:hover { border-color: #3d6791; background: #eef4fa; }
+.cf-labNav .chip.done { border-color: #3d8b2f; background: #eef8ea; color: #2f6f2f; }
+.cf-labNav .chip .num { font-weight: bold; }
+.cf-exercise .exHdr .exDone { color: #2f6f2f; font-weight: normal; font-size: 10px; }
+.cf-exercise .exHdr .exSection { color: #6b7a89; font-weight: normal; font-size: 10px; text-decoration: none; }
+.cf-exercise .exHdr .exSection:hover { color: #15497e; text-decoration: underline; }
+.cf-exercise.flash { animation: cfExFlash 1.4s ease-out; }
+@keyframes cfExFlash { from { box-shadow: 0 0 0 3px #f2c94c; } to { box-shadow: 0 0 0 0 transparent; } }
+/* multiple choice and short text answers */
+.cf-exercise .exOptions { list-style: none; margin: 4px 9px 8px; padding: 0; }
+.cf-exercise .exOptions li { margin: 3px 0; padding: 3px 6px; border: 1px solid transparent; border-radius: 3px; }
+.cf-exercise .exOptions li label { display: flex; align-items: flex-start; gap: 6px; cursor: pointer; }
+.cf-exercise .exOptions li input { margin: 2px 0 0; }
+.cf-exercise .exOptions li.ok { border-color: #3d8b2f; background: #eef8ea; }
+.cf-exercise .exOptions li.err { border-color: #b3271b; background: #fbeeec; }
+.cf-exercise .exOptions li.missed { border-color: #d99a17; background: #fff8e1; }
+.cf-exercise .exTextRow { display: flex; align-items: center; gap: 6px; margin: 4px 9px 8px; }
+.cf-exercise .exText { flex: 1; max-width: 420px; padding: 3px 5px; border: 1px solid #a9b8c7; border-bottom: 2px solid #3d6791; background: #fffdf3; font: 11px Tahoma, Verdana, sans-serif; }
+.cf-exercise .exText:focus { outline: none; border-color: #15497e; background: #fff; }
+.cf-exercise .exText.ok { border-color: #3d8b2f; background: #eef8ea; }
+.cf-exercise .exText.err { border-color: #b3271b; background: #fbeeec; }
+/* link from a section of the article to its exercise in the Lab */
+a.cf-labLink { display: inline-block; vertical-align: baseline; padding: 1px 7px 2px; line-height: 1.3; border: 1px solid #a9b8c7; border-radius: 3px; background: linear-gradient(#fafcfd, #e4eaf1); color: #15497e; text-decoration: none; font-size: 10px; white-space: nowrap; }   /* inline-block: a base do texto do botão fica na linha do texto ao lado */
+a.cf-labLink:hover { border-color: #3d6791; background: #eef4fa; text-decoration: none; }
+a.cf-labLink::before { content: ""; display: inline-block; width: 9px; height: 10px; margin-right: 4px; vertical-align: -1px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M6 2h4M7 2v4.5L3.2 12.4A1.5 1.5 0 0 0 4.5 14.5h7a1.5 1.5 0 0 0 1.3-2.1L9 6.5V2' fill='%23e8f0fa' stroke='%2335618f' stroke-width='1.4' stroke-linejoin='round'/></svg>") no-repeat center / contain; }
+@media (max-width: 768px) { .af-drawer.cf-labDrawer { width: auto; } }

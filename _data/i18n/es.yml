@@ -43,6 +43,8 @@ ui:
   contents: Índice
   print: Imprimir
   help: Ayuda
+  lab: Lab
+  lab_title: Laboratorio de Ejercicios
   article_contents: Índice del Artículo
   figures: Figuras
   figure_abbr: Fig.

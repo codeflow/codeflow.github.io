@@ -144,6 +144,7 @@ history:
     </div>
     <div class="figCaption"><b>Figure 1</b> &mdash; The traditional pipeline maps a known input to a known kind of answer; the generative pipeline learns patterns without a hand-written label for every example and composes the answer under the guidance of a prompt.</div>
   </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex1">open in the Lab: Exercise 1, Shape of the answer</a></p>
 
   <h2 class="af-subHeader" id="sec2">2. Traditional AI: learning from labeled examples</h2>
   <p>
@@ -181,6 +182,7 @@ history:
       only model choice, dominates the cost of traditional AI projects.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
     </div>
   </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex2">open in the Lab: Exercise 2, Wrong labels</a></p>
 
   <h2 class="af-subHeader" id="sec3">3. Classification and regression: the two shapes of a prediction</h2>
   <p>
@@ -266,6 +268,7 @@ history:
       business acts on it by contacting the customers most likely to leave.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
     </div>
   </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex3">open in the Lab: Exercise 3, Class or number</a></p>
 
   <h2 class="af-subHeader" id="sec4">4. From prediction to decision: scores, thresholds and triage</h2>
   <p>
@@ -314,6 +317,7 @@ history:
     </div>
     <div class="figCaption"><b>Figure 3</b> &mdash; The model produces a score; the decision comes from comparing it with thresholds chosen by the business. Nothing is created: an observed pattern is turned into a rank, a flag or a route.</div>
   </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex4">open in the Lab: Exercise 4, Score to decision</a></p>
 
   <h2 class="af-subHeader" id="sec5">5. The structural limit: a closed answer space</h2>
   <p>
@@ -373,6 +377,7 @@ history:
       whatever the corpus contains, including its errors and its biases.
     </div>
   </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex5">open in the Lab: Exercise 5, Two ways to answer</a></p>
 
   <h2 class="af-subHeader" id="sec7">7. Conditioned composition: prompt, context and coherence over long inputs</h2>
   <p>
@@ -524,6 +529,154 @@ CLASSES = [<span class="s">"normal"</span>, <span class="s">"fraud"</span>]     
   </p>
 
 </div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec1" data-short="Shape of the answer">
+    <div class="exHdr">Exercise 1 &mdash; the shape of the answer <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">Which of these tasks needs the generative paradigm?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Deciding whether a card payment is fraud</label></li>
+      <li><label><input type="radio" name="ex1"> Estimating how many people will go to the beach on Saturday</label></li>
+      <li><label><input type="radio" name="ex1"> Drafting a reply to an angry customer</label></li>
+      <li><label><input type="radio" name="ex1"> Ranking the products a customer is most likely to buy</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                2
+          ],
+          "explain": "Fraud, visitor counts and rankings have an answer shape fixed in advance (a class, a number, an order). The reply has to be composed."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concept" data-section="sec2" data-short="Wrong labels">
+    <div class="exHdr">Exercise 2 &mdash; wrong labels <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">Images of dogs are labeled <i>human</i> in the training set. What does a supervised model do?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex2"> Detects the inconsistency and corrects the labels</label></li>
+      <li><label><input type="radio" name="ex2"> Learns the wrong association: to the optimizer, the label is the truth</label></li>
+      <li><label><input type="radio" name="ex2"> Ignores those examples automatically</label></li>
+      <li><label><input type="radio" name="ex2"> Refuses to train</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "The loss only compares predictions with labels; the model has no way to judge the semantics of the data."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex3" data-kind="text" data-lang="Concept" data-section="sec3" data-short="Class or number">
+    <div class="exHdr">Exercise 3 &mdash; class or number <span class="lang">&mdash; written answer</span></div>
+    <p class="exTask">Estimating the number of beach visitors from the temperature is which kind of task: classification or regression?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "accept": [
+                "regression"
+          ],
+          "hint": "The output is a continuous quantity, not a category.",
+          "explain": "Regression estimates a numeric value; classification chooses among discrete classes such as fraud or normal.",
+          "regex": "^\\s*regression\\s*$"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex4" data-kind="run" data-lang="JavaScript" data-section="sec4" data-short="Score to decision">
+    <div class="exHdr">Exercise 4 &mdash; from score to decision <span class="lang">&mdash; JavaScript, run with tests</span></div>
+    <p class="exTask">Implement <code>decide</code>, which turns a risk score between 0 and 1 into the decision of Figure 3: approve below 0.5, review from 0.5, block from 0.8.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">function decide(score) {
+    // return "approve" below 0.5, "review" from 0.5 up to (not including) 0.8, "block" from 0.8
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "tests": [
+                {
+                      "call": "decide(0.87)",
+                      "expect": "block",
+                      "msg": "decide(0.87) → block"
+                },
+                {
+                      "call": "decide(0.6)",
+                      "expect": "review",
+                      "msg": "decide(0.6) → review"
+                },
+                {
+                      "call": "decide(0.2)",
+                      "expect": "approve",
+                      "msg": "decide(0.2) → approve"
+                },
+                {
+                      "call": "decide(0.5)",
+                      "expect": "review",
+                      "msg": "decide(0.5) → review"
+                },
+                {
+                      "call": "decide(0.8)",
+                      "expect": "block",
+                      "msg": "decide(0.8) → block"
+                }
+          ],
+          "solution": "function decide(score) {\n    if (score < 0.5) return \"approve\";\n    if (score < 0.8) return \"review\";\n    return \"block\";\n}"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex5" data-kind="blanks" data-lang="Python" data-section="sec6" data-short="Two ways to answer">
+    <div class="exHdr">Exercise 5 &mdash; two ways to answer <span class="lang">&mdash; Python, blanks</span></div>
+    <p class="exTask">Complete the three lines from the code box: the logistic function, the decision by threshold and the token that joins the context.</p>
+    <pre class="exBlanks">score = 1 / (1 + exp(___z))                       # logistic function, equation (2)
+return CLASSES[int(score ___ threshold)], score   # one of the known options
+context.___(token)                                 # what was written becomes context</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "blanks": [
+                {
+                      "accept": [
+                            "-"
+                      ],
+                      "hint": "The sign that makes sigma(z) grow with z.",
+                      "width": 2
+                },
+                {
+                      "accept": [
+                            ">=",
+                            ">"
+                      ],
+                      "hint": "Positive class when the score reaches the threshold.",
+                      "width": 3
+                },
+                {
+                      "accept": [
+                            "append"
+                      ],
+                      "hint": "The list method that adds one element at the end.",
+                      "width": 7
+                }
+          ],
+          "solution": "score = 1 / (1 + exp(-z))\nreturn CLASSES[int(score >= threshold)], score\ncontext.append(token)"
+    }</script>
+  </div>
+</div>
+
 
 <!-- references -->
 <ul class="cf-refList">

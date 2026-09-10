@@ -141,6 +141,7 @@ history:
       Transformer les dio una forma de usar contextos largos.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>,<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex1">abrir en el Lab: Ejercicio 1, Tres factores</a></p>
 
   <h2 class="af-subHeader" id="sec2">2. De la IA tradicional a la IA generativa</h2>
   <p>
@@ -226,6 +227,7 @@ history:
       artefacto que no existía. La propia petición pasa a formar parte de la entrada del modelo, y por eso el prompt importa tanto (sección 5).
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex2">abrir en el Lab: Ejercicio 2, Predecir o generar</a></p>
 
   <h2 class="af-subHeader" id="sec3">3. Generar no es copiar</h2>
   <p>
@@ -311,6 +313,7 @@ history:
       deben a que falta una de estas piezas.
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex3">abrir en el Lab: Ejercicio 3, El mecanismo de control</a></p>
 
   <h2 class="af-subHeader" id="sec6">6. Dónde ya funciona: texto, imagen, vídeo y código</h2>
   <p>
@@ -403,6 +406,7 @@ history:
       es donde las herramientas generativas realmente rinden — cada corrección es también un mejor prompt para la siguiente ronda.
     </div>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex4">abrir en el Lab: Ejercicio 4, Revisión humana</a></p>
 
   <h2 class="af-subHeader" id="sec8">8. Bajo el capó: deep learning, atención y contexto</h2>
   <p>
@@ -483,6 +487,7 @@ history:
         tokens.append(muestrear_siguiente_token(logits, temperatura))
     <span class="k">return</span> tokens</pre>
   </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex5">abrir en el Lab: Ejercicio 5, Muestrear el siguiente token</a></p>
 
   <h2 class="af-subHeader" id="sec9">9. Conclusión</h2>
   <p>
@@ -495,6 +500,136 @@ history:
   </p>
 
 </div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec1" data-short="Tres factores">
+    <div class="exHdr">Ejercicio 1 &mdash; los tres factores <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">¿Qué factores convergieron para que la IA generativa fuera viable? Marca todos los que correspondan.</p>
+    <ul class="exOptions">
+      <li><label><input type="checkbox" name="ex1"> Cómputo paralelo barato (GPUs)</label></li>
+      <li><label><input type="checkbox" name="ex1"> Datos en forma utilizable, a escala</label></li>
+      <li><label><input type="checkbox" name="ex1"> Una arquitectura que modela el contexto a escala (Transformers)</label></li>
+      <li><label><input type="checkbox" name="ex1"> Computadoras cuánticas en el centro de datos</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                0,
+                1,
+                2
+          ],
+          "explain": "Cómputo, datos y arquitectura convergieron; la computación cuántica no interviene en los modelos generativos actuales."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concept" data-section="sec2" data-short="Predecir o generar">
+    <div class="exHdr">Ejercicio 2 &mdash; predecir o generar <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">Un sistema de recomendación sugiere la cerveza que ya compraste el viernes pasado. ¿Qué paradigma está actuando?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex2"> IA generativa: compuso una sugerencia nueva</label></li>
+      <li><label><input type="radio" name="ex2"> IA tradicional (predictiva): eligió un ítem existente de tu historial</label></li>
+      <li><label><input type="radio" name="ex2"> Ninguno: la recomendación no es IA</label></li>
+      <li><label><input type="radio" name="ex2"> Los dos, siempre</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "Elegir un ítem existente a partir del historial observado es predicción. Generar produciría algo que no existía como opción."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex3" data-kind="text" data-lang="Concept" data-section="sec5" data-short="El mecanismo de control">
+    <div class="exHdr">Ejercicio 3 &mdash; el mecanismo de control <span class="lang">&mdash; respuesta escrita</span></div>
+    <p class="exTask">¿Cómo se llama el mecanismo con el que el usuario dirige lo que produce un modelo generativo?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "accept": [
+                "prompt",
+                "el prompt",
+                "un prompt"
+          ],
+          "hint": "Una palabra; lleva la intención, el contexto y las restricciones.",
+          "explain": "El prompt es la especificación: condiciona cada distribución de siguiente token de la que muestrea el modelo.",
+          "regex": "^\\s*(el\\s+|un\\s+)?prompt\\s*$"
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex4" data-kind="quiz" data-lang="Concept" data-section="sec7" data-short="Revisión humana">
+    <div class="exHdr">Ejercicio 4 &mdash; revisión humana <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">Un informe generado se lee con fluidez pero trae una cifra equivocada. ¿Qué flujo de trabajo recomienda el artículo?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex4"> Generar y publicar: la fluidez es buena señal de corrección</label></li>
+      <li><label><input type="radio" name="ex4"> Generar, inspeccionar y corregir: una salida fluida puede estar mal</label></li>
+      <li><label><input type="radio" name="ex4"> Volver a generar hasta que la cifra cambie</label></li>
+      <li><label><input type="radio" name="ex4"> Bajar la temperatura y publicar</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "answer": [
+                1
+          ],
+          "explain": "La fluidez esconde errores; el flujo es generar, inspeccionar y corregir, con un humano a cargo del juicio."
+    }</script>
+  </div>
+  <div class="cf-exercise" id="ex5" data-kind="blanks" data-lang="Python" data-section="sec8" data-short="Muestrear el siguiente token">
+    <div class="exHdr">Ejercicio 5 &mdash; muestrear el siguiente token <span class="lang">&mdash; Python, huecos</span></div>
+    <p class="exTask">Completa los tres pasos del muestreo del siguiente token a partir de las puntuaciones del modelo (temperatura, softmax, muestreo).</p>
+    <pre class="exBlanks">z = logits / max(___, 1e-6)        # 1. remodela la distribución
+z = z - z.max()                       # estabilidad numérica
+p = np.exp(z) / np.exp(z).___()      # 2. probabilidades que suman 1
+return rng.choice(len(p), ___=p)     # 3. el mismo contexto puede dar tokens distintos</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+      <button class="af-button" data-act="solution">Ver solución</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+          "blanks": [
+                {
+                      "accept": [
+                            "temperatura"
+                      ],
+                      "hint": "Por debajo de 1 afila la distribución, por encima de 1 la aplana.",
+                      "width": 11
+                },
+                {
+                      "accept": [
+                            "sum"
+                      ],
+                      "hint": "Divide por el total para que las probabilidades sumen 1.",
+                      "width": 4
+                },
+                {
+                      "accept": [
+                            "p"
+                      ],
+                      "hint": "El argumento con nombre que da la probabilidad de cada índice.",
+                      "width": 2
+                }
+          ],
+          "solution": "z = logits / max(temperatura, 1e-6)\nz = z - z.max()\np = np.exp(z) / np.exp(z).sum()\nreturn rng.choice(len(p), p=p)"
+    }</script>
+  </div>
+</div>
+
 
 <!-- references -->
 <ul class="cf-refList">

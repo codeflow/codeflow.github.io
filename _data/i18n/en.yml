@@ -43,6 +43,8 @@ ui:
   contents: Contents
   print: Print
   help: Help
+  lab: Lab
+  lab_title: Exercise Lab
   article_contents: Article Contents
   figures: Figures
   figure_abbr: Fig.
