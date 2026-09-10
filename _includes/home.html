@@ -21,6 +21,19 @@
       </h1>
     </div>
 
+    <!-- Latest articles: Fusion-style carousel filled by carousel.js (hidden while a filter is active or with < 2 posts) -->
+    <div class="af-panelBox core cf-carousel" id="latestCarousel" role="region" aria-roledescription="carousel" aria-label="{{ t.ui.latest_articles }}" tabindex="0">
+      <div class="boxHdr">{{ t.ui.latest_articles }}<span class="crCount" id="crCount"></span></div>
+      <div class="boxBody">
+        <div class="crViewport" id="crViewport"><div class="crTrack" id="crTrack"></div></div>
+        <div class="crNav">
+          <button type="button" class="af-button small" id="crPrev" aria-label="{{ t.ui.previous }}">&#9664;</button>
+          <div class="crDots" id="crDots"></div>
+          <button type="button" class="af-button small" id="crNext" aria-label="{{ t.ui.next }}">&#9654;</button>
+        </div>
+      </div>
+    </div>
+
     <h2 class="af-subHeader">{{ t.ui.published_articles }}</h2>
 
     <div class="af-panelCollection">

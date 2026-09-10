@@ -25,6 +25,8 @@ ui:
   archive: Arquivo
   welcome: Bem-vindo ao Codeflow
   published_articles: Artigos Publicados
+  latest_articles: Últimos artigos
+  carousel_of: "{n} de {total}"
   clear_filter: Limpar filtro
   previous: Anterior
   next: Próxima

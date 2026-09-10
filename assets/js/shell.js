@@ -97,6 +97,7 @@ function render() {
   document.getElementById('statusText').textContent =
     t('showing', { first: first, last: last, total: list.length }) + filterLabel();
   document.getElementById('clearFilter').hidden = !(state.type && state.value);
+  if (window.cfCarouselSync) cfCarouselSync(!!(state.type && state.value));   // the Latest-articles carousel hides while filtering
   document.getElementById('pgInfo').textContent = t('page_of', { page: state.page, pages: pages });
   document.getElementById('pgPrev').classList.toggle('disabled', state.page <= 1);
   document.getElementById('pgNext').classList.toggle('disabled', state.page >= pages);
