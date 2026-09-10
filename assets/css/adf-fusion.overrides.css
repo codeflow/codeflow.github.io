@@ -851,7 +851,7 @@ body.cf-sheetOpen { overflow: hidden; }
 
 /* ---------- Lista da Home: "Leia mais" numa linha, tags na linha de baixo; no celular só o "Leia mais" ---------- */
 .cf-post .postFoot { display: block; }
-.cf-post .postTags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.cf-post .postTags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
 @media (max-width: 768px) {
   .cf-post .postTags { display: none; }
 }
