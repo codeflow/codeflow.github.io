@@ -879,3 +879,15 @@ body.cf-sheetOpen { overflow: hidden; }
 .cf-stackTree .af-treeNode.closed > ul { display: none; }
 .cf-stackTree ul { padding-left: 22px; }
 .cf-stackTree > .af-treeNode { margin-bottom: 2px; }
+
+/* ---------- Lista da Home: capa do post (o banner de abertura, capturado em assets/covers/) ---------- */
+.cf-post .cover { float: left; width: 176px; margin: 2px 14px 6px 0; border: 1px solid #a9b8c7; line-height: 0; background: #eef3f8; }   /* 112px de altura */
+/* o resumo é cortado no mesmo número de linhas que a altura da capa (7 x 16,5px = 115px no desktop) */
+.cf-post p.excerpt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 7; overflow: hidden; margin-bottom: 8px; }
+.cf-post .cover img { display: block; width: 100%; height: auto; }
+.cf-post .postFoot { clear: both; }
+.cf-post .postFoot .readMore { display: block; text-align: right; }   /* "Leia mais" abaixo do texto, alinhado à direita */
+@media (max-width: 768px) {
+  .cf-post .cover { width: 144px; margin: 2px 10px 4px 0; }       /* 92px: 5 linhas de 18px */
+  .cf-post p.excerpt { -webkit-line-clamp: 5; }
+}

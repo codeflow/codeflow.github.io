@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* PWA smoke test in headless Chrome (Chrome DevTools Protocol, no dependencies — Node >= 22).
-   usage: node scripts/check_pwa.js [origin]      default: http://localhost:4000
+   usage: node scripts/check_pwa.js [origin]      default: http://localhost:3000
    Checks: manifest reachable and valid, service worker registers and activates, the shell is precached,
    and a page never visited still renders (network-first with cache) while a cold URL falls back to /offline/. */
 const { spawn } = require('child_process');
@@ -8,7 +8,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const ORIGIN = process.argv[2] || 'http://localhost:4000';
+const ORIGIN = process.argv[2] || 'http://localhost:3000';
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const PORT = 9333 + Math.floor(Math.random() * 500);
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cf-pwa-'));

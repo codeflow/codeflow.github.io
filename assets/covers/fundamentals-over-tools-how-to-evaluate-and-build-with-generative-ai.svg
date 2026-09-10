@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Nested layers with a model at the centre, a magnifier and a set of criteria bars">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <!-- nested layers -->
+  <rect x="22" y="22" width="150" height="150" rx="10" fill="#eef3f8" stroke="#8fa6c0"/>
+  <rect x="40" y="40" width="114" height="114" rx="9" fill="#e4ecf5" stroke="#8fa6c0"/>
+  <rect x="58" y="58" width="78" height="78" rx="8" fill="#d6e3f1" stroke="#8fa6c0"/>
+  <rect x="76" y="80" width="42" height="34" rx="5" fill="url(#hi)" stroke="#2e5378"/>
+  <circle cx="90" cy="92" r="3" fill="#ffffff"/><circle cx="104" cy="92" r="3" fill="#ffffff"/><path d="M88 104h18" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  <!-- magnifier over the layers -->
+  <circle cx="158" cy="60" r="22" fill="#ffffff" fill-opacity=".85" stroke="#15497e" stroke-width="3"/>
+  <path d="M174 76l22 22" stroke="#15497e" stroke-width="6" stroke-linecap="round"/>
+  <!-- criteria bars with check marks -->
+  <g transform="translate(212 44)">
+    <g stroke="#c9d4df"><rect x="0" y="0" width="84" height="12" rx="2" fill="#eef2f7"/><rect x="0" y="26" width="84" height="12" rx="2" fill="#eef2f7"/><rect x="0" y="52" width="84" height="12" rx="2" fill="#eef2f7"/><rect x="0" y="78" width="84" height="12" rx="2" fill="#eef2f7"/><rect x="0" y="104" width="84" height="12" rx="2" fill="#eef2f7"/></g>
+    <rect x="0" y="0" width="76" height="12" rx="2" fill="#3d6791"/>
+    <rect x="0" y="26" width="52" height="12" rx="2" fill="#3d6791"/>
+    <rect x="0" y="52" width="34" height="12" rx="2" fill="#3d6791"/>
+    <rect x="0" y="78" width="66" height="12" rx="2" fill="#3d6791"/>
+    <rect x="0" y="104" width="22" height="12" rx="2" fill="#3d6791"/>
+    <g fill="none" stroke="#15497e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-14 6l3 3 6-6M-14 32l3 3 6-6M-14 84l3 3 6-6"/>
+    </g>
+  </g>
+  <rect x="0" y="194" width="320" height="6" fill="#3d6791"/>
+</svg>

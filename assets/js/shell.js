@@ -82,7 +82,8 @@ function render() {
         '<span class="item">' + t('published_on') + ' <b>' + a.date + '</b></span><span class="sep">·</span> ' +
         '<span class="item"><b>' + esc(label(a.cat)) + '</b></span><span class="sep">·</span> ' +
         '<span class="item">' + t('reading_time') + ' <b>' + a.min + ' ' + t('min') + '</b></span></div>' +
-      '<p>' + esc(a.excerpt) + '</p>' +
+      (a.cover ? '<a class="cover" href="' + a.href + '" tabindex="-1"><img src="' + a.cover + '" alt=""></a>' : '') +
+      '<p class="excerpt">' + esc(a.excerpt) + '</p>' +
       '<div class="postFoot"><a class="readMore" href="' + a.href + '">' + t('read_more') + ' ▸</a>' +
         '<div class="postTags">' + a.tags.map(function (t) {
           return '<a class="cf-tag" href="#" onclick="setFilter(\'tag\',\'' + esc(t) + '\'); return false;">' + esc(t) + '</a>';

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Three pillars converging into a new artifact">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <!-- compute: a chip -->
+  <g transform="translate(30 30)">
+    <rect x="0" y="0" width="52" height="52" rx="5" fill="#ffffff" stroke="#7d8fa2"/>
+    <rect x="12" y="12" width="28" height="28" rx="3" fill="#cfe2f7" stroke="#15497e"/>
+    <g stroke="#7d8fa2" stroke-width="2"><path d="M18 0v-8M26 0v-8M34 0v-8M18 52v8M26 52v8M34 52v8M0 18h-8M0 26h-8M0 34h-8M52 18h8M52 26h8M52 34h8"/></g>
+  </g>
+  <!-- data: a stack of discs -->
+  <g transform="translate(30 104)">
+    <ellipse cx="26" cy="8" rx="26" ry="8" fill="#e8f0fa" stroke="#7d8fa2"/>
+    <path d="M0 8v18c0 4.4 11.6 8 26 8s26-3.6 26-8V8" fill="#ffffff" stroke="#7d8fa2"/>
+    <path d="M0 26v18c0 4.4 11.6 8 26 8s26-3.6 26-8V26" fill="#ffffff" stroke="#7d8fa2"/>
+    <path d="M0 26c0 4.4 11.6 8 26 8s26-3.6 26-8" fill="none" stroke="#7d8fa2"/>
+  </g>
+  <!-- architecture: a small network -->
+  <g transform="translate(112 66)">
+    <path d="M10 12L40 30M10 48L40 30M40 30L70 12M40 30L70 48" stroke="#8fa6c0" stroke-width="2"/>
+    <circle cx="10" cy="12" r="7" fill="#ffffff" stroke="#15497e"/><circle cx="10" cy="48" r="7" fill="#ffffff" stroke="#15497e"/>
+    <circle cx="40" cy="30" r="9" fill="url(#hi)" stroke="#2e5378"/>
+    <circle cx="70" cy="12" r="7" fill="#ffffff" stroke="#15497e"/><circle cx="70" cy="48" r="7" fill="#ffffff" stroke="#15497e"/>
+  </g>
+  <!-- convergence arrows -->
+  <path d="M98 56 C130 56 150 90 178 96" fill="none" stroke="#3d6791" stroke-width="2" marker-end="url(#ar)"/>
+  <path d="M98 134 C130 134 150 104 178 100" fill="none" stroke="#3d6791" stroke-width="2" marker-end="url(#ar)"/>
+  <path d="M190 84 L194 96" fill="none" stroke="#3d6791" stroke-width="2"/>
+  <!-- the new artifact: a page with a spark -->
+  <g transform="translate(206 52)">
+    <path d="M0 0h54l22 22v74H0z" fill="#ffffff" stroke="#15497e" stroke-width="1.5"/>
+    <path d="M54 0v22h22" fill="#cfe2f7" stroke="#15497e" stroke-width="1.5"/>
+    <g stroke="#a9b8c7" stroke-width="2.5" stroke-linecap="round"><path d="M12 40h40M12 52h48M12 64h34M12 76h44"/></g>
+    <path d="M62 60l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#f2c94c" stroke="#b08f3e"/>
+  </g>
+  <rect x="0" y="194" width="320" height="6" fill="#3d6791"/>
+</svg>

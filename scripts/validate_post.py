@@ -3,7 +3,7 @@
 """
 Codeflow — validate that a post is fully wired into the site.
 
-  python3 scripts/validate_post.py --key <slug> --lang <lang> [--site http://localhost:4000] [--build]
+  python3 scripts/validate_post.py --key <slug> --lang <lang> [--site http://localhost:3000] [--build]
 
 Checks (each prints PASS/FAIL/INFO):
   SEO       meta description ≤160 chars, canonical, hreflang (own language + x-default), a 1200x630 social card as
@@ -52,7 +52,7 @@ def detect_lang(text):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--key", required=True); ap.add_argument("--lang", default="en")
-    ap.add_argument("--site", default="http://localhost:4000"); ap.add_argument("--build", action="store_true")
+    ap.add_argument("--site", default="http://localhost:3000"); ap.add_argument("--build", action="store_true")
     a = ap.parse_args()
     site = a.site.rstrip("/")
     server = None
@@ -195,6 +195,9 @@ def main():
     if not img_ok: problems.append(img_msg)
     if len(h2s) < 5 or stray: problems.append(f"{len(h2s)} h2 section heading(s), {len(stray)} still <div> — sections must be <h2 class=\"af-subHeader\" id=\"secN\">")
     if not jsonld_ok: problems.append("JSON-LD without a TechArticle node")
+    cover = post.get("cover") or ""
+    if not cover.startswith("/assets/covers/") or not os.path.exists(os.path.join(ROOT, cover.lstrip("/"))):
+        problems.append("no cover illustration (front matter cover: /assets/covers/<slug>.svg, see the skill step 3a)")
     rep("SEO", not problems, ("; ".join(problems)) if problems else f"description {dlen} chars; canonical; hreflang {'/'.join(alts)}; {img_msg}; {len(h2s)} h2 sections; TechArticle JSON-LD")
 
     print_summary(results)

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Three rising steps from typing code to reviewing to deciding, with a person at the top">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <!-- steps -->
+  <rect x="24" y="132" width="84" height="44" rx="4" fill="#ffffff" stroke="#8fa6c0"/>
+  <rect x="118" y="100" width="84" height="76" rx="4" fill="#e8f0fa" stroke="#8fa6c0"/>
+  <rect x="212" y="68" width="84" height="108" rx="4" fill="#cfe2f7" stroke="#15497e"/>
+  <!-- step 1: code brackets, faded -->
+  <g fill="none" stroke="#8fa6c0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M52 144l-8 10 8 10M80 144l8 10-8 10M70 142l-8 24"/>
+  </g>
+  <!-- step 2: a magnifier over lines (review) -->
+  <g transform="translate(134 112)">
+    <g stroke="#a9b8c7" stroke-width="2.5" stroke-linecap="round"><path d="M0 8h40M0 18h52M0 28h30"/></g>
+    <circle cx="44" cy="30" r="11" fill="#ffffff" fill-opacity=".9" stroke="#15497e" stroke-width="2.5"/>
+    <path d="M52 38l10 10" stroke="#15497e" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- step 3: a person with a decision diamond -->
+  <g transform="translate(254 84)">
+    <circle cx="0" cy="8" r="9" fill="url(#hi)" stroke="#2e5378"/>
+    <path d="M-16 44c0-12 7-20 16-20s16 8 16 20z" fill="url(#hi)" stroke="#2e5378"/>
+    <path d="M0 52l16 16-16 16-16-16z" fill="#f2c94c" stroke="#b08f3e"/>
+    <path d="M-6 68l4 4 8-8" fill="none" stroke="#6b5a1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- rising arrow -->
+  <path d="M40 118 C90 70 150 60 236 40" fill="none" stroke="#3d6791" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+  <rect x="0" y="194" width="320" height="6" fill="#3d6791"/>
+</svg>
