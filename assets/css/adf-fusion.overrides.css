@@ -7,6 +7,10 @@
 /* ---------- Abas de navegação: um respiro acima da aba Home ---------- */
 .af-navTabs { padding-top: 10px; }
 
+/* ---------- Barra de branding: 46px de altura, logo de 26px (desktop e celular) ---------- */
+:root { --cf-bar-h: 46px; }
+.af-branding { height: var(--cf-bar-h); }
+
 /* ---------- Branding ---------- */
 .af-branding .cf-brandLink {           /* logo + nome levam à Home do idioma; visual idêntico ao texto anterior */
   display: inline-flex;
@@ -16,8 +20,8 @@
 }
 .af-branding .cf-brandLink:hover .cf-brandName { color: #e8f0fa; }
 .cf-brandLogo {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   vertical-align: middle;
   display: block;
   position: relative;          /* fica acima do halo */
@@ -33,7 +37,7 @@
 .cf-logoHalo::before {
   content: "";
   position: absolute;
-  inset: -6px;                 /* a imagem do halo tem 6px de margem em volta do logo de 20px */
+  inset: -8px;                 /* a imagem do halo tem 6px de margem em volta do logo (proporcional aos 26px) */
   background: url("../logo-glow.png") center / 100% 100% no-repeat;   /* anel que segue o contorno externo do hexágono */
   opacity: 0;
   pointer-events: none;
@@ -576,7 +580,7 @@ body.cf-resizing .af-panelMain { pointer-events: none; }
   .cf-drawerHead {
     display: flex;
     align-items: center;
-    height: 38px;
+    height: var(--cf-bar-h);
     padding: 0 8px 0 10px;
     background: linear-gradient(#54749b 0%, #3a5c86 48%, #1f3f63 100%);
     border-bottom: 1px solid #122a44;
@@ -705,14 +709,14 @@ body.cf-resizing .af-panelMain { pointer-events: none; }
    rolam com a página e, com z-index acima dos 30 da barra sticky, tampavam a barra. */
 .af-drawerDock {
   position: sticky;
-  top: 38px;                     /* altura da barra de branding */
+  top: var(--cf-bar-h);          /* altura da barra de branding */
   align-self: flex-start;        /* sem isso o item é esticado e o sticky não tem para onde ir */
-  height: calc(100vh - 38px);
+  height: calc(100vh - var(--cf-bar-h));
   z-index: 26;                   /* abaixo da barra (30): nem a sombra a invade */
 }
 .af-drawer {
   position: fixed;
-  top: 38px;
+  top: var(--cf-bar-h);
   bottom: 0;
   right: 26px;                   /* largura do dock */
   z-index: 25;
@@ -746,7 +750,7 @@ body {
   align-items: center;
 }
 .af-drawer { bottom: var(--cf-footer-h); }
-.af-drawerDock { height: calc(100vh - 38px - var(--cf-footer-h)); height: calc(100dvh - 38px - var(--cf-footer-h)); }
+.af-drawerDock { height: calc(100vh - var(--cf-bar-h) - var(--cf-footer-h)); height: calc(100dvh - var(--cf-bar-h) - var(--cf-footer-h)); }
 
 /* ---------- Tabelas: rolagem horizontal própria em telas estreitas ---------- */
 .cf-tableScroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -823,7 +827,7 @@ body.cf-sheetOpen { overflow: hidden; }
   .af-drawerDock { display: none; }
   .af-drawer {
     left: 0; right: 0; width: auto;
-    top: 46px; bottom: var(--cf-footer-h);     /* barra de branding do celular */
+    top: var(--cf-bar-h); bottom: var(--cf-footer-h);
     z-index: 70;                       /* acima do menu lateral (60) */
     border-left: 0; box-shadow: none;
   }
