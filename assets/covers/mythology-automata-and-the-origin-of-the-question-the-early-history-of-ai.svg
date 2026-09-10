@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="An ancient bronze figure with a gear inside, an arrow to a single artificial neuron, and a decision tree; a question mark hovers above">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <!-- the automaton: a stylised bronze figure with a gear for a heart -->
+  <g transform="translate(28 46)">
+    <circle cx="30" cy="16" r="14" fill="#f2c94c" stroke="#b08f3e" stroke-width="1.5"/>
+    <path d="M6 44 h48 v70 h-12 v-30 h-24 v30 h-12 z" fill="#f2c94c" stroke="#b08f3e" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M6 48 l-14 34 M54 48 l14 34" stroke="#b08f3e" stroke-width="4" stroke-linecap="round"/>
+    <g transform="translate(30 70)">
+      <circle r="12" fill="#ffffff" stroke="#15497e" stroke-width="1.5"/>
+      <circle r="4" fill="#15497e"/>
+      <g stroke="#15497e" stroke-width="3" stroke-linecap="round"><path d="M0 -14v-4M0 14v4M-14 0h-4M14 0h4M-10 -10l-3 -3M10 10l3 3M-10 10l-3 3M10 -10l3 3"/></g>
+    </g>
+  </g>
+  <!-- the question -->
+  <text x="112" y="40" font-family="Georgia, serif" font-size="34" font-weight="bold" fill="#15497e">?</text>
+  <!-- arrow from the automaton to the neuron -->
+  <path d="M104 120 C124 120 128 100 150 100" fill="none" stroke="#3d6791" stroke-width="2" marker-end="url(#ar)"/>
+  <!-- the perceptron: three inputs into a unit, one output -->
+  <g transform="translate(156 70)">
+    <g stroke="#8fa6c0" stroke-width="2"><path d="M8 8L40 30M8 30L40 30M8 52L40 30M56 30L78 30"/></g>
+    <circle cx="8" cy="8" r="6" fill="#ffffff" stroke="#15497e" stroke-width="1.5"/>
+    <circle cx="8" cy="30" r="6" fill="#ffffff" stroke="#15497e" stroke-width="1.5"/>
+    <circle cx="8" cy="52" r="6" fill="#ffffff" stroke="#15497e" stroke-width="1.5"/>
+    <circle cx="44" cy="30" r="13" fill="url(#hi)" stroke="#2e5378" stroke-width="1.5"/>
+    <circle cx="84" cy="30" r="6" fill="#cfe2f7" stroke="#15497e" stroke-width="1.5"/>
+  </g>
+  <!-- the decision tree -->
+  <g transform="translate(232 120)">
+    <path d="M28 8L10 36M28 8L46 36M46 40L34 64M46 40L58 64" stroke="#8fa6c0" stroke-width="2"/>
+    <rect x="14" y="0" width="28" height="14" rx="3" fill="#fff8e1" stroke="#b08f3e" stroke-width="1.5"/>
+    <rect x="-4" y="32" width="26" height="12" rx="3" fill="#cfe2f7" stroke="#15497e" stroke-width="1.5"/>
+    <rect x="34" y="32" width="26" height="12" rx="3" fill="#fff8e1" stroke="#b08f3e" stroke-width="1.5"/>
+    <rect x="22" y="62" width="24" height="12" rx="3" fill="#cfe2f7" stroke="#15497e" stroke-width="1.5"/>
+    <rect x="50" y="62" width="24" height="12" rx="3" fill="#ffffff" stroke="#8fa6c0" stroke-width="1.5"/>
+  </g>
+  <rect x="0" y="194" width="320" height="6" fill="#3d6791"/>
+</svg>

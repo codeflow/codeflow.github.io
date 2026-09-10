@@ -1,0 +1,648 @@
+---
+title: "Mitología, autómatas y el origen de la pregunta: los inicios de la historia de la IA, de Turing al primer invierno"
+date: 2026-09-10 16:00:00 -0300
+lang: es
+key: mythology-automata-and-the-origin-of-the-question-the-early-history-of-ai
+permalink: /es/articles/mythology-automata-and-the-origin-of-the-question-the-early-history-of-ai/
+category: "Artificial Intelligence"
+section: "History of AI"
+topic: "History of AI"
+order: 1                     # position in the Content Navigator (within the category/topic); date order when absent
+tags: [history-of-ai, alan-turing, turing-test, dartmouth-conference, perceptron, neural-networks, expert-systems, decision-trees, ai-winter, symbolic-ai]
+reading_time: 14
+level: Introductory
+cover: "/assets/covers/mythology-automata-and-the-origin-of-the-question-the-early-history-of-ai.svg"
+excerpt: "El deseo de construir seres artificiales que actúen por su cuenta es mucho más antiguo que la computadora digital: los mitos griegos ya hablaban de guardianes de bronce y sirvientas de oro, y los ingenieros construyeron autómatas siglos antes de que alguien escribiera un programa. Este artículo sigue esa vieja pregunta hasta su forma científica: la reformulación de Turing en 1950 y el juego de imitación, el paso de la simulación mecánica a la cognitiva, la conferencia de Dartmouth de 1956 que convirtió una provocación en programa de investigación, el perceptrón de Rosenblatt y las primeras máquinas que aprendieron de ejemplos, los límites de hardware y datos que las frenaron, los sistemas basados en reglas y los árboles de decisión de los años sesenta, y la tensión entre codificar el conocimiento y aprenderlo que llevó directo al primer invierno de la IA…"
+image: "/assets/social/mythology-automata-and-the-origin-of-the-question-the-early-history-of-ai.es.png"
+description: "Los inicios de la IA: mitos y autómatas, la pregunta y el test de Turing, Dartmouth, perceptrones, sistemas de reglas y el camino al primer invierno."
+references_count: 10
+key_concepts: ["Juego de imitación", "Simulación cognitiva", "Dartmouth 1956", "Regla de aprendizaje del perceptrón", "Sistemas basados en reglas", "Invierno de la IA"]
+version: 1
+history:
+  - { when: "10/09/2026 16:00", what: "Publicación inicial del artículo" }
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    Qué encontrarás en este artículo
+  </div>
+  <ul>
+    <li>Por qué la IA es más antigua que la computación: los <b>mitos y autómatas</b> en los que se planteó por primera vez la pregunta de simular capacidades humanas en un artefacto, y por qué esa historia explica los debates de hoy.</li>
+    <li>El movimiento de Turing en 1950 — <b>¿pueden pensar las máquinas?</b> — el <b>juego de imitación</b>, qué mide el test y qué no, y el paso de la simulación mecánica a la <b>simulación cognitiva</b>.</li>
+    <li><b>Dartmouth 1956</b>: el evento que convirtió una provocación en programa de investigación.</li>
+    <li>El <b>perceptrón</b>: la primera máquina que aprendió de ejemplos, con su regla de aprendizaje, una implementación ejecutable y una traza exacta de entrenamiento — y los límites de hardware y datos que lo frenaron.</li>
+    <li>La <b>IA basada en reglas</b> y los árboles de decisión, el conflicto entre codificar el conocimiento y aprenderlo, y cómo la distancia entre expectativa y capacidad preparó el primer <b>invierno de la IA</b>.</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+    <svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Banner del artículo: una línea de tiempo corta de los mitos a 1950, 1956, 1958 y el primer invierno de la IA">
+      <defs>
+        <linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+        <linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        <marker id="cfHeroArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+      </defs>
+      <rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+      <text x="26" y="26" font-size="9" letter-spacing="1.4" fill="#6b90b6">CODEFLOW &#183; INTELIGENCIA ARTIFICIAL &#183; HISTORIA DE LA IA</text>
+      <text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">El origen de la pregunta</text>
+      <text x="26" y="74" font-size="12" fill="#44566a">De los guardianes de bronce al juego de imitaci&#243;n, al perceptr&#243;n y al primer invierno</text>
+      <text x="26" y="112" font-size="10" fill="#5b6b7a">mitos &#183; Turing &#183; Dartmouth &#183; perceptrones &#183; reglas &#183; invierno</text>
+      <!-- derecha: mini línea de tiempo -->
+      <g font-size="9" fill="#1a2836" text-anchor="middle">
+        <rect x="528" y="96" width="56" height="20" rx="3" fill="#e8f0fa" stroke="#a9b8c7"/><text x="556" y="109">mitos</text>
+        <rect x="596" y="96" width="56" height="20" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="624" y="109">1950</text>
+        <rect x="664" y="96" width="56" height="20" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="692" y="109">1956</text>
+        <rect x="732" y="96" width="56" height="20" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="760" y="109">1958</text>
+        <rect x="800" y="96" width="56" height="20" rx="3" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="828" y="109" fill="#ffffff" font-weight="bold">invierno</text>
+      </g>
+      <path d="M584 106 L596 106" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
+      <path d="M652 106 L664 106" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
+      <path d="M720 106 L732 106" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
+      <path d="M788 106 L800 106" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
+      <text x="528" y="84" font-size="9" fill="#5b6b7a">Antig&#252;edad</text>
+      <text x="856" y="84" font-size="9" fill="#5b6b7a" text-anchor="end">1974</text>
+    </svg>
+  </div>
+
+  <p class="lead">
+    Mucho antes de que alguien pudiera escribir un programa, la gente ya contaba historias sobre seres artificiales que se
+    movían, vigilaban, servían y parecían pensar. Eso no es una curiosidad de la prehistoria de la computación; es el origen de la
+    pregunta que la inteligencia artificial todavía intenta responder. Este artículo sigue la pregunta desde los mitos y
+    autómatas de la Antigüedad hasta el momento en que se convirtió en ciencia — la reformulación de Turing en 1950, la
+    conferencia de Dartmouth de 1956, el perceptrón y los sistemas basados en reglas de los años sesenta — y hasta la primera vez
+    en que el campo prometió más de lo que podía entregar.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+  </p>
+
+  <h2 class="af-subHeader" id="sec1">1. Mitología, autómatas y el origen de la pregunta</h2>
+  <p>
+    La idea de construir entidades artificiales capaces de actuar por su cuenta es mucho más antigua que la computación digital.
+    En la Antigüedad, especialmente en la mitología griega, ya aparecían narraciones sobre seres artificiales creados por humanos
+    o dioses, con comportamiento autónomo y apariencia de inteligencia.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
+    Talos, el gigante de bronce que, según el mito, rodeaba la isla de Creta tres veces al día y lanzaba rocas contra los barcos
+    que se acercaban, es un guardián con rutina de patrulla y un disparador; las sirvientas de oro que Homero sitúa en el taller
+    de Hefesto se describen como dotadas de juicio, voz y capacidad de aprender el oficio. Más tarde, los ingenieros construyeron
+    las primeras versiones físicas: Herón de Alejandría describió teatros automáticos y puertas de templo movidas por agua y
+    contrapesos en el siglo I, y los relojeros del siglo XVIII produjeron autómatas que escribían frases con una pluma o tocaban
+    un órgano.
+  </p>
+  <p>
+    Esto importa porque la IA no nace solo como problema técnico: nace como una <b>pregunta persistente sobre simular capacidades
+    humanas en artefactos</b>. Los mitos preguntan qué significaría que una cosa fabricada vigilara, sirviera o juzgara; los
+    autómatas muestran cuánto de un comportamiento puede reproducirse solo con mecanismo. La computadora no creó la pregunta. Le
+    dio un medio nuevo.
+  </p>
+
+  <h2 class="af-subHeader" id="sec2">2. Por qué la historia importa para la IA actual</h2>
+  <p>
+    Entender el origen de la IA ayuda a interpretar los conflictos éticos, económicos y profesionales que reaparecen con cada
+    nueva ola tecnológica. La discusión sobre el trabajo, la autonomía de la máquina y los límites de la simulación no empezó con
+    los modelos generativos recientes; acompaña al campo desde sus formulaciones iniciales. El autómata del siglo XVIII que
+    escribía cartas ya planteaba la pregunta de qué pasa con el escribano; el programa de los años sesenta que sostenía una
+    conversación ya hacía que la gente se confiara a él más de lo que su autor esperaba.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
+  </p>
+  <p>
+    Ese contexto histórico evita tratar la IA generativa como un fenómeno aislado y muestra que cada avance responde a preguntas
+    antiguas con herramientas nuevas. También explica un patrón que se repite: una idea prometedora aparece pronto, la
+    infraestructura de la época no la sostiene, un enfoque más limitado pero viable ocupa el escenario, las expectativas superan
+    los resultados y el interés se desploma hasta que la infraestructura alcanza a la idea. El primer ciclo de ese patrón es el
+    tema de este artículo.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Dos líneas de trabajo, una pregunta y el primer invierno <span class="figNum">&mdash; Figura 1</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Línea de tiempo de 1943 a 1974 con dos carriles. Aprender de ejemplos: McCulloch y Pitts 1943, el perceptrón 1958, Minsky y Papert 1969. Conocimiento codificado: Logic Theorist 1956, DENDRAL 1965, MYCIN 1972. Entre los carriles, la pregunta de Turing en 1950 y Dartmouth en 1956. Los dos carriles convergen en el primer invierno de la IA tras el informe Lighthill de 1973">
+        <defs>
+          <linearGradient id="cfNode1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
+        <!-- etiquetas de carril y líneas de carril (dibujadas antes de las cajas) -->
+        <text x="16" y="44" font-size="10" font-weight="bold" fill="#15497e">Aprender de ejemplos</text>
+        <text x="16" y="124" font-size="10" font-weight="bold" fill="#15497e">Conocimiento codificado</text>
+        <path d="M16 70 L82 70 M178 70 L358 70 M454 70 L560 70" stroke="#c3cedb" stroke-width="1.2"/>
+        <path d="M16 150 L321 150 M417 150 L487 150 M583 150 L616 150" stroke="#c3cedb" stroke-width="1.2"/>
+        <!-- hitos del carril 1 -->
+        <g font-size="9" fill="#1a2836" text-anchor="middle">
+          <rect x="82" y="55" width="96" height="30" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/><text x="130" y="67" font-weight="bold">1943</text><text x="130" y="79">McCulloch &amp; Pitts</text>
+          <rect x="358" y="55" width="96" height="30" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/><text x="406" y="67" font-weight="bold">1958</text><text x="406" y="79">perceptr&#243;n</text>
+          <rect x="560" y="55" width="96" height="30" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/><text x="608" y="67" font-weight="bold">1969</text><text x="608" y="79">Minsky &amp; Papert</text>
+        </g>
+        <!-- hitos centrales -->
+        <g font-size="9" fill="#1a2836" text-anchor="middle">
+          <rect x="211" y="95" width="96" height="30" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="259" y="107" font-weight="bold">1950</text><text x="259" y="119">pregunta de Turing</text>
+          <rect x="321" y="95" width="96" height="30" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="369" y="107" font-weight="bold">1956</text><text x="369" y="119">Dartmouth</text>
+        </g>
+        <!-- hitos del carril 2 -->
+        <g font-size="9" fill="#1a2836" text-anchor="middle">
+          <rect x="321" y="135" width="96" height="30" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/><text x="369" y="147" font-weight="bold">1956</text><text x="369" y="159">Logic Theorist</text>
+          <rect x="487" y="135" width="96" height="30" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/><text x="535" y="147" font-weight="bold">1965</text><text x="535" y="159">DENDRAL</text>
+          <rect x="616" y="135" width="96" height="30" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/><text x="664" y="147" font-weight="bold">1972</text><text x="664" y="159">MYCIN</text>
+        </g>
+        <!-- convergencia -->
+        <rect x="740" y="95" width="110" height="30" rx="3" fill="url(#cfSel1)" stroke="#2e5378"/>
+        <text x="795" y="107" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle">1973&ndash;1980</text>
+        <text x="795" y="119" font-size="9" fill="#dbe7f3" text-anchor="middle">primer invierno</text>
+        <path d="M656 70 Q700 70 740 104" fill="none" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <path d="M712 150 Q730 150 740 116" fill="none" stroke="#3d6791" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <text x="16" y="196" font-size="9" fill="#5b6b7a">Sobre la l&#237;nea: m&#225;quinas que se ajustan a partir de datos. Debajo: conocimiento escrito por personas en forma de reglas. Entre ambas, los dos eventos que enmarcaron el campo.</text>
+        <text x="16" y="214" font-size="9" fill="#8a99a8">El informe Lighthill (1973) y el recorte de financiaci&#243;n que lo sigui&#243; marcan el inicio convencional del primer invierno; las fechas de los hitos son los a&#241;os de publicaci&#243;n.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figura 1</b> &mdash; Los inicios de la historia en dos carriles. Aprender de ejemplos empieza antes y se frena primero; el conocimiento codificado produce los sistemas que funcionan en los años sesenta y principios de los setenta. Los dos chocan con la misma pared: expectativas mayores de lo que el hardware, los datos y las reglas rígidas podían sostener.</div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec3">3. Alan Turing y la pregunta central</h2>
+  <p>
+    En 1950, Alan Turing desplaza el debate hacia una formulación decisiva: <b>¿pueden pensar las máquinas?</b><sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+    La fuerza de esa pregunta está en cambiar el foco de la automatización mecánica por la simulación de procesos cognitivos,
+    acercando computación e inteligencia como objetos del mismo problema. A partir de ahí, la IA pasa a pensarse menos como un
+    mecanismo que ejecuta movimientos y más como un sistema que reproduce aspectos del razonamiento humano. Turing también sabía
+    que "pensar" se resiste a las definiciones, y por eso cambió la pregunta por un experimento.
+  </p>
+  <p>
+    El <b>test de Turing</b> — el juego de imitación del artículo de 1950 — es un experimento mental que evalúa si una máquina
+    consigue sostener una interacción indistinguible de la de un humano. Un interrogador intercambia mensajes escritos con dos
+    participantes ocultos, un humano y una máquina, y tiene que decir cuál es cuál; si el interrogador falla con suficiente
+    frecuencia, la máquina ha pasado. El test no mide la consciencia ni prueba la inteligencia en el sentido filosófico; mide la
+    capacidad de <b>imitar el comportamiento lingüístico o conversacional de forma convincente</b>. Su importancia histórica está
+    en ofrecer un criterio operativo para discutir la inteligencia sin depender de una definición cerrada de "pensar".
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">El juego de imitación: qué mide el test <span class="figNum">&mdash; Figura 2</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 200" width="860" height="200" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Un interrogador a la izquierda intercambia preguntas y respuestas escritas, a través de una pared, con dos participantes ocultos a la derecha: un humano y una máquina. El interrogador debe decir cuál es la máquina">
+        <defs>
+          <linearGradient id="cfNode2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="200" fill="#ffffff"/>
+        <path d="M340 30 L340 170" stroke="#8a99a8" stroke-width="4" stroke-dasharray="8 4"/>
+        <text x="348" y="32" font-size="9" fill="#8a99a8">pared: solo pasa texto</text>
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="40" y="70" width="140" height="50" rx="3" fill="#fff8e1" stroke="#b08f3e"/>
+          <text x="110" y="90" font-weight="bold">Interrogador</text><text x="110" y="106" font-size="9" fill="#5b6b7a">pregunta lo que quiera</text>
+          <rect x="420" y="40" width="140" height="40" rx="3" fill="url(#cfNode2)" stroke="#7d8fa2"/>
+          <text x="490" y="56" font-weight="bold">Participante A</text><text x="490" y="71" font-size="9" fill="#5b6b7a">una persona</text>
+          <rect x="420" y="120" width="140" height="40" rx="3" fill="url(#cfSel2)" stroke="#2e5378"/>
+          <text x="490" y="136" font-weight="bold" fill="#ffffff">Participante B</text><text x="490" y="151" font-size="9" fill="#dbe7f3">una m&#225;quina</text>
+        </g>
+        <path d="M180 95 L420 60" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M180 95 L420 140" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <text x="190" y="58" font-size="9" fill="#5b6b7a">intercambio escrito</text>
+        <text x="190" y="150" font-size="9" fill="#5b6b7a">intercambio escrito</text>
+        <text x="600" y="56" font-size="9" fill="#5b6b7a">El interrogador debe decir cu&#225;l de los dos es la m&#225;quina.</text>
+        <text x="600" y="72" font-size="9" fill="#5b6b7a">Si falla con suficiente frecuencia, B ha pasado.</text>
+        <text x="600" y="128" font-size="9" fill="#2f6f2f">Medido: imitaci&#243;n convincente de una conversaci&#243;n</text>
+        <text x="600" y="144" font-size="9" fill="#b3271b">No medido: consciencia, comprensi&#243;n, verdad</text>
+        <text x="16" y="188" font-size="9" fill="#8a99a8">La versi&#243;n de Turing de 1950 adapta un juego de sal&#243;n en el que el interrogador ten&#237;a que distinguir a un hombre de una mujer solo por respuestas escritas.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figura 2</b> &mdash; El test sustituye "¿piensa?" por una pregunta que la observación resuelve: "¿se puede distinguir?". Todo lo que el interrogador no ve a través de la pared queda deliberadamente fuera del criterio.</div>
+  </div>
+
+  <div class="af-panelBox light" id="boxObjections">
+    <div class="boxHdr" onclick="toggleBox('boxObjections')"><span class="disc">&#9660;</span>Turing respondió a las objeciones antes de que se plantearan</div>
+    <div class="boxBody">
+      La mayor parte del artículo de 1950 no es el test, sino una lista de objeciones a las máquinas pensantes, cada una con su
+      respuesta: la objeción teológica, la objeción de "la cabeza en la arena", la objeción matemática basada en los resultados de
+      Gödel, el argumento de la consciencia, los argumentos de las distintas incapacidades ("una máquina nunca disfrutará de las
+      fresas con nata"), la objeción de Lady Lovelace de que una máquina solo hace lo que se le ordena, y varias más.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup>
+      Setenta años después, las discusiones sobre modelos generativos siguen recorriendo la misma lista. Leer el artículo es la
+      forma más rápida de reconocerlas.
+    </div>
+  </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex1">abrir en el Lab: Ejercicio 1, Qué mide el test</a></p>
+
+  <h2 class="af-subHeader" id="sec4">4. De la simulación mecánica a la simulación cognitiva</h2>
+  <p>
+    El cambio propuesto por Turing reorganiza el objetivo técnico del campo. En vez de construir solo máquinas que ejecutan
+    acciones automáticas, el foco pasa a ser construir sistemas que <b>simulen procesos cognitivos por medio de algoritmos</b>. El
+    autómata que escribía con una pluma reproducía el movimiento de escribir; los programas que vinieron después intentaron
+    reproducir la elección de qué escribir. Ese giro prepara el terreno para los enfoques posteriores que intentan representar
+    decisión, aprendizaje y adaptación, cada uno con sus propias limitaciones.
+  </p>
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead><tr><th style="width:190px;">Aspecto</th><th>Simulación mecánica</th><th>Simulación cognitiva</th></tr></thead>
+    <tbody>
+      <tr><td>Qué se reproduce</td><td>Un movimiento o una secuencia fija de acciones</td><td>Un proceso: decidir, aprender, adaptarse</td></tr>
+      <tr class="band"><td>Dónde vive el comportamiento</td><td>En levas, engranajes, palancas</td><td>En un algoritmo y sus datos</td></tr>
+      <tr><td>Respuesta a una situación nueva</td><td><span class="st err">Ninguna</span> &mdash; la secuencia se repite</td><td><span class="st warn">Depende del método</span> &mdash; reglas o aprendizaje</td></tr>
+      <tr class="band"><td>Criterio de éxito</td><td>Se parece a la acción</td><td>Produce el resultado que produciría una persona</td></tr>
+      <tr><td>Ejemplo</td><td>Un autómata que escribe una frase fija</td><td>Un programa que elige la siguiente jugada en un juego</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Tabla 1 &mdash; La reformulación de Turing mueve el objetivo de la columna izquierda a la derecha. El resto del artículo trata de las dos maneras en que se persiguió ese objetivo.</p>
+
+  <h2 class="af-subHeader" id="sec5">5. La conferencia de Dartmouth</h2>
+  <p>
+    La conferencia de Dartmouth, en 1956, marca la consolidación de la IA como campo de investigación identificable. En ella,
+    nombres como John McCarthy, Marvin Minsky y Herbert Simon ayudan a convertir una provocación intelectual en agenda científica,
+    con la hipótesis de que aspectos de la inteligencia humana podrían simularse computacionalmente.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+    La propuesta de 1955 que convocó el taller de verano fue escrita por McCarthy, Minsky, Nathaniel Rochester y Claude Shannon,
+    y es el documento en el que se eligió el término <b>inteligencia artificial</b>. Su conjetura central es que todo aspecto del
+    aprendizaje o cualquier otra característica de la inteligencia puede, en principio, describirse con la precisión suficiente
+    para que una máquina lo simule.
+  </p>
+  <p>
+    El evento importa menos por su tamaño y más por establecer un <b>programa de trabajo</b> que orientó la investigación de las
+    décadas siguientes: lenguaje, redes neuronales, teoría de la computación, abstracción y creatividad estaban todos en la lista.
+    Allen Newell y Herbert Simon llevaron el Logic Theorist, un programa que demostraba teoremas de lógica simbólica, y se
+    convirtió en el modelo de cómo era un sistema de IA que funcionaba: conocimiento y razonamiento escritos explícitamente.
+  </p>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex2">abrir en el Lab: Ejercicio 2, El año de Dartmouth</a></p>
+
+  <h2 class="af-subHeader" id="sec6">6. Perceptrones: aprender a partir de ejemplos</h2>
+  <p>
+    Retomando la búsqueda de máquinas que no dependieran solo de reglas explícitas, los perceptrones introducen la idea de
+    <b>aprender a partir de ejemplos</b>. Inspirados, de forma simplificada, en las neuronas biológicas — la abstracción propuesta
+    por McCulloch y Pitts en 1943<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup> — representan uno
+    de los primeros intentos de construir redes neuronales capaces de ajustar su comportamiento a partir de datos observados. El
+    perceptrón de Frank Rosenblatt, de 1958, calcula una suma ponderada de sus entradas y se dispara cuando la suma supera un
+    umbral:<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="var">y</span> <span class="op">=</span> 1 &nbsp;si&nbsp; <span class="var">w</span>&middot;<span class="var">x</span> + <span class="var">b</span> &gt; 0, &nbsp;en caso contrario&nbsp; 0
+  </div>
+  <div class="cf-formula">
+    <span class="eqNum">(2)</span>
+    <span class="var">w</span> <span class="op">&larr;</span> <span class="var">w</span> + <span class="var">&eta;</span> (<span class="var">t</span> &minus; <span class="var">y</span>) <span class="var">x</span>, &nbsp;&nbsp;
+    <span class="var">b</span> <span class="op">&larr;</span> <span class="var">b</span> + <span class="var">&eta;</span> (<span class="var">t</span> &minus; <span class="var">y</span>)
+  </div>
+  <p>
+    La ecuación (2) es toda la novedad. Nadie escribe los pesos: después de cada ejemplo, la diferencia entre la respuesta
+    esperada <span class="var">t</span> y la respuesta producida <span class="var">y</span> empuja los pesos en la dirección que
+    habría reducido el error, con un paso <span class="var">&eta;</span>. Repite sobre los ejemplos y, cuando una recta puede
+    separar las dos clases, el procedimiento tiene garantía de encontrarla. La Figura 3 muestra la unidad y la Tabla 2 la traza
+    exacta del aprendizaje de la función Y, producida por el código de abajo.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">El perceptrón: suma ponderada, umbral y una regla que ajusta los pesos <span class="figNum">&mdash; Figura 3</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 220" width="860" height="220" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Dos entradas y un sesgo alimentan un nodo de suma a través de conexiones con pesos; la suma pasa por un umbral y produce la salida 0 o 1; el error entre la salida esperada y la producida vuelve a los pesos">
+        <defs>
+          <linearGradient id="cfNode3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+          <marker id="cfArr3b" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#b08f3e"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="220" fill="#ffffff"/>
+        <!-- conexiones con peso (dibujadas antes de los nodos) -->
+        <path d="M100 60 L355 110" stroke="#3d6791" stroke-width="1.4"/>
+        <path d="M100 120 L352 120" stroke="#3d6791" stroke-width="1.4"/>
+        <path d="M100 180 L355 130" stroke="#3d6791" stroke-width="1.4"/>
+        <!-- entradas -->
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <circle cx="80" cy="60" r="20" fill="url(#cfNode3)" stroke="#7d8fa2"/><text x="80" y="64">x&#8321;</text>
+          <circle cx="80" cy="120" r="20" fill="url(#cfNode3)" stroke="#7d8fa2"/><text x="80" y="124">x&#8322;</text>
+          <circle cx="80" cy="180" r="20" fill="#fff8e1" stroke="#b08f3e"/><text x="80" y="184">1</text>
+        </g>
+        <text x="16" y="34" font-size="9" fill="#5b6b7a">entradas (el sesgo entra como una constante 1)</text>
+        <g font-size="9" fill="#15497e">
+          <text x="215" y="70">w&#8321;</text><text x="215" y="110">w&#8322;</text><text x="215" y="172">b</text>
+        </g>
+        <!-- nodo de suma, umbral, salida -->
+        <circle cx="380" cy="120" r="28" fill="url(#cfNode3)" stroke="#7d8fa2"/>
+        <text x="380" y="126" font-size="16" fill="#1a2836" text-anchor="middle">&Sigma;</text>
+        <path d="M408 120 L470 120" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr3)"/>
+        <rect x="470" y="100" width="100" height="40" rx="3" fill="url(#cfNode3)" stroke="#7d8fa2"/>
+        <text x="520" y="116" font-size="10" font-weight="bold" fill="#1a2836" text-anchor="middle">umbral</text>
+        <text x="520" y="131" font-size="9" fill="#5b6b7a" text-anchor="middle">suma &gt; 0 ?</text>
+        <path d="M570 120 L655 120" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr3)"/>
+        <circle cx="680" cy="120" r="25" fill="url(#cfSel3)" stroke="#2e5378"/>
+        <text x="680" y="125" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">y</text>
+        <text x="716" y="118" font-size="9" fill="#5b6b7a">0 o 1</text>
+        <!-- aprendizaje: el error vuelve a los pesos -->
+        <path d="M680 145 L680 178 L380 178 L380 150" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#cfArr3b)"/>
+        <text x="420" y="196" font-size="9" fill="#b08f3e">aprendizaje: compara y con el esperado t y mueve los pesos en &eta;(t &minus; y)x, ecuaci&#243;n (2)</text>
+        <text x="16" y="212" font-size="9" fill="#8a99a8">La ecuaci&#243;n (1) es el paso hacia delante; el bucle discontinuo es lo que hace del perceptr&#243;n la primera m&#225;quina de esta historia que se cambia a s&#237; misma a partir de datos.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figura 3</b> &mdash; Un único perceptrón. Los pesos de las conexiones son lo único que cambia durante el entrenamiento; la estructura es fija. Con una sola unidad, solo se pueden aprender problemas que una recta puede separar.</div>
+  </div>
+
+  <div class="cf-codeBox">
+    <div class="codeHdr">perceptron.py <span class="lang">&mdash; Python</span><button class="af-button small" onclick="copyCode(this)">Copiar</button></div>
+    <pre><span class="c"># un único perceptrón aprendiendo la función Y a partir de sus cuatro ejemplos</span>
+EJEMPLOS = [((<span class="n">0</span>, <span class="n">0</span>), <span class="n">0</span>), ((<span class="n">0</span>, <span class="n">1</span>), <span class="n">0</span>), ((<span class="n">1</span>, <span class="n">0</span>), <span class="n">0</span>), ((<span class="n">1</span>, <span class="n">1</span>), <span class="n">1</span>)]
+
+<span class="k">def</span> predecir(w, b, x):
+    <span class="c"># ecuación (1): suma ponderada, luego el umbral</span>
+    s = w[<span class="n">0</span>] * x[<span class="n">0</span>] + w[<span class="n">1</span>] * x[<span class="n">1</span>] + b
+    <span class="k">return</span> <span class="n">1</span> <span class="k">if</span> s &gt; <span class="n">0</span> <span class="k">else</span> <span class="n">0</span>
+
+<span class="k">def</span> entrenar(ejemplos, eta=<span class="n">1</span>, max_epocas=<span class="n">50</span>):
+    w, b = [<span class="n">0</span>, <span class="n">0</span>], <span class="n">0</span>                          <span class="c"># nadie elige los pesos: empiezan en cero</span>
+    <span class="k">for</span> epoca <span class="k">in</span> <span class="k">range</span>(<span class="n">1</span>, max_epocas + <span class="n">1</span>):
+        errores = <span class="n">0</span>
+        <span class="k">for</span> x, t <span class="k">in</span> ejemplos:
+            y = predecir(w, b, x)
+            e = t - y                             <span class="c"># +1: se disparó de menos, -1: se disparó de más, 0: correcto</span>
+            <span class="k">if</span> e != <span class="n">0</span>:
+                errores += <span class="n">1</span>
+                w[<span class="n">0</span>] += eta * e * x[<span class="n">0</span>]              <span class="c"># ecuación (2): cada peso se mueve en proporción a su entrada</span>
+                w[<span class="n">1</span>] += eta * e * x[<span class="n">1</span>]
+                b += eta * e
+        <span class="k">if</span> errores == <span class="n">0</span>:                         <span class="c"># una pasada entera sin errores: convergió</span>
+            <span class="k">return</span> w, b, epoca
+    <span class="k">return</span> w, b, <span class="k">None</span>
+
+w, b, epoca = entrenar(EJEMPLOS)
+<span class="k">print</span>(w, b, epoca)                            <span class="c"># [2, 1] -2 6: correcto en los cuatro ejemplos a partir de la época 6</span>
+<span class="k">print</span>([predecir(w, b, x) <span class="k">for</span> x, _ <span class="k">in</span> EJEMPLOS])   <span class="c"># [0, 0, 0, 1]</span></pre>
+  </div>
+
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead><tr><th style="width:70px;">Época</th><th style="width:80px;">x</th><th style="width:60px;">t</th><th style="width:90px;">suma</th><th style="width:60px;">y</th><th style="width:70px;">t &minus; y</th><th>w, b tras el ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>(0, 0)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>[0, 0], 0</td></tr>
+      <tr class="band"><td>1</td><td>(0, 1)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>[0, 0], 0</td></tr>
+      <tr><td>1</td><td>(1, 0)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>[0, 0], 0</td></tr>
+      <tr class="band"><td>1</td><td>(1, 1)</td><td>1</td><td>0</td><td>0</td><td><span class="st warn">+1</span></td><td>[1, 1], 1</td></tr>
+      <tr><td colspan="7" style="color:#6b7a89;">&hellip; épocas 2 a 5: diez correcciones en total, los pesos oscilan y se asientan &hellip;</td></tr>
+      <tr class="band"><td>6</td><td>(0, 0)</td><td>0</td><td>&minus;2</td><td>0</td><td>0</td><td>[2, 1], &minus;2</td></tr>
+      <tr><td>6</td><td>(0, 1)</td><td>0</td><td>&minus;1</td><td>0</td><td>0</td><td>[2, 1], &minus;2</td></tr>
+      <tr class="band"><td>6</td><td>(1, 0)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>[2, 1], &minus;2</td></tr>
+      <tr><td>6</td><td>(1, 1)</td><td>1</td><td>1</td><td>1</td><td><span class="st ok">0</span></td><td>[2, 1], &minus;2</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Tabla 2 &mdash; Traza exacta del código de arriba con &eta; = 1. Los tres primeros ejemplos de la época 1 no producen error porque la suma es 0 y el umbral es estricto; el cuarto dispara la primera corrección. A partir de la época 6 el perceptrón acierta los cuatro ejemplos: 2x&#8321; + x&#8322; &minus; 2 &gt; 0 solo cuando ambas entradas son 1.</p>
+
+  <p>
+    Los primeros modelos neuronales chocaron con restricciones severas de hardware, capacidad de procesamiento y disponibilidad
+    de datos. El perceptrón Mark I de Rosenblatt era un armario de potenciómetros ajustados por motores, que aprendía a partir de
+    una rejilla de 20 por 20 fotocélulas. Eso no era un detalle operativo, sino un <b>limitador estructural</b>: sin escala
+    computacional y sin un volumen suficiente de ejemplos, el aprendizaje se quedaba rudimentario y difícil de ampliar. La
+    consecuencia fue que ideas prometedoras surgieron pronto, pero no podían madurar técnicamente en aquel momento histórico. El
+    golpe teórico llegó en 1969, cuando Minsky y Papert demostraron lo que un perceptrón de una sola capa no puede aprender.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+  </p>
+
+  <div class="af-panelBox light" id="boxXor">
+    <div class="boxHdr" onclick="toggleBox('boxXor')"><span class="disc">&#9660;</span>Lo que Minsky y Papert demostraron realmente</div>
+    <div class="boxBody">
+      Un único perceptrón traza una recta y responde 1 a uno de sus lados. La función o-exclusivo — 1 cuando exactamente una
+      entrada es 1 — pone sus dos casos positivos en esquinas opuestas del cuadrado, y ninguna recta los deja a un lado con los dos
+      casos negativos al otro. Las redes con una capa oculta pueden representarla, pero en 1969 nadie tenía una forma práctica de
+      entrenarlas; ese método, la retropropagación, solo se generalizó en 1986. El libro se leyó como un veredicto sobre todo el
+      enfoque, y la financiación para redes neuronales se secó durante más de una década.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+    </div>
+  </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex3">abrir en el Lab: Ejercicio 3, Un paso de aprendizaje</a></p>
+
+  <h2 class="af-subHeader" id="sec7">7. IA basada en reglas y árboles de decisión</h2>
+  <p>
+    En los años sesenta cobra fuerza la <b>IA basada en reglas</b>, estructurada en lógicas del tipo "si… entonces" y a menudo
+    organizada como árboles de decisión. Este enfoque funciona bien cuando el dominio puede ser explicitado por especialistas:
+    DENDRAL, iniciado en 1965, infería la estructura de una molécula orgánica a partir de su espectro de masas usando reglas
+    escritas con químicos, y los sistemas que lo siguieron codificaron el juicio de expertos en campos que van de la geología a la
+    configuración de computadoras.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup> El mecanismo es
+    transparente: una cadena de pruebas sobre atributos conocidos lleva a una conclusión, y toda conclusión puede explicarse
+    listando las reglas que se dispararon.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Un árbol de decisión es un conjunto de reglas si–entonces con una forma <span class="figNum">&mdash; Figura 4</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Un árbol de decisión para un invernadero: si la humedad del suelo está por debajo del 40 por ciento, regar; si no, si la temperatura supera los 30 grados, abrir la ventilación; si no, ninguna acción">
+        <defs>
+          <linearGradient id="cfNode4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="330" y="20" width="200" height="30" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="430" y="39">&#191;humedad del suelo &lt; 40%?</text>
+          <rect x="120" y="100" width="180" height="30" rx="3" fill="url(#cfSel4)" stroke="#2e5378"/><text x="210" y="119" fill="#ffffff" font-weight="bold">regar 10 minutos</text>
+          <rect x="540" y="100" width="200" height="30" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="640" y="119">&#191;temperatura &gt; 30 &#176;C?</text>
+          <rect x="430" y="180" width="160" height="30" rx="3" fill="url(#cfSel4)" stroke="#2e5378"/><text x="510" y="199" fill="#ffffff" font-weight="bold">abrir la ventilaci&#243;n</text>
+          <rect x="650" y="180" width="160" height="30" rx="3" fill="url(#cfNode4)" stroke="#7d8fa2"/><text x="730" y="199">ninguna acci&#243;n</text>
+        </g>
+        <path d="M430 50 L210 100" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M430 50 L640 100" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M640 130 L510 180" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M640 130 L730 180" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <g font-size="9" fill="#5b6b7a">
+          <text x="290" y="64">s&#237;</text><text x="560" y="64">no</text><text x="560" y="150">s&#237;</text><text x="700" y="150">no</text>
+        </g>
+        <text x="16" y="60" font-size="9" fill="#8a99a8">cada camino es una regla:</text>
+        <text x="16" y="74" font-size="9" fill="#8a99a8">si humedad &lt; 40% entonces regar</text>
+        <text x="16" y="88" font-size="9" fill="#8a99a8">si no, si temp &gt; 30 entonces ventilar</text>
+        <text x="16" y="222" font-size="9" fill="#8a99a8">Los umbrales de 40% y 30 &#176;C los escribi&#243; un agricultor, no se aprendieron. Un cultivo que necesite otros valores recibe otro &#225;rbol, escrito de nuevo a mano.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figura 4</b> &mdash; El mismo conocimiento como reglas o como árbol. Leer un camino de la raíz a una hoja da la regla; la explicación de cualquier decisión es el propio camino. Nada en el árbol cambia cuando cambia el invernadero.</div>
+  </div>
+
+  <div class="cf-codeBox">
+    <div class="codeHdr">reglas_del_invernadero.py <span class="lang">&mdash; Python</span><button class="af-button small" onclick="copyCode(this)">Copiar</button></div>
+    <pre><span class="c"># el árbol de la Figura 4 como código: el conocimiento está en las condiciones, escritas por una persona</span>
+<span class="k">def</span> decidir(humedad, temperatura):
+    <span class="k">if</span> humedad &lt; <span class="n">40</span>:                        <span class="c"># regla 1: el suelo seco va primero</span>
+        <span class="k">return</span> <span class="s">"regar 10 minutos"</span>
+    <span class="k">if</span> temperatura &gt; <span class="n">30</span>:                    <span class="c"># regla 2: solo se comprueba cuando el suelo está bien</span>
+        <span class="k">return</span> <span class="s">"abrir la ventilación"</span>
+    <span class="k">return</span> <span class="s">"ninguna acción"</span>                <span class="c"># todo lo no previsto termina aquí, bien o mal</span>
+
+<span class="k">print</span>(decidir(<span class="n">35</span>, <span class="n">24</span>))    <span class="c"># regar 10 minutos</span>
+<span class="k">print</span>(decidir(<span class="n">55</span>, <span class="n">33</span>))    <span class="c"># abrir la ventilación</span>
+<span class="k">print</span>(decidir(<span class="n">60</span>, <span class="n">-4</span>))    <span class="c"># ninguna acción: una helada no está en el árbol, así que el árbol no hace nada</span></pre>
+  </div>
+  <p>
+    El problema es que el enfoque depende de la <b>codificación manual del conocimiento</b>, lo que limita la adaptación del
+    sistema a situaciones no previstas. La última línea de arriba es toda la limitación en un ejemplo: una helada no está en el
+    árbol, así que el árbol no hace nada, y lo hace con total confianza. Añadir el caso significa encontrar a un especialista,
+    escribir la regla y comprobar que no contradice a las demás — para cada caso nuevo, para siempre.
+  </p>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex4">abrir en el Lab: Ejercicio 4, Por qué ganaron las reglas en los sesenta</a></p>
+
+  <h2 class="af-subHeader" id="sec8">8. Codificar o aprender: el conflicto y el camino al invierno</h2>
+  <p>
+    La tensión central de este período está entre dos estrategias: <b>programar explícitamente el razonamiento</b> o <b>permitir
+    que la máquina aprenda de ejemplos</b>. Los sistemas basados en reglas eran más viables con la infraestructura de la época, y
+    por eso ganaron notoriedad, pero cargaban con el límite de operar solo dentro de lo que se había especificado previamente. La
+    línea de las redes neuronales apuntaba a una IA menos rígida, aunque todavía bloqueada por restricciones técnicas que solo se
+    afrontarían mucho después.
+  </p>
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead><tr><th style="width:190px;">Criterio</th><th>Conocimiento codificado (reglas, árboles)</th><th>Aprender de ejemplos (perceptrones)</th></tr></thead>
+    <tbody>
+      <tr><td>De dónde sale el conocimiento</td><td>Los especialistas lo escriben como condiciones</td><td>La máquina ajusta pesos a partir de datos etiquetados</td></tr>
+      <tr class="band"><td>Viabilidad en los años sesenta</td><td><span class="st ok">Alta</span> &mdash; corre en las computadoras de la época</td><td><span class="st err">Baja</span> &mdash; necesita datos y cómputo que no existían</td></tr>
+      <tr><td>Explicabilidad</td><td><span class="st ok">Total</span> &mdash; las reglas que se dispararon</td><td><span class="st warn">Débil</span> &mdash; un conjunto de números</td></tr>
+      <tr class="band"><td>Situación no prevista</td><td><span class="st err">Falla en silencio</span> o cae en un valor por defecto</td><td><span class="st warn">Generaliza</span> si vio ejemplos parecidos</td></tr>
+      <tr><td>Costo de ampliar</td><td>Una persona por cada regla nueva, y comprobaciones de consistencia</td><td>Más ejemplos, y otra ronda de entrenamiento</td></tr>
+      <tr class="band"><td>Qué lo bloqueó</td><td>Rigidez: el mundo excede las reglas</td><td>Hardware, datos y el resultado de 1969 sobre capas únicas</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Tabla 3 &mdash; Las dos estrategias tal como estaban a finales de los sesenta. Ninguna podía entregar lo prometido: una por ser demasiado rígida, la otra por haber llegado demasiado pronto.</p>
+  <p>
+    Este comienzo de la historia produce un ciclo clásico de entusiasmo seguido de frustración. La creencia de que la inteligencia
+    humana se simularía rápidamente generó expectativas mayores de lo que la tecnología podía sostener — traducción automática
+    que se resolvería en pocos años, programas que pronto se enfrentarían a un campeón de ajedrez — sobre todo cuando los
+    métodos más prometedores todavía eran inmaduros y los métodos más viables eran demasiado rígidos. En 1973, el informe
+    Lighthill, encargado por el consejo de investigación británico, concluyó que el campo no había cumplido sus promesas
+    centrales fuera de problemas de juguete, y la financiación se recortó en Gran Bretaña y, por razones parecidas, en Estados
+    Unidos.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup> Ese desajuste prepara directamente el
+    escenario del <b>invierno de la IA</b>, cuando el avance del campo empieza a frenarse.
+  </p>
+
+  <div class="af-panelBox light" id="boxEliza">
+    <div class="boxHdr" onclick="toggleBox('boxEliza')"><span class="disc">&#9660;</span>ELIZA: una conversación por reglas que parecía comprensión</div>
+    <div class="boxBody">
+      En 1966, Joseph Weizenbaum publicó ELIZA, un programa que sostenía una conversación escrita emparejando palabras clave y
+      devolviendo la frase del usuario como pregunta, al modo de un terapeuta no directivo. No tenía modelo del mundo ni memoria de
+      la conversación, y aun así la gente se confiaba a él y algunos se negaban a creer que fuera un programa.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup>
+      ELIZA es el juego de imitación respondido solo con reglas, y la primera evidencia de que una superficie convincente y la
+      comprensión son cosas distintas — una lección que el campo volvería a aprender con los modelos generativos fluidos.
+    </div>
+  </div>
+  <p>Practica: <a class="cf-labLink" href="#lab-ex5">abrir en el Lab: Ejercicio 5, Preparando el invierno</a></p>
+
+  <h2 class="af-subHeader" id="sec9">9. Conclusión</h2>
+  <p>
+    La pregunta vino primero y la máquina vino después. Mitos y autómatas preguntaron qué haría falta para que una cosa fabricada
+    actuara por su cuenta; Turing convirtió la pregunta en un experimento sobre el comportamiento; Dartmouth convirtió el
+    experimento en un programa de investigación. El programa se dividió entonces en dos maneras de responder: escribir el
+    conocimiento o dejar que la máquina lo aprenda. La primera produjo los sistemas que funcionaban en los años sesenta y su
+    rigidez; la segunda produjo el perceptrón y se frenó en el hardware, los datos y un teorema. Lo que cerró el primer período no
+    fue un fracaso de las ideas, sino la distancia entre lo prometido y lo que se podía construir. Quédate con esa distancia: es
+    la forma recurrente del campo, y la razón por la que su historia es útil cada vez que una nueva ola promete cerrarla para
+    siempre.
+  </p>
+
+</div><!-- /cf-article -->
+
+<!-- Lab: ejercicios movidos al cajón del Lab por exercise.js -->
+<div class="cf-lab" hidden>
+
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concepto" data-section="sec3" data-short="Qué mide el test">
+    <div class="exHdr">Ejercicio 1 &mdash; qué mide el test <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">Según el artículo, ¿qué mide realmente el test de Turing?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Si la máquina es consciente</label></li>
+      <li><label><input type="radio" name="ex1"> Si la máquina puede imitar el comportamiento conversacional humano de forma lo bastante convincente para que un interrogador no la distinga de una persona</label></li>
+      <li><label><input type="radio" name="ex1"> Si la máquina calcula más rápido que un humano</label></li>
+      <li><label><input type="radio" name="ex1"> Si la máquina da respuestas verdaderas</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "answer": [1],
+      "explain": "El juego de imitación sustituye una definición de pensar por un criterio observable: indistinguibilidad en una conversación escrita. Consciencia, velocidad y verdad quedan deliberadamente fuera."
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex2" data-kind="text" data-lang="Concepto" data-section="sec5" data-short="El año de Dartmouth">
+    <div class="exHdr">Ejercicio 2 &mdash; el año de Dartmouth <span class="lang">&mdash; respuesta escrita</span></div>
+    <p class="exTask">¿En qué año tuvo lugar la conferencia de Dartmouth, el evento que consolidó la IA como campo de investigación identificable?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "accept": ["1956"],
+      "regex": "^\\s*1956\\s*$",
+      "hint": "Seis años después del artículo de Turing; la propuesta que la convocó se escribió el año anterior.",
+      "explain": "1956: el taller de verano convocado por McCarthy, Minsky, Rochester y Shannon, donde se adoptó el término inteligencia artificial."
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex3" data-kind="run" data-lang="JavaScript" data-section="sec6" data-short="Un paso de aprendizaje">
+    <div class="exHdr">Ejercicio 3 &mdash; un paso de aprendizaje <span class="lang">&mdash; JavaScript, ejecución con pruebas</span></div>
+    <p class="exTask">Implementa un paso del perceptrón: dados los pesos <code>w</code> (array de dos), el sesgo <code>b</code>, un ejemplo <code>x</code> con salida esperada <code>t</code> y el paso <code>eta</code>, calcula <code>y</code> con la ecuación (1), el error <code>t − y</code>, aplica la ecuación (2) y devuelve <code>[w, b]</code> tras la actualización.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="7">function pasoPerceptron(w, b, x, t, eta) {
+    // y = 1 si w·x + b > 0, si no 0; luego w_i += eta * (t - y) * x_i y b += eta * (t - y)
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+      <button class="af-button" data-act="solution">Ver solución</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "tests": [
+        { "call": "pasoPerceptron([0, 0], 0, [1, 1], 1, 1)", "expect": [[1, 1], 1], "msg": "primera corrección de la Tabla 2: (1, 1) debía dispararse y no lo hizo" },
+        { "call": "pasoPerceptron([1, 1], 1, [0, 0], 0, 1)", "expect": [[1, 1], 0], "msg": "época 2, (0, 0): se disparó de más, solo se mueve el sesgo" },
+        { "call": "pasoPerceptron([2, 1], -2, [1, 1], 1, 1)", "expect": [[2, 1], -2], "msg": "un ejemplo correcto no cambia nada" },
+        { "call": "pasoPerceptron([0, 0], 0, [0, 1], 0, 1)", "expect": [[0, 0], 0], "msg": "una suma exactamente 0 no se dispara (umbral estricto), así que no hay error" },
+        { "call": "pasoPerceptron([1, 1], 1, [0, 1], 0, 0.5)", "expect": [[1, 0.5], 0.5], "msg": "con eta = 0,5 el paso es la mitad de largo" }
+      ],
+      "solution": "function pasoPerceptron(w, b, x, t, eta) {\n    const s = w[0] * x[0] + w[1] * x[1] + b;\n    const y = s > 0 ? 1 : 0;\n    const e = t - y;\n    return [[w[0] + eta * e * x[0], w[1] + eta * e * x[1]], b + eta * e];\n}"
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex4" data-kind="quiz" data-lang="Concepto" data-section="sec7" data-short="Por qué ganaron las reglas">
+    <div class="exHdr">Ejercicio 4 &mdash; por qué ganaron las reglas en los sesenta <span class="lang">&mdash; opción múltiple</span></div>
+    <p class="exTask">¿Por qué los sistemas basados en reglas ganaron notoriedad en los años sesenta mientras las redes neuronales se frenaban?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex4"> Porque las reglas aprendían de ejemplos más rápido que los perceptrones</label></li>
+      <li><label><input type="radio" name="ex4"> Porque eran viables con el hardware y los datos de la época, y el conocimiento de los expertos podía escribirse como condiciones si–entonces</label></li>
+      <li><label><input type="radio" name="ex4"> Porque se adaptaban solos a situaciones que nadie había previsto</label></li>
+      <li><label><input type="radio" name="ex4"> Porque Dartmouth prohibió la investigación en redes neuronales</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "answer": [1],
+      "explain": "Las reglas corrían en las computadoras de la época y hacían explícito el juicio de los expertos; su precio era la rigidez, no la adaptación. Las redes neuronales necesitaban cómputo y datos que aún no existían."
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex5" data-kind="quiz" data-lang="Concepto" data-section="sec8" data-short="Preparando el invierno">
+    <div class="exHdr">Ejercicio 5 &mdash; preparando el invierno <span class="lang">&mdash; opción múltiple, dos respuestas</span></div>
+    <p class="exTask">¿Qué dos factores, juntos, prepararon el primer invierno de la IA? Marca los dos.</p>
+    <ul class="exOptions">
+      <li><label><input type="checkbox" name="ex5"> Los métodos más prometedores, las redes neuronales, todavía eran inmaduros</label></li>
+      <li><label><input type="checkbox" name="ex5"> Los métodos más viables, los sistemas de reglas, eran demasiado rígidos para salir de lo que se había especificado</label></li>
+      <li><label><input type="checkbox" name="ex5"> Las computadoras se volvieron demasiado caras para que las universidades las compraran</label></li>
+      <li><label><input type="checkbox" name="ex5"> Los investigadores perdieron el interés en la pregunta de si las máquinas pueden pensar</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validar</button>
+      <button class="af-button" data-act="reset">Empezar de nuevo</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "answer": [0, 1],
+      "explain": "Las expectativas superaron lo que se podía construir: el enfoque flexible llegó demasiado pronto y el enfoque que funcionaba era demasiado rígido. El interés en la pregunta nunca desapareció; la financiación, sí."
+    }</script>
+  </div>
+
+</div>
+
+<!-- references -->
+<ul class="cf-refList">
+  <li><span class="refNum">[1]</span><span>A. M. Turing &mdash; <cite>Computing Machinery and Intelligence</cite>, Mind 59(236), 1950. <a href="https://doi.org/10.1093/mind/LIX.236.433">doi:10.1093/mind/LIX.236.433</a> <span class="refSrc">(consultado el 10/09/2026)</span></span><span class="refType cf-label">Artículo académico</span></li>
+  <li><span class="refNum">[2]</span><span>J. McCarthy; M. L. Minsky; N. Rochester; C. E. Shannon &mdash; <cite>A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence</cite>, 1955; reimpreso en AI Magazine 27(4), 2006. <a href="https://doi.org/10.1609/aimag.v27i4.1904">doi:10.1609/aimag.v27i4.1904</a></span><span class="refType cf-label">Documento histórico</span></li>
+  <li><span class="refNum">[3]</span><span>F. Rosenblatt &mdash; <cite>The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain</cite>, Psychological Review 65(6), 1958. <a href="https://doi.org/10.1037/h0042519">doi:10.1037/h0042519</a></span><span class="refType cf-label">Artículo académico</span></li>
+  <li><span class="refNum">[4]</span><span>W. S. McCulloch; W. Pitts &mdash; <cite>A Logical Calculus of the Ideas Immanent in Nervous Activity</cite>, Bulletin of Mathematical Biophysics 5, 1943. <a href="https://doi.org/10.1007/BF02478259">doi:10.1007/BF02478259</a></span><span class="refType cf-label">Artículo académico</span></li>
+  <li><span class="refNum">[5]</span><span>M. Minsky; S. Papert &mdash; <cite>Perceptrons: An Introduction to Computational Geometry</cite>, MIT Press, 1969. <a href="https://mitpress.mit.edu/9780262630221/perceptrons/">mitpress.mit.edu</a></span><span class="refType cf-label">Libro</span></li>
+  <li><span class="refNum">[6]</span><span>J. Lighthill &mdash; <cite>Artificial Intelligence: A General Survey</cite>, en Artificial Intelligence: a paper symposium, Science Research Council, 1973. <a href="http://www.chilton-computing.org.uk/inf/literature/reports/lighthill_report/p001.htm">chilton-computing.org.uk</a></span><span class="refType cf-label">Informe</span></li>
+  <li><span class="refNum">[7]</span><span>B. G. Buchanan; E. H. Shortliffe (eds.) &mdash; <cite>Rule-Based Expert Systems: The MYCIN Experiments of the Stanford Heuristic Programming Project</cite>, Addison-Wesley, 1984. <a href="https://www.shortliffe.net/Buchanan-Shortliffe-1984/MYCIN%20Book.htm">shortliffe.net</a></span><span class="refType cf-label">Libro</span></li>
+  <li><span class="refNum">[8]</span><span>A. Mayor &mdash; <cite>Gods and Robots: Myths, Machines, and Ancient Dreams of Technology</cite>, Princeton University Press, 2018. <a href="https://press.princeton.edu/books/hardcover/9780691183510/gods-and-robots">press.princeton.edu</a></span><span class="refType cf-label">Libro</span></li>
+  <li><span class="refNum">[9]</span><span>J. Weizenbaum &mdash; <cite>ELIZA &mdash; A Computer Program for the Study of Natural Language Communication Between Man and Machine</cite>, Communications of the ACM 9(1), 1966. <a href="https://doi.org/10.1145/365153.365168">doi:10.1145/365153.365168</a></span><span class="refType cf-label">Artículo académico</span></li>
+  <li><span class="refNum">[10]</span><span>S. Russell; P. Norvig &mdash; <cite>Artificial Intelligence: A Modern Approach</cite>, 4.&ordf; ed., Pearson, 2020, capítulo 1. <a href="https://aima.cs.berkeley.edu/">aima.cs.berkeley.edu</a></span><span class="refType cf-label">Libro</span></li>
+</ul>
+<div class="af-spacer"></div>
+<h2 class="af-subHeader" style="margin-top:0;">Lecturas complementarias</h2>
+<ul class="cf-refList">
+  <li><span class="refNum">[a]</span><span>N. J. Nilsson &mdash; <cite>The Quest for Artificial Intelligence: A History of Ideas and Achievements</cite>, Cambridge University Press, 2010. <a href="https://ai.stanford.edu/~nilsson/QAI/qai.pdf">ai.stanford.edu</a></span><span class="refType cf-label">Libro</span></li>
+  <li><span class="refNum">[b]</span><span>G. Oppy; D. Dowe &mdash; <cite>The Turing Test</cite>, Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/turing-test/">plato.stanford.edu</a></span><span class="refType cf-label">Entrada de enciclopedia</span></li>
+</ul>
+<p class="tip" style="margin-top:8px;">Referencias verificadas el 10/09/2026 y comprobadas durante la revisión técnica. Los enlaces externos se abren fuera de Codeflow.</p>
