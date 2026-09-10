@@ -527,6 +527,8 @@ body.cf-resizing .af-panelMain { pointer-events: none; }
   .af-globalLinks .af-selectWrap, .af-globalLinks select { font-size: 12px; }
   .af-globalLinks .af-selectWrap { display: none; }               /* no celular usa a folha inferior */
   .af-globalLinks .cf-langBtn { display: inline-flex; }            /* só a bandeira; abre a folha de idiomas */
+  .cf-langBtn .flag { position: relative; top: 2px; }              /* o emoji desenha alto; desce para o centro ótico */
+  .af-branding .app-name .release { top: 1px; }                    /* badge um fio mais baixo */
 
   /* --- botão de menu (três traços) antes do logo, na barra de branding --- */
   .af-navTabs { align-items: flex-end; padding: 10px 8px 0; }
