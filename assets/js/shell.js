@@ -234,6 +234,14 @@ function toggleDrawer(id) {
 function expandDrawer(id) {
   document.getElementById(id).classList.toggle('expanded');
 }
+/* A click outside an open drawer (Contents, Help, Lab) closes it, like the ✕ of its header. Clicks on the drawer
+   itself, on its tab/button (those already toggle), on a "open in the Lab" link or inside a dialog are left alone. */
+document.addEventListener('mousedown', function (e) {
+  var open = document.querySelector('.af-drawer.open');
+  if (!open || open.contains(e.target)) return;
+  if (e.target.closest('.af-drawerTab, [onclick*="toggleDrawer"], a.cf-labLink, .af-dialog')) return;
+  toggleDrawer(open.id);
+});
 var PENDING_LANG = null;
 function switchLanguage(code) {
   if (!code || code === LANG) return;
