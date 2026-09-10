@@ -1,0 +1,546 @@
+---
+title: "Traditional AI versus generative AI: predict from known data or compose new outputs"
+date: 2026-09-10 08:00:00 -0300
+lang: en
+category: "Artificial Intelligence"
+section: "Generative AI"
+topic: "Generative AI"
+order: 4                     # position in the Content Navigator (within the category/topic); date order when absent
+tags: [traditional-ai, generative-ai, supervised-learning, classification, regression, labeled-data, fraud-detection, self-supervised-learning, transformers, llm]
+reading_time: 13
+level: Introductory
+series_prev: { title: "What is Generative AI, and why did it only become viable now?", url: "/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
+cover: "/assets/covers/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs.svg"
+excerpt: "Traditional AI answers a question whose options were fixed before training: it learns from labeled examples how to map an input to a class or a number, which makes it the right tool for prediction, triage and decision support. Generative AI learns the internal regularities of large volumes of data and uses them to compose an output that did not exist as an option, conditioned on the prompt and the context. This article walks through labeled data and supervised learning, classification and regression, risk scores and thresholds in fraud and spam, the structural limit of a closed answer space, and then the shift to self-supervised patterns, conditioned composition, long context and the Transformer. It closes with the multiple-choice student versus the writer, and when to use each…"
+image: "/assets/social/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs.en.png"
+description: "Traditional AI predicts a class or a value inside a closed answer space; generative AI composes a new output from learned patterns. When to use each."
+references_count: 10
+key_concepts: ["Labeled data", "Classification vs regression", "Risk score and threshold", "Closed answer space", "Self-supervised patterns", "Conditioned composition"]
+version: 1
+history:
+  - { when: "09/10/2026 08:00", what: "Initial publication of the article" }
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    What you will find in this article
+  </div>
+  <ul>
+    <li>What <b>traditional AI</b> does with <b>labeled data</b>: learn a mapping from known inputs to known outputs, and why a wrong label is learned as faithfully as a right one.</li>
+    <li>The two shapes of a prediction — <b>classification</b> (a class) and <b>regression</b> (a number) — and how a <b>risk score</b> plus a threshold turns a prediction into an operational decision in fraud and spam.</li>
+    <li>The structural limit of that paradigm: a <b>closed answer space</b>, and why recognition, ranking and detection fit it while open-ended creation does not.</li>
+    <li>What changes with <b>generative AI</b>: patterns learned with far less manual labeling, outputs <b>composed at interaction time</b>, conditioning on the prompt, and the Transformer as the reason long context holds together.</li>
+    <li>The analogy to keep — the <b>multiple-choice student</b> versus the <b>writer</b> — and a table to decide which paradigm fits a given task.</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+    <svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Article banner: on the left, choosing one of four options versus composing a new answer; on the right, the two pipelines, traditional AI from labeled pairs to a class or value, and generative AI from a raw corpus to a new output">
+      <defs>
+        <linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+        <linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        <marker id="cfHeroArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+      </defs>
+      <rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+      <text x="26" y="26" font-size="9" letter-spacing="1.4" fill="#6b90b6">CODEFLOW &#183; ARTIFICIAL INTELLIGENCE &#183; GENERATIVE AI</text>
+      <text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">Predict or compose</text>
+      <text x="26" y="74" font-size="12" fill="#44566a">From a closed answer space to an output composed at interaction time</text>
+      <!-- left bottom: multiple choice versus composition -->
+      <g font-size="10" fill="#1a2836" text-anchor="middle">
+        <rect x="28" y="96" width="26" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="41" y="112">A</text>
+        <rect x="62" y="96" width="26" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="75" y="112">B</text>
+        <rect x="96" y="96" width="26" height="24" rx="3" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="109" y="112" fill="#ffffff" font-weight="bold">C</text>
+        <rect x="130" y="96" width="26" height="24" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="143" y="112">D</text>
+      </g>
+      <text x="170" y="112" font-size="10" fill="#5b6b7a">choose one of the options</text>
+      <rect x="330" y="96" width="190" height="24" rx="4" fill="url(#cfHeroSel)" stroke="#2e5378"/>
+      <text x="425" y="112" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">compose a new answer</text>
+      <!-- right: the two pipelines -->
+      <g font-size="9" fill="#5b6b7a">
+        <text x="556" y="40">Traditional AI</text>
+        <rect x="556" y="46" width="96" height="18" rx="2" fill="#e8f0fa" stroke="#a9b8c7"/><text x="604" y="58" text-anchor="middle" fill="#1a2836">labeled pairs</text>
+        <path d="M652 55 L674 55" stroke="#5b6b7a" marker-end="url(#cfHeroArr)"/>
+        <rect x="680" y="46" width="56" height="18" rx="2" fill="#e8f0fa" stroke="#a9b8c7"/><text x="708" y="58" text-anchor="middle" fill="#1a2836">model</text>
+        <path d="M736 55 L758 55" stroke="#5b6b7a" marker-end="url(#cfHeroArr)"/>
+        <rect x="764" y="46" width="90" height="18" rx="2" fill="#e8f0fa" stroke="#a9b8c7"/><text x="809" y="58" text-anchor="middle" fill="#1a2836">class / value</text>
+        <text x="556" y="96">Generative AI</text>
+        <rect x="556" y="102" width="96" height="18" rx="2" fill="#cfe2f7" stroke="#15497e"/><text x="604" y="114" text-anchor="middle" fill="#1a2836">raw corpus</text>
+        <path d="M652 111 L674 111" stroke="#15497e" marker-end="url(#cfHeroArr)"/>
+        <rect x="680" y="102" width="56" height="18" rx="2" fill="#cfe2f7" stroke="#15497e"/><text x="708" y="114" text-anchor="middle" fill="#1a2836">model</text>
+        <path d="M736 111 L758 111" stroke="#15497e" marker-end="url(#cfHeroArr)"/>
+        <rect x="764" y="102" width="90" height="18" rx="2" fill="#cfe2f7" stroke="#15497e"/><text x="809" y="114" text-anchor="middle" fill="#15497e" font-weight="bold">new output</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="lead">
+    A bank wants to know whether the card payment that just arrived is fraud. A city wants to know how many people will go to the
+    beach next Saturday. A support team wants a reply drafted for an angry customer. The first two questions have an answer shape
+    fixed in advance — a class, a number — and the system only has to pick or estimate it. The third has no option to pick: the
+    reply has to be composed. That difference in the <b>shape of the answer</b> is the cleanest line between traditional AI and
+    generative AI, and it decides which one a task needs.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+  </p>
+
+  <h2 class="af-subHeader" id="sec1">1. Two questions, two paradigms</h2>
+  <p>
+    Traditional AI operates over inputs and outputs that were defined <b>before</b> training. It does not create anything; it learns
+    relations between known variables to estimate a probable answer, which is exactly what prediction and decision support
+    need.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup> The paradigm depends on examples in which
+    the system already knows what went in and what the result should have been.
+  </p>
+  <p>
+    Generative AI learns the internal regularities of the data and uses them to produce new examples that are coherent with what it
+    learned.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> The question changes from
+    <i>which label should I assign?</i> to <i>which output can I compose from the patterns I observed?</i> — and that is why the
+    answer does not have to exist beforehand as a closed option: it is built at the moment of the interaction.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Two pipelines: predict inside a closed space or compose a new output <span class="figNum">&mdash; Figure 1</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Two lanes. Traditional AI: labeled examples feed a model that learns the mapping from x to y and returns a class or value inside a closed answer space. Generative AI: a large raw corpus feeds a model that learns patterns and, conditioned on a prompt, returns a new output composed at interaction time">
+        <defs>
+          <linearGradient id="cfNode1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
+        <!-- lane 1: traditional AI -->
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="150" y="40" width="150" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
+          <text x="225" y="56" font-weight="bold">Labeled examples</text><text x="225" y="71" font-size="9" fill="#5b6b7a">(x, y) pairs</text>
+          <rect x="330" y="40" width="170" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
+          <text x="415" y="56" font-weight="bold">Learns the mapping x &#8594; y</text><text x="415" y="71" font-size="9" fill="#5b6b7a">supervised training</text>
+          <rect x="530" y="40" width="160" height="40" rx="3" fill="url(#cfSel1)" stroke="#2e5378"/>
+          <text x="610" y="56" font-weight="bold" fill="#ffffff">Class or value</text><text x="610" y="71" font-size="9" fill="#dbe7f3">closed answer space</text>
+        </g>
+        <path d="M300 60 L330 60" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <path d="M500 60 L530 60" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <text x="702" y="56" font-size="9" fill="#5b6b7a">fraud or normal, spam or legit,</text>
+        <text x="702" y="70" font-size="9" fill="#5b6b7a">7.7 thousand visitors</text>
+        <!-- lane 2: generative AI -->
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="530" y="96" width="160" height="26" rx="3" fill="#fff8e1" stroke="#b08f3e"/>
+          <text x="610" y="113" font-size="9">Prompt (instruction + context)</text>
+          <rect x="150" y="140" width="150" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
+          <text x="225" y="156" font-weight="bold">Large raw corpus</text><text x="225" y="171" font-size="9" fill="#5b6b7a">labels come from the data</text>
+          <rect x="330" y="140" width="170" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
+          <text x="415" y="156" font-weight="bold">Learns the patterns</text><text x="415" y="171" font-size="9" fill="#5b6b7a">self-supervised training</text>
+          <rect x="530" y="140" width="160" height="40" rx="3" fill="url(#cfSel1)" stroke="#2e5378"/>
+          <text x="610" y="156" font-weight="bold" fill="#ffffff">New output</text><text x="610" y="171" font-size="9" fill="#dbe7f3">composed at interaction time</text>
+        </g>
+        <path d="M300 160 L330 160" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <path d="M500 160 L530 160" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <path d="M610 122 L610 140" stroke="#b08f3e" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <text x="702" y="156" font-size="9" fill="#5b6b7a">text, image, sound or code</text>
+        <text x="702" y="170" font-size="9" fill="#5b6b7a">that did not exist as an option</text>
+        <!-- row labels on the vertical centre of the boxes -->
+        <text x="16" y="63.5" font-size="10" font-weight="bold" fill="#15497e">Traditional AI</text>
+        <text x="16" y="163.5" font-size="10" font-weight="bold" fill="#15497e">Generative AI</text>
+        <text x="16" y="212" font-size="9" fill="#8a99a8">Both lanes learn from data. What differs is the learning signal (an explicit label versus the data itself) and the shape of the answer.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 1</b> &mdash; The traditional pipeline maps a known input to a known kind of answer; the generative pipeline learns patterns without a hand-written label for every example and composes the answer under the guidance of a prompt.</div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec2">2. Traditional AI: learning from labeled examples</h2>
+  <p>
+    <b>Labeled data</b> are records in which every example already carries the category or the value expected for it: a transaction
+    marked <i>fraud</i> or <i>normal</i>, a passenger marked <i>survived</i> or <i>did not survive</i>, a day marked with the number
+    of visitors that actually showed up. Labels exist because the model needs an explicit reference to learn how to map input to
+    output without ambiguity. This is <b>supervised learning</b>: the training procedure adjusts the parameters
+    <span class="var">&theta;</span> of a function <span class="var">f</span><sub><span class="var">&theta;</span></sub> so that its
+    predictions get as close as possible to the labels over the whole training set.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="var">&theta;</span><sup>*</sup> <span class="op">=</span> <span class="fName">argmin</span><sub><span class="var">&theta;</span></sub>&nbsp;
+    <span class="frac"><span class="num">1</span><span class="den"><span class="var">N</span></span></span>&nbsp;
+    <span style="font-size:18px; vertical-align:-2px;">&sum;</span><sub><span class="var">i</span>=1</sub><sup><span class="var">N</span></sup>&nbsp;
+    <span class="fName">L</span>(<span class="var">f</span><sub><span class="var">&theta;</span></sub>(<span class="var">x</span><sub><span class="var">i</span></sub>), <span class="var">y</span><sub><span class="var">i</span></sub>)
+  </div>
+  <p>
+    Equation (1) says everything about the dependence on labels: the loss <span class="fName">L</span> compares each prediction with
+    its label <span class="var">y</span><sub><span class="var">i</span></sub>, and nothing else. If the labels are wrong — say, images
+    of dogs marked as <i>human</i> — the system learns the wrong association, because it has no way to correct the
+    <b>semantics</b> of the data on its own: to the optimizer, the label <i>is</i> the truth. Label errors are not a rare
+    curiosity; an audit of ten widely used benchmark test sets found an average of 3.3% mislabeled examples, enough to change which
+    model ranks best.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+  </p>
+
+  <div class="af-panelBox light" id="boxLabels">
+    <div class="boxHdr" onclick="toggleBox('boxLabels')"><span class="disc">&#9660;</span>Why the model does not fix a wrong label by itself</div>
+    <div class="boxBody">
+      A supervised model has no notion of <i>dog</i> or <i>human</i>; it has pixels on one side and a target on the other. Its only
+      job is to make the two agree more often. A consistently wrong label is, from the model's point of view, a consistent pattern to
+      be learned. Only an inconsistent label (the same kind of image marked both ways) shows up as noise, and even that is averaged
+      away rather than flagged. Fixing semantics is a job for the people who curate the dataset, which is why data quality, and not
+      only model choice, dominates the cost of traditional AI projects.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec3">3. Classification and regression: the two shapes of a prediction</h2>
+  <p>
+    <b>Classification</b> is the task of choosing among discrete categories: survive or not survive, spam or legitimate, fraud or
+    normal operation. <b>Regression</b> estimates a continuous quantity: traffic volume, future demand, the number of people expected
+    at the beach. Both use patterns observed in the history, but they differ in the type of output — a closed class in
+    classification, a numeric value in regression.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+    The simplest models of each family make the contrast explicit:
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(2)</span>
+    <span class="var">p</span>(fraud | <span class="var">x</span>) <span class="op">=</span> <span class="fName">&sigma;</span>(<span class="var">w</span>&middot;<span class="var">x</span> + <span class="var">b</span>)
+    <span class="op">=</span>
+    <span class="frac"><span class="num">1</span><span class="den">1 + <span class="var">e</span><sup>&minus;(<span class="var">w</span>&middot;<span class="var">x</span> + <span class="var">b</span>)</sup></span></span>
+  </div>
+  <div class="cf-formula">
+    <span class="eqNum">(3)</span>
+    <span class="var">&#375;</span> <span class="op">=</span> <span class="var">w</span>&middot;<span class="var">x</span> + <span class="var">b</span>
+  </div>
+  <p>
+    Equation (2) is logistic regression, the workhorse of binary classification: the same weighted sum as in (3), squashed into a
+    probability between 0 and 1 by the logistic function <span class="fName">&sigma;</span>, and then turned into a class by a
+    threshold. Equation (3) is linear regression: the weighted sum is the answer, no class involved. Figure 2 shows the two on
+    small examples.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">A class on the left, a number on the right <span class="figNum">&mdash; Figure 2</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 180" width="860" height="180" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Left panel: transactions plotted by amount and time of day, normal ones in blue and fraud in yellow, separated by a straight decision boundary. Right panel: beach visitors against temperature, with the least-squares line and the value it predicts at 32 degrees">
+        <rect x="0" y="0" width="860" height="180" fill="#ffffff"/>
+        <!-- left panel: classification -->
+        <text x="60" y="22" font-size="10" font-weight="bold" fill="#15497e">Classification: fraud or normal?</text>
+        <text x="64" y="34" font-size="9" fill="#5b6b7a">time of day</text>
+        <path d="M60 150 L400 150" stroke="#a9b8c7" stroke-width="1.2"/>
+        <path d="M60 150 L60 40" stroke="#a9b8c7" stroke-width="1.2"/>
+        <text x="230" y="168" font-size="9" fill="#5b6b7a" text-anchor="middle">amount</text>
+        <g fill="#6b90b6" stroke="#3d6791">
+          <circle cx="100" cy="120" r="4"/><circle cx="130" cy="135" r="4"/><circle cx="150" cy="110" r="4"/><circle cx="180" cy="128" r="4"/>
+          <circle cx="120" cy="95" r="4"/><circle cx="200" cy="105" r="4"/><circle cx="160" cy="140" r="4"/><circle cx="230" cy="120" r="4"/>
+          <circle cx="210" cy="90" r="4"/><circle cx="250" cy="135" r="4"/><circle cx="140" cy="70" r="4"/><circle cx="270" cy="110" r="4"/>
+        </g>
+        <g fill="#f2c94c" stroke="#b08f3e">
+          <circle cx="300" cy="60" r="4"/><circle cx="340" cy="75" r="4"/><circle cx="370" cy="50" r="4"/><circle cx="320" cy="95" r="4"/>
+          <circle cx="360" cy="110" r="4"/><circle cx="290" cy="80" r="4"/><circle cx="380" cy="90" r="4"/><circle cx="262" cy="58" r="4"/>
+        </g>
+        <path d="M230 40 L330 150" stroke="#2e5378" stroke-width="1.6" stroke-dasharray="5 3"/>
+        <text x="340" y="42" font-size="9" fill="#2e5378">decision boundary</text>
+        <circle cx="70" cy="168" r="4" fill="#6b90b6" stroke="#3d6791"/><text x="78" y="171" font-size="9" fill="#5b6b7a">normal</text>
+        <circle cx="140" cy="168" r="4" fill="#f2c94c" stroke="#b08f3e"/><text x="148" y="171" font-size="9" fill="#5b6b7a">fraud</text>
+        <!-- right panel: regression -->
+        <text x="470" y="22" font-size="10" font-weight="bold" fill="#15497e">Regression: how many beach visitors?</text>
+        <text x="474" y="34" font-size="9" fill="#5b6b7a">visitors (thousands)</text>
+        <path d="M470 150 L820 150" stroke="#a9b8c7" stroke-width="1.2"/>
+        <path d="M470 150 L470 40" stroke="#a9b8c7" stroke-width="1.2"/>
+        <text x="560" y="168" font-size="9" fill="#5b6b7a">temperature (&#176;C)</text>
+        <text x="470" y="163" font-size="8" fill="#8a99a8">20</text>
+        <text x="812" y="163" font-size="8" fill="#8a99a8">38</text>
+        <g fill="#6b90b6" stroke="#3d6791">
+          <circle cx="508.9" cy="119" r="4"/><circle cx="547.8" cy="110" r="4"/><circle cx="567.2" cy="114" r="4"/><circle cx="606.1" cy="98" r="4"/>
+          <circle cx="625.6" cy="91" r="4"/><circle cx="664.4" cy="86" r="4"/><circle cx="683.9" cy="75" r="4"/><circle cx="722.8" cy="71" r="4"/>
+          <circle cx="742.2" cy="58" r="4"/><circle cx="781.1" cy="54" r="4"/>
+        </g>
+        <path d="M489.4 127.1 L800.6 48.1" stroke="#2e5378" stroke-width="1.6"/>
+        <path d="M703.3 150 L703.3 72.8" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <path d="M470 72.8 L703.3 72.8" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <circle cx="703.3" cy="72.8" r="4.5" fill="#f2c94c" stroke="#b08f3e"/>
+        <text x="698" y="163" font-size="8" fill="#b08f3e">32</text>
+        <text x="478" y="66" font-size="9" fill="#b08f3e">&#375; &#8776; 7.7 thousand at 32 &#176;C</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 2</b> &mdash; Left: a classifier learns a boundary that separates the labeled classes; every new transaction falls on one side. Right: a regression learns the least-squares line <span class="var">&#375;</span> = 0.494&middot;<span class="var">T</span> &minus; 8.08 over ten labeled days and reads a number off it; the ten points and the line are exact, the scenario is illustrative.</div>
+  </div>
+
+  <div class="af-panelBox light" id="boxTitanic">
+    <div class="boxHdr" onclick="toggleBox('boxTitanic')"><span class="disc">&#9660;</span>Survive or not survive: why the Titanic is the classic classification exercise</div>
+    <div class="boxBody">
+      The passenger list of the Titanic is a small, fully labeled table: class, sex, age, fare and the outcome. It is the standard
+      first exercise in classification precisely because every ingredient of the paradigm is visible at once — known inputs, a known
+      binary label, and a model that learns which combinations of inputs went with which outcome. Nothing is generated; the model
+      only learns where the boundary lies.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec4">4. From prediction to decision: scores, thresholds and triage</h2>
+  <p>
+    Traditional AI observes recurring patterns and turns them into an <b>operational decision</b>. In bank fraud the system learns
+    the usual behaviour of each customer — amounts, hours, places, merchants — and flags deviations with a <b>risk
+    score</b>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup> In spam filtering it separates
+    messages on the basis of traits already recognised as suspicious, an idea that dates back to the Bayesian filters of the late
+    1990s.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup> The practical value lies in automating
+    <b>triage, prioritisation and recommendation</b> at a scale no team of analysts could match.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">From a transaction to a decision: the score and the threshold <span class="figNum">&mdash; Figure 3</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 140" width="860" height="140" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="A transaction with its features goes through a behaviour model learned from the customer's history, which returns a risk score of 0.87; the score falls on a bar divided into approve, review and block, in the block zone">
+        <defs>
+          <linearGradient id="cfNode3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <marker id="cfArr3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="140" fill="#ffffff"/>
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="16" y="30" width="130" height="40" rx="3" fill="url(#cfNode3)" stroke="#7d8fa2"/>
+          <text x="81" y="46" font-weight="bold">Transaction</text><text x="81" y="61" font-size="9" fill="#5b6b7a">amount, hour, place</text>
+          <rect x="176" y="30" width="150" height="40" rx="3" fill="url(#cfNode3)" stroke="#7d8fa2"/>
+          <text x="251" y="46" font-weight="bold">Behaviour model</text><text x="251" y="61" font-size="9" fill="#5b6b7a">customer history</text>
+          <rect x="356" y="30" width="110" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/>
+          <text x="411" y="46" font-weight="bold">Risk score</text><text x="411" y="62" font-size="11" font-weight="bold" fill="#b08f3e">0.87</text>
+        </g>
+        <path d="M146 50 L176 50" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr3)"/>
+        <path d="M326 50 L356 50" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr3)"/>
+        <path d="M466 50 L500 50" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr3)"/>
+        <!-- score bar -->
+        <g font-size="9" text-anchor="middle">
+          <rect x="500" y="38" width="150" height="24" fill="#d9ead3" stroke="#7d8fa2"/><text x="575" y="54" fill="#1a2836">approve</text>
+          <rect x="650" y="38" width="90" height="24" fill="#fff2cc" stroke="#7d8fa2"/><text x="695" y="54" fill="#1a2836">review</text>
+          <rect x="740" y="38" width="60" height="24" fill="#f4cccc" stroke="#7d8fa2"/><text x="770" y="54" fill="#1a2836">block</text>
+        </g>
+        <path d="M761 34 l-5 -8 h10 z" fill="#15497e"/>
+        <text x="761" y="20" font-size="9" font-weight="bold" fill="#15497e" text-anchor="middle">0.87</text>
+        <text x="500" y="76" font-size="8" fill="#8a99a8">0</text>
+        <text x="650" y="76" font-size="8" fill="#8a99a8" text-anchor="middle">0.5</text>
+        <text x="800" y="76" font-size="8" fill="#8a99a8" text-anchor="end">1</text>
+        <text x="16" y="104" font-size="9" fill="#5b6b7a">The same pipeline filters spam: message traits &#8594; model &#8594; score &#8594; inbox or junk folder. Recommendation ranks items by a score in the same way.</text>
+        <text x="16" y="124" font-size="9" fill="#8a99a8">Where the thresholds sit trades missed fraud against false alarms; that is a business decision, not something the model outputs.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 3</b> &mdash; The model produces a score; the decision comes from comparing it with thresholds chosen by the business. Nothing is created: an observed pattern is turned into a rank, a flag or a route.</div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec5">5. The structural limit: a closed answer space</h2>
+  <p>
+    The restriction of this paradigm is that it generalises over what it has already learned but does not <b>synthesise</b> a new
+    output in the generative sense. It identifies, classifies, ranks or predicts inside a space of answers already delimited by the
+    training data and by the task. The fraud model can only say <i>fraud</i> or <i>normal</i>; the visitor model can only return a
+    number; a recommender can only rank items that exist in its catalogue. That is why recommendation, detection and recognition
+    work well in this model, while open-ended creation demands another approach.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>]</sup>
+  </p>
+  <ul>
+    <li><b>Answer space fixed before training.</b> The classes, or the numeric range, are part of the problem statement; the model
+      never adds an option.</li>
+    <li><b>One label per example.</b> The supervision signal is explicit and expensive: someone had to write it down, and its
+      mistakes are learned as facts.</li>
+    <li><b>Strength where the space is known.</b> Triage, scoring, ranking and detection are exactly the tasks whose answers are a
+      class or a number, and the paradigm remains the right tool for them.</li>
+  </ul>
+
+  <h2 class="af-subHeader" id="sec6">6. Generative AI: learning patterns to compose new outputs</h2>
+  <p>
+    Generative AI learns the internal regularities of the data and uses them to produce new examples coherent with what it
+    learned.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup> The change of mindset is to leave
+    <i>which label do I assign?</i> for <i>which output can I compose from the observed patterns?</i>. Unlike traditional AI, it
+    can learn with far less dependence on exhaustive manual labeling: instead of requiring every example to come marked with the
+    right answer in a rigid format, it mines large volumes of data to capture <b>structure, sequence, context and implicit
+    relations</b>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup> That widens the scale of
+    training and changes the kind of knowledge the model can internalise.
+  </p>
+  <p>
+    The trick is that the <b>label comes from the data itself</b>. A language model is trained to predict the next token of a text
+    that already exists; a masked model is trained to fill in words that were hidden from it.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">8</a>]</sup>
+    Nobody had to annotate anything: every sentence on the web is simultaneously an input and its own answer. Formally the model
+    learns a probability distribution over whole sequences, factored one step at a time:
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(4)</span>
+    <span class="var">p</span>(<span class="var">x</span><sub>1</sub>, &hellip;, <span class="var">x</span><sub><span class="var">T</span></sub> | <span class="var">prompt</span>)
+    <span class="op">=</span>
+    <span style="font-size:18px; vertical-align:-2px;">&prod;</span><sub><span class="var">t</span>=1</sub><sup><span class="var">T</span></sup>&nbsp;
+    <span class="var">p</span>(<span class="var">x</span><sub><span class="var">t</span></sub> | <span class="var">prompt</span>, <span class="var">x</span><sub>&lt;<span class="var">t</span></sub>)
+  </div>
+  <p>
+    Compare (4) with (2). The classifier outputs a probability over a handful of classes fixed in advance. The generative model
+    outputs a probability over the <i>next piece</i> of an output, conditioned on the prompt and on everything it has already
+    written — and by chaining those steps it assigns probability to sequences nobody listed beforehand. The answer space is no
+    longer a menu; it is the set of all outputs the learned patterns make plausible.
+  </p>
+
+  <div class="af-panelBox light" id="boxSelfSup">
+    <div class="boxHdr" onclick="toggleBox('boxSelfSup')"><span class="disc">&#9660;</span>Self-supervision is still supervision, technically</div>
+    <div class="boxBody">
+      The training loop of a language model minimises a loss exactly like equation (1); what changes is where
+      <span class="var">y</span><sub><span class="var">i</span></sub> comes from. In supervised learning a person wrote it; in
+      self-supervised learning it is the next token of the very text being read.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+      That is why the "less dependence on labels" is real but not absolute: the labels are free and abundant, but they still carry
+      whatever the corpus contains, including its errors and its biases.
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec7">7. Conditioned composition: prompt, context and coherence over long inputs</h2>
+  <p>
+    The new point, against traditional prediction, is that the output is not pre-fixed as a known class. When the user provides an
+    instruction, the model uses the context it received to determine what to generate — text, image, sound or code. The result
+    remains <b>conditioned</b> on the learned patterns, but it is composed dynamically instead of selected from a list of possible
+    answers.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+  </p>
+  <p>
+    This capability enables automated writing, image generation, assisted code production and sophisticated machine
+    translation.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup> In real-time translation the
+    system does not merely identify isolated words; it <b>recomposes the message</b> coherently in the target language, which is
+    why neural translation overtook phrase-based systems once attention let the decoder look back at the right part of the
+    source.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup> The same principle is starting to
+    appear in wearables and embedded devices — smart glasses and smart rings — that use contextual generation to support continuous
+    interaction through the day: a caption for what the camera sees, a reply suggested from the last messages, a summary spoken
+    into an earpiece.
+  </p>
+  <p>
+    Modern generative models keep coherence over larger inputs because they process dependencies between distant parts of the
+    content. The Transformer, presented in the previous article, is the base that handles long context better and sustains
+    semantic continuity during generation: attention lets every position weigh every other one directly, instead of relying on a
+    state that fades with distance.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup> That is decisive
+    in dialogue, translation and long-form writing, where the meaning depends on what came much earlier.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Multiple choice versus writer: pick an option or build the answer <span class="figNum">&mdash; Figure 4</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 200" width="860" height="200" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Top lane: an input goes through a classifier that picks one of four fixed classes, class C highlighted. Bottom lane: a prompt goes through a generator that writes the answer one token at a time, each token conditioned on the previous ones, shown by dashed arcs">
+        <defs>
+          <linearGradient id="cfNode4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+          <marker id="cfArr4b" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#b08f3e"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="200" fill="#ffffff"/>
+        <!-- top lane: multiple choice -->
+        <text x="430" y="22" font-size="9" fill="#5b6b7a">fixed set of answers, known before training</text>
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="150" y="30" width="130" height="40" rx="3" fill="url(#cfNode4)" stroke="#7d8fa2"/><text x="215" y="54" font-weight="bold">input x</text>
+          <rect x="306" y="30" width="104" height="40" rx="3" fill="url(#cfNode4)" stroke="#7d8fa2"/><text x="358" y="54" font-weight="bold">classifier</text>
+          <rect x="430" y="30" width="56" height="40" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="458" y="54">class A</text>
+          <rect x="500" y="30" width="56" height="40" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="528" y="54">class B</text>
+          <rect x="570" y="30" width="56" height="40" rx="3" fill="url(#cfSel4)" stroke="#2e5378"/><text x="598" y="54" fill="#ffffff" font-weight="bold">class C</text>
+          <rect x="640" y="30" width="56" height="40" rx="3" fill="#ffffff" stroke="#a9b8c7"/><text x="668" y="54">class D</text>
+        </g>
+        <path d="M280 50 L306 50" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M410 50 L430 50" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <text x="710" y="54" font-size="9" fill="#5b6b7a">picks one</text>
+        <!-- bottom lane: writer -->
+        <text x="430" y="96" font-size="9" fill="#5b6b7a">answer composed one token at a time, each conditioned on the previous ones</text>
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="150" y="120" width="130" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="215" y="144" font-weight="bold">prompt</text>
+          <rect x="306" y="120" width="104" height="40" rx="3" fill="url(#cfNode4)" stroke="#7d8fa2"/><text x="358" y="144" font-weight="bold">generator</text>
+          <rect x="430" y="120" width="56" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="458" y="144">The</text>
+          <rect x="500" y="120" width="56" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="528" y="144">beach</text>
+          <rect x="570" y="120" width="56" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="598" y="144">was</text>
+          <rect x="640" y="120" width="56" height="40" rx="3" fill="url(#cfSel4)" stroke="#2e5378"/><text x="668" y="144" fill="#ffffff" font-weight="bold">packed</text>
+        </g>
+        <path d="M280 140 L306 140" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M410 140 L430 140" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M486 140 L500 140" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M556 140 L570 140" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M626 140 L640 140" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M696 140 L720 140" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr4)"/>
+        <path d="M458 120 Q528 104 598 120" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#cfArr4b)"/>
+        <path d="M528 120 Q598 104 668 120" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#cfArr4b)"/>
+        <text x="726" y="144" font-size="10" fill="#5b6b7a">&hellip; next token</text>
+        <!-- row labels on the vertical centre of the boxes -->
+        <text x="16" y="53.5" font-size="10" font-weight="bold" fill="#15497e">Multiple choice</text>
+        <text x="16" y="143.5" font-size="10" font-weight="bold" fill="#15497e">Writer</text>
+        <text x="16" y="186" font-size="9" fill="#8a99a8">Top: the answer must be one of the given options. Bottom: the answer did not exist before; it is built under the constraints of the prompt and the learned patterns.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 4</b> &mdash; The multiple-choice student chooses among alternatives that were given; the writer produces a new story from the repertoire it accumulated. The dashed arcs are the context: every token is chosen in the light of the ones already written, which is what keeps a long output coherent.</div>
+  </div>
+
+  <p>The two ways of answering fit in a few lines of code. The shape of the return value is the whole difference:</p>
+  <div class="cf-codeBox">
+    <div class="codeHdr">two_ways_to_answer.py <span class="lang">&mdash; Python</span><button class="af-button small" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="k">from</span> math <span class="k">import</span> exp
+
+CLASSES = [<span class="s">"normal"</span>, <span class="s">"fraud"</span>]          <span class="c"># closed answer space: fixed before training</span>
+
+<span class="k">def</span> classify(features, weights, bias, threshold=<span class="n">0.5</span>):
+    <span class="c"># traditional AI: a score for the positive class, then a decision — equation (2)</span>
+    z = <span class="k">sum</span>(w * x <span class="k">for</span> w, x <span class="k">in</span> <span class="k">zip</span>(weights, features)) + bias
+    score = <span class="n">1</span> / (<span class="n">1</span> + exp(-z))
+    <span class="k">return</span> CLASSES[<span class="k">int</span>(score &gt;= threshold)], score   <span class="c"># one of the known options, plus the score</span>
+
+<span class="k">def</span> predict_value(features, weights, bias):
+    <span class="c"># regression: a number, not a class — equation (3)</span>
+    <span class="k">return</span> <span class="k">sum</span>(w * x <span class="k">for</span> w, x <span class="k">in</span> <span class="k">zip</span>(weights, features)) + bias
+
+<span class="k">def</span> compose(prompt_tokens, model, max_new=<span class="n">50</span>, stop=<span class="s">"&lt;eos&gt;"</span>):
+    <span class="c"># generative AI: the answer is built token by token — equation (4)</span>
+    context = <span class="k">list</span>(prompt_tokens)
+    <span class="k">for</span> _ <span class="k">in</span> <span class="k">range</span>(max_new):
+        distribution = model.next_token_distribution(context)   <span class="c"># p(x_t | prompt, x_&lt;t)</span>
+        token = distribution.sample()
+        <span class="k">if</span> token == stop:
+            <span class="k">break</span>
+        context.append(token)          <span class="c"># what was written becomes part of the context</span>
+    <span class="k">return</span> context[<span class="k">len</span>(prompt_tokens):]   <span class="c"># a sequence nobody listed beforehand</span></pre>
+  </div>
+
+  <h2 class="af-subHeader" id="sec8">8. Multiple choice versus writer: choosing the paradigm for the task</h2>
+  <p>
+    The most useful analogy is to compare traditional AI to a multiple-choice student and generative AI to a writer. The first
+    chooses among alternatives already given; the second produces a new story from the repertoire it accumulated. The practical
+    implication is direct: traditional systems are strong when the answer space is known, while generative systems stand out when
+    the task demands <b>composition, reformulation and creation conditioned on context</b>. Table 1 puts the two side by side.
+  </p>
+
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead><tr><th style="width:190px;">Aspect</th><th>Traditional AI</th><th>Generative AI</th></tr></thead>
+    <tbody>
+      <tr><td>Question it answers</td><td>Which class, or which value?</td><td>Which output can be composed from the patterns?</td></tr>
+      <tr class="band"><td>Training data</td><td>Labeled examples, one explicit target each</td><td>Large raw corpora; the target comes from the data itself</td></tr>
+      <tr><td>Answer space</td><td><span class="st ok">Closed</span> &mdash; fixed before training</td><td><span class="st warn">Open</span> &mdash; any sequence the patterns make plausible</td></tr>
+      <tr class="band"><td>Typical tasks</td><td>Fraud and spam detection, demand forecasting, recommendation, recognition</td><td>Writing, code, image and sound generation, translation, dialogue</td></tr>
+      <tr><td>Output</td><td>A class, a number, a rank, a score</td><td>Text, image, sound or code composed at interaction time</td></tr>
+      <tr class="band"><td>Controlled by</td><td>Features and the decision threshold</td><td>The prompt and the context window</td></tr>
+      <tr><td>Main failure mode</td><td><span class="st warn">Wrong or biased labels</span> learned as facts</td><td><span class="st err">Fluent but wrong output</span> that reads as correct</td></tr>
+      <tr class="band"><td>Human role</td><td>Set thresholds, audit the labels, review flagged cases</td><td>Specify the intent, inspect and correct the output</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Table 1 &mdash; The two paradigms compared. Neither replaces the other: a bank runs a classifier on every transaction and a generative model only where a text has to be written.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup></p>
+
+  <div class="af-panelBox light" id="boxBoth">
+    <div class="boxHdr" onclick="toggleBox('boxBoth')"><span class="disc">&#9660;</span>Most real systems use both</div>
+    <div class="boxBody">
+      The fraud pipeline of Figure 3 is traditional end to end, and should stay that way: its answer is a class and its errors need
+      to be measurable. What generative AI adds is around it — the explanation written for the analyst who reviews a flagged case,
+      the message drafted to the customer, the SQL generated to investigate a pattern. Deciding which parts of a workflow have a
+      closed answer and which need composition is the first design question, well before choosing a model.
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec9">9. Conclusion</h2>
+  <p>
+    The line between the two paradigms is not intelligence, size or age; it is the shape of the answer. Traditional AI learns from
+    labeled examples to pick a class or estimate a number inside a space defined before training, which makes it precise, auditable
+    and the right tool for detection, ranking and forecasting. Generative AI learns the patterns of the data itself and composes an
+    output that did not exist as an option, conditioned on the prompt and on a context that the Transformer lets it hold over long
+    stretches. Ask first what shape the answer has: if it is a menu, use the multiple-choice student; if it has to be written, call
+    the writer — and keep a human reading what the writer produces.
+  </p>
+
+</div><!-- /cf-article -->
+
+<!-- references -->
+<ul class="cf-refList">
+  <li><span class="refNum">[1]</span><span>A. Vaswani; N. Shazeer; N. Parmar <i>et al.</i> &mdash; <cite>Attention Is All You Need</cite>, NeurIPS 2017. <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a> <span class="refSrc">(accessed on 09/10/2026)</span></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[2]</span><span>T. Hastie; R. Tibshirani; J. Friedman &mdash; <cite>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</cite>, 2nd ed., Springer, 2009. <a href="https://hastie.su.domains/ElemStatLearn/">hastie.su.domains/ElemStatLearn</a></span><span class="refType cf-label">Book</span></li>
+  <li><span class="refNum">[3]</span><span>A. Radford; K. Narasimhan; T. Salimans; I. Sutskever &mdash; <cite>Improving Language Understanding by Generative Pre-Training</cite>, OpenAI, 2018. <a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">cdn.openai.com</a></span><span class="refType cf-label">Technical report</span></li>
+  <li><span class="refNum">[4]</span><span>T. B. Brown; B. Mann; N. Ryder <i>et al.</i> &mdash; <cite>Language Models are Few-Shot Learners</cite>, NeurIPS 2020. <a href="https://arxiv.org/abs/2005.14165">arXiv:2005.14165</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[5]</span><span>C. G. Northcutt; A. Athalye; J. Mueller &mdash; <cite>Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks</cite>, NeurIPS 2021 Datasets and Benchmarks Track. <a href="https://arxiv.org/abs/2103.14749">arXiv:2103.14749</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[6]</span><span>R. J. Bolton; D. J. Hand &mdash; <cite>Statistical Fraud Detection: A Review</cite>, Statistical Science 17(3), 2002. <a href="https://doi.org/10.1214/ss/1042727940">doi:10.1214/ss/1042727940</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[7]</span><span>M. Sahami; S. Dumais; D. Heckerman; E. Horvitz &mdash; <cite>A Bayesian Approach to Filtering Junk E-Mail</cite>, AAAI Workshop on Learning for Text Categorization, 1998. <a href="https://www.microsoft.com/en-us/research/publication/a-bayesian-approach-to-filtering-junk-e-mail/">microsoft.com/research</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[8]</span><span>J. Devlin; M.-W. Chang; K. Lee; K. Toutanova &mdash; <cite>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</cite>, NAACL 2019. <a href="https://arxiv.org/abs/1810.04805">arXiv:1810.04805</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[9]</span><span>M. Chen; J. Tworek; H. Jun <i>et al.</i> &mdash; <cite>Evaluating Large Language Models Trained on Code</cite>, 2021. <a href="https://arxiv.org/abs/2107.03374">arXiv:2107.03374</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[10]</span><span>D. Bahdanau; K. Cho; Y. Bengio &mdash; <cite>Neural Machine Translation by Jointly Learning to Align and Translate</cite>, ICLR 2015. <a href="https://arxiv.org/abs/1409.0473">arXiv:1409.0473</a></span><span class="refType cf-label">Academic paper</span></li>
+</ul>
+<div class="af-spacer"></div>
+<h2 class="af-subHeader" style="margin-top:0;">Further reading</h2>
+<ul class="cf-refList">
+  <li><span class="refNum">[a]</span><span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016. <a href="https://www.deeplearningbook.org/">deeplearningbook.org</a></span><span class="refType cf-label">Book</span></li>
+  <li><span class="refNum">[b]</span><span>scikit-learn developers &mdash; <cite>Supervised learning</cite>, scikit-learn User Guide. <a href="https://scikit-learn.org/stable/supervised_learning.html">scikit-learn.org</a></span><span class="refType cf-label">Documentation</span></li>
+</ul>
+<p class="tip" style="margin-top:8px;">References verified on 09/10/2026 and checked during technical review. External links open outside Codeflow.</p>

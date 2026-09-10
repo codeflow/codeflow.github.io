@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Data feeding two paths: a multiple-choice card with one option picked, and a page being written with a spark">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <!-- data: a stack of discs at the top centre -->
+  <g transform="translate(134 14)">
+    <ellipse cx="26" cy="8" rx="26" ry="8" fill="#e8f0fa" stroke="#7d8fa2"/>
+    <path d="M0 8v14c0 4.4 11.6 8 26 8s26-3.6 26-8V8" fill="#ffffff" stroke="#7d8fa2"/>
+    <path d="M0 22v14c0 4.4 11.6 8 26 8s26-3.6 26-8V22" fill="#ffffff" stroke="#7d8fa2"/>
+    <path d="M0 22c0 4.4 11.6 8 26 8s26-3.6 26-8" fill="none" stroke="#7d8fa2"/>
+  </g>
+  <!-- two paths out of the data -->
+  <path d="M136 46 C100 60 90 76 84 92" fill="none" stroke="#3d6791" stroke-width="2" marker-end="url(#ar)"/>
+  <path d="M184 46 C220 60 230 76 236 92" fill="none" stroke="#3d6791" stroke-width="2" marker-end="url(#ar)"/>
+  <!-- left: multiple-choice card, one option picked -->
+  <g transform="translate(34 98)">
+    <rect x="0" y="0" width="100" height="84" rx="5" fill="#ffffff" stroke="#15497e" stroke-width="1.5"/>
+    <g stroke="#a9b8c7" stroke-width="3" stroke-linecap="round">
+      <path d="M30 18h54M30 36h44M30 54h50M30 72h40"/>
+    </g>
+    <circle cx="16" cy="18" r="6" fill="#ffffff" stroke="#6b90b6" stroke-width="1.5"/>
+    <circle cx="16" cy="36" r="6" fill="#ffffff" stroke="#6b90b6" stroke-width="1.5"/>
+    <circle cx="16" cy="54" r="6" fill="url(#hi)" stroke="#2e5378" stroke-width="1.5"/>
+    <path d="M12.5 54l2.5 2.5 4.5-5" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="16" cy="72" r="6" fill="#ffffff" stroke="#6b90b6" stroke-width="1.5"/>
+  </g>
+  <!-- right: a page being written, with a pen and a spark -->
+  <g transform="translate(196 98)">
+    <path d="M0 0h62l20 20v64H0z" fill="#ffffff" stroke="#15497e" stroke-width="1.5"/>
+    <path d="M62 0v20h20" fill="#cfe2f7" stroke="#15497e" stroke-width="1.5"/>
+    <g stroke="#8fa6c0" stroke-width="3" stroke-linecap="round"><path d="M12 34h44M12 48h52M12 62h30"/></g>
+    <path d="M46 62h8" stroke="#15497e" stroke-width="3" stroke-linecap="round"/>
+    <path d="M58 56l14-14 6 6-14 14-8 2z" fill="#f2c94c" stroke="#b08f3e" stroke-linejoin="round"/>
+    <path d="M56 78l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="#f2c94c" stroke="#b08f3e"/>
+  </g>
+  <rect x="0" y="194" width="320" height="6" fill="#3d6791"/>
+</svg>
