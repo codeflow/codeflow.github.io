@@ -9,6 +9,13 @@ ui:
   home: Inicio
   menu: Menú
   cancel: Cancelar
+  content_tab: "Contenido"
+  stack_title: "Stack de contenido"
+  stack_intro: "Mapa interno de planificación: los temas y subtemas que Codeflow pretende cubrir, un área por pestaña. Expanda un tema para ver su alcance."
+  stack_se: "Ingeniería de Software"
+  stack_expand: "Expandir todo"
+  stack_collapse: "Contraer todo"
+  stack_count: "{n} temas, {m} subtemas"
   close_menu: Cerrar menú
   search: Buscar
   search_content: Buscar contenido

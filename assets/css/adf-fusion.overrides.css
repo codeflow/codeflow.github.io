@@ -861,3 +861,21 @@ body.cf-sheetOpen { overflow: hidden; }
 @media (max-width: 768px) {
   .cf-post .postTags { display: none; }
 }
+
+
+/* ---------- Página interna /stack/: sem menu lateral, árvore de tópicos com descrição ---------- */
+.af-shell.cf-noSidebar .af-panelMain { padding: 10px 16px 18px; }
+.cf-stackIntro { margin: 0 0 10px; }
+.cf-stackTabs { margin-top: 0; }
+.cf-stackBar { display: flex; align-items: center; justify-content: space-between; margin: 0 0 8px; }
+.cf-stackActions .af-button { margin-left: 4px; }
+.cf-stackTree .af-treeRow { align-items: flex-start; padding: 4px 6px; }
+.cf-stackTree .af-treeRow .tw { margin-top: 3px; }
+.cf-stackTree .af-treeRow svg { flex: none; margin-top: 1px; }
+.cf-stackTree .af-treeRow .lbl { white-space: normal; overflow: visible; display: block; line-height: 1.4; }
+.cf-stackTree .af-treeRow .lbl b { color: #15497e; }
+.cf-stackTree .af-treeRow.topic .lbl b { font-size: 12px; }
+.cf-stackTree .af-treeRow .desc { display: block; color: #5b6b7a; }
+.cf-stackTree .af-treeNode.closed > ul { display: none; }
+.cf-stackTree ul { padding-left: 22px; }
+.cf-stackTree > .af-treeNode { margin-bottom: 2px; }

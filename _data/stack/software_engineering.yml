@@ -1,0 +1,430 @@
+# Content stack — Software Engineering. Internal planning map: topics and subtopics with a one-sentence scope each.
+# Names and descriptions in every site language (en, pt-BR, es). Rendered by /stack/ (unpublished page).
+- id: foundations
+  name: { en: "Computing Foundations", pt-BR: "Fundamentos de Computação", es: "Fundamentos de Computación" }
+  desc: { en: "The theory and machinery every engineer builds on: how programs are represented, executed and bounded.", pt-BR: "A teoria e a maquinaria sobre as quais todo engenheiro constrói: como programas são representados, executados e limitados.", es: "La teoría y la maquinaria sobre las que construye todo ingeniero: cómo se representan, ejecutan y acotan los programas." }
+  children:
+    - id: algorithms
+      name: { en: "Algorithms and Complexity", pt-BR: "Algoritmos e Complexidade", es: "Algoritmos y Complejidad" }
+      desc: { en: "Designing procedures that solve problems correctly and analysing their time and space cost with asymptotic notation.", pt-BR: "Projetar procedimentos que resolvem problemas corretamente e analisar seu custo de tempo e espaço com notação assintótica.", es: "Diseñar procedimientos que resuelven problemas correctamente y analizar su costo en tiempo y espacio con notación asintótica." }
+    - id: data-structures
+      name: { en: "Data Structures", pt-BR: "Estruturas de Dados", es: "Estructuras de Datos" }
+      desc: { en: "Arrays, lists, trees, hashes and graphs: how data is organised in memory and what each layout makes cheap or expensive.", pt-BR: "Vetores, listas, árvores, hashes e grafos: como os dados são organizados na memória e o que cada arranjo torna barato ou caro.", es: "Arreglos, listas, árboles, hashes y grafos: cómo se organizan los datos en memoria y qué vuelve barato o caro cada disposición." }
+    - id: computer-architecture
+      name: { en: "Computer Architecture", pt-BR: "Arquitetura de Computadores", es: "Arquitectura de Computadores" }
+      desc: { en: "Processors, memory hierarchy, caches and I/O: the hardware model that explains why some code is fast and some is not.", pt-BR: "Processadores, hierarquia de memória, caches e E/S: o modelo de hardware que explica por que certo código é rápido e outro não.", es: "Procesadores, jerarquía de memoria, cachés y E/S: el modelo de hardware que explica por qué cierto código es rápido y otro no." }
+    - id: operating-systems
+      name: { en: "Operating Systems", pt-BR: "Sistemas Operacionais", es: "Sistemas Operativos" }
+      desc: { en: "Processes, threads, scheduling, virtual memory and file systems, and how applications negotiate with the kernel.", pt-BR: "Processos, threads, escalonamento, memória virtual e sistemas de arquivos, e como as aplicações negociam com o kernel.", es: "Procesos, hilos, planificación, memoria virtual y sistemas de archivos, y cómo las aplicaciones negocian con el núcleo." }
+    - id: networks
+      name: { en: "Computer Networks", pt-BR: "Redes de Computadores", es: "Redes de Computadores" }
+      desc: { en: "The protocol stack from IP to HTTP, latency and bandwidth, and the failure modes that distributed software inherits from the wire.", pt-BR: "A pilha de protocolos do IP ao HTTP, latência e largura de banda, e os modos de falha que o software distribuído herda do cabo.", es: "La pila de protocolos del IP al HTTP, latencia y ancho de banda, y los modos de falla que el software distribuido hereda del cable." }
+    - id: compilers
+      name: { en: "Languages, Compilers and Runtimes", pt-BR: "Linguagens, Compiladores e Runtimes", es: "Lenguajes, Compiladores y Runtimes" }
+      desc: { en: "How source code becomes executable behaviour: parsing, type systems, code generation, garbage collection and virtual machines.", pt-BR: "Como o código-fonte vira comportamento executável: análise sintática, sistemas de tipos, geração de código, coleta de lixo e máquinas virtuais.", es: "Cómo el código fuente se convierte en comportamiento ejecutable: análisis sintáctico, sistemas de tipos, generación de código, recolección de basura y máquinas virtuales." }
+    - id: discrete-math
+      name: { en: "Discrete Mathematics and Logic", pt-BR: "Matemática Discreta e Lógica", es: "Matemática Discreta y Lógica" }
+      desc: { en: "Sets, relations, graphs, combinatorics and propositional logic as the vocabulary of specifications, proofs and data models.", pt-BR: "Conjuntos, relações, grafos, combinatória e lógica proposicional como o vocabulário de especificações, provas e modelos de dados.", es: "Conjuntos, relaciones, grafos, combinatoria y lógica proposicional como el vocabulario de especificaciones, pruebas y modelos de datos." }
+
+- id: requirements
+  name: { en: "Requirements Engineering", pt-BR: "Engenharia de Requisitos", es: "Ingeniería de Requisitos" }
+  desc: { en: "Discovering, negotiating, specifying and validating what a system must do and how well, before and while it is built.", pt-BR: "Descobrir, negociar, especificar e validar o que um sistema deve fazer e quão bem, antes e durante a construção.", es: "Descubrir, negociar, especificar y validar qué debe hacer un sistema y con qué calidad, antes y durante su construcción." }
+  children:
+    - id: elicitation
+      name: { en: "Elicitation and Discovery", pt-BR: "Elicitação e Descoberta", es: "Elicitación y Descubrimiento" }
+      desc: { en: "Interviews, workshops, observation and document analysis to surface needs that stakeholders cannot state on their own.", pt-BR: "Entrevistas, workshops, observação e análise de documentos para revelar necessidades que os interessados não conseguem enunciar sozinhos.", es: "Entrevistas, talleres, observación y análisis de documentos para sacar a la luz necesidades que los interesados no logran enunciar por sí solos." }
+    - id: analysis
+      name: { en: "Analysis and Negotiation", pt-BR: "Análise e Negociação", es: "Análisis y Negociación" }
+      desc: { en: "Resolving conflicts, priorities and trade-offs among stakeholders so the requirement set is consistent and feasible.", pt-BR: "Resolver conflitos, prioridades e trade-offs entre os interessados para que o conjunto de requisitos seja consistente e viável.", es: "Resolver conflictos, prioridades y compromisos entre interesados para que el conjunto de requisitos sea consistente y factible." }
+    - id: specification
+      name: { en: "Specification and User Stories", pt-BR: "Especificação e Histórias de Usuário", es: "Especificación e Historias de Usuario" }
+      desc: { en: "Writing requirements that are unambiguous and testable, from formal documents to user stories with acceptance criteria.", pt-BR: "Escrever requisitos sem ambiguidade e testáveis, de documentos formais a histórias de usuário com critérios de aceite.", es: "Escribir requisitos sin ambigüedad y comprobables, desde documentos formales hasta historias de usuario con criterios de aceptación." }
+    - id: nfr
+      name: { en: "Quality Attributes (Non-functional Requirements)", pt-BR: "Atributos de Qualidade (Requisitos Não Funcionais)", es: "Atributos de Calidad (Requisitos No Funcionales)" }
+      desc: { en: "Performance, availability, security, usability and other -ilities, expressed as measurable targets that drive architecture.", pt-BR: "Desempenho, disponibilidade, segurança, usabilidade e outros atributos, expressos como metas mensuráveis que orientam a arquitetura.", es: "Rendimiento, disponibilidad, seguridad, usabilidad y otros atributos, expresados como metas medibles que orientan la arquitectura." }
+    - id: validation
+      name: { en: "Validation and Acceptance", pt-BR: "Validação e Aceite", es: "Validación y Aceptación" }
+      desc: { en: "Confirming with stakeholders that the specified system is the right one, through reviews, prototypes and acceptance tests.", pt-BR: "Confirmar com os interessados que o sistema especificado é o certo, por revisões, protótipos e testes de aceite.", es: "Confirmar con los interesados que el sistema especificado es el correcto, mediante revisiones, prototipos y pruebas de aceptación." }
+    - id: traceability
+      name: { en: "Traceability and Change", pt-BR: "Rastreabilidade e Mudança", es: "Trazabilidad y Cambio" }
+      desc: { en: "Linking requirements to design, code and tests, and managing their evolution as the product and the business change.", pt-BR: "Ligar requisitos a projeto, código e testes, e administrar sua evolução conforme produto e negócio mudam.", es: "Vincular requisitos con diseño, código y pruebas, y administrar su evolución a medida que cambian el producto y el negocio." }
+    - id: domain-modeling
+      name: { en: "Domain Modelling", pt-BR: "Modelagem de Domínio", es: "Modelado de Dominio" }
+      desc: { en: "Capturing the concepts, rules and language of the business as a model shared by analysts and developers.", pt-BR: "Capturar conceitos, regras e linguagem do negócio num modelo compartilhado por analistas e desenvolvedores.", es: "Capturar los conceptos, reglas y lenguaje del negocio en un modelo compartido por analistas y desarrolladores." }
+
+- id: design
+  name: { en: "Software Design", pt-BR: "Projeto de Software", es: "Diseño de Software" }
+  desc: { en: "Turning requirements into a structure of components, interfaces and responsibilities that can be built and changed.", pt-BR: "Transformar requisitos numa estrutura de componentes, interfaces e responsabilidades que possa ser construída e alterada.", es: "Convertir requisitos en una estructura de componentes, interfaces y responsabilidades que pueda construirse y cambiarse." }
+  children:
+    - id: principles
+      name: { en: "Design Principles", pt-BR: "Princípios de Projeto", es: "Principios de Diseño" }
+      desc: { en: "Cohesion, coupling, information hiding, SOLID and the other rules of thumb that keep change local.", pt-BR: "Coesão, acoplamento, ocultação de informação, SOLID e as demais regras práticas que mantêm a mudança localizada.", es: "Cohesión, acoplamiento, ocultación de información, SOLID y las demás reglas prácticas que mantienen el cambio localizado." }
+    - id: patterns
+      name: { en: "Design Patterns", pt-BR: "Padrões de Projeto", es: "Patrones de Diseño" }
+      desc: { en: "Named, reusable solutions to recurring design problems, from the classic catalogue to language-specific idioms.", pt-BR: "Soluções nomeadas e reutilizáveis para problemas recorrentes de projeto, do catálogo clássico aos idiomas de cada linguagem.", es: "Soluciones nombradas y reutilizables para problemas recurrentes de diseño, desde el catálogo clásico hasta los modismos de cada lenguaje." }
+    - id: oo-design
+      name: { en: "Object-Oriented Design", pt-BR: "Projeto Orientado a Objetos", es: "Diseño Orientado a Objetos" }
+      desc: { en: "Classes, responsibilities, collaborations, inheritance versus composition, and how to model behaviour with objects.", pt-BR: "Classes, responsabilidades, colaborações, herança versus composição, e como modelar comportamento com objetos.", es: "Clases, responsabilidades, colaboraciones, herencia frente a composición, y cómo modelar comportamiento con objetos." }
+    - id: functional-design
+      name: { en: "Functional and Reactive Design", pt-BR: "Projeto Funcional e Reativo", es: "Diseño Funcional y Reactivo" }
+      desc: { en: "Immutability, pure functions, composition and streams as a way to structure programs that are easier to reason about.", pt-BR: "Imutabilidade, funções puras, composição e fluxos como forma de estruturar programas mais fáceis de raciocinar.", es: "Inmutabilidad, funciones puras, composición y flujos como forma de estructurar programas más fáciles de razonar." }
+    - id: ddd
+      name: { en: "Domain-Driven Design", pt-BR: "Domain-Driven Design", es: "Diseño Guiado por el Dominio" }
+      desc: { en: "Bounded contexts, aggregates, ubiquitous language and strategic design for systems whose complexity lives in the business.", pt-BR: "Contextos delimitados, agregados, linguagem ubíqua e projeto estratégico para sistemas cuja complexidade está no negócio.", es: "Contextos delimitados, agregados, lenguaje ubicuo y diseño estratégico para sistemas cuya complejidad vive en el negocio." }
+    - id: api-design
+      name: { en: "API and Interface Design", pt-BR: "Projeto de APIs e Interfaces", es: "Diseño de APIs e Interfaces" }
+      desc: { en: "Contracts between components and teams: REST, GraphQL, gRPC, versioning, error handling and backward compatibility.", pt-BR: "Contratos entre componentes e times: REST, GraphQL, gRPC, versionamento, tratamento de erros e compatibilidade retroativa.", es: "Contratos entre componentes y equipos: REST, GraphQL, gRPC, versionado, manejo de errores y compatibilidad hacia atrás." }
+    - id: modeling-notations
+      name: { en: "Modelling Notations", pt-BR: "Notações de Modelagem", es: "Notaciones de Modelado" }
+      desc: { en: "UML, C4 and other diagrams as tools for thinking and communicating structure and behaviour, not as ends in themselves.", pt-BR: "UML, C4 e outros diagramas como ferramentas para pensar e comunicar estrutura e comportamento, não como fins em si.", es: "UML, C4 y otros diagramas como herramientas para pensar y comunicar estructura y comportamiento, no como fines en sí mismos." }
+
+- id: architecture
+  name: { en: "Software Architecture", pt-BR: "Arquitetura de Software", es: "Arquitectura de Software" }
+  desc: { en: "The decisions that are expensive to change: system decomposition, styles, integration and the trade-offs among quality attributes.", pt-BR: "As decisões caras de mudar: decomposição do sistema, estilos, integração e os trade-offs entre atributos de qualidade.", es: "Las decisiones caras de cambiar: descomposición del sistema, estilos, integración y los compromisos entre atributos de calidad." }
+  children:
+    - id: styles
+      name: { en: "Architectural Styles", pt-BR: "Estilos Arquiteturais", es: "Estilos Arquitectónicos" }
+      desc: { en: "Layered, hexagonal, microkernel, event-driven, monolith and microservices: what each optimises for and what it costs.", pt-BR: "Em camadas, hexagonal, microkernel, orientado a eventos, monólito e microsserviços: o que cada um otimiza e o que custa.", es: "En capas, hexagonal, micronúcleo, orientado a eventos, monolito y microservicios: qué optimiza cada uno y qué cuesta." }
+    - id: decisions
+      name: { en: "Architectural Decisions and Documentation", pt-BR: "Decisões Arquiteturais e Documentação", es: "Decisiones Arquitectónicas y Documentación" }
+      desc: { en: "Recording the why behind the structure with decision records, views and lightweight architecture documents.", pt-BR: "Registrar o porquê da estrutura com registros de decisão, visões e documentos de arquitetura enxutos.", es: "Registrar el porqué de la estructura con registros de decisión, vistas y documentos de arquitectura ligeros." }
+    - id: quality-tradeoffs
+      name: { en: "Quality Attribute Trade-offs", pt-BR: "Trade-offs entre Atributos de Qualidade", es: "Compromisos entre Atributos de Calidad" }
+      desc: { en: "Evaluating architectures against scenarios of performance, availability, modifiability and security, and choosing deliberately.", pt-BR: "Avaliar arquiteturas contra cenários de desempenho, disponibilidade, modificabilidade e segurança, e escolher de forma deliberada.", es: "Evaluar arquitecturas frente a escenarios de rendimiento, disponibilidad, modificabilidad y seguridad, y elegir de forma deliberada." }
+    - id: integration
+      name: { en: "Integration and Messaging", pt-BR: "Integração e Mensageria", es: "Integración y Mensajería" }
+      desc: { en: "Synchronous and asynchronous communication, queues, event streams, sagas and the consistency models each implies.", pt-BR: "Comunicação síncrona e assíncrona, filas, fluxos de eventos, sagas e os modelos de consistência que cada um implica.", es: "Comunicación síncrona y asíncrona, colas, flujos de eventos, sagas y los modelos de consistencia que cada uno implica." }
+    - id: modular-monolith
+      name: { en: "Modularity and Service Boundaries", pt-BR: "Modularidade e Fronteiras de Serviço", es: "Modularidad y Fronteras de Servicio" }
+      desc: { en: "Drawing boundaries that follow the domain and the team structure, and knowing when to split a system and when not to.", pt-BR: "Traçar fronteiras que seguem o domínio e a estrutura dos times, e saber quando dividir um sistema e quando não.", es: "Trazar fronteras que siguen el dominio y la estructura de los equipos, y saber cuándo dividir un sistema y cuándo no." }
+    - id: evolution
+      name: { en: "Evolutionary Architecture", pt-BR: "Arquitetura Evolutiva", es: "Arquitectura Evolutiva" }
+      desc: { en: "Fitness functions, incremental change and migration strategies that let the architecture change without a rewrite.", pt-BR: "Funções de aptidão, mudança incremental e estratégias de migração que permitem a arquitetura mudar sem reescrita.", es: "Funciones de aptitud, cambio incremental y estrategias de migración que permiten cambiar la arquitectura sin reescribirla." }
+    - id: frontend-architecture
+      name: { en: "Front-end and Client Architecture", pt-BR: "Arquitetura de Front-end e Clientes", es: "Arquitectura de Front-end y Clientes" }
+      desc: { en: "State management, rendering strategies, component models and the split of responsibilities between client and server.", pt-BR: "Gestão de estado, estratégias de renderização, modelos de componentes e a divisão de responsabilidades entre cliente e servidor.", es: "Gestión de estado, estrategias de renderizado, modelos de componentes y el reparto de responsabilidades entre cliente y servidor." }
+
+- id: construction
+  name: { en: "Software Construction", pt-BR: "Construção de Software", es: "Construcción de Software" }
+  desc: { en: "The craft of writing code that works, reads well and survives its authors: languages, tools, habits and reviews.", pt-BR: "O ofício de escrever código que funciona, lê bem e sobrevive aos autores: linguagens, ferramentas, hábitos e revisões.", es: "El oficio de escribir código que funciona, se lee bien y sobrevive a sus autores: lenguajes, herramientas, hábitos y revisiones." }
+  children:
+    - id: paradigms
+      name: { en: "Programming Paradigms and Languages", pt-BR: "Paradigmas e Linguagens de Programação", es: "Paradigmas y Lenguajes de Programación" }
+      desc: { en: "Imperative, object-oriented, functional and logic styles, and how a language's model shapes the programs written in it.", pt-BR: "Estilos imperativo, orientado a objetos, funcional e lógico, e como o modelo de uma linguagem molda os programas escritos nela.", es: "Estilos imperativo, orientado a objetos, funcional y lógico, y cómo el modelo de un lenguaje moldea los programas escritos en él." }
+    - id: clean-code
+      name: { en: "Readable Code and Conventions", pt-BR: "Código Legível e Convenções", es: "Código Legible y Convenciones" }
+      desc: { en: "Naming, structure, comments and style guides that make code understandable to the next person, including its author.", pt-BR: "Nomes, estrutura, comentários e guias de estilo que tornam o código compreensível para a próxima pessoa, inclusive o autor.", es: "Nombres, estructura, comentarios y guías de estilo que hacen el código comprensible para la siguiente persona, incluido su autor." }
+    - id: error-handling
+      name: { en: "Error Handling and Robustness", pt-BR: "Tratamento de Erros e Robustez", es: "Manejo de Errores y Robustez" }
+      desc: { en: "Exceptions, result types, defensive programming, retries and the discipline of failing loudly and recovering safely.", pt-BR: "Exceções, tipos de resultado, programação defensiva, novas tentativas e a disciplina de falhar de forma visível e recuperar com segurança.", es: "Excepciones, tipos de resultado, programación defensiva, reintentos y la disciplina de fallar de forma visible y recuperarse con seguridad." }
+    - id: concurrency
+      name: { en: "Concurrency and Parallelism", pt-BR: "Concorrência e Paralelismo", es: "Concurrencia y Paralelismo" }
+      desc: { en: "Threads, async models, locks, actors and data races: getting correctness before speed when many things happen at once.", pt-BR: "Threads, modelos assíncronos, travas, atores e condições de corrida: obter correção antes de velocidade quando muita coisa acontece ao mesmo tempo.", es: "Hilos, modelos asíncronos, bloqueos, actores y condiciones de carrera: lograr corrección antes que velocidad cuando muchas cosas ocurren a la vez." }
+    - id: refactoring
+      name: { en: "Refactoring", pt-BR: "Refatoração", es: "Refactorización" }
+      desc: { en: "Improving the internal structure of code in small, behaviour-preserving steps backed by tests.", pt-BR: "Melhorar a estrutura interna do código em passos pequenos que preservam o comportamento, apoiados por testes.", es: "Mejorar la estructura interna del código en pasos pequeños que preservan el comportamiento, respaldados por pruebas." }
+    - id: code-review
+      name: { en: "Code Review", pt-BR: "Revisão de Código", es: "Revisión de Código" }
+      desc: { en: "Reviewing for correctness, design and knowledge sharing, with practices that keep reviews fast and respectful.", pt-BR: "Revisar por correção, projeto e compartilhamento de conhecimento, com práticas que mantêm as revisões rápidas e respeitosas.", es: "Revisar por corrección, diseño e intercambio de conocimiento, con prácticas que mantienen las revisiones rápidas y respetuosas." }
+    - id: tooling
+      name: { en: "Developer Tooling", pt-BR: "Ferramentas do Desenvolvedor", es: "Herramientas del Desarrollador" }
+      desc: { en: "Editors, debuggers, linters, formatters, build tools and package managers as multipliers of individual productivity.", pt-BR: "Editores, depuradores, linters, formatadores, ferramentas de build e gerenciadores de pacotes como multiplicadores da produtividade individual.", es: "Editores, depuradores, linters, formateadores, herramientas de build y gestores de paquetes como multiplicadores de la productividad individual." }
+    - id: ai-assisted
+      name: { en: "AI-assisted Development", pt-BR: "Desenvolvimento Assistido por IA", es: "Desarrollo Asistido por IA" }
+      desc: { en: "Using code assistants and agents for drafts, tests and exploration while keeping judgement, review and ownership with people.", pt-BR: "Usar assistentes de código e agents para rascunhos, testes e exploração mantendo julgamento, revisão e responsabilidade com pessoas.", es: "Usar asistentes de código y agents para borradores, pruebas y exploración manteniendo el juicio, la revisión y la responsabilidad en las personas." }
+
+- id: testing
+  name: { en: "Software Testing", pt-BR: "Testes de Software", es: "Pruebas de Software" }
+  desc: { en: "Gaining justified confidence that the software does what it should, at every level from a function to the whole system.", pt-BR: "Obter confiança justificada de que o software faz o que deve, em todos os níveis, de uma função ao sistema inteiro.", es: "Obtener confianza justificada de que el software hace lo que debe, en todos los niveles, de una función al sistema completo." }
+  children:
+    - id: test-levels
+      name: { en: "Test Levels and the Pyramid", pt-BR: "Níveis de Teste e a Pirâmide", es: "Niveles de Prueba y la Pirámide" }
+      desc: { en: "Unit, integration, contract, end-to-end and exploratory tests, and how to balance them for speed and coverage.", pt-BR: "Testes unitários, de integração, de contrato, ponta a ponta e exploratórios, e como equilibrá-los entre velocidade e cobertura.", es: "Pruebas unitarias, de integración, de contrato, de extremo a extremo y exploratorias, y cómo equilibrarlas entre velocidad y cobertura." }
+    - id: tdd
+      name: { en: "Test-Driven and Behaviour-Driven Development", pt-BR: "Desenvolvimento Guiado por Testes e por Comportamento", es: "Desarrollo Guiado por Pruebas y por Comportamiento" }
+      desc: { en: "Writing tests before code to drive design, and expressing behaviour in examples the business can read.", pt-BR: "Escrever testes antes do código para guiar o projeto, e expressar comportamento em exemplos que o negócio consegue ler.", es: "Escribir pruebas antes del código para guiar el diseño, y expresar el comportamiento en ejemplos que el negocio puede leer." }
+    - id: test-design
+      name: { en: "Test Design Techniques", pt-BR: "Técnicas de Projeto de Testes", es: "Técnicas de Diseño de Pruebas" }
+      desc: { en: "Equivalence classes, boundary values, state machines, property-based and mutation testing to choose the cases that matter.", pt-BR: "Classes de equivalência, valores-limite, máquinas de estado, testes baseados em propriedades e de mutação para escolher os casos que importam.", es: "Clases de equivalencia, valores límite, máquinas de estado, pruebas basadas en propiedades y de mutación para elegir los casos que importan." }
+    - id: test-doubles
+      name: { en: "Test Doubles and Isolation", pt-BR: "Dublês de Teste e Isolamento", es: "Dobles de Prueba y Aislamiento" }
+      desc: { en: "Stubs, mocks, fakes and contract tests, and the risk of testing the mocks instead of the system.", pt-BR: "Stubs, mocks, fakes e testes de contrato, e o risco de testar os mocks em vez do sistema.", es: "Stubs, mocks, fakes y pruebas de contrato, y el riesgo de probar los mocks en lugar del sistema." }
+    - id: non-functional-testing
+      name: { en: "Performance, Load and Security Testing", pt-BR: "Testes de Desempenho, Carga e Segurança", es: "Pruebas de Rendimiento, Carga y Seguridad" }
+      desc: { en: "Verifying quality attributes under realistic conditions: throughput, latency, resource use and resistance to attack.", pt-BR: "Verificar atributos de qualidade em condições realistas: vazão, latência, uso de recursos e resistência a ataques.", es: "Verificar atributos de calidad en condiciones realistas: rendimiento, latencia, uso de recursos y resistencia a ataques." }
+    - id: test-automation
+      name: { en: "Test Automation and Flakiness", pt-BR: "Automação de Testes e Instabilidade", es: "Automatización de Pruebas e Inestabilidad" }
+      desc: { en: "Building suites that run on every change, stay fast and trustworthy, and are treated as production code.", pt-BR: "Construir suítes que rodam a cada mudança, permanecem rápidas e confiáveis, e são tratadas como código de produção.", es: "Construir suites que corren en cada cambio, se mantienen rápidas y confiables, y se tratan como código de producción." }
+    - id: testing-in-production
+      name: { en: "Testing in Production", pt-BR: "Testes em Produção", es: "Pruebas en Producción" }
+      desc: { en: "Canary releases, feature flags, synthetic monitoring and chaos experiments as tests that only the real environment can run.", pt-BR: "Lançamentos canário, feature flags, monitoramento sintético e experimentos de caos como testes que só o ambiente real consegue rodar.", es: "Lanzamientos canario, feature flags, monitoreo sintético y experimentos de caos como pruebas que solo el entorno real puede ejecutar." }
+
+- id: quality
+  name: { en: "Software Quality", pt-BR: "Qualidade de Software", es: "Calidad de Software" }
+  desc: { en: "Defining, measuring and assuring quality as a property of the product and the process, beyond finding bugs.", pt-BR: "Definir, medir e assegurar qualidade como propriedade do produto e do processo, para além de encontrar defeitos.", es: "Definir, medir y asegurar la calidad como propiedad del producto y del proceso, más allá de encontrar defectos." }
+  children:
+    - id: quality-models
+      name: { en: "Quality Models and Standards", pt-BR: "Modelos e Normas de Qualidade", es: "Modelos y Normas de Calidad" }
+      desc: { en: "ISO 25010 and similar frameworks that name the dimensions of quality and make them discussable and measurable.", pt-BR: "ISO 25010 e frameworks semelhantes que nomeiam as dimensões da qualidade e as tornam discutíveis e mensuráveis.", es: "ISO 25010 y marcos similares que nombran las dimensiones de la calidad y las vuelven discutibles y medibles." }
+    - id: static-analysis
+      name: { en: "Static Analysis and Code Metrics", pt-BR: "Análise Estática e Métricas de Código", es: "Análisis Estático y Métricas de Código" }
+      desc: { en: "Complexity, duplication, dependency and smell metrics, and the tools that flag them before a human reads the code.", pt-BR: "Métricas de complexidade, duplicação, dependência e maus cheiros, e as ferramentas que as apontam antes de um humano ler o código.", es: "Métricas de complejidad, duplicación, dependencias y malos olores, y las herramientas que las señalan antes de que un humano lea el código." }
+    - id: reviews-inspections
+      name: { en: "Reviews, Inspections and Audits", pt-BR: "Revisões, Inspeções e Auditorias", es: "Revisiones, Inspecciones y Auditorías" }
+      desc: { en: "Structured examination of artefacts, from lightweight peer review to formal inspection and compliance audits.", pt-BR: "Exame estruturado de artefatos, da revisão leve por pares à inspeção formal e às auditorias de conformidade.", es: "Examen estructurado de artefactos, desde la revisión ligera entre pares hasta la inspección formal y las auditorías de cumplimiento." }
+    - id: technical-debt
+      name: { en: "Technical Debt", pt-BR: "Débito Técnico", es: "Deuda Técnica" }
+      desc: { en: "Recognising, quantifying and paying down the shortcuts that slow future change, and deciding which debt to keep.", pt-BR: "Reconhecer, quantificar e pagar os atalhos que retardam mudanças futuras, e decidir qual débito manter.", es: "Reconocer, cuantificar y pagar los atajos que frenan los cambios futuros, y decidir qué deuda conservar." }
+    - id: defect-management
+      name: { en: "Defect Management and Root Cause Analysis", pt-BR: "Gestão de Defeitos e Análise de Causa Raiz", es: "Gestión de Defectos y Análisis de Causa Raíz" }
+      desc: { en: "Tracking, triaging and learning from defects so the same class of failure does not return.", pt-BR: "Registrar, triar e aprender com defeitos para que a mesma classe de falha não volte.", es: "Registrar, priorizar y aprender de los defectos para que la misma clase de falla no regrese." }
+    - id: quality-culture
+      name: { en: "Quality Culture and Definition of Done", pt-BR: "Cultura de Qualidade e Definição de Pronto", es: "Cultura de Calidad y Definición de Terminado" }
+      desc: { en: "Shared standards, checklists and team agreements that make quality everyone's job rather than a final gate.", pt-BR: "Padrões compartilhados, checklists e acordos de time que tornam a qualidade tarefa de todos, e não um portão final.", es: "Estándares compartidos, listas de verificación y acuerdos de equipo que hacen de la calidad tarea de todos y no una puerta final." }
+
+- id: maintenance
+  name: { en: "Maintenance and Evolution", pt-BR: "Manutenção e Evolução", es: "Mantenimiento y Evolución" }
+  desc: { en: "Keeping software useful and healthy after release, which is where most of its life and cost are spent.", pt-BR: "Manter o software útil e saudável depois do lançamento, onde a maior parte da vida e do custo dele é gasta.", es: "Mantener el software útil y sano después del lanzamiento, que es donde se gasta la mayor parte de su vida y su costo." }
+  children:
+    - id: maintenance-types
+      name: { en: "Types of Maintenance", pt-BR: "Tipos de Manutenção", es: "Tipos de Mantenimiento" }
+      desc: { en: "Corrective, adaptive, perfective and preventive work, and how each is planned and prioritised.", pt-BR: "Trabalho corretivo, adaptativo, perfectivo e preventivo, e como cada um é planejado e priorizado.", es: "Trabajo correctivo, adaptativo, perfectivo y preventivo, y cómo se planifica y prioriza cada uno." }
+    - id: legacy
+      name: { en: "Legacy Systems and Modernisation", pt-BR: "Sistemas Legados e Modernização", es: "Sistemas Heredados y Modernización" }
+      desc: { en: "Characterisation tests, strangler patterns and incremental rewrites for systems nobody fully understands anymore.", pt-BR: "Testes de caracterização, padrão estrangulador e reescritas incrementais para sistemas que ninguém entende por completo.", es: "Pruebas de caracterización, patrón estrangulador y reescrituras incrementales para sistemas que ya nadie entiende del todo." }
+    - id: comprehension
+      name: { en: "Program Comprehension and Reverse Engineering", pt-BR: "Compreensão de Programas e Engenharia Reversa", es: "Comprensión de Programas e Ingeniería Inversa" }
+      desc: { en: "Reading unfamiliar code, recovering design from artefacts, and building the mental model needed to change safely.", pt-BR: "Ler código desconhecido, recuperar o projeto a partir dos artefatos e construir o modelo mental necessário para mudar com segurança.", es: "Leer código desconocido, recuperar el diseño a partir de los artefactos y construir el modelo mental necesario para cambiar con seguridad." }
+    - id: dependencies
+      name: { en: "Dependency and Upgrade Management", pt-BR: "Gestão de Dependências e Atualizações", es: "Gestión de Dependencias y Actualizaciones" }
+      desc: { en: "Keeping libraries, runtimes and platforms current without breaking the product, including vulnerability response.", pt-BR: "Manter bibliotecas, runtimes e plataformas atualizados sem quebrar o produto, incluindo a resposta a vulnerabilidades.", es: "Mantener bibliotecas, runtimes y plataformas al día sin romper el producto, incluida la respuesta a vulnerabilidades." }
+    - id: deprecation
+      name: { en: "Deprecation and Decommissioning", pt-BR: "Descontinuação e Desativação", es: "Desaprobación y Retiro" }
+      desc: { en: "Retiring features and systems responsibly: migration paths, communication and data preservation.", pt-BR: "Aposentar recursos e sistemas com responsabilidade: caminhos de migração, comunicação e preservação de dados.", es: "Retirar funciones y sistemas con responsabilidad: rutas de migración, comunicación y preservación de datos." }
+
+- id: scm-devops
+  name: { en: "Configuration Management and DevOps", pt-BR: "Gestão de Configuração e DevOps", es: "Gestión de Configuración y DevOps" }
+  desc: { en: "The path from a commit to a running system: version control, builds, pipelines, environments and releases.", pt-BR: "O caminho de um commit a um sistema em execução: controle de versão, builds, pipelines, ambientes e lançamentos.", es: "El camino de un commit a un sistema en ejecución: control de versiones, builds, pipelines, entornos y lanzamientos." }
+  children:
+    - id: version-control
+      name: { en: "Version Control and Branching", pt-BR: "Controle de Versão e Ramificação", es: "Control de Versiones y Ramificación" }
+      desc: { en: "Git workflows, trunk-based development, history hygiene and collaboration models for teams of any size.", pt-BR: "Fluxos com Git, desenvolvimento baseado em trunk, higiene do histórico e modelos de colaboração para times de qualquer tamanho.", es: "Flujos con Git, desarrollo basado en trunk, higiene del historial y modelos de colaboración para equipos de cualquier tamaño." }
+    - id: build
+      name: { en: "Build Systems and Artefacts", pt-BR: "Sistemas de Build e Artefatos", es: "Sistemas de Build y Artefactos" }
+      desc: { en: "Reproducible builds, dependency resolution, artefact repositories and the supply chain of what gets deployed.", pt-BR: "Builds reprodutíveis, resolução de dependências, repositórios de artefatos e a cadeia de suprimentos do que é implantado.", es: "Builds reproducibles, resolución de dependencias, repositorios de artefactos y la cadena de suministro de lo que se despliega." }
+    - id: ci-cd
+      name: { en: "Continuous Integration and Delivery", pt-BR: "Integração e Entrega Contínuas", es: "Integración y Entrega Continuas" }
+      desc: { en: "Pipelines that integrate, test and ship every change, with fast feedback and small batches as the goal.", pt-BR: "Pipelines que integram, testam e entregam cada mudança, com feedback rápido e lotes pequenos como objetivo.", es: "Pipelines que integran, prueban y entregan cada cambio, con retroalimentación rápida y lotes pequeños como objetivo." }
+    - id: iac
+      name: { en: "Infrastructure as Code", pt-BR: "Infraestrutura como Código", es: "Infraestructura como Código" }
+      desc: { en: "Declaring environments in versioned code so they can be reviewed, reproduced and destroyed on demand.", pt-BR: "Declarar ambientes em código versionado para que possam ser revisados, reproduzidos e destruídos sob demanda.", es: "Declarar entornos en código versionado para que puedan revisarse, reproducirse y destruirse bajo demanda." }
+    - id: containers
+      name: { en: "Containers and Orchestration", pt-BR: "Contêineres e Orquestração", es: "Contenedores y Orquestación" }
+      desc: { en: "Packaging applications with their dependencies and running them at scale with schedulers such as Kubernetes.", pt-BR: "Empacotar aplicações com suas dependências e executá-las em escala com orquestradores como o Kubernetes.", es: "Empaquetar aplicaciones con sus dependencias y ejecutarlas a escala con orquestadores como Kubernetes." }
+    - id: release
+      name: { en: "Release Strategies", pt-BR: "Estratégias de Lançamento", es: "Estrategias de Lanzamiento" }
+      desc: { en: "Blue-green, canary, feature flags and rollbacks: separating deployment from release to reduce risk.", pt-BR: "Blue-green, canário, feature flags e reversões: separar implantação de lançamento para reduzir risco.", es: "Blue-green, canario, feature flags y reversiones: separar el despliegue del lanzamiento para reducir el riesgo." }
+    - id: environments
+      name: { en: "Environments and Configuration", pt-BR: "Ambientes e Configuração", es: "Entornos y Configuración" }
+      desc: { en: "Managing settings, secrets and parity across development, staging and production.", pt-BR: "Gerenciar configurações, segredos e paridade entre desenvolvimento, homologação e produção.", es: "Gestionar configuraciones, secretos y paridad entre desarrollo, pruebas y producción." }
+
+- id: operations
+  name: { en: "Operations and Reliability", pt-BR: "Operação e Confiabilidade", es: "Operaciones y Confiabilidad" }
+  desc: { en: "Running software in production: observing it, keeping it available, responding to incidents and learning from them.", pt-BR: "Operar software em produção: observá-lo, mantê-lo disponível, responder a incidentes e aprender com eles.", es: "Operar software en producción: observarlo, mantenerlo disponible, responder a incidentes y aprender de ellos." }
+  children:
+    - id: observability
+      name: { en: "Observability", pt-BR: "Observabilidade", es: "Observabilidad" }
+      desc: { en: "Logs, metrics and traces designed so that unknown problems can be investigated, not only known ones alerted.", pt-BR: "Logs, métricas e rastros projetados para que problemas desconhecidos possam ser investigados, e não só os conhecidos alertados.", es: "Logs, métricas y trazas diseñados para que los problemas desconocidos puedan investigarse, y no solo alertar los conocidos." }
+    - id: sre
+      name: { en: "Site Reliability Engineering", pt-BR: "Engenharia de Confiabilidade de Sites", es: "Ingeniería de Confiabilidad de Sitios" }
+      desc: { en: "Service level objectives, error budgets and toil reduction as an engineering approach to operations.", pt-BR: "Objetivos de nível de serviço, orçamentos de erro e redução de trabalho repetitivo como abordagem de engenharia para a operação.", es: "Objetivos de nivel de servicio, presupuestos de error y reducción del trabajo repetitivo como enfoque de ingeniería para la operación." }
+    - id: incidents
+      name: { en: "Incident Response and Postmortems", pt-BR: "Resposta a Incidentes e Post-mortems", es: "Respuesta a Incidentes y Postmortems" }
+      desc: { en: "On-call practices, runbooks, communication during outages and blameless reviews afterwards.", pt-BR: "Práticas de plantão, runbooks, comunicação durante interrupções e revisões sem culpa depois.", es: "Prácticas de guardia, runbooks, comunicación durante las caídas y revisiones sin culpa después." }
+    - id: capacity-performance
+      name: { en: "Capacity Planning and Performance Engineering", pt-BR: "Planejamento de Capacidade e Engenharia de Desempenho", es: "Planificación de Capacidad e Ingeniería de Rendimiento" }
+      desc: { en: "Profiling, benchmarking, scaling strategies and forecasting demand so the system stays fast under real load.", pt-BR: "Perfilamento, benchmarks, estratégias de escala e previsão de demanda para que o sistema continue rápido sob carga real.", es: "Perfilado, benchmarks, estrategias de escalado y previsión de demanda para que el sistema siga rápido bajo carga real." }
+    - id: resilience
+      name: { en: "Resilience Patterns", pt-BR: "Padrões de Resiliência", es: "Patrones de Resiliencia" }
+      desc: { en: "Timeouts, retries with backoff, circuit breakers, bulkheads and graceful degradation for systems that depend on others.", pt-BR: "Timeouts, novas tentativas com recuo, disjuntores, anteparas e degradação graciosa para sistemas que dependem de outros.", es: "Timeouts, reintentos con retroceso, cortacircuitos, mamparas y degradación controlada para sistemas que dependen de otros." }
+    - id: cost
+      name: { en: "Cloud Cost and Sustainability", pt-BR: "Custo de Nuvem e Sustentabilidade", es: "Costo de Nube y Sostenibilidad" }
+      desc: { en: "Understanding what a system costs to run, attributing it to features and reducing waste in compute and energy.", pt-BR: "Entender quanto um sistema custa para rodar, atribuir o custo a funcionalidades e reduzir desperdício de computação e energia.", es: "Entender cuánto cuesta ejecutar un sistema, atribuir el costo a funcionalidades y reducir el desperdicio de cómputo y energía." }
+
+- id: distributed
+  name: { en: "Distributed Systems and Cloud", pt-BR: "Sistemas Distribuídos e Nuvem", es: "Sistemas Distribuidos y Nube" }
+  desc: { en: "Building systems out of many machines that fail independently, and the theory that limits what they can promise.", pt-BR: "Construir sistemas a partir de muitas máquinas que falham de forma independente, e a teoria que limita o que elas podem prometer.", es: "Construir sistemas a partir de muchas máquinas que fallan de forma independiente, y la teoría que limita lo que pueden prometer." }
+  children:
+    - id: fundamentals-distributed
+      name: { en: "Distributed Systems Fundamentals", pt-BR: "Fundamentos de Sistemas Distribuídos", es: "Fundamentos de Sistemas Distribuidos" }
+      desc: { en: "Partial failure, clocks, consensus, replication and the CAP and PACELC trade-offs.", pt-BR: "Falha parcial, relógios, consenso, replicação e os trade-offs CAP e PACELC.", es: "Falla parcial, relojes, consenso, replicación y los compromisos CAP y PACELC." }
+    - id: microservices
+      name: { en: "Microservices and Service Meshes", pt-BR: "Microsserviços e Malhas de Serviço", es: "Microservicios y Mallas de Servicio" }
+      desc: { en: "Decomposing into independently deployable services and handling discovery, routing, retries and observability between them.", pt-BR: "Decompor em serviços implantáveis de forma independente e tratar descoberta, roteamento, novas tentativas e observabilidade entre eles.", es: "Descomponer en servicios desplegables de forma independiente y manejar descubrimiento, enrutamiento, reintentos y observabilidad entre ellos." }
+    - id: event-driven
+      name: { en: "Event-Driven Architecture and Streaming", pt-BR: "Arquitetura Orientada a Eventos e Streaming", es: "Arquitectura Orientada a Eventos y Streaming" }
+      desc: { en: "Event logs, pub/sub, event sourcing and CQRS for systems that react to change rather than poll for it.", pt-BR: "Logs de eventos, pub/sub, event sourcing e CQRS para sistemas que reagem à mudança em vez de consultá-la.", es: "Logs de eventos, pub/sub, event sourcing y CQRS para sistemas que reaccionan al cambio en lugar de consultarlo." }
+    - id: cloud-platforms
+      name: { en: "Cloud Platforms and Serverless", pt-BR: "Plataformas de Nuvem e Serverless", es: "Plataformas de Nube y Serverless" }
+      desc: { en: "Managed services, functions, storage and networking primitives, and the lock-in and cost models that come with them.", pt-BR: "Serviços gerenciados, funções, armazenamento e primitivas de rede, e os modelos de dependência e custo que vêm com eles.", es: "Servicios gestionados, funciones, almacenamiento y primitivas de red, y los modelos de dependencia y costo que traen consigo." }
+    - id: caching
+      name: { en: "Caching and Content Delivery", pt-BR: "Cache e Distribuição de Conteúdo", es: "Caché y Distribución de Contenido" }
+      desc: { en: "Where to cache, for how long and how to invalidate, from in-process caches to CDNs at the edge.", pt-BR: "Onde cachear, por quanto tempo e como invalidar, de caches em processo a CDNs na borda.", es: "Dónde cachear, por cuánto tiempo y cómo invalidar, desde cachés en proceso hasta CDN en el borde." }
+    - id: scalability
+      name: { en: "Scalability Patterns", pt-BR: "Padrões de Escalabilidade", es: "Patrones de Escalabilidad" }
+      desc: { en: "Horizontal scaling, sharding, load balancing, backpressure and idempotency for growth without collapse.", pt-BR: "Escala horizontal, sharding, balanceamento de carga, contrapressão e idempotência para crescer sem colapsar.", es: "Escalado horizontal, sharding, balanceo de carga, contrapresión e idempotencia para crecer sin colapsar." }
+
+- id: data
+  name: { en: "Data Management", pt-BR: "Gestão de Dados", es: "Gestión de Datos" }
+  desc: { en: "Storing, modelling, moving and protecting data, the asset that outlives every application built on top of it.", pt-BR: "Armazenar, modelar, mover e proteger dados, o ativo que sobrevive a toda aplicação construída sobre ele.", es: "Almacenar, modelar, mover y proteger los datos, el activo que sobrevive a toda aplicación construida sobre ellos." }
+  children:
+    - id: relational
+      name: { en: "Relational Databases and SQL", pt-BR: "Bancos Relacionais e SQL", es: "Bases de Datos Relacionales y SQL" }
+      desc: { en: "Schemas, normalisation, transactions, indexes and query planning: the model most business data still lives in.", pt-BR: "Esquemas, normalização, transações, índices e planejamento de consultas: o modelo em que a maioria dos dados de negócio ainda vive.", es: "Esquemas, normalización, transacciones, índices y planificación de consultas: el modelo en el que aún vive la mayoría de los datos de negocio." }
+    - id: nosql
+      name: { en: "NoSQL and Specialised Stores", pt-BR: "NoSQL e Armazenamentos Especializados", es: "NoSQL y Almacenes Especializados" }
+      desc: { en: "Document, key-value, column, graph, time-series and search engines, and the access patterns each is built for.", pt-BR: "Bancos de documentos, chave-valor, colunares, de grafos, séries temporais e motores de busca, e os padrões de acesso para os quais cada um foi feito.", es: "Bases de documentos, clave-valor, columnares, de grafos, series temporales y motores de búsqueda, y los patrones de acceso para los que fue hecho cada uno." }
+    - id: data-modeling
+      name: { en: "Data Modelling and Schema Evolution", pt-BR: "Modelagem de Dados e Evolução de Esquemas", es: "Modelado de Datos y Evolución de Esquemas" }
+      desc: { en: "Designing schemas that fit the domain and migrating them safely while the system keeps running.", pt-BR: "Projetar esquemas que se encaixam no domínio e migrá-los com segurança enquanto o sistema continua rodando.", es: "Diseñar esquemas que encajan con el dominio y migrarlos con seguridad mientras el sistema sigue funcionando." }
+    - id: data-engineering
+      name: { en: "Data Engineering and Pipelines", pt-BR: "Engenharia de Dados e Pipelines", es: "Ingeniería de Datos y Pipelines" }
+      desc: { en: "Batch and streaming pipelines, warehouses and lakes, data quality and lineage for analytics and machine learning.", pt-BR: "Pipelines em lote e em streaming, data warehouses e lakes, qualidade e linhagem de dados para análise e aprendizado de máquina.", es: "Pipelines por lotes y en streaming, almacenes y lagos de datos, calidad y linaje de datos para analítica y aprendizaje automático." }
+    - id: transactions
+      name: { en: "Consistency, Transactions and Concurrency Control", pt-BR: "Consistência, Transações e Controle de Concorrência", es: "Consistencia, Transacciones y Control de Concurrencia" }
+      desc: { en: "ACID, isolation levels, optimistic locking and the anomalies that appear when many writers share data.", pt-BR: "ACID, níveis de isolamento, trava otimista e as anomalias que surgem quando muitos escritores compartilham dados.", es: "ACID, niveles de aislamiento, bloqueo optimista y las anomalías que aparecen cuando muchos escritores comparten datos." }
+    - id: data-governance
+      name: { en: "Data Privacy, Retention and Governance", pt-BR: "Privacidade, Retenção e Governança de Dados", es: "Privacidad, Retención y Gobernanza de Datos" }
+      desc: { en: "Classification, consent, anonymisation, retention policies and regulatory duties such as GDPR and LGPD.", pt-BR: "Classificação, consentimento, anonimização, políticas de retenção e obrigações regulatórias como GDPR e LGPD.", es: "Clasificación, consentimiento, anonimización, políticas de retención y obligaciones regulatorias como GDPR y LGPD." }
+
+- id: security
+  name: { en: "Security Engineering", pt-BR: "Engenharia de Segurança", es: "Ingeniería de Seguridad" }
+  desc: { en: "Designing, building and operating software that resists misuse, from threat modelling to incident handling.", pt-BR: "Projetar, construir e operar software que resiste ao uso indevido, da modelagem de ameaças ao tratamento de incidentes.", es: "Diseñar, construir y operar software que resiste el uso indebido, desde el modelado de amenazas hasta el manejo de incidentes." }
+  children:
+    - id: threat-modeling
+      name: { en: "Threat Modelling and Secure Design", pt-BR: "Modelagem de Ameaças e Projeto Seguro", es: "Modelado de Amenazas y Diseño Seguro" }
+      desc: { en: "Identifying assets, attackers and attack surfaces early, and designing least privilege and defence in depth.", pt-BR: "Identificar ativos, atacantes e superfícies de ataque cedo, e projetar privilégio mínimo e defesa em profundidade.", es: "Identificar activos, atacantes y superficies de ataque desde temprano, y diseñar privilegio mínimo y defensa en profundidad." }
+    - id: secure-coding
+      name: { en: "Secure Coding and Common Vulnerabilities", pt-BR: "Codificação Segura e Vulnerabilidades Comuns", es: "Codificación Segura y Vulnerabilidades Comunes" }
+      desc: { en: "Injection, broken authentication, insecure deserialisation and the rest of the OWASP catalogue, and how to avoid them.", pt-BR: "Injeção, autenticação quebrada, desserialização insegura e o restante do catálogo OWASP, e como evitá-los.", es: "Inyección, autenticación rota, deserialización insegura y el resto del catálogo OWASP, y cómo evitarlos." }
+    - id: identity
+      name: { en: "Authentication, Authorisation and Identity", pt-BR: "Autenticação, Autorização e Identidade", es: "Autenticación, Autorización e Identidad" }
+      desc: { en: "Passwords, MFA, OAuth, OpenID Connect, sessions, tokens and access control models for users and services.", pt-BR: "Senhas, MFA, OAuth, OpenID Connect, sessões, tokens e modelos de controle de acesso para usuários e serviços.", es: "Contraseñas, MFA, OAuth, OpenID Connect, sesiones, tokens y modelos de control de acceso para usuarios y servicios." }
+    - id: cryptography
+      name: { en: "Applied Cryptography", pt-BR: "Criptografia Aplicada", es: "Criptografía Aplicada" }
+      desc: { en: "Hashing, symmetric and asymmetric encryption, TLS and key management, used correctly through vetted libraries.", pt-BR: "Hashing, criptografia simétrica e assimétrica, TLS e gestão de chaves, usados corretamente por meio de bibliotecas confiáveis.", es: "Hashing, cifrado simétrico y asimétrico, TLS y gestión de claves, usados correctamente a través de bibliotecas confiables." }
+    - id: supply-chain
+      name: { en: "Software Supply Chain Security", pt-BR: "Segurança da Cadeia de Suprimentos de Software", es: "Seguridad de la Cadena de Suministro de Software" }
+      desc: { en: "Dependencies, build integrity, signing, SBOMs and the trust placed in code the team did not write.", pt-BR: "Dependências, integridade do build, assinatura, SBOMs e a confiança depositada em código que o time não escreveu.", es: "Dependencias, integridad del build, firma, SBOM y la confianza depositada en código que el equipo no escribió." }
+    - id: security-operations
+      name: { en: "Security Testing and Operations", pt-BR: "Testes e Operação de Segurança", es: "Pruebas y Operación de Seguridad" }
+      desc: { en: "Static and dynamic scanning, penetration testing, monitoring, vulnerability disclosure and response.", pt-BR: "Varredura estática e dinâmica, testes de penetração, monitoramento, divulgação de vulnerabilidades e resposta.", es: "Escaneo estático y dinámico, pruebas de penetración, monitoreo, divulgación de vulnerabilidades y respuesta." }
+    - id: privacy-engineering
+      name: { en: "Privacy Engineering", pt-BR: "Engenharia de Privacidade", es: "Ingeniería de Privacidad" }
+      desc: { en: "Data minimisation, privacy by design and technical controls that turn regulation into system properties.", pt-BR: "Minimização de dados, privacidade desde o projeto e controles técnicos que transformam regulação em propriedades do sistema.", es: "Minimización de datos, privacidad desde el diseño y controles técnicos que convierten la regulación en propiedades del sistema." }
+
+- id: process
+  name: { en: "Software Process and Methods", pt-BR: "Processo e Métodos de Software", es: "Proceso y Métodos de Software" }
+  desc: { en: "How work is organised over time: lifecycles, agile and lean practices, and the improvement of the process itself.", pt-BR: "Como o trabalho se organiza no tempo: ciclos de vida, práticas ágeis e lean, e a melhoria do próprio processo.", es: "Cómo se organiza el trabajo en el tiempo: ciclos de vida, prácticas ágiles y lean, y la mejora del propio proceso." }
+  children:
+    - id: lifecycles
+      name: { en: "Lifecycle Models", pt-BR: "Modelos de Ciclo de Vida", es: "Modelos de Ciclo de Vida" }
+      desc: { en: "Waterfall, iterative, incremental, spiral and continuous models, and the contexts each one fits.", pt-BR: "Modelos cascata, iterativo, incremental, espiral e contínuo, e os contextos em que cada um se encaixa.", es: "Modelos en cascada, iterativo, incremental, en espiral y continuo, y los contextos en los que encaja cada uno." }
+    - id: agile
+      name: { en: "Agile Frameworks", pt-BR: "Frameworks Ágeis", es: "Marcos Ágiles" }
+      desc: { en: "Scrum, Kanban, XP and scaled approaches: roles, ceremonies, artefacts and the principles behind them.", pt-BR: "Scrum, Kanban, XP e abordagens escaladas: papéis, cerimônias, artefatos e os princípios por trás deles.", es: "Scrum, Kanban, XP y enfoques escalados: roles, ceremonias, artefactos y los principios detrás de ellos." }
+    - id: lean
+      name: { en: "Lean and Flow", pt-BR: "Lean e Fluxo", es: "Lean y Flujo" }
+      desc: { en: "Limiting work in progress, reducing batch size and measuring lead time to make delivery predictable.", pt-BR: "Limitar o trabalho em andamento, reduzir o tamanho dos lotes e medir o lead time para tornar a entrega previsível.", es: "Limitar el trabajo en curso, reducir el tamaño de los lotes y medir el lead time para volver predecible la entrega." }
+    - id: process-improvement
+      name: { en: "Process Assessment and Improvement", pt-BR: "Avaliação e Melhoria de Processos", es: "Evaluación y Mejora de Procesos" }
+      desc: { en: "Maturity models, retrospectives and metrics such as the DORA four keys used to improve how a team delivers.", pt-BR: "Modelos de maturidade, retrospectivas e métricas como as quatro chaves do DORA usadas para melhorar como um time entrega.", es: "Modelos de madurez, retrospectivas y métricas como las cuatro claves de DORA usadas para mejorar cómo entrega un equipo." }
+    - id: documentation
+      name: { en: "Technical Documentation", pt-BR: "Documentação Técnica", es: "Documentación Técnica" }
+      desc: { en: "Docs as code, architecture and API documentation, runbooks and the writing habits that keep them current.", pt-BR: "Documentação como código, documentação de arquitetura e de API, runbooks e os hábitos de escrita que as mantêm atualizadas.", es: "Documentación como código, documentación de arquitectura y de API, runbooks y los hábitos de escritura que las mantienen al día." }
+    - id: formal-methods
+      name: { en: "Formal Methods", pt-BR: "Métodos Formais", es: "Métodos Formales" }
+      desc: { en: "Specification languages, model checking and proof for systems where a bug is too expensive to find by testing.", pt-BR: "Linguagens de especificação, verificação de modelos e prova para sistemas em que um defeito é caro demais para achar por testes.", es: "Lenguajes de especificación, verificación de modelos y demostración para sistemas donde un defecto es demasiado caro de hallar por pruebas." }
+
+- id: management
+  name: { en: "Engineering Management", pt-BR: "Gestão de Engenharia", es: "Gestión de Ingeniería" }
+  desc: { en: "Planning, estimating, leading and measuring software work, and growing the people who do it.", pt-BR: "Planejar, estimar, liderar e medir o trabalho de software, e desenvolver as pessoas que o fazem.", es: "Planificar, estimar, liderar y medir el trabajo de software, y hacer crecer a las personas que lo realizan." }
+  children:
+    - id: estimation
+      name: { en: "Estimation and Planning", pt-BR: "Estimativa e Planejamento", es: "Estimación y Planificación" }
+      desc: { en: "Relative sizing, forecasting from historical data, uncertainty and the honest communication of both.", pt-BR: "Dimensionamento relativo, previsão a partir de dados históricos, incerteza e a comunicação honesta de ambos.", es: "Dimensionamiento relativo, previsión a partir de datos históricos, incertidumbre y la comunicación honesta de ambas." }
+    - id: risk
+      name: { en: "Risk Management", pt-BR: "Gestão de Riscos", es: "Gestión de Riesgos" }
+      desc: { en: "Identifying technical and delivery risks early and reducing them with spikes, prototypes and staged commitments.", pt-BR: "Identificar riscos técnicos e de entrega cedo e reduzi-los com spikes, protótipos e compromissos por etapas.", es: "Identificar riesgos técnicos y de entrega temprano y reducirlos con spikes, prototipos y compromisos por etapas." }
+    - id: team-topologies
+      name: { en: "Team Structure and Topologies", pt-BR: "Estrutura e Topologias de Times", es: "Estructura y Topologías de Equipos" }
+      desc: { en: "Stream-aligned, platform and enabling teams, cognitive load and Conway's law as design constraints.", pt-BR: "Times alinhados a fluxo, de plataforma e habilitadores, carga cognitiva e a lei de Conway como restrições de projeto.", es: "Equipos alineados al flujo, de plataforma y habilitadores, carga cognitiva y la ley de Conway como restricciones de diseño." }
+    - id: technical-leadership
+      name: { en: "Technical Leadership", pt-BR: "Liderança Técnica", es: "Liderazgo Técnico" }
+      desc: { en: "Setting direction, making and delegating decisions, mentoring, and orchestrating people and AI systems.", pt-BR: "Definir direção, tomar e delegar decisões, orientar pessoas, e orquestrar pessoas e sistemas de IA.", es: "Fijar la dirección, tomar y delegar decisiones, orientar personas y orquestar personas y sistemas de IA." }
+    - id: metrics
+      name: { en: "Engineering Metrics", pt-BR: "Métricas de Engenharia", es: "Métricas de Ingeniería" }
+      desc: { en: "Delivery, quality and developer experience measures, and the pitfalls of turning any of them into targets.", pt-BR: "Medidas de entrega, qualidade e experiência do desenvolvedor, e as armadilhas de transformar qualquer uma delas em meta.", es: "Medidas de entrega, calidad y experiencia del desarrollador, y las trampas de convertir cualquiera de ellas en meta." }
+    - id: economics
+      name: { en: "Software Economics", pt-BR: "Economia de Software", es: "Economía de Software" }
+      desc: { en: "Cost of ownership, build versus buy, return on investment and the financial reading of technical decisions.", pt-BR: "Custo de propriedade, construir versus comprar, retorno sobre o investimento e a leitura financeira de decisões técnicas.", es: "Costo de propiedad, construir frente a comprar, retorno de la inversión y la lectura financiera de las decisiones técnicas." }
+
+- id: hci
+  name: { en: "Human-Computer Interaction and UX", pt-BR: "Interação Humano-Computador e UX", es: "Interacción Humano-Computador y UX" }
+  desc: { en: "Designing software around the people who use it: research, interaction design, accessibility and evaluation.", pt-BR: "Projetar software em torno das pessoas que o usam: pesquisa, projeto de interação, acessibilidade e avaliação.", es: "Diseñar software en torno a las personas que lo usan: investigación, diseño de interacción, accesibilidad y evaluación." }
+  children:
+    - id: user-research
+      name: { en: "User Research", pt-BR: "Pesquisa com Usuários", es: "Investigación de Usuarios" }
+      desc: { en: "Interviews, usability tests and analytics to learn what people actually do rather than what they say.", pt-BR: "Entrevistas, testes de usabilidade e analytics para descobrir o que as pessoas de fato fazem, e não o que dizem.", es: "Entrevistas, pruebas de usabilidad y analítica para descubrir lo que las personas hacen de verdad y no lo que dicen." }
+    - id: interaction-design
+      name: { en: "Interaction and Interface Design", pt-BR: "Projeto de Interação e Interface", es: "Diseño de Interacción e Interfaz" }
+      desc: { en: "Information architecture, navigation, feedback and the patterns that make interfaces predictable.", pt-BR: "Arquitetura da informação, navegação, feedback e os padrões que tornam as interfaces previsíveis.", es: "Arquitectura de la información, navegación, retroalimentación y los patrones que hacen predecibles las interfaces." }
+    - id: accessibility
+      name: { en: "Accessibility", pt-BR: "Acessibilidade", es: "Accesibilidad" }
+      desc: { en: "WCAG, assistive technologies and inclusive design so software works for people with every kind of ability.", pt-BR: "WCAG, tecnologias assistivas e design inclusivo para que o software funcione para pessoas com todo tipo de capacidade.", es: "WCAG, tecnologías de asistencia y diseño inclusivo para que el software funcione para personas con toda clase de capacidades." }
+    - id: design-systems
+      name: { en: "Design Systems", pt-BR: "Sistemas de Design", es: "Sistemas de Diseño" }
+      desc: { en: "Shared components, tokens and guidelines that keep products consistent and teams fast.", pt-BR: "Componentes, tokens e diretrizes compartilhados que mantêm produtos consistentes e times rápidos.", es: "Componentes, tokens y directrices compartidos que mantienen los productos consistentes y los equipos rápidos." }
+    - id: conversational-ux
+      name: { en: "Conversational and AI-mediated Interfaces", pt-BR: "Interfaces Conversacionais e Mediadas por IA", es: "Interfaces Conversacionales y Mediadas por IA" }
+      desc: { en: "Designing for intent, uncertainty and confirmation when a model, not a form, stands between the user and the system.", pt-BR: "Projetar para intenção, incerteza e confirmação quando um modelo, e não um formulário, fica entre o usuário e o sistema.", es: "Diseñar para la intención, la incertidumbre y la confirmación cuando un modelo, y no un formulario, media entre el usuario y el sistema." }
+
+- id: ai-systems
+  name: { en: "AI and Machine Learning Systems", pt-BR: "Sistemas de IA e Aprendizado de Máquina", es: "Sistemas de IA y Aprendizaje Automático" }
+  desc: { en: "Engineering software whose behaviour is learned from data: models, pipelines, evaluation and operation.", pt-BR: "Engenharia de software cujo comportamento é aprendido de dados: modelos, pipelines, avaliação e operação.", es: "Ingeniería de software cuyo comportamiento se aprende de los datos: modelos, pipelines, evaluación y operación." }
+  children:
+    - id: ml-fundamentals
+      name: { en: "Machine Learning Fundamentals", pt-BR: "Fundamentos de Aprendizado de Máquina", es: "Fundamentos de Aprendizaje Automático" }
+      desc: { en: "Supervised, unsupervised and reinforcement learning, generalisation, bias and variance, and how models are trained.", pt-BR: "Aprendizado supervisionado, não supervisionado e por reforço, generalização, viés e variância, e como os modelos são treinados.", es: "Aprendizaje supervisado, no supervisado y por refuerzo, generalización, sesgo y varianza, y cómo se entrenan los modelos." }
+    - id: generative-ai
+      name: { en: "Generative AI and Large Language Models", pt-BR: "IA Generativa e Grandes Modelos de Linguagem", es: "IA Generativa y Grandes Modelos de Lenguaje" }
+      desc: { en: "Transformers, attention, prompting, retrieval and agents, and what changes when generation becomes a component.", pt-BR: "Transformers, atenção, prompting, recuperação e agents, e o que muda quando a geração vira um componente.", es: "Transformers, atención, prompting, recuperación y agents, y qué cambia cuando la generación se vuelve un componente." }
+    - id: mlops
+      name: { en: "MLOps and Model Lifecycle", pt-BR: "MLOps e Ciclo de Vida de Modelos", es: "MLOps y Ciclo de Vida de Modelos" }
+      desc: { en: "Versioning data and models, training pipelines, deployment, monitoring for drift and retraining.", pt-BR: "Versionar dados e modelos, pipelines de treinamento, implantação, monitoramento de desvio e retreinamento.", es: "Versionar datos y modelos, pipelines de entrenamiento, despliegue, monitoreo de deriva y reentrenamiento." }
+    - id: evaluation
+      name: { en: "Evaluation and Guardrails", pt-BR: "Avaliação e Guardrails", es: "Evaluación y Guardrails" }
+      desc: { en: "Offline and online evaluation, test sets from real requests, human review and controls on what a model may do.", pt-BR: "Avaliação offline e online, conjuntos de teste a partir de requisições reais, revisão humana e controles sobre o que um modelo pode fazer.", es: "Evaluación offline y online, conjuntos de prueba a partir de solicitudes reales, revisión humana y controles sobre lo que un modelo puede hacer." }
+    - id: responsible-ai
+      name: { en: "Responsible and Trustworthy AI", pt-BR: "IA Responsável e Confiável", es: "IA Responsable y Confiable" }
+      desc: { en: "Fairness, transparency, safety, data provenance and regulation as engineering requirements, not afterthoughts.", pt-BR: "Justiça, transparência, segurança, proveniência de dados e regulação como requisitos de engenharia, não como acréscimos tardios.", es: "Equidad, transparencia, seguridad, procedencia de los datos y regulación como requisitos de ingeniería y no como añadidos tardíos." }
+
+- id: profession
+  name: { en: "Professional Practice", pt-BR: "Prática Profissional", es: "Práctica Profesional" }
+  desc: { en: "What it means to work as an engineer: ethics, communication, collaboration, learning and the shape of a career.", pt-BR: "O que significa trabalhar como engenheiro: ética, comunicação, colaboração, aprendizado e a forma de uma carreira.", es: "Lo que significa trabajar como ingeniero: ética, comunicación, colaboración, aprendizaje y la forma de una carrera." }
+  children:
+    - id: ethics
+      name: { en: "Ethics and Responsibility", pt-BR: "Ética e Responsabilidade", es: "Ética y Responsabilidad" }
+      desc: { en: "Codes of ethics, the impact of software on people and society, and the duty to speak up about risk.", pt-BR: "Códigos de ética, o impacto do software sobre pessoas e sociedade, e o dever de alertar sobre riscos.", es: "Códigos de ética, el impacto del software sobre las personas y la sociedad, y el deber de advertir sobre los riesgos." }
+    - id: communication
+      name: { en: "Communication and Technical Writing", pt-BR: "Comunicação e Escrita Técnica", es: "Comunicación y Escritura Técnica" }
+      desc: { en: "Explaining decisions, writing proposals and reviews, and adapting the message to engineers and non-engineers.", pt-BR: "Explicar decisões, escrever propostas e revisões, e adaptar a mensagem para engenheiros e não engenheiros.", es: "Explicar decisiones, escribir propuestas y revisiones, y adaptar el mensaje a ingenieros y no ingenieros." }
+    - id: collaboration
+      name: { en: "Collaboration and Remote Work", pt-BR: "Colaboração e Trabalho Remoto", es: "Colaboración y Trabajo Remoto" }
+      desc: { en: "Pairing, mobbing, asynchronous communication and the norms that keep distributed teams effective.", pt-BR: "Programação em par, mob programming, comunicação assíncrona e as normas que mantêm times distribuídos eficazes.", es: "Programación en pareja, mob programming, comunicación asíncrona y las normas que mantienen eficaces a los equipos distribuidos." }
+    - id: open-source
+      name: { en: "Open Source and Licensing", pt-BR: "Código Aberto e Licenciamento", es: "Código Abierto y Licenciamiento" }
+      desc: { en: "Contributing to and depending on open source, licence compatibility and intellectual property basics.", pt-BR: "Contribuir com e depender de código aberto, compatibilidade de licenças e noções de propriedade intelectual.", es: "Contribuir a y depender del código abierto, compatibilidad de licencias y nociones de propiedad intelectual." }
+    - id: continuous-learning
+      name: { en: "Continuous Learning and Career", pt-BR: "Aprendizado Contínuo e Carreira", es: "Aprendizaje Continuo y Carrera" }
+      desc: { en: "Triage of a fast-moving field, deliberate practice, mentoring and the paths from individual contributor to leadership.", pt-BR: "Triagem de um campo em movimento rápido, prática deliberada, mentoria e os caminhos de contribuidor individual à liderança.", es: "Triaje de un campo que se mueve rápido, práctica deliberada, mentoría y los caminos de contribuidor individual al liderazgo." }

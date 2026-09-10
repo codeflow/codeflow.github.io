@@ -9,6 +9,13 @@ ui:
   home: Home
   menu: Menu
   cancel: Cancel
+  content_tab: "Content"
+  stack_title: "Content stack"
+  stack_intro: "Internal planning map: the topics and subtopics Codeflow intends to cover, one area per tab. Expand a topic to see its scope."
+  stack_se: "Software Engineering"
+  stack_expand: "Expand all"
+  stack_collapse: "Collapse all"
+  stack_count: "{n} topics, {m} subtopics"
   close_menu: Close menu
   search: Search
   search_content: Search content

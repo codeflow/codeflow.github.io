@@ -1,0 +1,22 @@
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] | default: site.data.i18n.en -%}
+<div class="af-panelHeader"><h1>{{ t.ui.stack_title }}</h1></div>
+<p class="tip cf-stackIntro">{{ t.ui.stack_intro }}</p>
+
+<div class="af-panelTabbed cf-stackTabs" id="stackTabs">
+  <div class="af-tabBar">
+    <span class="af-tab selected" id="stackTabBtnSe" onclick="selectTab(this,'stackTabSe')">{{ t.ui.stack_se }}</span>
+  </div>
+  <div class="af-tabContent">
+    <div class="af-tabPanel active" id="stackTabSe">
+      <div class="cf-stackBar">
+        <span class="tip" id="stackCount"></span>
+        <span class="cf-stackActions">
+          <button class="af-button small" onclick="stackExpand(true)">{{ t.ui.stack_expand }}</button>
+          <button class="af-button small" onclick="stackExpand(false)">{{ t.ui.stack_collapse }}</button>
+        </span>
+      </div>
+      <ul class="af-tree cf-stackTree" id="stackTree"></ul>
+    </div>
+  </div>
+</div>
