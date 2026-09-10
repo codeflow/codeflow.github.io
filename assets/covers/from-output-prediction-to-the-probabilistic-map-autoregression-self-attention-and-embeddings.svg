@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="A map with a path of nodes, each node opening into a fan of possible next steps, and a compass rose">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+  </defs>
+  <rect width="320" height="200" fill="url(#bg)"/>
+  <!-- the map sheet -->
+  <path d="M28 30 l64 -10 l64 10 l64 -10 l64 10 v130 l-64 10 l-64 -10 l-64 10 l-64 -10 z" fill="#ffffff" stroke="#15497e" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M92 20 v140 M156 30 v140 M220 20 v140" stroke="#cfe2f7" stroke-width="1.5"/>
+  <!-- contour lines: the learned terrain -->
+  <g fill="none" stroke="#cfe2f7" stroke-width="1.5">
+    <path d="M40 70 c20 -18 50 -14 66 4 c16 18 46 22 66 4 c14 -12 36 -14 56 -4"/>
+    <path d="M40 96 c20 -18 50 -14 66 4 c16 18 46 22 66 4 c14 -12 36 -14 56 -4"/>
+    <path d="M40 122 c20 -18 50 -14 66 4 c16 18 46 22 66 4 c14 -12 36 -14 56 -4"/>
+  </g>
+  <!-- the path walked so far: three chosen nodes -->
+  <path d="M58 132 L104 108 L150 96" fill="none" stroke="#3d6791" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="58" cy="132" r="7" fill="#ffffff" stroke="#15497e" stroke-width="2"/>
+  <circle cx="104" cy="108" r="7" fill="#ffffff" stroke="#15497e" stroke-width="2"/>
+  <circle cx="150" cy="96" r="8" fill="url(#hi)" stroke="#2e5378" stroke-width="2"/>
+  <!-- the fan of plausible next steps: thickness = probability -->
+  <path d="M158 92 L204 72" fill="none" stroke="#3d6791" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ar)"/>
+  <path d="M158 97 L206 100" fill="none" stroke="#6b90b6" stroke-width="2" stroke-linecap="round" marker-end="url(#ar)"/>
+  <path d="M157 101 L198 128" fill="none" stroke="#8fa6c0" stroke-width="1" stroke-linecap="round" stroke-dasharray="3 3" marker-end="url(#ar)"/>
+  <circle cx="210" cy="69" r="6" fill="#f2c94c" stroke="#b08f3e" stroke-width="1.5"/>
+  <circle cx="212" cy="101" r="5" fill="#e8f0fa" stroke="#6b90b6" stroke-width="1.5"/>
+  <circle cx="202" cy="131" r="4" fill="#ffffff" stroke="#8fa6c0" stroke-width="1.5"/>
+  <!-- compass rose -->
+  <g transform="translate(262 62)">
+    <circle r="16" fill="#ffffff" stroke="#8fa6c0" stroke-width="1.5"/>
+    <path d="M0 -13 L4 0 L0 13 L-4 0 z" fill="#15497e"/>
+    <path d="M-13 0 L0 -4 L13 0 L0 4 z" fill="#cfe2f7" stroke="#6b90b6" stroke-width="1"/>
+  </g>
+  <rect x="0" y="194" width="320" height="6" fill="#3d6791"/>
+</svg>

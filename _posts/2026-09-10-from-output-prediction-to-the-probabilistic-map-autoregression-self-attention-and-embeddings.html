@@ -1,0 +1,651 @@
+---
+title: "From output prediction to the probabilistic map: autoregression, self-attention and embeddings"
+date: 2026-09-10 14:00:00 -0300
+lang: en
+category: "Artificial Intelligence"
+section: "Generative AI"
+topic: "Generative AI"
+order: 5                     # position in the Content Navigator (within the category/topic); date order when absent
+tags: [generative-ai, llm, autoregressive-models, self-attention, embeddings, transformers, next-token-prediction, semantic-similarity, hallucination, deep-learning]
+reading_time: 13
+level: Introductory
+series_prev: { title: "Traditional AI versus generative AI: predict from known data or compose new outputs", url: "/articles/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs/" }
+cover: "/assets/covers/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings.svg"
+excerpt: "Traditional AI learns a mapping from an input to the expected output. Generative AI learns something else: a probability distribution over patterns, sequences and combinations, a probabilistic map of what tends to make sense in a given context. This article follows that map through the three mechanisms that make it work: autoregression, which composes an output one token at a time so that every choice conditions the next; self-attention, the selective focus that keeps a character introduced on page one alive two hundred paragraphs later; and embeddings, the vectors in which king sits next to queen and far from dog. Along the way, the artist who recombines a repertoire, the cartographer who infers terrain never seen, and why a fluent chain of plausible steps can still drift into a hallucination…"
+image: "/assets/social/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings.en.png"
+description: "How generative models compose: a probabilistic map instead of a mapping, autoregression token by token, self-attention over long context and embeddings."
+references_count: 10
+key_concepts: ["Probabilistic map", "Autoregressive generation", "Self-attention", "Embeddings", "Cosine similarity", "Hallucination as drift"]
+version: 1
+history:
+  - { when: "09/10/2026 14:00", what: "Initial publication of the article" }
+---
+<div class="af-messages">
+  <div class="msgHead">
+    <svg width="15" height="15" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e8f0fa" stroke="#35618f"/><path d="M8 4.2v1.6M8 7.2v4.4" stroke="#35618f" stroke-width="1.8" stroke-linecap="round"/></svg>
+    What you will find in this article
+  </div>
+  <ul>
+    <li>What a generative model learns instead of a mapping: a <b>probabilistic map</b> of patterns, sequences and combinations, and why its output is a path through plausible continuations rather than a pick among labels.</li>
+    <li>Two analogies that make the map concrete — the <b>artist</b> who recombines a repertoire and the <b>cartographer</b> who infers terrain never seen — and where hallucination comes from.</li>
+    <li><b>Autoregression</b>: generation one token at a time, each choice conditioned on everything already written, with the fluency and the drift that this implies.</li>
+    <li><b>Self-attention</b> as selective focus over the history, and why it keeps a character introduced on page one alive many paragraphs later.</li>
+    <li><b>Embeddings</b>: how words, images and code become vectors, and how <b>cosine similarity</b> turns meaning into geometry (king next to queen, far from dog), with a runnable example.</li>
+  </ul>
+</div>
+
+<div class="cf-article">
+
+  <div class="cf-hero">
+    <svg viewBox="0 0 880 152" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Article banner: a context box feeding a distribution over the next token, drawn as three bars of decreasing probability">
+      <defs>
+        <linearGradient id="cfHeroBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#dae6f2"/></linearGradient>
+        <linearGradient id="cfHeroSel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        <marker id="cfHeroArr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+      </defs>
+      <rect x="0" y="0" width="880" height="152" fill="url(#cfHeroBg)"/><rect x="0" y="148" width="880" height="4" fill="#3d6791"/>
+      <text x="26" y="26" font-size="9" letter-spacing="1.4" fill="#6b90b6">CODEFLOW &#183; ARTIFICIAL INTELLIGENCE &#183; GENERATIVE AI</text>
+      <text x="26" y="54" font-size="25" font-weight="bold" fill="#15497e">The probabilistic map</text>
+      <text x="26" y="74" font-size="12" fill="#44566a">Not a label for each input, but a distribution over what could come next</text>
+      <text x="26" y="112" font-size="10" fill="#5b6b7a">autoregression &#183; self-attention &#183; embeddings</text>
+      <!-- right: context → distribution over the next token -->
+      <g font-size="9" fill="#5b6b7a">
+        <text x="556" y="76">context</text>
+        <rect x="556" y="96" width="96" height="24" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="604" y="111" text-anchor="middle" fill="#1a2836">&hellip;the wizard</text>
+        <path d="M652 108 L676 108" stroke="#15497e" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
+        <text x="686" y="76">p(next token | context)</text>
+        <rect x="686" y="86" width="80" height="12" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="772" y="95" fill="#1a2836">raised 0.53</text>
+        <rect x="686" y="102" width="48" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="740" y="111" fill="#1a2836">opened 0.32</text>
+        <rect x="686" y="118" width="11" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="703" y="127" fill="#1a2836">sold 0.07</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="lead">
+    Ask a fraud model about a payment and it answers with one of two labels it was trained to tell apart. Ask a language model
+    to continue "the wizard" and it does not answer with a label at all: it answers with a <b>distribution</b> — <i>raised</i>
+    is likely, <i>opened</i> is plausible, <i>sold</i> is unlikely but not impossible — and then commits to one of them, moves
+    on, and asks the question again with one more word in the context. That shift, from a mapping between input and expected
+    output to a map of probabilities over what could come next, is what this article is about, together with the three
+    mechanisms that make the map usable: autoregression, self-attention and embeddings.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+  </p>
+
+  <h2 class="af-subHeader" id="sec1">1. From a mapping to a map of probabilities</h2>
+  <p>
+    Traditional AI, as defined in the previous article, learns a mapping between an input and its expected output. Generative AI
+    changes the focus: instead of looking only for the correct answer to an input, it learns <b>probability distributions</b>
+    over patterns, sequences and possible combinations. That learning builds a <b>probabilistic map</b> of what tends to make
+    sense in a given context. The result is not a choice among known labels but a navigation through plausible paths to produce a
+    new, coherent output.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>,<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+  </p>
+  <p>
+    The difference shows in what the model returns. A classifier returns one point of a closed set. A generative model returns,
+    at every step, a whole distribution over the next piece — and the output is the path it walks through those
+    distributions. Figure 1 puts the two side by side.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">A mapping returns a label; a probabilistic map returns a distribution <span class="figNum">&mdash; Figure 1</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Two lanes. Traditional AI: an input goes through a learned function and returns one known label. Generative AI: the context so far goes through the model and returns a distribution over the next token, drawn as three bars: raised 0.53, opened 0.32, sold 0.07">
+        <defs>
+          <linearGradient id="cfNode1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
+        <!-- lane 1: traditional -->
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="150" y="40" width="130" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
+          <text x="215" y="56" font-weight="bold">Input x</text><text x="215" y="71" font-size="9" fill="#5b6b7a">a transaction</text>
+          <rect x="330" y="40" width="150" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
+          <text x="405" y="56" font-weight="bold">Learned f(x)</text><text x="405" y="71" font-size="9" fill="#5b6b7a">mapping x &#8594; y</text>
+          <rect x="530" y="40" width="160" height="40" rx="3" fill="url(#cfSel1)" stroke="#2e5378"/>
+          <text x="610" y="56" font-weight="bold" fill="#ffffff">One label</text><text x="610" y="71" font-size="9" fill="#dbe7f3">fraud or normal</text>
+        </g>
+        <path d="M280 60 L330 60" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <path d="M480 60 L530 60" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <!-- lane 2: generative -->
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="150" y="140" width="130" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/>
+          <text x="215" y="156" font-weight="bold">Context so far</text><text x="215" y="171" font-size="9" fill="#5b6b7a">&ldquo;The wizard&rdquo;</text>
+          <rect x="330" y="140" width="150" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
+          <text x="405" y="156" font-weight="bold">Model</text><text x="405" y="171" font-size="9" fill="#5b6b7a">probabilistic map</text>
+        </g>
+        <path d="M280 160 L330 160" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <path d="M480 160 L524 160" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
+        <text x="530" y="126" font-size="9" fill="#5b6b7a">distribution over the next token</text>
+        <g font-size="9" fill="#1a2836">
+          <rect x="530" y="136" width="120" height="12" fill="url(#cfSel1)" stroke="#2e5378"/><text x="658" y="146">raised &nbsp;0.53</text>
+          <rect x="530" y="152" width="73" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="611" y="162">opened &nbsp;0.32</text>
+          <rect x="530" y="168" width="16" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="554" y="178">sold &nbsp;0.07 &nbsp;&middot;&nbsp; others 0.08</text>
+        </g>
+        <!-- row labels on the vertical centre of the boxes -->
+        <text x="16" y="63.5" font-size="10" font-weight="bold" fill="#15497e">Traditional AI</text>
+        <text x="16" y="163.5" font-size="10" font-weight="bold" fill="#15497e">Generative AI</text>
+        <text x="16" y="212" font-size="9" fill="#8a99a8">The label is the end of the traditional pipeline. The distribution is one step of the generative one: a token is drawn from it and the question is asked again.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 1</b> &mdash; The classifier's answer space was fixed before training. The generative model's answer is a distribution over every token in its vocabulary, computed for the current context and recomputed after each choice. Probabilities are illustrative.</div>
+  </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex1">open in the Lab: Exercise 1, Map versus mapping</a></p>
+
+  <h2 class="af-subHeader" id="sec2">2. Underlying patterns and coherent generation</h2>
+  <p>
+    Training on large volumes of data serves to capture the <b>implicit structures</b> that organise information, even when they
+    are not explicitly labeled. The model learns regularities of language, style, association and continuity, which raises its
+    ability to tell probable sequences from sequences that are foreign to the context.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+    That is the basis of coherent generation: the output seems to make sense because it respects recurring patterns learned during
+    training. Nobody wrote down that a sentence in English tends to put the verb after the subject, that a recipe lists
+    ingredients before steps, or that a function's closing brace comes after its body; the model absorbed those regularities from
+    millions of examples in which they hold.
+  </p>
+  <p>
+    The same fact explains the failure mode. The better the training, the higher the chance that the model produces something
+    consistent and the lower the chance that it drifts into a <b>hallucination</b> — an output that follows the patterns of
+    plausible text without being anchored in anything true.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">7</a>]</sup>
+    A hallucinated citation has the shape of a citation: authors, a title, a year, a venue. The map says "this is what a citation
+    looks like here"; it does not say "this citation exists". Coherence and truth are different properties, and only the first
+    one is what the map optimises.
+  </p>
+
+  <div class="af-panelBox light" id="boxEntropy">
+    <div class="boxHdr" onclick="toggleBox('boxEntropy')"><span class="disc">&#9660;</span>An old idea: language was always predictable</div>
+    <div class="boxBody">
+      In 1951 Claude Shannon asked people to guess the next letter of an English text and measured how well they did: printed
+      English carries only about one bit of information per letter, because most of what comes next is predictable from what came
+      before.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">9</a>]</sup> A language model is a machine
+      that learned that predictability at the scale of tokens, styles and topics. The probabilistic map is not a new idea; what is
+      new is a model large enough to hold a useful one.
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec3">3. Two analogies: the artist and the cartographer</h2>
+  <p>
+    The <b>artist</b> analogy reduces the abstraction of the process. An artist observes many works, internalises styles,
+    compositions and relations, and then produces something new without literally copying a specific piece. The generative model
+    operates in a similar way: it uses a learned statistical repertoire to compose an original output conditioned on the context
+    it received. Originality arises from the coherent <b>recombination</b> of patterns, not from creation out of nothing.
+  </p>
+  <p>
+    The <b>cartographer</b> analogy explains the map itself. A cartographer does not only record the mountains, rivers and forests
+    already seen; they learn the logic of the terrain and start to infer where new elements could exist. The model likewise does
+    not merely memorise examples: it learns the <b>structure of the space of possibilities</b>. When asked to generate something
+    similar to what it knows, it projects a new configuration compatible with the regularities it observed. That is how it can
+    draw an "imaginary city" coherent with the cities it has seen — a river through the old centre, a grid where the ground is
+    flat, a port where the coast bends — even though that particular city never existed.
+  </p>
+
+  <table class="af-table" style="margin-bottom:10px;">
+    <thead><tr><th style="width:170px;">Aspect</th><th>The artist</th><th>The cartographer</th></tr></thead>
+    <tbody>
+      <tr><td>What is learned</td><td>A repertoire of styles, compositions and relations</td><td>The logic of the terrain: which configurations are possible</td></tr>
+      <tr class="band"><td>What is produced</td><td>A new work that recombines the repertoire</td><td>A new map compatible with the regularities</td></tr>
+      <tr><td>What it is not</td><td><span class="st ok">Not a copy</span> of one piece</td><td><span class="st ok">Not a memory</span> of one place</td></tr>
+      <tr class="band"><td>Where it fails</td><td><span class="st warn">Pastiche</span>: style without substance</td><td><span class="st warn">Plausible terrain</span> that is not there</td></tr>
+      <tr><td>Mechanism in the model</td><td>Embeddings and attention (sections 6 and 7)</td><td>The learned distribution, sampled step by step (section 4)</td></tr>
+    </tbody>
+  </table>
+  <p class="tip" style="margin-bottom:12px;">Table 1 &mdash; The two analogies describe the same object from two sides: the artist stresses recombination, the cartographer stresses the structure that makes a never-seen output coherent.</p>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex2">open in the Lab: Exercise 2, The cartographer</a></p>
+
+  <h2 class="af-subHeader" id="sec4">4. Autoregressive models: one token at a time</h2>
+  <p>
+    <b>Autoregressive</b> models generate content token by token, choosing each next element on the basis of the previous
+    ones.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>,<a href="#" onclick="gotoRefs(); return false;">5</a>]</sup>
+    In text this means that each word produced changes the context available for the next decision, forming a chain of local
+    dependencies. Formally, the probability of a whole sequence is the product of the probability of each token given everything
+    before it:
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(1)</span>
+    <span class="var">p</span>(<span class="var">x</span><sub>1</sub>, &hellip;, <span class="var">x</span><sub><span class="var">T</span></sub> | <span class="var">prompt</span>)
+    <span class="op">=</span>
+    <span style="font-size:18px; vertical-align:-2px;">&prod;</span><sub><span class="var">t</span>=1</sub><sup><span class="var">T</span></sup>&nbsp;
+    <span class="var">p</span>(<span class="var">x</span><sub><span class="var">t</span></sub> | <span class="var">prompt</span>, <span class="var">x</span><sub>&lt;<span class="var">t</span></sub>)
+  </div>
+  <p>
+    Take the scenario of generating a book in the style of a famous wizarding saga. The model uses the learned repertoire of style
+    and structure — a school, a rivalry, a mentor, a threat that grows chapter by chapter — but the concrete construction happens
+    step by step during generation. Coherence emerges because each new choice must be compatible with what has already been
+    written: once the wizard has <i>raised</i> something, the next token is very probably an object that can be raised. Figure 2
+    shows one step of the chain.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">One step of autoregressive generation <span class="figNum">&mdash; Figure 2</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 210" width="860" height="210" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="A prompt followed by five generated tokens, The wizard raised his wand; dashed arcs show that each token conditions the later ones; the sixth position is open and shows the distribution: and 0.44, slowly 0.27, then 0.06">
+        <defs>
+          <linearGradient id="cfNode2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
+          <linearGradient id="cfSel2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+          <marker id="cfArr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#3d6791"/></marker>
+          <marker id="cfArr2b" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#b08f3e"/></marker>
+        </defs>
+        <rect x="0" y="0" width="860" height="210" fill="#ffffff"/>
+        <text x="150" y="60" font-size="9" fill="#5b6b7a">each token is chosen given the prompt and every token before it</text>
+        <g font-size="10" fill="#1a2836" text-anchor="middle">
+          <rect x="16" y="90" width="110" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="71" y="114" font-weight="bold">Prompt</text>
+          <rect x="150" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="185" y="114">The</text>
+          <rect x="234" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="269" y="114">wizard</text>
+          <rect x="318" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="353" y="114">raised</text>
+          <rect x="402" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="437" y="114">his</text>
+          <rect x="486" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="521" y="114">wand</text>
+          <rect x="570" y="90" width="80" height="40" rx="3" fill="url(#cfSel2)" stroke="#2e5378"/><text x="610" y="114" fill="#ffffff" font-weight="bold">?</text>
+        </g>
+        <path d="M126 110 L150 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M220 110 L234 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M304 110 L318 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M388 110 L402 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M472 110 L486 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M556 110 L570 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M650 110 L664 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
+        <path d="M185 90 Q269 72 353 90" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#cfArr2b)"/>
+        <path d="M269 90 Q353 72 437 90" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#cfArr2b)"/>
+        <path d="M353 90 Q437 72 521 90" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#cfArr2b)"/>
+        <path d="M437 90 Q523 72 610 90" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#cfArr2b)"/>
+        <!-- distribution for position 6 -->
+        <g font-size="9" fill="#1a2836">
+          <rect x="670" y="86" width="110" height="12" fill="url(#cfSel2)" stroke="#2e5378"/><text x="786" y="96">and 0.44</text>
+          <rect x="670" y="102" width="68" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="744" y="112">slowly 0.27</text>
+          <rect x="670" y="118" width="15" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="691" y="128">then 0.06</text>
+        </g>
+        <text x="16" y="164" font-size="9" fill="#5b6b7a">Step 6: the context is the prompt plus five tokens. The model returns a distribution; one token is drawn from it and joins the context for step 7.</text>
+        <text x="16" y="186" font-size="9" fill="#8a99a8">The output is never planned as a whole: it is the trail left by a sequence of local decisions, each compatible with the previous ones.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 2</b> &mdash; Autoregression as a chain: the dashed arcs are the dependencies of each token on the ones before it. The distribution at position 6 is computed for exactly this context; after "and" is drawn, position 7 gets a new one. Probabilities are illustrative.</div>
+  </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex3">open in the Lab: Exercise 3, Softmax</a></p>
+
+  <h2 class="af-subHeader" id="sec5">5. Autoregression as a process of writing</h2>
+  <p>
+    The <b>writer</b> analogy shows why autoregression works well for language. A writer does not materialise the whole text at
+    once; they write a sentence, use that sentence to guide the next one, and adjust course as the narrative advances. The model
+    does the same at statistical scale: it keeps <b>autocompleting itself</b> until the sequence is done. This mechanism
+    explains both the fluency of generation and the possibility of drift: when the chain starts to follow a path that is
+    plausible but incorrect, every later step is conditioned on that error and tends to make it look consistent rather than to
+    fix it.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup>
+  </p>
+  <ul>
+    <li><b>Fluency.</b> Each token is chosen to fit the ones already written, so the surface is smooth by construction.</li>
+    <li><b>Drift.</b> A single unlikely choice — a wrong name, an invented number — becomes context for everything after it. The
+      map has no separate notion of "true"; it only has "consistent with what came before".</li>
+    <li><b>Why review stays mandatory.</b> Reading the output is the only step in which something other than the map judges it.</li>
+  </ul>
+
+  <div class="af-panelBox light" id="boxDecoding">
+    <div class="boxHdr" onclick="toggleBox('boxDecoding')"><span class="disc">&#9660;</span>Always taking the most likely token is not the best writing</div>
+    <div class="boxBody">
+      One might expect the best output to come from always picking the top token of each distribution. In practice, that greedy
+      strategy produces repetitive, dull text, while sampling from the distribution — with a temperature that sharpens or
+      flattens it, or a cut that keeps only the most probable tokens — produces text that reads as human-like.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">6</a>]</sup>
+      Human text is not a sequence of most-likely words; it is a sequence of plausible ones. The map is meant to be walked, not
+      followed along its ridge.
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec6">6. Self-attention: keeping the relevant parts of the context</h2>
+  <p>
+    Attention and context were introduced before; the new point here is <b>self-attention</b> as the way of preserving relevant
+    relations along the sequence. Self-attention lets the model weigh which earlier parts of the text matter more for
+    interpreting or generating the next token.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">1</a>]</sup> In a long
+    text this helps the model keep links between distant elements — a character introduced at the beginning and picked up many
+    paragraphs later. Without this mechanism, generation would lose continuity far more easily, because a model that only
+    looked at the last few tokens could not know who <i>she</i> is.
+  </p>
+  <p>
+    In practical terms, self-attention works as a system of <b>selective focus</b> over the available history. The model does not
+    treat all previous tokens as equally important; it assigns larger weights to the relations most useful for the current
+    decision. Each position builds a query, compares it with the keys of every position before it, turns the comparisons into
+    weights that sum to one and uses them to blend the values:
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(2)</span>
+    <span class="fName">Attention</span>(<span class="var">Q</span>, <span class="var">K</span>, <span class="var">V</span>) <span class="op">=</span>
+    <span class="fName">softmax</span><span style="font-size:14px;">(</span>
+    <span class="frac"><span class="num"><span class="var">Q</span><span class="var">K</span><sup>&#8868;</sup></span><span class="den">&radic;<span class="var">d</span><sub><span class="var">k</span></sub></span></span>
+    <span style="font-size:14px;">)</span> <span class="var">V</span>
+  </div>
+  <p>
+    Back to the book: this is what lets the model sustain the identity of the main character and the logic of the narrative even
+    when many events happen in between. The pronoun on page two hundred attends to the name on page one, and the spell being cast
+    attends to the wand raised three sentences earlier. Figure 3 shows the weights for one such decision.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Selective focus: which earlier tokens matter for &ldquo;she&rdquo; <span class="figNum">&mdash; Figure 3</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 190" width="860" height="190" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Two rows of tokens. Top: Elara found the map, then an ellipsis for many paragraphs. Bottom: she unfolded it again. Lines from the pronoun she to the earlier tokens are thick towards Elara, thinner towards map and found; the boxes are shaded by their attention weight">
+        <defs>
+          <linearGradient id="cfSel3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="860" height="190" fill="#ffffff"/>
+        <text x="16" y="22" font-size="10" fill="#5b6b7a">Attention weights of the pronoun over the history (darker = more weight)</text>
+        <!-- row 1: the beginning of the text -->
+        <g font-size="10" text-anchor="middle">
+          <rect x="16" y="40" width="64" height="24" rx="2" fill="#2e5378" stroke="#2e5378"/><text x="48" y="56" fill="#ffffff" font-weight="bold">Elara</text>
+          <rect x="90" y="40" width="60" height="24" rx="2" fill="#15497e" fill-opacity="0.10" stroke="#c3cedb"/><text x="120" y="56" fill="#1a2836">found</text>
+          <rect x="160" y="40" width="44" height="24" rx="2" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="182" y="56" fill="#1a2836">the</text>
+          <rect x="214" y="40" width="52" height="24" rx="2" fill="#15497e" fill-opacity="0.30" stroke="#c3cedb"/><text x="240" y="56" fill="#1a2836">map</text>
+          <rect x="276" y="40" width="40" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="296" y="56" fill="#8a99a8">&hellip;</text>
+        </g>
+        <text x="330" y="56" font-size="9" fill="#8a99a8">many paragraphs and hundreds of tokens later</text>
+        <!-- row 2: the current sentence -->
+        <g font-size="10" text-anchor="middle">
+          <rect x="16" y="110" width="50" height="24" rx="2" fill="url(#cfSel3)" stroke="#2e5378"/><text x="41" y="126" fill="#ffffff" font-weight="bold">she</text>
+          <rect x="76" y="110" width="70" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="111" y="126" fill="#1a2836">unfolded</text>
+          <rect x="156" y="110" width="44" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="178" y="126" fill="#1a2836">it</text>
+          <rect x="210" y="110" width="56" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="238" y="126" fill="#1a2836">again</text>
+        </g>
+        <!-- attention lines from the top edge of "she" to the bottom edge of earlier tokens -->
+        <path d="M41 110 L48 64" fill="none" stroke="#2e5378" stroke-width="3"/>
+        <path d="M41 110 L240 64" fill="none" stroke="#3d6791" stroke-width="1.6"/>
+        <path d="M41 110 L120 64" fill="none" stroke="#6b90b6" stroke-width="0.8"/>
+        <text x="330" y="126" font-size="9" fill="#5b6b7a">weights from &ldquo;she&rdquo;: Elara 0.62 &middot; map 0.21 &middot; found 0.05 &middot; the 0.02 &middot; everything else 0.10</text>
+        <text x="16" y="170" font-size="9" fill="#8a99a8">Illustrative weights, consistent with the coreference patterns observed in attention heads of real models. A model that only saw the last few tokens could not resolve &ldquo;she&rdquo;.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 3</b> &mdash; Self-attention as selective focus: for the decision at "she", the model weights the name introduced long before far above the tokens in between. That is what keeps the character's identity stable across a long text.</div>
+  </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex4">open in the Lab: Exercise 4, Selective focus</a></p>
+
+  <h2 class="af-subHeader" id="sec7">7. Embeddings: from symbols to vectors</h2>
+  <p>
+    Before operating on words, images or code, the model converts those elements into numeric vectors called
+    <b>embeddings</b>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+    This vector representation turns symbolic items into points of a mathematical space where relations can be measured
+    computationally. The model does not "read Portuguese" or "read English" the way a human does; it processes numeric patterns
+    that encode semantic and contextual properties. That is what makes it possible to compare meaning by <b>geometric
+    proximity</b> between vectors.
+  </p>
+  <p>
+    The embeddings are not designed by hand. They are learned together with the rest of the model, adjusted so that words used in
+    similar ways end up with similar vectors — which is exactly the property the probabilistic map needs, because a distribution
+    learned for one context can then apply to another context that is close in this space even if the words differ.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
+    Real models use hundreds or thousands of dimensions; Figure 4 uses two so that the geometry can be seen.
+  </p>
+
+  <div class="af-panelBox light" id="boxDims">
+    <div class="boxHdr" onclick="toggleBox('boxDims')"><span class="disc">&#9660;</span>What the dimensions mean</div>
+    <div class="boxBody">
+      Nothing, individually. In the toy space of Figure 4 the two axes were chosen by hand (a "royalty" direction and a "gender"
+      direction) so the picture is readable. In a real model no axis has a name: meaning is spread across all the dimensions, and
+      only distances and directions between vectors are interpretable — which is why comparisons use the angle between vectors,
+      equation (3), rather than any single coordinate.
+    </div>
+  </div>
+
+  <h2 class="af-subHeader" id="sec8">8. Semantic similarity by vectors</h2>
+  <p>
+    When two terms appear in similar contexts, their vectors tend to end up close in the semantic space; when they appear in very
+    different contexts, they tend to end up far apart.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
+    That is why pairs such as <i>king</i> and <i>queen</i> occupy nearby regions, while <i>king</i> and <i>dog</i> usually sit
+    further apart. The analogy with geographic coordinates helps: vector proximity works like proximity of location, but in a
+    space of meaning. The standard measure is the cosine of the angle between two vectors:
+  </p>
+
+  <div class="cf-formula">
+    <span class="eqNum">(3)</span>
+    <span class="fName">cos</span>(<span class="var">u</span>, <span class="var">v</span>) <span class="op">=</span>
+    <span class="frac"><span class="num"><span class="var">u</span> &middot; <span class="var">v</span></span><span class="den">&#8214;<span class="var">u</span>&#8214; &#8214;<span class="var">v</span>&#8214;</span></span>
+  </div>
+  <div class="cf-formula">
+    <span class="eqNum">(4)</span>
+    <span class="var">v</span><sub>king</sub> &minus; <span class="var">v</span><sub>man</sub> + <span class="var">v</span><sub>woman</sub> <span class="op">&asymp;</span> <span class="var">v</span><sub>queen</sub>
+  </div>
+  <p>
+    Equation (3) gives 1 for vectors pointing the same way, 0 for unrelated ones and &minus;1 for opposites, regardless of their
+    length. Equation (4) is the famous consequence: directions in the space carry relations, so subtracting <i>man</i> from
+    <i>king</i> and adding <i>woman</i> lands near <i>queen</i>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+    This structure is one of the bases on which the model recognises relations, keeps context and chooses more plausible
+    continuations.
+  </p>
+
+  <div class="cf-figure">
+    <div class="figHdr">Six words in a toy embedding space, and their cosine similarities <span class="figNum">&mdash; Figure 4</span></div>
+    <div class="figBody">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Left: a two-dimensional plot with king and queen high on the royalty axis, man and woman low, dog and cat at the bottom; dashed arrows from man to king and from woman to queen are parallel. Right: a grid of cosine similarities between king, queen, man, woman and dog">
+        <rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
+        <!-- left: the space -->
+        <text x="60" y="22" font-size="10" font-weight="bold" fill="#15497e">Two dimensions, chosen by hand for the picture</text>
+        <text x="64" y="34" font-size="9" fill="#5b6b7a">royalty</text>
+        <path d="M60 200 L440 200" stroke="#a9b8c7" stroke-width="1.2"/>
+        <path d="M60 200 L60 40" stroke="#a9b8c7" stroke-width="1.2"/>
+        <text x="250" y="216" font-size="9" fill="#5b6b7a" text-anchor="middle">gender direction</text>
+        <path d="M375 111 L345 43.5" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <path d="M105 111 L135 43.5" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <g fill="#6b90b6" stroke="#3d6791">
+          <circle cx="345" cy="43.5" r="5"/><circle cx="135" cy="43.5" r="5"/><circle cx="375" cy="111" r="5"/><circle cx="105" cy="111" r="5"/>
+        </g>
+        <g fill="#f2c94c" stroke="#b08f3e">
+          <circle cx="255" cy="174" r="5"/><circle cx="225" cy="169.5" r="5"/>
+        </g>
+        <g font-size="10" fill="#1a2836">
+          <text x="353" y="47">king</text><text x="143" y="47">queen</text><text x="383" y="114">man</text><text x="113" y="114">woman</text>
+          <text x="263" y="178">dog</text><text x="217" y="166" text-anchor="end">cat</text>
+        </g>
+        <text x="200" y="90" font-size="9" fill="#b08f3e">king &minus; man &asymp; queen &minus; woman</text>
+        <!-- right: cosine grid -->
+        <text x="560" y="22" font-size="10" font-weight="bold" fill="#15497e">Cosine similarity, equation (3)</text>
+        <g font-size="9" fill="#5b6b7a" text-anchor="middle">
+          <text x="586" y="56">king</text><text x="638" y="56">queen</text><text x="690" y="56">man</text><text x="742" y="56">woman</text><text x="794" y="56">dog</text>
+        </g>
+        <g font-size="9" fill="#5b6b7a" text-anchor="end">
+          <text x="552" y="78.5">king</text><text x="552" y="100.5">queen</text><text x="552" y="122.5">man</text><text x="552" y="144.5">woman</text><text x="552" y="166.5">dog</text>
+        </g>
+        <g font-size="9" text-anchor="middle">
+          <rect x="560" y="64" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="586" y="78.5" fill="#ffffff">1.00</text>
+          <rect x="612" y="64" width="52" height="22" fill="#15497e" fill-opacity="0.58" stroke="#c3cedb"/><text x="638" y="78.5" fill="#ffffff">0.71</text>
+          <rect x="664" y="64" width="52" height="22" fill="#15497e" fill-opacity="0.46" stroke="#c3cedb"/><text x="690" y="78.5" fill="#1a2836">0.57</text>
+          <rect x="716" y="64" width="52" height="22" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="742" y="78.5" fill="#1a2836">&minus;0.17</text>
+          <rect x="768" y="64" width="52" height="22" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/><text x="794" y="78.5" fill="#1a2836">&minus;0.89</text>
+          <rect x="560" y="86" width="52" height="22" fill="#15497e" fill-opacity="0.58" stroke="#c3cedb"/><text x="586" y="100.5" fill="#ffffff">0.71</text>
+          <rect x="612" y="86" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="638" y="100.5" fill="#ffffff">1.00</text>
+          <rect x="664" y="86" width="52" height="22" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="690" y="100.5" fill="#1a2836">&minus;0.17</text>
+          <rect x="716" y="86" width="52" height="22" fill="#15497e" fill-opacity="0.46" stroke="#c3cedb"/><text x="742" y="100.5" fill="#1a2836">0.57</text>
+          <rect x="768" y="86" width="52" height="22" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/><text x="794" y="100.5" fill="#1a2836">&minus;0.95</text>
+          <rect x="560" y="108" width="52" height="22" fill="#15497e" fill-opacity="0.46" stroke="#c3cedb"/><text x="586" y="122.5" fill="#1a2836">0.57</text>
+          <rect x="612" y="108" width="52" height="22" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="638" y="122.5" fill="#1a2836">&minus;0.17</text>
+          <rect x="664" y="108" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="690" y="122.5" fill="#ffffff">1.00</text>
+          <rect x="716" y="108" width="52" height="22" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/><text x="742" y="122.5" fill="#1a2836">&minus;0.91</text>
+          <rect x="768" y="108" width="52" height="22" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="794" y="122.5" fill="#1a2836">&minus;0.14</text>
+          <rect x="560" y="130" width="52" height="22" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="586" y="144.5" fill="#1a2836">&minus;0.17</text>
+          <rect x="612" y="130" width="52" height="22" fill="#15497e" fill-opacity="0.46" stroke="#c3cedb"/><text x="638" y="144.5" fill="#1a2836">0.57</text>
+          <rect x="664" y="130" width="52" height="22" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/><text x="690" y="144.5" fill="#1a2836">&minus;0.91</text>
+          <rect x="716" y="130" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="742" y="144.5" fill="#ffffff">1.00</text>
+          <rect x="768" y="130" width="52" height="22" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="794" y="144.5" fill="#1a2836">&minus;0.30</text>
+          <rect x="560" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/><text x="586" y="166.5" fill="#1a2836">&minus;0.89</text>
+          <rect x="612" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.03" stroke="#c3cedb"/><text x="638" y="166.5" fill="#1a2836">&minus;0.95</text>
+          <rect x="664" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.06" stroke="#c3cedb"/><text x="690" y="166.5" fill="#1a2836">&minus;0.14</text>
+          <rect x="716" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="742" y="166.5" fill="#1a2836">&minus;0.30</text>
+          <rect x="768" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="794" y="166.5" fill="#ffffff">1.00</text>
+        </g>
+        <text x="560" y="196" font-size="9" fill="#8a99a8">king &minus; man + woman = (&minus;0.55, 0.85): cosine 0.98 with queen, &minus;0.79 with cat, &minus;0.88 with dog.</text>
+        <text x="560" y="212" font-size="9" fill="#8a99a8">Vectors in the code box below; the numbers are exact for this toy space.</text>
+      </svg>
+    </div>
+    <div class="figCaption"><b>Figure 4</b> &mdash; Left: the vectors of six words in a two-dimensional space built for the picture; the dashed arrows are the same displacement, which is what makes equation (4) work. Right: the cosine similarities computed from those vectors with the code below. A real model has hundreds of dimensions and no named axes, but the same geometry.</div>
+  </div>
+
+  <p>The whole of Figure 4 fits in a few lines. The vectors are the ones plotted; the outputs in the comments are what the code prints:</p>
+  <div class="cf-codeBox">
+    <div class="codeHdr">semantic_neighbours.py <span class="lang">&mdash; Python</span><button class="af-button small" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="k">import</span> math
+
+vec = {                                   <span class="c"># toy embeddings in two dimensions; real models use hundreds</span>
+    <span class="s">"king"</span>:  (<span class="n">0.35</span>, <span class="n">0.85</span>),  <span class="s">"queen"</span>: (-<span class="n">0.35</span>, <span class="n">0.85</span>),
+    <span class="s">"man"</span>:   (<span class="n">0.45</span>, <span class="n">0.10</span>),  <span class="s">"woman"</span>: (-<span class="n">0.45</span>, <span class="n">0.10</span>),
+    <span class="s">"dog"</span>:   (<span class="n">0.05</span>, -<span class="n">0.60</span>), <span class="s">"cat"</span>:   (-<span class="n">0.05</span>, -<span class="n">0.55</span>),
+}
+
+<span class="k">def</span> norm(u):
+    <span class="k">return</span> math.sqrt(<span class="k">sum</span>(a * a <span class="k">for</span> a <span class="k">in</span> u))
+
+<span class="k">def</span> cosine(u, v):
+    <span class="c"># equation (3): 1 = same direction, 0 = unrelated, -1 = opposite; length does not matter</span>
+    dot = <span class="k">sum</span>(a * b <span class="k">for</span> a, b <span class="k">in</span> <span class="k">zip</span>(u, v))
+    <span class="k">return</span> dot / (norm(u) * norm(v))
+
+<span class="k">def</span> neighbours(word, k=<span class="n">2</span>):
+    others = [w <span class="k">for</span> w <span class="k">in</span> vec <span class="k">if</span> w != word]
+    <span class="k">return</span> <span class="k">sorted</span>(others, key=<span class="k">lambda</span> w: cosine(vec[word], vec[w]), reverse=<span class="k">True</span>)[:k]
+
+<span class="k">def</span> analogy(a, b, c):
+    <span class="c"># equation (4): a - b + c, then the closest word that is not one of the three</span>
+    target = <span class="k">tuple</span>(x - y + z <span class="k">for</span> x, y, z <span class="k">in</span> <span class="k">zip</span>(vec[a], vec[b], vec[c]))
+    candidates = [w <span class="k">for</span> w <span class="k">in</span> vec <span class="k">if</span> w <span class="k">not</span> <span class="k">in</span> (a, b, c)]
+    <span class="k">return</span> <span class="k">max</span>(candidates, key=<span class="k">lambda</span> w: cosine(target, vec[w]))
+
+<span class="k">print</span>(neighbours(<span class="s">"king"</span>))                 <span class="c"># ['queen', 'man']</span>
+<span class="k">print</span>(neighbours(<span class="s">"dog"</span>))                  <span class="c"># ['cat', 'man']</span>
+<span class="k">print</span>(<span class="k">round</span>(cosine(vec[<span class="s">"king"</span>], vec[<span class="s">"dog"</span>]), <span class="n">2</span>))   <span class="c"># -0.89: far apart</span>
+<span class="k">print</span>(analogy(<span class="s">"king"</span>, <span class="s">"man"</span>, <span class="s">"woman"</span>))   <span class="c"># queen</span></pre>
+  </div>
+  <p>Practise: <a class="cf-labLink" href="#lab-ex5">open in the Lab: Exercise 5, Cosine and analogy</a></p>
+
+  <h2 class="af-subHeader" id="sec9">9. Conclusion</h2>
+  <p>
+    A generative model does not store answers; it stores a map. Training on large volumes of data turns the implicit structure of
+    language, code and images into probability distributions over what tends to make sense in a given context. Autoregression
+    walks that map one token at a time, which is why the output is fluent and why it can drift; self-attention decides which parts
+    of the history matter for each step, which is why a long text keeps its characters and its thread; embeddings give the map its
+    coordinates, so that meaning can be compared as distance and relations as direction. Keep the cartographer in mind: the model
+    infers terrain it never saw, coherent with terrain it did see — and only a reader can check whether the city is really there.
+  </p>
+
+</div><!-- /cf-article -->
+
+<!-- Lab: exercises moved into the Lab drawer by exercise.js -->
+<div class="cf-lab" hidden>
+
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec1" data-short="Map versus mapping">
+    <div class="exHdr">Exercise 1 &mdash; map versus mapping <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">Instead of the mapping x &#8594; y of traditional AI, what does a generative model learn?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> A single correct answer for each input</label></li>
+      <li><label><input type="radio" name="ex1"> A probability distribution over patterns, sequences and combinations: a map of what tends to make sense in a context</label></li>
+      <li><label><input type="radio" name="ex1"> A complete list of every valid output, stored for lookup</label></li>
+      <li><label><input type="radio" name="ex1"> Grammar rules written by linguists</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "answer": [1],
+      "explain": "The output is not a pick among labels but a path through plausible continuations; nothing is stored as a list, and no rule is written by hand."
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concept" data-section="sec3" data-short="The cartographer">
+    <div class="exHdr">Exercise 2 &mdash; the cartographer <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">Why can the model draw an imaginary city that still looks like a city?</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex2"> It memorised every city in the training data and blends two of them</label></li>
+      <li><label><input type="radio" name="ex2"> It learned the structure of the space of possibilities and projects a new configuration compatible with the regularities it observed</label></li>
+      <li><label><input type="radio" name="ex2"> It copies the closest example and changes the name</label></li>
+      <li><label><input type="radio" name="ex2"> It asks the user for the layout before drawing</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "answer": [1],
+      "explain": "Like the cartographer who learned the logic of the terrain, the model learns the structure, not the examples; the city never existed, but its rivers, grid and port follow the regularities of cities that did."
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex3" data-kind="run" data-lang="JavaScript" data-section="sec4" data-short="Softmax">
+    <div class="exHdr">Exercise 3 &mdash; softmax <span class="lang">&mdash; JavaScript, run with tests</span></div>
+    <p class="exTask">The model produces one score per candidate token; <code>softmax</code> turns the scores into the distribution of Figure 2. Implement it: the probability of each score is its exponential divided by the sum of all exponentials.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">function softmax(scores) {
+    // return an array of probabilities, one per score, that sum to 1
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "tests": [
+        { "call": "softmax([2, 0]).map(p => Math.round(p * 1000) / 1000)", "expect": [0.881, 0.119], "msg": "softmax([2, 0]) → [0.881, 0.119]" },
+        { "call": "softmax([1, 2, 3]).map(p => Math.round(p * 1000) / 1000)", "expect": [0.09, 0.245, 0.665], "msg": "softmax([1, 2, 3]) → [0.090, 0.245, 0.665]" },
+        { "call": "softmax([0, 0, 0]).map(p => Math.round(p * 1000) / 1000)", "expect": [0.333, 0.333, 0.333], "msg": "equal scores give equal probabilities" },
+        { "call": "Number(softmax([5, -1, 0.5]).reduce((a, b) => a + b, 0).toFixed(6))", "expect": 1, "msg": "the probabilities sum to 1" },
+        { "call": "softmax([])", "expect": [], "msg": "an empty list of scores gives an empty distribution" }
+      ],
+      "solution": "function softmax(scores) {\n    const exps = scores.map(s => Math.exp(s));\n    const total = exps.reduce((a, b) => a + b, 0);\n    return exps.map(e => e / total);\n}"
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex4" data-kind="text" data-lang="Concept" data-section="sec6" data-short="Selective focus">
+    <div class="exHdr">Exercise 4 &mdash; selective focus <span class="lang">&mdash; written answer</span></div>
+    <p class="exTask">What is the name of the mechanism that weights which earlier tokens matter most for the current decision, so that "she" on page two hundred still points to the name on page one?</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "accept": ["self-attention", "self attention", "selfattention", "attention", "the attention mechanism"],
+      "regex": "attention",
+      "hint": "Two words joined by a hyphen; the sequence looks at itself.",
+      "explain": "Self-attention: each position weighs every earlier position, and the weights sum to one, so the relevant parts of the history dominate the decision."
+    }</script>
+  </div>
+
+  <div class="cf-exercise" id="ex5" data-kind="blanks" data-lang="Python" data-section="sec8" data-short="Cosine and analogy">
+    <div class="exHdr">Exercise 5 &mdash; cosine and analogy <span class="lang">&mdash; Python, blanks</span></div>
+    <p class="exTask">Complete three lines of the code box: the denominator of the cosine, the word subtracted in the analogy, and the function that picks the closest candidate.</p>
+    <pre class="exBlanks">def cosine(u, v):
+    dot = sum(a * b for a, b in zip(u, v))
+    return dot / (norm(u) * ___(v))                     # equation (3): length does not matter
+
+target = tuple(x - y + z for x, y, z in zip(vec["king"], vec["___"], vec["woman"]))   # equation (4)
+best = ___(candidates, key=lambda w: cosine(target, vec[w]))   # the candidate with the highest cosine</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "blanks": [
+        { "accept": ["norm"], "hint": "The same function used for u.", "width": 5 },
+        { "accept": ["man"], "hint": "king − ? + woman ≈ queen.", "width": 6 },
+        { "accept": ["max"], "hint": "Highest cosine wins.", "width": 4 }
+      ],
+      "solution": "def cosine(u, v):\n    dot = sum(a * b for a, b in zip(u, v))\n    return dot / (norm(u) * norm(v))\n\ntarget = tuple(x - y + z for x, y, z in zip(vec[\"king\"], vec[\"man\"], vec[\"woman\"]))\nbest = max(candidates, key=lambda w: cosine(target, vec[w]))"
+    }</script>
+  </div>
+
+</div>
+
+<!-- references -->
+<ul class="cf-refList">
+  <li><span class="refNum">[1]</span><span>A. Vaswani; N. Shazeer; N. Parmar <i>et al.</i> &mdash; <cite>Attention Is All You Need</cite>, NeurIPS 2017. <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a> <span class="refSrc">(accessed on 09/10/2026)</span></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[2]</span><span>T. Mikolov; K. Chen; G. Corrado; J. Dean &mdash; <cite>Efficient Estimation of Word Representations in Vector Space</cite>, ICLR Workshop 2013. <a href="https://arxiv.org/abs/1301.3781">arXiv:1301.3781</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[3]</span><span>T. Mikolov; I. Sutskever; K. Chen; G. Corrado; J. Dean &mdash; <cite>Distributed Representations of Words and Phrases and their Compositionality</cite>, NeurIPS 2013. <a href="https://arxiv.org/abs/1310.4546">arXiv:1310.4546</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[4]</span><span>Y. Bengio; R. Ducharme; P. Vincent; C. Jauvin &mdash; <cite>A Neural Probabilistic Language Model</cite>, Journal of Machine Learning Research 3, 2003. <a href="https://www.jmlr.org/papers/v3/bengio03a.html">jmlr.org</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[5]</span><span>A. Radford; J. Wu; R. Child; D. Luan; D. Amodei; I. Sutskever &mdash; <cite>Language Models are Unsupervised Multitask Learners</cite>, OpenAI, 2019. <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">cdn.openai.com</a></span><span class="refType cf-label">Technical report</span></li>
+  <li><span class="refNum">[6]</span><span>A. Holtzman; J. Buys; L. Du; M. Forbes; Y. Choi &mdash; <cite>The Curious Case of Neural Text Degeneration</cite>, ICLR 2020. <a href="https://arxiv.org/abs/1904.09751">arXiv:1904.09751</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[7]</span><span>Z. Ji; N. Lee; R. Frieske <i>et al.</i> &mdash; <cite>Survey of Hallucination in Natural Language Generation</cite>, ACM Computing Surveys 55(12), 2023. <a href="https://arxiv.org/abs/2202.03629">arXiv:2202.03629</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[8]</span><span>D. Bahdanau; K. Cho; Y. Bengio &mdash; <cite>Neural Machine Translation by Jointly Learning to Align and Translate</cite>, ICLR 2015. <a href="https://arxiv.org/abs/1409.0473">arXiv:1409.0473</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[9]</span><span>C. E. Shannon &mdash; <cite>Prediction and Entropy of Printed English</cite>, Bell System Technical Journal 30(1), 1951. <a href="https://doi.org/10.1002/j.1538-7305.1951.tb01366.x">doi:10.1002/j.1538-7305.1951.tb01366.x</a></span><span class="refType cf-label">Academic paper</span></li>
+  <li><span class="refNum">[10]</span><span>J. Pennington; R. Socher; C. D. Manning &mdash; <cite>GloVe: Global Vectors for Word Representation</cite>, EMNLP 2014. <a href="https://aclanthology.org/D14-1162/">aclanthology.org/D14-1162</a></span><span class="refType cf-label">Academic paper</span></li>
+</ul>
+<div class="af-spacer"></div>
+<h2 class="af-subHeader" style="margin-top:0;">Further reading</h2>
+<ul class="cf-refList">
+  <li><span class="refNum">[a]</span><span>J. Alammar &mdash; <cite>The Illustrated Transformer</cite>. <a href="https://jalammar.github.io/illustrated-transformer/">jalammar.github.io</a></span><span class="refType cf-label">Tutorial</span></li>
+  <li><span class="refNum">[b]</span><span>I. Goodfellow; Y. Bengio; A. Courville &mdash; <cite>Deep Learning</cite>, MIT Press, 2016, chapter 10 (sequence modeling). <a href="https://www.deeplearningbook.org/">deeplearningbook.org</a></span><span class="refType cf-label">Book</span></li>
+</ul>
+<p class="tip" style="margin-top:8px;">References verified on 09/10/2026 and checked during technical review. External links open outside Codeflow.</p>

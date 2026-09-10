@@ -10,6 +10,7 @@ tags: [traditional-ai, generative-ai, supervised-learning, classification, regre
 reading_time: 13
 level: Introductory
 series_prev: { title: "What is Generative AI, and why did it only become viable now?", url: "/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
+series_next: { title: "From output prediction to the probabilistic map: autoregression, self-attention and embeddings", url: "/articles/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings/" }
 cover: "/assets/covers/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs.svg"
 excerpt: "Traditional AI answers a question whose options were fixed before training: it learns from labeled examples how to map an input to a class or a number, which makes it the right tool for prediction, triage and decision support. Generative AI learns the internal regularities of large volumes of data and uses them to compose an output that did not exist as an option, conditioned on the prompt and the context. This article walks through labeled data and supervised learning, classification and regression, risk scores and thresholds in fraud and spam, the structural limit of a closed answer space, and then the shift to self-supervised patterns, conditioned composition, long context and the Transformer. It closes with the multiple-choice student versus the writer, and when to use each…"
 image: "/assets/social/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs.en.png"
@@ -526,6 +527,8 @@ CLASSES = [<span class="s">"normal"</span>, <span class="s">"fraud"</span>]     
     output that did not exist as an option, conditioned on the prompt and on a context that the Transformer lets it hold over long
     stretches. Ask first what shape the answer has: if it is a menu, use the multiple-choice student; if it has to be written, call
     the writer — and keep a human reading what the writer produces.
+    The next article opens the writer's toolbox: the probabilistic map the model learns instead of a mapping, autoregression
+    one token at a time, self-attention over long context and the embeddings that give meaning its coordinates.
   </p>
 
 </div><!-- /cf-article -->

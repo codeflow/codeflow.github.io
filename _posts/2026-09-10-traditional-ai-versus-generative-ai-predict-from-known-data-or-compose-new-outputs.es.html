@@ -12,6 +12,7 @@ tags: [traditional-ai, generative-ai, supervised-learning, classification, regre
 reading_time: 13
 level: Introductory
 series_prev: { title: "¿Qué es la IA generativa, y por qué solo ahora se volvió viable?", url: "/es/articles/what-is-generative-ai-and-why-did-it-only-become-viable-now/" }
+series_next: { title: "De la predicción de la salida al mapa probabilístico: autorregresión, self-attention y embeddings", url: "/es/articles/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings/" }
 cover: "/assets/covers/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs.svg"
 excerpt: "La IA tradicional responde a una pregunta cuyas opciones se fijaron antes del entrenamiento: aprende, a partir de ejemplos etiquetados, a asignar una entrada a una clase o a un número, lo que la convierte en la herramienta adecuada para predicción, triaje y apoyo a la decisión. La IA generativa aprende las regularidades internas de grandes volúmenes de datos y las usa para componer una salida que no existía como opción, condicionada al prompt y al contexto. Este artículo recorre los datos etiquetados y el aprendizaje supervisado, clasificación y regresión, scores de riesgo y umbrales en fraude y spam, la limitación estructural de un espacio de respuestas cerrado, y luego el giro hacia patrones autosupervisados, composición condicionada, contexto largo y el Transformer. Cierra con el alumno de opción múltiple frente al escritor, y cuándo usar cada uno…"
 image: "/assets/social/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs.es.png"
@@ -532,6 +533,8 @@ CLASES = [<span class="s">"normal"</span>, <span class="s">"fraude"</span>]     
     patrones del propio dato y compone una salida que no existía como opción, condicionada al prompt y a un contexto que el
     Transformer le permite sostener en tramos largos. Pregunta primero qué forma tiene la respuesta: si es un menú, usa al alumno de
     opción múltiple; si hay que escribirla, llama al escritor — y mantén a un humano leyendo lo que el escritor produce.
+    El próximo artículo abre la caja de herramientas del escritor: el mapa probabilístico que el modelo aprende en vez de una
+    correspondencia, la autorregresión token a token, la self-attention en contexto largo y los embeddings que dan coordenadas al significado.
   </p>
 
 </div><!-- /cf-article -->
