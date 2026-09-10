@@ -13,7 +13,7 @@ reading_time: 13
 level: Introductory
 series_prev: { title: "IA tradicional versus IA generativa: predecir a partir de datos conocidos o componer salidas nuevas", url: "/es/articles/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs/" }
 cover: "/assets/covers/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings.svg"
-excerpt: "La IA tradicional aprende una correspondencia entre una entrada y la salida esperada. La IA generativa aprende otra cosa: una distribución de probabilidad sobre patrones, secuencias y combinaciones, un mapa probabilístico de lo que tiende a tener sentido en un contexto dado. Este artículo recorre ese mapa a través de los tres mecanismos que lo hacen funcionar: la autorregresión, que compone la salida un token a la vez de modo que cada elección condiciona la siguiente; la self-attention, el foco selectivo que mantiene vivo a un personaje presentado en la primera página doscientos párrafos después; y los embeddings, los vectores en los que rey queda junto a reina y lejos de perro. Por el camino, el artista que recombina un repertorio, el cartógrafo que infiere un terreno nunca visto, y por qué una cadena fluida de pasos plausibles todavía puede desviarse hacia una alucinación…"
+excerpt: "La IA tradicional aprende una correspondencia entre una entrada y la salida esperada. La IA generativa aprende otra cosa: una distribución de probabilidad sobre patrones, secuencias y combinaciones, un mapa probabilístico de lo que tiende a tener sentido en un contexto dado. Este artículo recorre ese mapa a través de los tres mecanismos que lo hacen funcionar: la autorregresión, que compone la salida un token a la vez de modo que cada elección condiciona la siguiente; la self-attention, el foco selectivo que mantiene vivo a un personaje presentado en la primera página doscientos párrafos después; y los embeddings, los vectores en los que París queda junto a Roma y lejos de cuchara. Por el camino, el artista que recombina un repertorio, el cartógrafo que infiere un terreno nunca visto, y por qué una cadena fluida de pasos plausibles todavía puede desviarse hacia una alucinación…"
 image: "/assets/social/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings.es.png"
 description: "Cómo componen los modelos generativos: un mapa probabilístico en vez de una correspondencia, autorregresión token a token, self-attention y embeddings."
 references_count: 10
@@ -32,7 +32,7 @@ history:
     <li>Dos analogías que hacen concreto el mapa — el <b>artista</b> que recombina un repertorio y el <b>cartógrafo</b> que infiere un terreno nunca visto — y de dónde sale la alucinación.</li>
     <li><b>Autorregresión</b>: generación un token a la vez, cada elección condicionada a todo lo ya escrito, con la fluidez y el desvío que eso implica.</li>
     <li><b>Self-attention</b> como foco selectivo sobre el historial, y por qué mantiene vivo a un personaje presentado en la primera página muchos párrafos después.</li>
-    <li><b>Embeddings</b>: cómo palabras, imágenes y código se convierten en vectores, y cómo la <b>similitud de coseno</b> convierte el significado en geometría (rey junto a reina, lejos de perro), con un ejemplo ejecutable.</li>
+    <li><b>Embeddings</b>: cómo palabras, imágenes y código se convierten en vectores, y cómo la <b>similitud de coseno</b> convierte el significado en geometría (París junto a Roma, lejos de cuchara), con un ejemplo ejecutable.</li>
   </ul>
 </div>
 
@@ -53,20 +53,20 @@ history:
       <!-- derecha: contexto → distribución sobre el siguiente token -->
       <g font-size="9" fill="#5b6b7a">
         <text x="556" y="76">contexto</text>
-        <rect x="556" y="96" width="96" height="24" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="604" y="111" text-anchor="middle" fill="#1a2836">&hellip;el mago</text>
+        <rect x="556" y="96" width="96" height="24" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="604" y="111" text-anchor="middle" fill="#1a2836">&hellip;la detective</text>
         <path d="M652 108 L676 108" stroke="#15497e" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
         <text x="686" y="76">p(siguiente token | contexto)</text>
-        <rect x="686" y="86" width="80" height="12" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="772" y="95" fill="#1a2836">alz&#243; 0,53</text>
-        <rect x="686" y="102" width="48" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="740" y="111" fill="#1a2836">abri&#243; 0,32</text>
-        <rect x="686" y="118" width="11" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="703" y="127" fill="#1a2836">vendi&#243; 0,07</text>
+        <rect x="686" y="86" width="80" height="12" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="772" y="95" fill="#1a2836">abri&#243; 0,53</text>
+        <rect x="686" y="102" width="48" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="740" y="111" fill="#1a2836">encontr&#243; 0,32</text>
+        <rect x="686" y="118" width="11" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="703" y="127" fill="#1a2836">cant&#243; 0,07</text>
       </g>
     </svg>
   </div>
 
   <p class="lead">
     Pregúntale a un modelo de fraude por un pago y responde con una de las dos etiquetas que fue entrenado para distinguir.
-    Pídele a un modelo de lenguaje que continúe "el mago" y no responde con ninguna etiqueta: responde con una
-    <b>distribución</b> — <i>alzó</i> es probable, <i>abrió</i> es plausible, <i>vendió</i> es improbable pero no imposible — y
+    Pídele a un modelo de lenguaje que continúe "la detective" y no responde con ninguna etiqueta: responde con una
+    <b>distribución</b> — <i>abrió</i> es probable, <i>encontró</i> es plausible, <i>cantó</i> es improbable pero no imposible — y
     después se compromete con una de ellas, avanza y vuelve a hacer la pregunta con una palabra más en el contexto. Ese giro, de
     una correspondencia entre entrada y salida esperada a un mapa de probabilidades sobre lo que puede venir después, es el tema
     de este artículo, junto con los tres mecanismos que hacen utilizable el mapa: autorregresión, self-attention y
@@ -90,7 +90,7 @@ history:
   <div class="cf-figure">
     <div class="figHdr">Una correspondencia devuelve una etiqueta; un mapa probabilístico devuelve una distribución <span class="figNum">&mdash; Figura 1</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Dos carriles. IA tradicional: una entrada pasa por una función aprendida y devuelve una etiqueta conocida. IA generativa: el contexto hasta aquí pasa por el modelo y devuelve una distribución sobre el siguiente token, dibujada como tres barras: alzó 0,53, abrió 0,32, vendió 0,07">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Dos carriles. IA tradicional: una entrada pasa por una función aprendida y devuelve una etiqueta conocida. IA generativa: el contexto hasta aquí pasa por el modelo y devuelve una distribución sobre el siguiente token, dibujada como tres barras: abrió 0,53, encontró 0,32, cantó 0,07">
         <defs>
           <linearGradient id="cfNode1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
           <linearGradient id="cfSel1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
@@ -111,7 +111,7 @@ history:
         <!-- carril 2: generativa -->
         <g font-size="10" fill="#1a2836" text-anchor="middle">
           <rect x="150" y="140" width="130" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/>
-          <text x="215" y="156" font-weight="bold">Contexto hasta aqu&#237;</text><text x="215" y="171" font-size="9" fill="#5b6b7a">&ldquo;El mago&rdquo;</text>
+          <text x="215" y="156" font-weight="bold">Contexto hasta aqu&#237;</text><text x="215" y="171" font-size="9" fill="#5b6b7a">&ldquo;La detective&rdquo;</text>
           <rect x="330" y="140" width="150" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
           <text x="405" y="156" font-weight="bold">Modelo</text><text x="405" y="171" font-size="9" fill="#5b6b7a">mapa probabil&#237;stico</text>
         </g>
@@ -119,9 +119,9 @@ history:
         <path d="M480 160 L524 160" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
         <text x="530" y="126" font-size="9" fill="#5b6b7a">distribuci&#243;n sobre el siguiente token</text>
         <g font-size="9" fill="#1a2836">
-          <rect x="530" y="136" width="120" height="12" fill="url(#cfSel1)" stroke="#2e5378"/><text x="658" y="146">alz&#243; &nbsp;0,53</text>
-          <rect x="530" y="152" width="73" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="611" y="162">abri&#243; &nbsp;0,32</text>
-          <rect x="530" y="168" width="16" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="554" y="178">vendi&#243; &nbsp;0,07 &nbsp;&middot;&nbsp; otros 0,08</text>
+          <rect x="530" y="136" width="120" height="12" fill="url(#cfSel1)" stroke="#2e5378"/><text x="658" y="146">abri&#243; &nbsp;0,53</text>
+          <rect x="530" y="152" width="73" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="611" y="162">encontr&#243; &nbsp;0,32</text>
+          <rect x="530" y="168" width="16" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="554" y="178">cant&#243; &nbsp;0,07 &nbsp;&middot;&nbsp; otros 0,08</text>
         </g>
         <!-- etiquetas de fila en el centro vertical de las cajas -->
         <text x="16" y="63.5" font-size="10" font-weight="bold" fill="#15497e">IA tradicional</text>
@@ -176,8 +176,8 @@ history:
     ya vistos; aprende la lógica del terreno y pasa a inferir dónde podrían existir elementos nuevos. El modelo, del mismo modo,
     no se limita a memorizar ejemplos: aprende la <b>estructura del espacio de posibilidades</b>. Cuando recibe la petición de
     generar algo parecido a lo que conoce, proyecta una configuración nueva compatible con las regularidades observadas. Así es
-    como puede dibujar una "ciudad ilusoria" coherente con las ciudades que ha visto — un río por el centro antiguo, una
-    cuadrícula donde el terreno es llano, un puerto donde la costa se curva — aunque esa ciudad concreta nunca haya existido.
+    como puede dibujar una "isla imaginaria" coherente con las islas que ha visto — un puerto en el lado resguardado, un río que
+    baja de las tierras altas, una aldea en la desembocadura — aunque esa isla concreta nunca haya existido.
   </p>
 
   <table class="af-table" style="margin-bottom:10px;">
@@ -210,17 +210,17 @@ history:
     <span class="var">p</span>(<span class="var">x</span><sub><span class="var">t</span></sub> | <span class="var">prompt</span>, <span class="var">x</span><sub>&lt;<span class="var">t</span></sub>)
   </div>
   <p>
-    Tomemos el escenario de generar un libro al estilo de una famosa saga de magos. El modelo usa el repertorio aprendido de
-    estilo y estructura — una escuela, una rivalidad, un mentor, una amenaza que crece capítulo a capítulo — pero la construcción
+    Tomemos el escenario de generar una novela al estilo de una famosa serie policíaca. El modelo usa el repertorio aprendido
+    de estilo y estructura — un crimen, una lista de sospechosos, una pista que el lector pasó por alto, una revelación en el último capítulo — pero la construcción
     concreta ocurre paso a paso durante la generación. La coherencia emerge porque cada nueva elección tiene que ser compatible
-    con lo ya escrito: una vez que el mago <i>alzó</i> algo, el siguiente token es muy probablemente un objeto que se puede alzar.
+    con lo ya escrito: una vez que la detective <i>abrió</i> algo, el siguiente token es muy probablemente algo que se puede abrir.
     La Figura 2 muestra un paso de la cadena.
   </p>
 
   <div class="cf-figure">
     <div class="figHdr">Un paso de la generación autorregresiva <span class="figNum">&mdash; Figura 2</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 210" width="860" height="210" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Un prompt seguido de cinco tokens generados, El mago alzó su varita; arcos discontinuos muestran que cada token condiciona a los siguientes; la sexta posición está abierta y muestra la distribución: y 0,44, despacio 0,27, luego 0,06">
+      <svg viewBox="0 0 860 210" width="860" height="210" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Un prompt seguido de cinco tokens generados, La detective abrió la carta; arcos discontinuos muestran que cada token condiciona a los siguientes; la sexta posición está abierta y muestra la distribución: y 0,44, despacio 0,27, luego 0,06">
         <defs>
           <linearGradient id="cfNode2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
           <linearGradient id="cfSel2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
@@ -231,11 +231,11 @@ history:
         <text x="150" y="60" font-size="9" fill="#5b6b7a">cada token se elige dado el prompt y todos los tokens anteriores</text>
         <g font-size="10" fill="#1a2836" text-anchor="middle">
           <rect x="16" y="90" width="110" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="71" y="114" font-weight="bold">Prompt</text>
-          <rect x="150" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="185" y="114">El</text>
-          <rect x="234" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="269" y="114">mago</text>
-          <rect x="318" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="353" y="114">alz&#243;</text>
-          <rect x="402" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="437" y="114">su</text>
-          <rect x="486" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="521" y="114">varita</text>
+          <rect x="150" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="185" y="114">La</text>
+          <rect x="234" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="269" y="114">detective</text>
+          <rect x="318" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="353" y="114">abri&#243;</text>
+          <rect x="402" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="437" y="114">la</text>
+          <rect x="486" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="521" y="114">carta</text>
           <rect x="570" y="90" width="80" height="40" rx="3" fill="url(#cfSel2)" stroke="#2e5378"/><text x="610" y="114" fill="#ffffff" font-weight="bold">?</text>
         </g>
         <path d="M126 110 L150 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
@@ -315,14 +315,14 @@ history:
   </div>
   <p>
     Volviendo al libro: esto es lo que permite sostener la identidad del personaje principal y la lógica de la narración incluso
-    cuando hay muchos acontecimientos intermedios. El pronombre de la página doscientos atiende al nombre de la página uno, y el
-    hechizo que se lanza atiende a la varita alzada tres frases antes. La Figura 3 muestra los pesos de una de esas decisiones.
+    cuando hay muchos acontecimientos intermedios. El pronombre de la página doscientos atiende al nombre de la página uno, y la
+    pista que se examina atiende a la carta abierta tres frases antes. La Figura 3 muestra los pesos de una de esas decisiones.
   </p>
 
   <div class="cf-figure">
     <div class="figHdr">Foco selectivo: qué tokens anteriores importan para &ldquo;ella&rdquo; <span class="figNum">&mdash; Figura 3</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 190" width="860" height="190" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Dos filas de tokens. Arriba: Elara halló el mapa, luego puntos suspensivos por muchos párrafos. Abajo: ella desplegó lo de nuevo. Las líneas desde el pronombre ella hasta los tokens anteriores son gruesas hacia Elara, más finas hacia mapa y halló; las cajas están sombreadas por su peso de atención">
+      <svg viewBox="0 0 860 190" width="860" height="190" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Dos filas de tokens. Arriba: Nadia halló la llave, luego puntos suspensivos por muchos párrafos. Abajo: ella giró la de nuevo. Las líneas desde el pronombre ella hasta los tokens anteriores son gruesas hacia Nadia, más finas hacia llave y halló; las cajas están sombreadas por su peso de atención">
         <defs>
           <linearGradient id="cfSel3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
         </defs>
@@ -330,25 +330,25 @@ history:
         <text x="16" y="22" font-size="10" fill="#5b6b7a">Pesos de atenci&#243;n del pronombre sobre el historial (m&#225;s oscuro = m&#225;s peso)</text>
         <!-- fila 1: el comienzo del texto -->
         <g font-size="10" text-anchor="middle">
-          <rect x="16" y="40" width="64" height="24" rx="2" fill="#2e5378" stroke="#2e5378"/><text x="48" y="56" fill="#ffffff" font-weight="bold">Elara</text>
+          <rect x="16" y="40" width="64" height="24" rx="2" fill="#2e5378" stroke="#2e5378"/><text x="48" y="56" fill="#ffffff" font-weight="bold">Nadia</text>
           <rect x="90" y="40" width="60" height="24" rx="2" fill="#15497e" fill-opacity="0.10" stroke="#c3cedb"/><text x="120" y="56" fill="#1a2836">hall&#243;</text>
-          <rect x="160" y="40" width="44" height="24" rx="2" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="182" y="56" fill="#1a2836">el</text>
-          <rect x="214" y="40" width="52" height="24" rx="2" fill="#15497e" fill-opacity="0.30" stroke="#c3cedb"/><text x="240" y="56" fill="#1a2836">mapa</text>
+          <rect x="160" y="40" width="44" height="24" rx="2" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="182" y="56" fill="#1a2836">la</text>
+          <rect x="214" y="40" width="52" height="24" rx="2" fill="#15497e" fill-opacity="0.30" stroke="#c3cedb"/><text x="240" y="56" fill="#1a2836">llave</text>
           <rect x="276" y="40" width="40" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="296" y="56" fill="#8a99a8">&hellip;</text>
         </g>
         <text x="330" y="56" font-size="9" fill="#8a99a8">muchos p&#225;rrafos y cientos de tokens despu&#233;s</text>
         <!-- fila 2: la frase actual -->
         <g font-size="10" text-anchor="middle">
           <rect x="16" y="110" width="50" height="24" rx="2" fill="url(#cfSel3)" stroke="#2e5378"/><text x="41" y="126" fill="#ffffff" font-weight="bold">ella</text>
-          <rect x="76" y="110" width="70" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="111" y="126" fill="#1a2836">despleg&#243;</text>
-          <rect x="156" y="110" width="44" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="178" y="126" fill="#1a2836">lo</text>
+          <rect x="76" y="110" width="70" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="111" y="126" fill="#1a2836">gir&#243;</text>
+          <rect x="156" y="110" width="44" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="178" y="126" fill="#1a2836">la</text>
           <rect x="210" y="110" width="56" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="238" y="126" fill="#1a2836">de nuevo</text>
         </g>
         <!-- líneas de atención desde el borde superior de "ella" hasta el borde inferior de los tokens anteriores -->
         <path d="M41 110 L48 64" fill="none" stroke="#2e5378" stroke-width="3"/>
         <path d="M41 110 L240 64" fill="none" stroke="#3d6791" stroke-width="1.6"/>
         <path d="M41 110 L120 64" fill="none" stroke="#6b90b6" stroke-width="0.8"/>
-        <text x="330" y="126" font-size="9" fill="#5b6b7a">pesos desde &ldquo;ella&rdquo;: Elara 0,62 &middot; mapa 0,21 &middot; hall&#243; 0,05 &middot; el 0,02 &middot; todo lo dem&#225;s 0,10</text>
+        <text x="330" y="126" font-size="9" fill="#5b6b7a">pesos desde &ldquo;ella&rdquo;: Nadia 0,62 &middot; llave 0,21 &middot; hall&#243; 0,05 &middot; la 0,02 &middot; todo lo dem&#225;s 0,10</text>
         <text x="16" y="170" font-size="9" fill="#8a99a8">Pesos ilustrativos, coherentes con los patrones de correferencia observados en cabezas de atenci&#243;n de modelos reales. Un modelo que solo viera los &#250;ltimos tokens no resolver&#237;a &ldquo;ella&rdquo;.</text>
       </svg>
     </div>
@@ -376,8 +376,8 @@ history:
   <div class="af-panelBox light" id="boxDims">
     <div class="boxHdr" onclick="toggleBox('boxDims')"><span class="disc">&#9660;</span>Qué significan las dimensiones</div>
     <div class="boxBody">
-      Nada, individualmente. En el espacio de juguete de la Figura 4 los dos ejes se eligieron a mano (una dirección de "realeza" y
-      una dirección de "género") para que la imagen sea legible. En un modelo real ningún eje tiene nombre: el significado está
+      Nada, individualmente. En el espacio de juguete de la Figura 4 los dos ejes se eligieron a mano (una dirección de "capital" y
+      una dirección "de Francia a Italia") para que la imagen sea legible. En un modelo real ningún eje tiene nombre: el significado está
       repartido por todas las dimensiones, y solo las distancias y direcciones entre vectores son interpretables — por eso las
       comparaciones usan el ángulo entre vectores, ecuación (3), y no una coordenada aislada.
     </div>
@@ -387,7 +387,7 @@ history:
   <p>
     Cuando dos términos aparecen en contextos parecidos, sus vectores tienden a quedar cerca en el espacio semántico; cuando
     aparecen en contextos muy distintos, tienden a quedar lejos.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
-    Por eso pares como <i>rey</i> y <i>reina</i> ocupan regiones próximas, mientras que <i>rey</i> y <i>perro</i> normalmente
+    Por eso pares como <i>París</i> y <i>Roma</i> ocupan regiones próximas, mientras que <i>París</i> y <i>cuchara</i> normalmente
     quedan más alejados. La analogía con las coordenadas geográficas ayuda: la proximidad vectorial funciona como la proximidad de
     ubicación, pero en un espacio de significado. La medida estándar es el coseno del ángulo entre dos vectores:
   </p>
@@ -399,12 +399,12 @@ history:
   </div>
   <div class="cf-formula">
     <span class="eqNum">(4)</span>
-    <span class="var">v</span><sub>rey</sub> &minus; <span class="var">v</span><sub>hombre</sub> + <span class="var">v</span><sub>mujer</sub> <span class="op">&asymp;</span> <span class="var">v</span><sub>reina</sub>
+    <span class="var">v</span><sub>París</sub> &minus; <span class="var">v</span><sub>Francia</sub> + <span class="var">v</span><sub>Italia</sub> <span class="op">&asymp;</span> <span class="var">v</span><sub>Roma</sub>
   </div>
   <p>
     La ecuación (3) da 1 para vectores que apuntan en la misma dirección, 0 para vectores sin relación y &minus;1 para opuestos, sin
     importar su longitud. La ecuación (4) es la consecuencia famosa: las direcciones del espacio llevan relaciones, así que restar
-    <i>hombre</i> de <i>rey</i> y sumar <i>mujer</i> cae cerca de <i>reina</i>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+    <i>Francia</i> de <i>París</i> y sumar <i>Italia</i> cae cerca de <i>Roma</i>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
     Esta estructura es una de las bases sobre las que el modelo reconoce relaciones, mantiene el contexto y elige continuaciones
     más plausibles.
   </p>
@@ -412,14 +412,14 @@ history:
   <div class="cf-figure">
     <div class="figHdr">Seis palabras en un espacio de embeddings de juguete, y sus similitudes de coseno <span class="figNum">&mdash; Figura 4</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Izquierda: un gráfico bidimensional con rey y reina arriba en el eje de realeza, hombre y mujer abajo, perro y gato en la base; flechas discontinuas de hombre a rey y de mujer a reina son paralelas. Derecha: una cuadrícula de similitudes de coseno entre rey, reina, hombre, mujer y perro">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Izquierda: un gráfico bidimensional con París y Roma arriba en el eje de capital, Francia e Italia abajo, cuchara y tenedor en la base; flechas discontinuas de Francia a París y de Italia a Roma son paralelas. Derecha: una cuadrícula de similitudes de coseno entre París, Roma, Francia, Italia y cuchara">
         <rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
         <!-- izquierda: el espacio -->
         <text x="60" y="22" font-size="10" font-weight="bold" fill="#15497e">Dos dimensiones, elegidas a mano para la imagen</text>
-        <text x="64" y="34" font-size="9" fill="#5b6b7a">realeza</text>
+        <text x="64" y="34" font-size="9" fill="#5b6b7a">capital</text>
         <path d="M60 200 L440 200" stroke="#a9b8c7" stroke-width="1.2"/>
         <path d="M60 200 L60 40" stroke="#a9b8c7" stroke-width="1.2"/>
-        <text x="250" y="216" font-size="9" fill="#5b6b7a" text-anchor="middle">direcci&#243;n de g&#233;nero</text>
+        <text x="250" y="216" font-size="9" fill="#5b6b7a" text-anchor="middle">direcci&#243;n Francia &#8596; Italia</text>
         <path d="M375 111 L345 43.5" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="4 3"/>
         <path d="M105 111 L135 43.5" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="4 3"/>
         <g fill="#6b90b6" stroke="#3d6791">
@@ -429,17 +429,17 @@ history:
           <circle cx="255" cy="174" r="5"/><circle cx="225" cy="169.5" r="5"/>
         </g>
         <g font-size="10" fill="#1a2836">
-          <text x="353" y="47">rey</text><text x="143" y="47">reina</text><text x="383" y="114">hombre</text><text x="113" y="114">mujer</text>
-          <text x="263" y="178">perro</text><text x="217" y="166" text-anchor="end">gato</text>
+          <text x="353" y="47">Par&#237;s</text><text x="143" y="47">Roma</text><text x="383" y="114">Francia</text><text x="113" y="114">Italia</text>
+          <text x="263" y="178">cuchara</text><text x="217" y="166" text-anchor="end">tenedor</text>
         </g>
-        <text x="200" y="90" font-size="9" fill="#b08f3e">rey &minus; hombre &asymp; reina &minus; mujer</text>
+        <text x="200" y="90" font-size="9" fill="#b08f3e">Par&#237;s &minus; Francia &asymp; Roma &minus; Italia</text>
         <!-- derecha: cuadrícula de cosenos -->
         <text x="560" y="22" font-size="10" font-weight="bold" fill="#15497e">Similitud de coseno, ecuaci&#243;n (3)</text>
         <g font-size="9" fill="#5b6b7a" text-anchor="middle">
-          <text x="586" y="56">rey</text><text x="638" y="56">reina</text><text x="690" y="56">hombre</text><text x="742" y="56">mujer</text><text x="794" y="56">perro</text>
+          <text x="586" y="56">Par&#237;s</text><text x="638" y="56">Roma</text><text x="690" y="56">Francia</text><text x="742" y="56">Italia</text><text x="794" y="56">cuchara</text>
         </g>
         <g font-size="9" fill="#5b6b7a" text-anchor="end">
-          <text x="552" y="78.5">rey</text><text x="552" y="100.5">reina</text><text x="552" y="122.5">hombre</text><text x="552" y="144.5">mujer</text><text x="552" y="166.5">perro</text>
+          <text x="552" y="78.5">Par&#237;s</text><text x="552" y="100.5">Roma</text><text x="552" y="122.5">Francia</text><text x="552" y="144.5">Italia</text><text x="552" y="166.5">cuchara</text>
         </g>
         <g font-size="9" text-anchor="middle">
           <rect x="560" y="64" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="586" y="78.5" fill="#ffffff">1,00</text>
@@ -468,7 +468,7 @@ history:
           <rect x="716" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="742" y="166.5" fill="#1a2836">&minus;0,30</text>
           <rect x="768" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="794" y="166.5" fill="#ffffff">1,00</text>
         </g>
-        <text x="560" y="196" font-size="9" fill="#8a99a8">rey &minus; hombre + mujer = (&minus;0,55, 0,85): coseno 0,98 con reina, &minus;0,79 con gato, &minus;0,88 con perro.</text>
+        <text x="560" y="196" font-size="9" fill="#8a99a8">Par&#237;s &minus; Francia + Italia = (&minus;0,55, 0,85): coseno 0,98 con Roma, &minus;0,79 con tenedor, &minus;0,88 con cuchara.</text>
         <text x="560" y="212" font-size="9" fill="#8a99a8">Vectores en la caja de c&#243;digo de abajo; los n&#250;meros son exactos para este espacio de juguete.</text>
       </svg>
     </div>
@@ -481,9 +481,9 @@ history:
     <pre><span class="k">import</span> math
 
 vec = {                                   <span class="c"># embeddings de juguete en dos dimensiones; los modelos reales usan cientos</span>
-    <span class="s">"rey"</span>:    (<span class="n">0.35</span>, <span class="n">0.85</span>),  <span class="s">"reina"</span>: (-<span class="n">0.35</span>, <span class="n">0.85</span>),
-    <span class="s">"hombre"</span>: (<span class="n">0.45</span>, <span class="n">0.10</span>),  <span class="s">"mujer"</span>: (-<span class="n">0.45</span>, <span class="n">0.10</span>),
-    <span class="s">"perro"</span>:  (<span class="n">0.05</span>, -<span class="n">0.60</span>), <span class="s">"gato"</span>:  (-<span class="n">0.05</span>, -<span class="n">0.55</span>),
+    <span class="s">"paris"</span>:   (<span class="n">0.35</span>, <span class="n">0.85</span>),  <span class="s">"roma"</span>:    (-<span class="n">0.35</span>, <span class="n">0.85</span>),
+    <span class="s">"francia"</span>: (<span class="n">0.45</span>, <span class="n">0.10</span>),  <span class="s">"italia"</span>:  (-<span class="n">0.45</span>, <span class="n">0.10</span>),
+    <span class="s">"cuchara"</span>: (<span class="n">0.05</span>, -<span class="n">0.60</span>), <span class="s">"tenedor"</span>: (-<span class="n">0.05</span>, -<span class="n">0.55</span>),
 }
 
 <span class="k">def</span> norma(u):
@@ -504,10 +504,10 @@ vec = {                                   <span class="c"># embeddings de juguet
     candidatas = [w <span class="k">for</span> w <span class="k">in</span> vec <span class="k">if</span> w <span class="k">not</span> <span class="k">in</span> (a, b, c)]
     <span class="k">return</span> <span class="k">max</span>(candidatas, key=<span class="k">lambda</span> w: coseno(objetivo, vec[w]))
 
-<span class="k">print</span>(vecinos(<span class="s">"rey"</span>))                     <span class="c"># ['reina', 'hombre']</span>
-<span class="k">print</span>(vecinos(<span class="s">"perro"</span>))                   <span class="c"># ['gato', 'hombre']</span>
-<span class="k">print</span>(<span class="k">round</span>(coseno(vec[<span class="s">"rey"</span>], vec[<span class="s">"perro"</span>]), <span class="n">2</span>))   <span class="c"># -0.89: lejos</span>
-<span class="k">print</span>(analogia(<span class="s">"rey"</span>, <span class="s">"hombre"</span>, <span class="s">"mujer"</span>))   <span class="c"># reina</span></pre>
+<span class="k">print</span>(vecinos(<span class="s">"paris"</span>))                   <span class="c"># ['roma', 'francia']</span>
+<span class="k">print</span>(vecinos(<span class="s">"roma"</span>))                    <span class="c"># ['paris', 'italia']</span>
+<span class="k">print</span>(<span class="k">round</span>(coseno(vec[<span class="s">"paris"</span>], vec[<span class="s">"cuchara"</span>]), <span class="n">2</span>))   <span class="c"># -0.89: lejos</span>
+<span class="k">print</span>(analogia(<span class="s">"paris"</span>, <span class="s">"francia"</span>, <span class="s">"italia"</span>))   <span class="c"># roma</span></pre>
   </div>
   <p>Practica: <a class="cf-labLink" href="#lab-ex5">abrir en el Lab: Ejercicio 5, Coseno y analogía</a></p>
 
@@ -549,9 +549,9 @@ vec = {                                   <span class="c"># embeddings de juguet
 
   <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concepto" data-section="sec3" data-short="El cartógrafo">
     <div class="exHdr">Ejercicio 2 &mdash; el cartógrafo <span class="lang">&mdash; opción múltiple</span></div>
-    <p class="exTask">¿Por qué puede el modelo dibujar una ciudad ilusoria que aun así parece una ciudad?</p>
+    <p class="exTask">¿Por qué puede el modelo dibujar una isla imaginaria que aun así parece una isla?</p>
     <ul class="exOptions">
-      <li><label><input type="radio" name="ex2"> Memorizó todas las ciudades de los datos de entrenamiento y mezcla dos de ellas</label></li>
+      <li><label><input type="radio" name="ex2"> Memorizó todas las islas de los datos de entrenamiento y mezcla dos de ellas</label></li>
       <li><label><input type="radio" name="ex2"> Aprendió la estructura del espacio de posibilidades y proyecta una configuración nueva compatible con las regularidades que observó</label></li>
       <li><label><input type="radio" name="ex2"> Copia el ejemplo más cercano y le cambia el nombre</label></li>
       <li><label><input type="radio" name="ex2"> Le pregunta al usuario el trazado antes de dibujar</label></li>
@@ -563,7 +563,7 @@ vec = {                                   <span class="c"># embeddings de juguet
     <div class="exResult" hidden></div>
     <script type="application/json" class="exSpec">{
       "answer": [1],
-      "explain": "Como el cartógrafo que aprendió la lógica del terreno, el modelo aprende la estructura, no los ejemplos; la ciudad nunca existió, pero sus ríos, cuadrícula y puerto siguen las regularidades de las ciudades que sí existieron."
+      "explain": "Como el cartógrafo que aprendió la lógica del terreno, el modelo aprende la estructura, no los ejemplos; la isla nunca existió, pero su puerto, su río y su aldea siguen las regularidades de las islas que sí existieron."
     }</script>
   </div>
 
@@ -615,7 +615,7 @@ vec = {                                   <span class="c"># embeddings de juguet
     dot = sum(a * b for a, b in zip(u, v))
     return dot / (norma(u) * ___(v))                    # ecuación (3): la longitud no importa
 
-objetivo = tuple(x - y + z for x, y, z in zip(vec["rey"], vec["___"], vec["mujer"]))   # ecuación (4)
+objetivo = tuple(x - y + z for x, y, z in zip(vec["paris"], vec["___"], vec["italia"]))   # ecuación (4)
 mejor = ___(candidatas, key=lambda w: coseno(objetivo, vec[w]))   # la candidata con el coseno más alto</pre>
     <div class="af-buttonBar">
       <button class="af-button" data-act="check">Validar</button>
@@ -626,10 +626,10 @@ mejor = ___(candidatas, key=lambda w: coseno(objetivo, vec[w]))   # la candidata
     <script type="application/json" class="exSpec">{
       "blanks": [
         { "accept": ["norma"], "hint": "La misma función usada para u.", "width": 6 },
-        { "accept": ["hombre"], "hint": "rey − ? + mujer ≈ reina.", "width": 7 },
+        { "accept": ["francia"], "hint": "paris − ? + italia ≈ roma.", "width": 8 },
         { "accept": ["max"], "hint": "El coseno más alto gana.", "width": 4 }
       ],
-      "solution": "def coseno(u, v):\n    dot = sum(a * b for a, b in zip(u, v))\n    return dot / (norma(u) * norma(v))\n\nobjetivo = tuple(x - y + z for x, y, z in zip(vec[\"rey\"], vec[\"hombre\"], vec[\"mujer\"]))\nmejor = max(candidatas, key=lambda w: coseno(objetivo, vec[w]))"
+      "solution": "def coseno(u, v):\n    dot = sum(a * b for a, b in zip(u, v))\n    return dot / (norma(u) * norma(v))\n\nobjetivo = tuple(x - y + z for x, y, z in zip(vec[\"paris\"], vec[\"francia\"], vec[\"italia\"]))\nmejor = max(candidatas, key=lambda w: coseno(objetivo, vec[w]))"
     }</script>
   </div>
 

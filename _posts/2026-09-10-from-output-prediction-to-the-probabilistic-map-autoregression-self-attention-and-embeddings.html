@@ -11,7 +11,7 @@ reading_time: 13
 level: Introductory
 series_prev: { title: "Traditional AI versus generative AI: predict from known data or compose new outputs", url: "/articles/traditional-ai-versus-generative-ai-predict-from-known-data-or-compose-new-outputs/" }
 cover: "/assets/covers/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings.svg"
-excerpt: "Traditional AI learns a mapping from an input to the expected output. Generative AI learns something else: a probability distribution over patterns, sequences and combinations, a probabilistic map of what tends to make sense in a given context. This article follows that map through the three mechanisms that make it work: autoregression, which composes an output one token at a time so that every choice conditions the next; self-attention, the selective focus that keeps a character introduced on page one alive two hundred paragraphs later; and embeddings, the vectors in which king sits next to queen and far from dog. Along the way, the artist who recombines a repertoire, the cartographer who infers terrain never seen, and why a fluent chain of plausible steps can still drift into a hallucination…"
+excerpt: "Traditional AI learns a mapping from an input to the expected output. Generative AI learns something else: a probability distribution over patterns, sequences and combinations, a probabilistic map of what tends to make sense in a given context. This article follows that map through the three mechanisms that make it work: autoregression, which composes an output one token at a time so that every choice conditions the next; self-attention, the selective focus that keeps a character introduced on page one alive two hundred paragraphs later; and embeddings, the vectors in which Paris sits next to Rome and far from spoon. Along the way, the artist who recombines a repertoire, the cartographer who infers terrain never seen, and why a fluent chain of plausible steps can still drift into a hallucination…"
 image: "/assets/social/from-output-prediction-to-the-probabilistic-map-autoregression-self-attention-and-embeddings.en.png"
 description: "How generative models compose: a probabilistic map instead of a mapping, autoregression token by token, self-attention over long context and embeddings."
 references_count: 10
@@ -30,7 +30,7 @@ history:
     <li>Two analogies that make the map concrete — the <b>artist</b> who recombines a repertoire and the <b>cartographer</b> who infers terrain never seen — and where hallucination comes from.</li>
     <li><b>Autoregression</b>: generation one token at a time, each choice conditioned on everything already written, with the fluency and the drift that this implies.</li>
     <li><b>Self-attention</b> as selective focus over the history, and why it keeps a character introduced on page one alive many paragraphs later.</li>
-    <li><b>Embeddings</b>: how words, images and code become vectors, and how <b>cosine similarity</b> turns meaning into geometry (king next to queen, far from dog), with a runnable example.</li>
+    <li><b>Embeddings</b>: how words, images and code become vectors, and how <b>cosine similarity</b> turns meaning into geometry (Paris next to Rome, far from spoon), with a runnable example.</li>
   </ul>
 </div>
 
@@ -51,20 +51,20 @@ history:
       <!-- right: context → distribution over the next token -->
       <g font-size="9" fill="#5b6b7a">
         <text x="556" y="76">context</text>
-        <rect x="556" y="96" width="96" height="24" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="604" y="111" text-anchor="middle" fill="#1a2836">&hellip;the wizard</text>
+        <rect x="556" y="96" width="96" height="24" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="604" y="111" text-anchor="middle" fill="#1a2836">&hellip;the detective</text>
         <path d="M652 108 L676 108" stroke="#15497e" stroke-width="1.4" marker-end="url(#cfHeroArr)"/>
         <text x="686" y="76">p(next token | context)</text>
-        <rect x="686" y="86" width="80" height="12" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="772" y="95" fill="#1a2836">raised 0.53</text>
-        <rect x="686" y="102" width="48" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="740" y="111" fill="#1a2836">opened 0.32</text>
-        <rect x="686" y="118" width="11" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="703" y="127" fill="#1a2836">sold 0.07</text>
+        <rect x="686" y="86" width="80" height="12" fill="url(#cfHeroSel)" stroke="#2e5378"/><text x="772" y="95" fill="#1a2836">opened 0.53</text>
+        <rect x="686" y="102" width="48" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="740" y="111" fill="#1a2836">found 0.32</text>
+        <rect x="686" y="118" width="11" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="703" y="127" fill="#1a2836">sang 0.07</text>
       </g>
     </svg>
   </div>
 
   <p class="lead">
     Ask a fraud model about a payment and it answers with one of two labels it was trained to tell apart. Ask a language model
-    to continue "the wizard" and it does not answer with a label at all: it answers with a <b>distribution</b> — <i>raised</i>
-    is likely, <i>opened</i> is plausible, <i>sold</i> is unlikely but not impossible — and then commits to one of them, moves
+    to continue "the detective" and it does not answer with a label at all: it answers with a <b>distribution</b> — <i>opened</i>
+    is likely, <i>found</i> is plausible, <i>sang</i> is unlikely but not impossible — and then commits to one of them, moves
     on, and asks the question again with one more word in the context. That shift, from a mapping between input and expected
     output to a map of probabilities over what could come next, is what this article is about, together with the three
     mechanisms that make the map usable: autoregression, self-attention and embeddings.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">4</a>]</sup>
@@ -87,7 +87,7 @@ history:
   <div class="cf-figure">
     <div class="figHdr">A mapping returns a label; a probabilistic map returns a distribution <span class="figNum">&mdash; Figure 1</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Two lanes. Traditional AI: an input goes through a learned function and returns one known label. Generative AI: the context so far goes through the model and returns a distribution over the next token, drawn as three bars: raised 0.53, opened 0.32, sold 0.07">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Two lanes. Traditional AI: an input goes through a learned function and returns one known label. Generative AI: the context so far goes through the model and returns a distribution over the next token, drawn as three bars: opened 0.53, found 0.32, sang 0.07">
         <defs>
           <linearGradient id="cfNode1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
           <linearGradient id="cfSel1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
@@ -108,7 +108,7 @@ history:
         <!-- lane 2: generative -->
         <g font-size="10" fill="#1a2836" text-anchor="middle">
           <rect x="150" y="140" width="130" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/>
-          <text x="215" y="156" font-weight="bold">Context so far</text><text x="215" y="171" font-size="9" fill="#5b6b7a">&ldquo;The wizard&rdquo;</text>
+          <text x="215" y="156" font-weight="bold">Context so far</text><text x="215" y="171" font-size="9" fill="#5b6b7a">&ldquo;The detective&rdquo;</text>
           <rect x="330" y="140" width="150" height="40" rx="3" fill="url(#cfNode1)" stroke="#7d8fa2"/>
           <text x="405" y="156" font-weight="bold">Model</text><text x="405" y="171" font-size="9" fill="#5b6b7a">probabilistic map</text>
         </g>
@@ -116,9 +116,9 @@ history:
         <path d="M480 160 L524 160" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr1)"/>
         <text x="530" y="126" font-size="9" fill="#5b6b7a">distribution over the next token</text>
         <g font-size="9" fill="#1a2836">
-          <rect x="530" y="136" width="120" height="12" fill="url(#cfSel1)" stroke="#2e5378"/><text x="658" y="146">raised &nbsp;0.53</text>
-          <rect x="530" y="152" width="73" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="611" y="162">opened &nbsp;0.32</text>
-          <rect x="530" y="168" width="16" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="554" y="178">sold &nbsp;0.07 &nbsp;&middot;&nbsp; others 0.08</text>
+          <rect x="530" y="136" width="120" height="12" fill="url(#cfSel1)" stroke="#2e5378"/><text x="658" y="146">opened &nbsp;0.53</text>
+          <rect x="530" y="152" width="73" height="12" fill="#6b90b6" stroke="#3d6791"/><text x="611" y="162">found &nbsp;0.32</text>
+          <rect x="530" y="168" width="16" height="12" fill="#cfe2f7" stroke="#6b90b6"/><text x="554" y="178">sang &nbsp;0.07 &nbsp;&middot;&nbsp; others 0.08</text>
         </g>
         <!-- row labels on the vertical centre of the boxes -->
         <text x="16" y="63.5" font-size="10" font-weight="bold" fill="#15497e">Traditional AI</text>
@@ -172,8 +172,8 @@ history:
     already seen; they learn the logic of the terrain and start to infer where new elements could exist. The model likewise does
     not merely memorise examples: it learns the <b>structure of the space of possibilities</b>. When asked to generate something
     similar to what it knows, it projects a new configuration compatible with the regularities it observed. That is how it can
-    draw an "imaginary city" coherent with the cities it has seen — a river through the old centre, a grid where the ground is
-    flat, a port where the coast bends — even though that particular city never existed.
+    draw an "imaginary island" coherent with the islands it has seen — a harbour on the sheltered side, a river coming down
+    from the highlands, a village at the river mouth — even though that particular island never existed.
   </p>
 
   <table class="af-table" style="margin-bottom:10px;">
@@ -206,17 +206,17 @@ history:
     <span class="var">p</span>(<span class="var">x</span><sub><span class="var">t</span></sub> | <span class="var">prompt</span>, <span class="var">x</span><sub>&lt;<span class="var">t</span></sub>)
   </div>
   <p>
-    Take the scenario of generating a book in the style of a famous wizarding saga. The model uses the learned repertoire of style
-    and structure — a school, a rivalry, a mentor, a threat that grows chapter by chapter — but the concrete construction happens
+    Take the scenario of generating a novel in the style of a famous detective series. The model uses the learned repertoire of
+    style and structure — a crime, a list of suspects, a clue the reader overlooked, a reveal in the last chapter — but the concrete construction happens
     step by step during generation. Coherence emerges because each new choice must be compatible with what has already been
-    written: once the wizard has <i>raised</i> something, the next token is very probably an object that can be raised. Figure 2
+    written: once the detective has <i>opened</i> something, the next token is very probably something that can be opened. Figure 2
     shows one step of the chain.
   </p>
 
   <div class="cf-figure">
     <div class="figHdr">One step of autoregressive generation <span class="figNum">&mdash; Figure 2</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 210" width="860" height="210" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="A prompt followed by five generated tokens, The wizard raised his wand; dashed arcs show that each token conditions the later ones; the sixth position is open and shows the distribution: and 0.44, slowly 0.27, then 0.06">
+      <svg viewBox="0 0 860 210" width="860" height="210" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="A prompt followed by five generated tokens, The detective opened the letter; dashed arcs show that each token conditions the later ones; the sixth position is open and shows the distribution: and 0.44, slowly 0.27, then 0.06">
         <defs>
           <linearGradient id="cfNode2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8f0fa"/></linearGradient>
           <linearGradient id="cfSel2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
@@ -228,10 +228,10 @@ history:
         <g font-size="10" fill="#1a2836" text-anchor="middle">
           <rect x="16" y="90" width="110" height="40" rx="3" fill="#fff8e1" stroke="#b08f3e"/><text x="71" y="114" font-weight="bold">Prompt</text>
           <rect x="150" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="185" y="114">The</text>
-          <rect x="234" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="269" y="114">wizard</text>
-          <rect x="318" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="353" y="114">raised</text>
-          <rect x="402" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="437" y="114">his</text>
-          <rect x="486" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="521" y="114">wand</text>
+          <rect x="234" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="269" y="114">detective</text>
+          <rect x="318" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="353" y="114">opened</text>
+          <rect x="402" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="437" y="114">the</text>
+          <rect x="486" y="90" width="70" height="40" rx="3" fill="#cfe2f7" stroke="#15497e"/><text x="521" y="114">letter</text>
           <rect x="570" y="90" width="80" height="40" rx="3" fill="url(#cfSel2)" stroke="#2e5378"/><text x="610" y="114" fill="#ffffff" font-weight="bold">?</text>
         </g>
         <path d="M126 110 L150 110" stroke="#44566a" stroke-width="1.4" marker-end="url(#cfArr2)"/>
@@ -311,14 +311,14 @@ history:
   </div>
   <p>
     Back to the book: this is what lets the model sustain the identity of the main character and the logic of the narrative even
-    when many events happen in between. The pronoun on page two hundred attends to the name on page one, and the spell being cast
-    attends to the wand raised three sentences earlier. Figure 3 shows the weights for one such decision.
+    when many events happen in between. The pronoun on page two hundred attends to the name on page one, and the clue being examined
+    attends to the letter opened three sentences earlier. Figure 3 shows the weights for one such decision.
   </p>
 
   <div class="cf-figure">
     <div class="figHdr">Selective focus: which earlier tokens matter for &ldquo;she&rdquo; <span class="figNum">&mdash; Figure 3</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 190" width="860" height="190" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Two rows of tokens. Top: Elara found the map, then an ellipsis for many paragraphs. Bottom: she unfolded it again. Lines from the pronoun she to the earlier tokens are thick towards Elara, thinner towards map and found; the boxes are shaded by their attention weight">
+      <svg viewBox="0 0 860 190" width="860" height="190" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Two rows of tokens. Top: Nadia found the key, then an ellipsis for many paragraphs. Bottom: she turned it again. Lines from the pronoun she to the earlier tokens are thick towards Nadia, thinner towards key and found; the boxes are shaded by their attention weight">
         <defs>
           <linearGradient id="cfSel3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b90b6"/><stop offset="1" stop-color="#2e5378"/></linearGradient>
         </defs>
@@ -326,17 +326,17 @@ history:
         <text x="16" y="22" font-size="10" fill="#5b6b7a">Attention weights of the pronoun over the history (darker = more weight)</text>
         <!-- row 1: the beginning of the text -->
         <g font-size="10" text-anchor="middle">
-          <rect x="16" y="40" width="64" height="24" rx="2" fill="#2e5378" stroke="#2e5378"/><text x="48" y="56" fill="#ffffff" font-weight="bold">Elara</text>
+          <rect x="16" y="40" width="64" height="24" rx="2" fill="#2e5378" stroke="#2e5378"/><text x="48" y="56" fill="#ffffff" font-weight="bold">Nadia</text>
           <rect x="90" y="40" width="60" height="24" rx="2" fill="#15497e" fill-opacity="0.10" stroke="#c3cedb"/><text x="120" y="56" fill="#1a2836">found</text>
           <rect x="160" y="40" width="44" height="24" rx="2" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="182" y="56" fill="#1a2836">the</text>
-          <rect x="214" y="40" width="52" height="24" rx="2" fill="#15497e" fill-opacity="0.30" stroke="#c3cedb"/><text x="240" y="56" fill="#1a2836">map</text>
+          <rect x="214" y="40" width="52" height="24" rx="2" fill="#15497e" fill-opacity="0.30" stroke="#c3cedb"/><text x="240" y="56" fill="#1a2836">key</text>
           <rect x="276" y="40" width="40" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="296" y="56" fill="#8a99a8">&hellip;</text>
         </g>
         <text x="330" y="56" font-size="9" fill="#8a99a8">many paragraphs and hundreds of tokens later</text>
         <!-- row 2: the current sentence -->
         <g font-size="10" text-anchor="middle">
           <rect x="16" y="110" width="50" height="24" rx="2" fill="url(#cfSel3)" stroke="#2e5378"/><text x="41" y="126" fill="#ffffff" font-weight="bold">she</text>
-          <rect x="76" y="110" width="70" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="111" y="126" fill="#1a2836">unfolded</text>
+          <rect x="76" y="110" width="70" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="111" y="126" fill="#1a2836">turned</text>
           <rect x="156" y="110" width="44" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="178" y="126" fill="#1a2836">it</text>
           <rect x="210" y="110" width="56" height="24" rx="2" fill="#ffffff" stroke="#c3cedb"/><text x="238" y="126" fill="#1a2836">again</text>
         </g>
@@ -344,7 +344,7 @@ history:
         <path d="M41 110 L48 64" fill="none" stroke="#2e5378" stroke-width="3"/>
         <path d="M41 110 L240 64" fill="none" stroke="#3d6791" stroke-width="1.6"/>
         <path d="M41 110 L120 64" fill="none" stroke="#6b90b6" stroke-width="0.8"/>
-        <text x="330" y="126" font-size="9" fill="#5b6b7a">weights from &ldquo;she&rdquo;: Elara 0.62 &middot; map 0.21 &middot; found 0.05 &middot; the 0.02 &middot; everything else 0.10</text>
+        <text x="330" y="126" font-size="9" fill="#5b6b7a">weights from &ldquo;she&rdquo;: Nadia 0.62 &middot; key 0.21 &middot; found 0.05 &middot; the 0.02 &middot; everything else 0.10</text>
         <text x="16" y="170" font-size="9" fill="#8a99a8">Illustrative weights, consistent with the coreference patterns observed in attention heads of real models. A model that only saw the last few tokens could not resolve &ldquo;she&rdquo;.</text>
       </svg>
     </div>
@@ -371,7 +371,7 @@ history:
   <div class="af-panelBox light" id="boxDims">
     <div class="boxHdr" onclick="toggleBox('boxDims')"><span class="disc">&#9660;</span>What the dimensions mean</div>
     <div class="boxBody">
-      Nothing, individually. In the toy space of Figure 4 the two axes were chosen by hand (a "royalty" direction and a "gender"
+      Nothing, individually. In the toy space of Figure 4 the two axes were chosen by hand (a "capital" direction and a "France to Italy"
       direction) so the picture is readable. In a real model no axis has a name: meaning is spread across all the dimensions, and
       only distances and directions between vectors are interpretable — which is why comparisons use the angle between vectors,
       equation (3), rather than any single coordinate.
@@ -382,7 +382,7 @@ history:
   <p>
     When two terms appear in similar contexts, their vectors tend to end up close in the semantic space; when they appear in very
     different contexts, they tend to end up far apart.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">2</a>,<a href="#" onclick="gotoRefs(); return false;">10</a>]</sup>
-    That is why pairs such as <i>king</i> and <i>queen</i> occupy nearby regions, while <i>king</i> and <i>dog</i> usually sit
+    That is why pairs such as <i>Paris</i> and <i>Rome</i> occupy nearby regions, while <i>Paris</i> and <i>spoon</i> usually sit
     further apart. The analogy with geographic coordinates helps: vector proximity works like proximity of location, but in a
     space of meaning. The standard measure is the cosine of the angle between two vectors:
   </p>
@@ -394,12 +394,12 @@ history:
   </div>
   <div class="cf-formula">
     <span class="eqNum">(4)</span>
-    <span class="var">v</span><sub>king</sub> &minus; <span class="var">v</span><sub>man</sub> + <span class="var">v</span><sub>woman</sub> <span class="op">&asymp;</span> <span class="var">v</span><sub>queen</sub>
+    <span class="var">v</span><sub>Paris</sub> &minus; <span class="var">v</span><sub>France</sub> + <span class="var">v</span><sub>Italy</sub> <span class="op">&asymp;</span> <span class="var">v</span><sub>Rome</sub>
   </div>
   <p>
     Equation (3) gives 1 for vectors pointing the same way, 0 for unrelated ones and &minus;1 for opposites, regardless of their
-    length. Equation (4) is the famous consequence: directions in the space carry relations, so subtracting <i>man</i> from
-    <i>king</i> and adding <i>woman</i> lands near <i>queen</i>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
+    length. Equation (4) is the famous consequence: directions in the space carry relations, so subtracting <i>France</i> from
+    <i>Paris</i> and adding <i>Italy</i> lands near <i>Rome</i>.<sup class="cf-cite">[<a href="#" onclick="gotoRefs(); return false;">3</a>]</sup>
     This structure is one of the bases on which the model recognises relations, keeps context and chooses more plausible
     continuations.
   </p>
@@ -407,14 +407,14 @@ history:
   <div class="cf-figure">
     <div class="figHdr">Six words in a toy embedding space, and their cosine similarities <span class="figNum">&mdash; Figure 4</span></div>
     <div class="figBody">
-      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Left: a two-dimensional plot with king and queen high on the royalty axis, man and woman low, dog and cat at the bottom; dashed arrows from man to king and from woman to queen are parallel. Right: a grid of cosine similarities between king, queen, man, woman and dog">
+      <svg viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, Verdana, sans-serif" role="img" aria-label="Left: a two-dimensional plot with Paris and Rome high on the capital axis, France and Italy low, spoon and fork at the bottom; dashed arrows from France to Paris and from Italy to Rome are parallel. Right: a grid of cosine similarities between Paris, Rome, France, Italy and spoon">
         <rect x="0" y="0" width="860" height="230" fill="#ffffff"/>
         <!-- left: the space -->
         <text x="60" y="22" font-size="10" font-weight="bold" fill="#15497e">Two dimensions, chosen by hand for the picture</text>
-        <text x="64" y="34" font-size="9" fill="#5b6b7a">royalty</text>
+        <text x="64" y="34" font-size="9" fill="#5b6b7a">capital</text>
         <path d="M60 200 L440 200" stroke="#a9b8c7" stroke-width="1.2"/>
         <path d="M60 200 L60 40" stroke="#a9b8c7" stroke-width="1.2"/>
-        <text x="250" y="216" font-size="9" fill="#5b6b7a" text-anchor="middle">gender direction</text>
+        <text x="250" y="216" font-size="9" fill="#5b6b7a" text-anchor="middle">France &#8596; Italy direction</text>
         <path d="M375 111 L345 43.5" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="4 3"/>
         <path d="M105 111 L135 43.5" fill="none" stroke="#b08f3e" stroke-width="1.2" stroke-dasharray="4 3"/>
         <g fill="#6b90b6" stroke="#3d6791">
@@ -424,17 +424,17 @@ history:
           <circle cx="255" cy="174" r="5"/><circle cx="225" cy="169.5" r="5"/>
         </g>
         <g font-size="10" fill="#1a2836">
-          <text x="353" y="47">king</text><text x="143" y="47">queen</text><text x="383" y="114">man</text><text x="113" y="114">woman</text>
-          <text x="263" y="178">dog</text><text x="217" y="166" text-anchor="end">cat</text>
+          <text x="353" y="47">Paris</text><text x="143" y="47">Rome</text><text x="383" y="114">France</text><text x="113" y="114">Italy</text>
+          <text x="263" y="178">spoon</text><text x="217" y="166" text-anchor="end">fork</text>
         </g>
-        <text x="200" y="90" font-size="9" fill="#b08f3e">king &minus; man &asymp; queen &minus; woman</text>
+        <text x="200" y="90" font-size="9" fill="#b08f3e">Paris &minus; France &asymp; Rome &minus; Italy</text>
         <!-- right: cosine grid -->
         <text x="560" y="22" font-size="10" font-weight="bold" fill="#15497e">Cosine similarity, equation (3)</text>
         <g font-size="9" fill="#5b6b7a" text-anchor="middle">
-          <text x="586" y="56">king</text><text x="638" y="56">queen</text><text x="690" y="56">man</text><text x="742" y="56">woman</text><text x="794" y="56">dog</text>
+          <text x="586" y="56">Paris</text><text x="638" y="56">Rome</text><text x="690" y="56">France</text><text x="742" y="56">Italy</text><text x="794" y="56">spoon</text>
         </g>
         <g font-size="9" fill="#5b6b7a" text-anchor="end">
-          <text x="552" y="78.5">king</text><text x="552" y="100.5">queen</text><text x="552" y="122.5">man</text><text x="552" y="144.5">woman</text><text x="552" y="166.5">dog</text>
+          <text x="552" y="78.5">Paris</text><text x="552" y="100.5">Rome</text><text x="552" y="122.5">France</text><text x="552" y="144.5">Italy</text><text x="552" y="166.5">spoon</text>
         </g>
         <g font-size="9" text-anchor="middle">
           <rect x="560" y="64" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="586" y="78.5" fill="#ffffff">1.00</text>
@@ -463,7 +463,7 @@ history:
           <rect x="716" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.05" stroke="#c3cedb"/><text x="742" y="166.5" fill="#1a2836">&minus;0.30</text>
           <rect x="768" y="152" width="52" height="22" fill="#15497e" fill-opacity="0.85" stroke="#c3cedb"/><text x="794" y="166.5" fill="#ffffff">1.00</text>
         </g>
-        <text x="560" y="196" font-size="9" fill="#8a99a8">king &minus; man + woman = (&minus;0.55, 0.85): cosine 0.98 with queen, &minus;0.79 with cat, &minus;0.88 with dog.</text>
+        <text x="560" y="196" font-size="9" fill="#8a99a8">Paris &minus; France + Italy = (&minus;0.55, 0.85): cosine 0.98 with Rome, &minus;0.79 with fork, &minus;0.88 with spoon.</text>
         <text x="560" y="212" font-size="9" fill="#8a99a8">Vectors in the code box below; the numbers are exact for this toy space.</text>
       </svg>
     </div>
@@ -476,9 +476,9 @@ history:
     <pre><span class="k">import</span> math
 
 vec = {                                   <span class="c"># toy embeddings in two dimensions; real models use hundreds</span>
-    <span class="s">"king"</span>:  (<span class="n">0.35</span>, <span class="n">0.85</span>),  <span class="s">"queen"</span>: (-<span class="n">0.35</span>, <span class="n">0.85</span>),
-    <span class="s">"man"</span>:   (<span class="n">0.45</span>, <span class="n">0.10</span>),  <span class="s">"woman"</span>: (-<span class="n">0.45</span>, <span class="n">0.10</span>),
-    <span class="s">"dog"</span>:   (<span class="n">0.05</span>, -<span class="n">0.60</span>), <span class="s">"cat"</span>:   (-<span class="n">0.05</span>, -<span class="n">0.55</span>),
+    <span class="s">"paris"</span>:  (<span class="n">0.35</span>, <span class="n">0.85</span>),  <span class="s">"rome"</span>:  (-<span class="n">0.35</span>, <span class="n">0.85</span>),
+    <span class="s">"france"</span>: (<span class="n">0.45</span>, <span class="n">0.10</span>),  <span class="s">"italy"</span>: (-<span class="n">0.45</span>, <span class="n">0.10</span>),
+    <span class="s">"spoon"</span>:  (<span class="n">0.05</span>, -<span class="n">0.60</span>), <span class="s">"fork"</span>:  (-<span class="n">0.05</span>, -<span class="n">0.55</span>),
 }
 
 <span class="k">def</span> norm(u):
@@ -499,10 +499,10 @@ vec = {                                   <span class="c"># toy embeddings in tw
     candidates = [w <span class="k">for</span> w <span class="k">in</span> vec <span class="k">if</span> w <span class="k">not</span> <span class="k">in</span> (a, b, c)]
     <span class="k">return</span> <span class="k">max</span>(candidates, key=<span class="k">lambda</span> w: cosine(target, vec[w]))
 
-<span class="k">print</span>(neighbours(<span class="s">"king"</span>))                 <span class="c"># ['queen', 'man']</span>
-<span class="k">print</span>(neighbours(<span class="s">"dog"</span>))                  <span class="c"># ['cat', 'man']</span>
-<span class="k">print</span>(<span class="k">round</span>(cosine(vec[<span class="s">"king"</span>], vec[<span class="s">"dog"</span>]), <span class="n">2</span>))   <span class="c"># -0.89: far apart</span>
-<span class="k">print</span>(analogy(<span class="s">"king"</span>, <span class="s">"man"</span>, <span class="s">"woman"</span>))   <span class="c"># queen</span></pre>
+<span class="k">print</span>(neighbours(<span class="s">"paris"</span>))                <span class="c"># ['rome', 'france']</span>
+<span class="k">print</span>(neighbours(<span class="s">"rome"</span>))                 <span class="c"># ['paris', 'italy']</span>
+<span class="k">print</span>(<span class="k">round</span>(cosine(vec[<span class="s">"paris"</span>], vec[<span class="s">"spoon"</span>]), <span class="n">2</span>))   <span class="c"># -0.89: far apart</span>
+<span class="k">print</span>(analogy(<span class="s">"paris"</span>, <span class="s">"france"</span>, <span class="s">"italy"</span>))   <span class="c"># rome</span></pre>
   </div>
   <p>Practise: <a class="cf-labLink" href="#lab-ex5">open in the Lab: Exercise 5, Cosine and analogy</a></p>
 
@@ -543,9 +543,9 @@ vec = {                                   <span class="c"># toy embeddings in tw
 
   <div class="cf-exercise" id="ex2" data-kind="quiz" data-lang="Concept" data-section="sec3" data-short="The cartographer">
     <div class="exHdr">Exercise 2 &mdash; the cartographer <span class="lang">&mdash; multiple choice</span></div>
-    <p class="exTask">Why can the model draw an imaginary city that still looks like a city?</p>
+    <p class="exTask">Why can the model draw an imaginary island that still looks like an island?</p>
     <ul class="exOptions">
-      <li><label><input type="radio" name="ex2"> It memorised every city in the training data and blends two of them</label></li>
+      <li><label><input type="radio" name="ex2"> It memorised every island in the training data and blends two of them</label></li>
       <li><label><input type="radio" name="ex2"> It learned the structure of the space of possibilities and projects a new configuration compatible with the regularities it observed</label></li>
       <li><label><input type="radio" name="ex2"> It copies the closest example and changes the name</label></li>
       <li><label><input type="radio" name="ex2"> It asks the user for the layout before drawing</label></li>
@@ -557,7 +557,7 @@ vec = {                                   <span class="c"># toy embeddings in tw
     <div class="exResult" hidden></div>
     <script type="application/json" class="exSpec">{
       "answer": [1],
-      "explain": "Like the cartographer who learned the logic of the terrain, the model learns the structure, not the examples; the city never existed, but its rivers, grid and port follow the regularities of cities that did."
+      "explain": "Like the cartographer who learned the logic of the terrain, the model learns the structure, not the examples; the island never existed, but its harbour, river and village follow the regularities of islands that did."
     }</script>
   </div>
 
@@ -609,7 +609,7 @@ vec = {                                   <span class="c"># toy embeddings in tw
     dot = sum(a * b for a, b in zip(u, v))
     return dot / (norm(u) * ___(v))                     # equation (3): length does not matter
 
-target = tuple(x - y + z for x, y, z in zip(vec["king"], vec["___"], vec["woman"]))   # equation (4)
+target = tuple(x - y + z for x, y, z in zip(vec["paris"], vec["___"], vec["italy"]))   # equation (4)
 best = ___(candidates, key=lambda w: cosine(target, vec[w]))   # the candidate with the highest cosine</pre>
     <div class="af-buttonBar">
       <button class="af-button" data-act="check">Validate</button>
@@ -620,10 +620,10 @@ best = ___(candidates, key=lambda w: cosine(target, vec[w]))   # the candidate w
     <script type="application/json" class="exSpec">{
       "blanks": [
         { "accept": ["norm"], "hint": "The same function used for u.", "width": 5 },
-        { "accept": ["man"], "hint": "king − ? + woman ≈ queen.", "width": 6 },
+        { "accept": ["france"], "hint": "paris − ? + italy ≈ rome.", "width": 7 },
         { "accept": ["max"], "hint": "Highest cosine wins.", "width": 4 }
       ],
-      "solution": "def cosine(u, v):\n    dot = sum(a * b for a, b in zip(u, v))\n    return dot / (norm(u) * norm(v))\n\ntarget = tuple(x - y + z for x, y, z in zip(vec[\"king\"], vec[\"man\"], vec[\"woman\"]))\nbest = max(candidates, key=lambda w: cosine(target, vec[w]))"
+      "solution": "def cosine(u, v):\n    dot = sum(a * b for a, b in zip(u, v))\n    return dot / (norm(u) * norm(v))\n\ntarget = tuple(x - y + z for x, y, z in zip(vec[\"paris\"], vec[\"france\"], vec[\"italy\"]))\nbest = max(candidates, key=lambda w: cosine(target, vec[w]))"
     }</script>
   </div>
 
