@@ -16,11 +16,15 @@ Checks (each prints PASS/FAIL/INFO):
   LIST      the post appears in Published Articles (page 1 when it is among the 6 newest of its language)
   FIT       SVG labels inside boxes: how many had to be condensed (textLength) to fit, none beyond 15%
   GEOM      SVG connectors start/end on box edges, never run over a box drawn before them, never cross a text
+  LAB       the post's Lab (source file): at least 3 exercises of known kinds, each tied to an existing section,
+            every "open in the Lab" link resolving to an exercise and every exercise linked from a section, JSON
+            specs valid, quiz answers within the options, one blanks rule per ___, and the run-kind reference
+            solutions passing their own tests (needs node)
   LANG      <html lang>, the combobox option, the i18n dictionary (same keys as en.yml) and a stop-word language
             detector over the article text all agree with --lang
 Exit code 0 when every check passes.
 """
-import argparse, json, os, re, subprocess, sys, time, urllib.request, urllib.parse, html as htmlmod
+import argparse, json, os, re, shutil, subprocess, sys, time, urllib.request, urllib.parse, html as htmlmod
 from collections import Counter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -140,8 +144,48 @@ def main():
         except Exception: pass
     rep("GEOM", not geom, ("no connector inside/over a box or across a text" if not geom else "; ".join(geom[:4]) + (f" (+{len(geom)-4} more)" if len(geom) > 4 else "")))
 
-    # ---------- language ----------
+    # ---------- Lab: exercises, section links and specs (checked on the source file) ----------
     page_html = fetch(site + post["url"])
+    pat = re.compile(r"^\d{4}-\d{2}-\d{2}-" + re.escape(a.key) + (r"\.html$" if a.lang == "en" else r"\." + re.escape(a.lang) + r"\.html$"))
+    srcs = [f for f in os.listdir(os.path.join(ROOT, "_posts")) if pat.match(f)]
+    if not srcs:
+        rep("LAB", False, "post source file not found in _posts")
+    else:
+        src = open(os.path.join(ROOT, "_posts", srcs[0]), encoding="utf-8").read()
+        h2 = set(re.findall(r'<h2 class="af-subHeader" id="(sec\d+)"', src))
+        lab = re.search(r'<div class="cf-lab"[^>]*>(.*)$', src, flags=re.S)
+        exs = re.findall(r'<div class="cf-exercise"([^>]*)>(.*?)<script type="application/json" class="exSpec">(.*?)</script>', lab.group(1) if lab else "", flags=re.S)
+        issues, ids, run_specs = [], [], []
+        for attrs, body, spec in exs:
+            at = dict(re.findall(r'([\w-]+)="([^"]*)"', attrs)); eid = at.get("id", "?"); kind = at.get("data-kind", "code"); ids.append(eid)
+            if kind not in ("code", "blanks", "run", "quiz", "text"): issues.append(f"{eid}: unknown kind “{kind}”")
+            if at.get("data-section") not in h2: issues.append(f"{eid}: data-section “{at.get('data-section')}” is not a section of the article")
+            try: sp = json.loads(spec)
+            except Exception as e: issues.append(f"{eid}: invalid JSON spec ({e})"); continue
+            if kind == "quiz":
+                n_opt = len(re.findall(r"<li>", body)); ans = sp.get("answer") or []
+                if not ans or any(not isinstance(i, int) or i < 0 or i >= n_opt for i in ans): issues.append(f"{eid}: quiz answer {ans} outside its {n_opt} options")
+            elif kind == "text" and not (sp.get("accept") or sp.get("regex")): issues.append(f"{eid}: text exercise without accept/regex")
+            elif kind == "blanks" and body.count("___") != len(sp.get("blanks") or []): issues.append(f"{eid}: {body.count('___')} gaps but {len(sp.get('blanks') or [])} blank rule(s)")
+            elif kind == "run":
+                if not sp.get("tests") or not sp.get("solution"): issues.append(f"{eid}: run exercise needs tests and a solution")
+                else: run_specs.append((eid, sp))
+            elif kind == "code" and not sp.get("checks"): issues.append(f"{eid}: code exercise without checks")
+        if run_specs and shutil.which("node"):
+            js = ("const S=JSON.parse(require('fs').readFileSync(0,'utf8'));const out=[];for(const [id,sp] of S){for(const t of sp.tests){let g;"
+                  "try{g=new Function(sp.solution+'\\n;return ('+t.call+');')();}catch(e){g='ERR '+e.message}"
+                  "if(JSON.stringify(g)!==JSON.stringify(t.expect))out.push(id+': solution fails '+t.call.slice(0,50)+' → '+JSON.stringify(g))}}console.log(JSON.stringify(out))")
+            r = subprocess.run(["node", "-e", js], input=json.dumps(run_specs), capture_output=True, text=True)
+            try: issues += json.loads(r.stdout or "[]")
+            except Exception: issues.append("could not run the run-kind solutions with node")
+        links = re.findall(r'class="cf-labLink" href="#lab-([^"]+)"', src)
+        issues += [f"link to #lab-{h} has no exercise" for h in links if h not in ids]
+        issues += [f"{i}: no section links to it" for i in ids if i not in links]
+        if len(exs) < 3: issues.append(f"only {len(exs)} exercise(s); a post needs at least 3 (5 recommended)")
+        if 'id="labBody"' not in page_html: issues.append("Lab drawer not rendered on the page")
+        rep("LAB", not issues, f"{len(exs)} exercise(s), {len(links)} section link(s), {len(run_specs)} run-kind solution(s) tested" if not issues else "; ".join(issues[:4]) + (f" (+{len(issues)-4} more)" if len(issues) > 4 else ""))
+
+    # ---------- language ----------
     html_lang = re.search(r'<html lang="([^"]+)"', page_html).group(1)
     combo = re.findall(r'<option value="([^"]+)"', page_html)
     i18n_ok = os.path.exists(os.path.join(ROOT, "_data", "i18n", f"{a.lang}.yml"))

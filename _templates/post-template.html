@@ -64,6 +64,9 @@ history:
   <ul>
     <li><b>Point.</b> Explanation.</li>
   </ul>
+  <!-- Lab link: the LAST element of every section that has an exercise (before the next h2). Text in the post's language:
+       en "Practise: open in the Lab: Exercise n, <short>" · pt-BR "Pratique: abrir no Lab: Exercício n, <short>" · es "Practica: abrir en el Lab: Ejercicio n, <short>" -->
+  <p>Practise: <a class="cf-labLink" href="#lab-ex1">open in the Lab: Exercise 1, Short name</a></p>
 
   <!-- Comparison table (af-table with status dots: st ok / st warn / st err) -->
   <table class="af-table" style="margin-bottom:10px;">
@@ -122,6 +125,107 @@ history:
   <p>The one idea to keep. Do NOT announce a next article here: that sentence is added to THIS post later, when the next post is published (together with series_next).</p>
 
 </div><!-- /cf-article -->
+
+<!-- 6. Lab (required): 5 exercises, one per key section, kept in this hidden block; exercise.js (loaded by the post layout)
+     moves them into the Lab drawer, builds the chip nav, the progress and the "↩ Section n" links. Rules: ids ex1..ex5 in
+     section order; data-kind = quiz | text | blanks | run | code; data-section = the h2 id the exercise belongs to;
+     data-short = the chip label; every text (task, options, hints, explain, code comments, button labels) in the post's
+     language; the same ids/kinds/sections in every language version. The validator's LAB check enforces the wiring and
+     runs the run-kind solutions against their tests. One example of each kind: -->
+<div class="cf-lab" hidden>
+
+  <!-- quiz: radio for one answer, checkbox for several; "answer" = 0-based indexes of the right options -->
+  <div class="cf-exercise" id="ex1" data-kind="quiz" data-lang="Concept" data-section="sec1" data-short="Short name">
+    <div class="exHdr">Exercise 1 &mdash; title <span class="lang">&mdash; multiple choice</span></div>
+    <p class="exTask">The question, tied to what section 1 taught.</p>
+    <ul class="exOptions">
+      <li><label><input type="radio" name="ex1"> Option A</label></li>
+      <li><label><input type="radio" name="ex1"> Option B (right)</label></li>
+      <li><label><input type="radio" name="ex1"> Option C</label></li>
+    </ul>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{ "answer": [1], "explain": "Why B is right, shown after validating." }</script>
+  </div>
+
+  <!-- text: short written answer; accept is compared without case, accents and extra spaces; regex is optional -->
+  <div class="cf-exercise" id="ex2" data-kind="text" data-lang="Concept" data-section="sec2" data-short="Short name">
+    <div class="exHdr">Exercise 2 &mdash; title <span class="lang">&mdash; written answer</span></div>
+    <p class="exTask">A question with a one- or two-word answer.</p>
+    <div class="exTextRow"><input class="exText" type="text" spellcheck="false" autocomplete="off"></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{ "accept": ["answer", "the answer"], "regex": "^\\s*(the\\s+)?answer\\s*$", "hint": "Shown when wrong.", "explain": "Shown when right." }</script>
+  </div>
+
+  <!-- blanks: ___ becomes an input; one rule per gap (accept list or regex), in order -->
+  <div class="cf-exercise" id="ex3" data-kind="blanks" data-lang="Python" data-section="sec3" data-short="Short name">
+    <div class="exHdr">Exercise 3 &mdash; title <span class="lang">&mdash; Python, blanks</span></div>
+    <p class="exTask">Complete the lines from the code box.</p>
+    <pre class="exBlanks">p = np.exp(z) / np.exp(z).___()   # probabilities that sum to 1
+return rng.choice(len(p), ___=p)   # sampling</pre>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "blanks": [ { "accept": ["sum"], "hint": "Divide by the total.", "width": 4 }, { "accept": ["p"], "hint": "The keyword argument.", "width": 2 } ],
+      "solution": "p = np.exp(z) / np.exp(z).sum()\nreturn rng.choice(len(p), p=p)"
+    }</script>
+  </div>
+
+  <!-- run: JavaScript executed in the browser; each test is an expression and its expected value (compared as JSON) -->
+  <div class="cf-exercise" id="ex4" data-kind="run" data-lang="JavaScript" data-section="sec4" data-short="Short name">
+    <div class="exHdr">Exercise 4 &mdash; title <span class="lang">&mdash; JavaScript, run with tests</span></div>
+    <p class="exTask">Implement <code>fn</code> so that every test passes; any correct implementation is accepted.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">function fn(x) {
+    // what to return
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "tests": [ { "call": "fn(2)", "expect": 4, "msg": "fn(2) → 4" }, { "call": "fn(0)", "expect": 0, "msg": "fn(0) → 0" } ],
+      "solution": "function fn(x) {\n    return x * 2;\n}"
+    }</script>
+  </div>
+
+  <!-- code: free editor for any language, validated by static checks (regex with optional absent:true, balanced, semicolons) -->
+  <div class="cf-exercise" id="ex5" data-kind="code" data-lang="Java" data-section="sec5" data-short="Short name">
+    <div class="exHdr">Exercise 5 &mdash; title <span class="lang">&mdash; Java, checks over the code</span></div>
+    <p class="exTask">Write the method; the checks guide you, they do not compile.</p>
+    <div class="exEditor"><pre class="exGutter"></pre><textarea spellcheck="false" rows="6">public static int twice(int x) {
+    // write here
+}</textarea></div>
+    <div class="af-buttonBar">
+      <button class="af-button" data-act="check">Validate</button>
+      <button class="af-button" data-act="reset">Start over</button>
+      <button class="af-button" data-act="solution">Show solution</button>
+    </div>
+    <div class="exResult" hidden></div>
+    <script type="application/json" class="exSpec">{
+      "checks": [
+        { "type": "regex", "pattern": "\\breturn\\b", "msg": "Returns a value", "hint": "The method needs a return." },
+        { "type": "regex", "pattern": "System\\.out", "absent": true, "msg": "Prints nothing" },
+        { "type": "balanced", "msg": "Braces and parentheses balanced" },
+        { "type": "semicolons", "msg": "Statements end with a semicolon" }
+      ],
+      "solution": "public static int twice(int x) {\n    return x * 2;\n}"
+    }</script>
+  </div>
+
+</div>
 
 <!-- references -->
 <!-- Numbered references first (count them in references_count), then optional further reading with [a] [b] … -->
