@@ -5,7 +5,7 @@
     <ul class="sheetList">
       {%- for l in site.data.i18n %}
       <li class="sheetItem{% if l[0] == lang %} current{% endif %}" onclick="pickLanguage('{{ l[0] }}')" role="button">
-        <span class="chk" aria-hidden="true">{% if l[0] == lang %}&#10003;{% endif %}</span>{{ l[1].native }}
+        <span class="chk" aria-hidden="true">{% if l[0] == lang %}&#10003;{% endif %}</span><span class="flag" aria-hidden="true">{{ l[1].flag }}</span>{{ l[1].native }}
       </li>
       {%- endfor %}
     </ul>

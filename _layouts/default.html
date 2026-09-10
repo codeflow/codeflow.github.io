@@ -27,6 +27,9 @@
 
 <!-- ================= Branding bar ================= -->
 <div class="af-branding">
+  <button class="af-toolButton cf-menuBtn" onclick="toggleMenu()" aria-controls="sidePanel" aria-expanded="false" aria-label="{{ t.ui.menu }}" title="{{ t.ui.menu }}">
+    <span class="bars" aria-hidden="true">&#9776;</span>
+  </button>
   <a class="logo cf-brandLink" href="{{ home_url }}" title="{{ t.ui.home }}">
     <span class="cf-logoHalo"><img class="cf-brandLogo" src="{{ '/assets/codeflow.png' | relative_url }}" alt="{{ site.title }}"></span>
     <span class="cf-brandName">CODEFLOW</span>
@@ -39,7 +42,7 @@
       <option value="{{ l[0] }}"{% if l[0] == lang %} selected{% endif %}>{{ l[1].native }}</option>
       {%- endfor %}
     </select></span>
-    <button type="button" class="cf-langBtn" onclick="openLangSheet()" aria-haspopup="dialog" aria-controls="langSheet" aria-label="{{ t.ui.language | remove: ':' }}">{{ t.native }}<span class="arrow" aria-hidden="true"></span></button>
+    <button type="button" class="cf-langBtn" onclick="openLangSheet()" aria-haspopup="dialog" aria-controls="langSheet" aria-label="{{ t.ui.language | remove: ':' }}: {{ t.native }}"><span class="flag" aria-hidden="true">{{ t.flag }}</span></button>
     <span class="sep">|</span><a href="{{ site.github }}">GitHub</a>
   </div>
 </div>
@@ -47,9 +50,6 @@
 <!-- ================= Navigation tabs (level 1) ================= -->
 <div class="af-navTabs">
   <span class="af-navTab selected" onclick="location.href='{{ home_url }}'">{{ t.ui.home }}</span>
-  <button class="af-toolButton cf-menuBtn" onclick="toggleMenu()" aria-controls="sidePanel" aria-expanded="false" aria-label="{{ t.ui.menu }}" title="{{ t.ui.menu }}">
-    <span class="bars" aria-hidden="true">&#9776;</span>
-  </button>
 </div>
 
 <!-- ================= Shell: sidebar + splitter + main panel ================= -->

@@ -2,6 +2,7 @@
 code: es
 name: Spanish
 native: Español
+flag: "🇪🇸"
 locale: es_ES
 ui:
   language: "Idioma:"

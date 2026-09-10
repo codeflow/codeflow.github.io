@@ -2,6 +2,7 @@
 code: en
 name: English
 native: English
+flag: "🇺🇸"
 locale: en_US
 ui:
   language: "Language:"

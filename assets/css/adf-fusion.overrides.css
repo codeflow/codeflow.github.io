@@ -4,6 +4,9 @@
    permanece intacto; tudo daqui usa o prefixo cf-.
    ============================================================ */
 
+/* ---------- Abas de navegação: um respiro acima da aba Home ---------- */
+.af-navTabs { padding-top: 10px; }
+
 /* ---------- Branding ---------- */
 .af-branding .cf-brandLink {           /* logo + nome levam à Home do idioma; visual idêntico ao texto anterior */
   display: inline-flex;
@@ -512,24 +515,30 @@ body.cf-resizing .af-panelMain { pointer-events: none; }
   .af-button, .cf-searchRow .af-button.small { height: 26px; padding: 0 12px; box-sizing: border-box; }   /* mesma altura dos campos */
 
   /* --- barra de branding: logo + idioma; o resto some --- */
-  .af-branding { padding: 0 8px; }
+  .af-branding { padding: 0 8px; height: 46px; }                 /* barra um pouco mais alta no celular */
+  .cf-brandLogo { width: 26px; height: 26px; }                     /* logo levemente maior */
+  .cf-logoHalo::before { inset: -8px; }
   .af-globalLinks > *:not(.af-selectWrap) { display: none; }   /* fica só o seletor de idioma */
   .af-globalLinks { font-size: 0; }                             /* engole qualquer texto solto */
   .af-globalLinks .af-selectWrap, .af-globalLinks select { font-size: 12px; }
   .af-globalLinks .af-selectWrap { display: none; }               /* no celular usa a folha inferior */
-  .af-globalLinks .cf-langBtn { display: inline-flex; font-size: 12px; }
+  .af-globalLinks .cf-langBtn { display: inline-flex; }            /* só a bandeira; abre a folha de idiomas */
 
-  /* --- abas + botão de menu --- */
-  .af-navTabs { align-items: flex-end; padding: 7px 8px 0; }
+  /* --- botão de menu (três traços) antes do logo, na barra de branding --- */
+  .af-navTabs { align-items: flex-end; padding: 10px 8px 0; }
   .cf-menuBtn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    margin: 0 0 4px auto;
-    padding: 3px 9px 4px;
+    justify-content: center;
+    width: 34px; height: 30px;
+    margin: 0 8px 0 0;
+    padding: 0;
+    background: linear-gradient(rgba(255, 255, 255, .22), rgba(255, 255, 255, .08));
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 3px;
+    color: #fff;
   }
-  .cf-menuBtn .bars { font-size: 20px; line-height: 1; position: relative; top: -2px; }
-  .cf-menuBtn { padding: 2px 9px; }
+  .cf-menuBtn .bars { font-size: 22px; line-height: 1; position: relative; top: -1px; }
 
   /* --- shell empilhado: sem splitter, painel principal ocupa tudo --- */
   .af-shell { display: block; min-height: 0; }
@@ -775,14 +784,15 @@ body {
 
 /* ---------- Seletor de idioma no celular: botão + folha inferior (bottom sheet) ---------- */
 .cf-langBtn {
-  display: none;                          /* só no mobile */
-  align-items: center; gap: 6px;
-  height: 22px; padding: 0 6px 0 8px;
-  font: 12px Tahoma, Verdana, Helvetica, sans-serif; color: #1f3a5a;
-  background: linear-gradient(#ffffff, #dde7f1); border: 1px solid #7a9bbf; border-radius: 3px;
+  display: none;                          /* só no mobile: a bandeira do idioma atual abre a folha de idiomas */
+  align-items: center; justify-content: center;
+  width: 34px; height: 30px; padding: 0;
+  font-size: 22px; line-height: 1;
+  background: transparent; border: 0; border-radius: 3px;
   vertical-align: middle; cursor: pointer;
 }
-.cf-langBtn .arrow { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #35597d; }
+.cf-langBtn:active { background: rgba(255, 255, 255, .15); }
+.cf-sheet .sheetItem .flag { font-size: 18px; line-height: 1; margin-right: 2px; }
 .cf-sheetOverlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(60, 76, 94, .35); }
 .cf-sheetOverlay.open { display: block; }
 body.cf-sheetOpen { overflow: hidden; }
@@ -813,7 +823,7 @@ body.cf-sheetOpen { overflow: hidden; }
   .af-drawerDock { display: none; }
   .af-drawer {
     left: 0; right: 0; width: auto;
-    top: 38px; bottom: var(--cf-footer-h);
+    top: 46px; bottom: var(--cf-footer-h);     /* barra de branding do celular */
     z-index: 70;                       /* acima do menu lateral (60) */
     border-left: 0; box-shadow: none;
   }
@@ -838,3 +848,10 @@ body.cf-sheetOpen { overflow: hidden; }
 /* ---------- Dock das gavetas sem painel: só as abas Sumário/Ajuda, coladas na margem direita (todos os posts) ---------- */
 .af-drawerDock { background: transparent; border-left: 0; align-items: flex-end; }   /* abas coladas na margem direita */
 .af-drawerTab { margin-left: 0; margin-right: -1px; border-right: none; border-radius: 4px 0 0 4px; box-shadow: -1px 1px 2px rgba(20, 40, 70, .12); }
+
+/* ---------- Lista da Home: "Leia mais" numa linha, tags na linha de baixo; no celular só o "Leia mais" ---------- */
+.cf-post .postFoot { display: block; }
+.cf-post .postTags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+@media (max-width: 768px) {
+  .cf-post .postTags { display: none; }
+}

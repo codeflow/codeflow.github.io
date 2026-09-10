@@ -2,6 +2,7 @@
 code: pt-BR
 name: Portuguese (Brazil)
 native: Português (Brasil)
+flag: "🇧🇷"
 locale: pt_BR
 ui:
   language: "Idioma:"

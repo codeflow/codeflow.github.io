@@ -84,9 +84,9 @@ function render() {
         '<span class="item">' + t('reading_time') + ' <b>' + a.min + ' ' + t('min') + '</b></span></div>' +
       '<p>' + esc(a.excerpt) + '</p>' +
       '<div class="postFoot"><a class="readMore" href="' + a.href + '">' + t('read_more') + ' ▸</a>' +
-        a.tags.map(function (t) {
+        '<div class="postTags">' + a.tags.map(function (t) {
           return '<a class="cf-tag" href="#" onclick="setFilter(\'tag\',\'' + esc(t) + '\'); return false;">' + esc(t) + '</a>';
-        }).join('') +
+        }).join('') + '</div>' +
       '</div></div>';
   }).join('');
   document.getElementById('postList').innerHTML =
