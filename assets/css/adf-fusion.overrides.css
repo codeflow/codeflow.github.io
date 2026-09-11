@@ -973,7 +973,10 @@ a.cf-labLink::before { content: ""; display: inline-block; width: 9px; height: 1
 .cf-carousel .crExcerpt { margin: 0 0 4px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: #33536f; }
 .cf-carousel .readMore { display: block; text-align: right; }
 .cf-carousel .crNav { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-top: 1px solid #d4dce4; background: linear-gradient(#f8fafc, #e7edf3); border-radius: 0 0 3px 3px; }
-.cf-carousel .crNav .af-button.small { min-width: 26px; padding: 1px 6px 2px; }
+.cf-carousel .crNav .crArrow { min-width: 26px; height: 22px; padding: 0 6px; border: 0; background: none; box-shadow: none; color: #3d6791; font-size: 12px; line-height: 1; cursor: pointer; }   /* bare arrows: no frame, only the blue changes on hover */
+.cf-carousel .crNav .crArrow:hover { color: #15497e; background: none; border: 0; box-shadow: none; }
+.cf-carousel .crNav .crArrow:active { color: #0d3a6b; }
+.cf-carousel .crNav .crArrow:focus-visible { outline: 1px dotted #3d6791; outline-offset: 1px; }
 .cf-carousel .crDots { flex: 1; display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
 .cf-carousel .crDot { width: 10px; height: 10px; padding: 0; border: 1px solid #7d94ac; border-radius: 2px; background: linear-gradient(#fafcfd, #dbe5ef); cursor: pointer; }
 .cf-carousel .crDot:hover { border-color: #3d6791; }
@@ -984,6 +987,6 @@ a.cf-labLink::before { content: ""; display: inline-block; width: 9px; height: 1
   .cf-carousel .crNoCover { height: 122px; }
   .cf-carousel .crCaption { padding: 8px 10px 6px; }
   .cf-carousel .crTitle { font-size: 12px; }
-  .cf-carousel .crNav .af-button.small { min-width: 34px; height: 28px; }
+  .cf-carousel .crNav .crArrow { min-width: 36px; height: 28px; font-size: 14px; }
   .cf-carousel .crDot { width: 12px; height: 12px; }
 }
