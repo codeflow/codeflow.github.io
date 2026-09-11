@@ -953,11 +953,11 @@ a.cf-labLink::before { content: ""; display: inline-block; width: 9px; height: 1
 
 /* ---------- Home: "Latest articles" carousel (Fusion af:carousel spotlight: covers on a stage, the current one in the
    centre and its neighbours receding to the sides; caption below; arrows and position dots in the footer bar) ---------- */
+#latestHeading[hidden] { display: none; }
 .cf-carousel { margin: 0 0 14px; outline: none; }
 .cf-carousel:focus-visible { box-shadow: 0 0 0 2px #88aed6; }
-.cf-carousel .boxHdr .crCount { margin-left: auto; font-weight: normal; font-size: 10px; color: #33536f; }
 .cf-carousel .boxBody { padding: 0; }
-.cf-carousel .crStage { position: relative; height: 222px; overflow: hidden; background: linear-gradient(#e6edf5, #c5d3e2 70%, #b7c8da); box-shadow: inset 0 1px 0 #f4f8fc, inset 0 -8px 12px -8px rgba(20, 40, 70, .35); }
+.cf-carousel .crStage { position: relative; height: 222px; overflow: hidden; border-radius: 3px 3px 0 0; background: linear-gradient(#e6edf5, #c5d3e2 70%, #b7c8da); box-shadow: inset 0 1px 0 #f4f8fc, inset 0 -8px 12px -8px rgba(20, 40, 70, .35); }
 .cf-carousel .crStage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: #8fa6c0; }
 .cf-carousel .crCard { position: absolute; left: 50%; top: 50%; width: 300px; border: 1px solid #7d94ac; background: #fff; line-height: 0; box-shadow: 0 6px 14px rgba(20, 40, 70, .35); transition: transform .5s ease, opacity .5s ease; transform-origin: center; }
 .cf-carousel .crCard.current { border-color: #2e5378; box-shadow: 0 0 0 2px #cfe2f7, 0 10px 22px rgba(20, 40, 70, .45); cursor: pointer; }
@@ -965,14 +965,13 @@ a.cf-labLink::before { content: ""; display: inline-block; width: 9px; height: 1
 .cf-carousel .crCard img { display: block; width: 100%; height: auto; }
 .cf-carousel .crNoCover { display: flex; align-items: center; justify-content: center; height: 187px; padding: 12px; line-height: 1.4; color: #15497e; font-weight: bold; text-align: center; }
 .cf-carousel.noAnim .crCard, .cf-carousel.noAnim .crCaption { transition: none; }
-.cf-carousel .crCaption { padding: 10px 14px 8px; text-align: center; opacity: 0; transition: opacity .35s ease; }
+.cf-carousel .crCaption { max-width: 640px; margin: 0 auto; padding: 10px 14px 8px; text-align: left; opacity: 0; transition: opacity .35s ease; }   /* a centred column: title centred, excerpt left-aligned, Read more at the column's right edge */
 .cf-carousel .crCaption.in { opacity: 1; }
-.cf-carousel .crTitle { font-size: 14px; font-weight: bold; line-height: 1.3; margin-bottom: 3px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.cf-carousel .crTitle { font-size: 14px; font-weight: bold; line-height: 1.3; margin-bottom: 6px; text-align: center; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .cf-carousel .crTitle a { color: #15497e; text-decoration: none; }
 .cf-carousel .crTitle a:hover { color: #0d3a6b; text-decoration: underline; }
-.cf-carousel .cf-articleMeta { justify-content: center; margin: 0 0 6px; }
-.cf-carousel .crExcerpt { margin: 0 auto 6px; max-width: 640px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: #33536f; }
-.cf-carousel .readMore { display: inline-block; }
+.cf-carousel .crExcerpt { margin: 0 0 4px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: #33536f; }
+.cf-carousel .readMore { display: block; text-align: right; }
 .cf-carousel .crNav { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-top: 1px solid #d4dce4; background: linear-gradient(#f8fafc, #e7edf3); border-radius: 0 0 3px 3px; }
 .cf-carousel .crNav .af-button.small { min-width: 26px; padding: 1px 6px 2px; }
 .cf-carousel .crDots { flex: 1; display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
@@ -985,7 +984,6 @@ a.cf-labLink::before { content: ""; display: inline-block; width: 9px; height: 1
   .cf-carousel .crNoCover { height: 122px; }
   .cf-carousel .crCaption { padding: 8px 10px 6px; }
   .cf-carousel .crTitle { font-size: 12px; }
-  .cf-carousel .cf-articleMeta .item:nth-child(n+3), .cf-carousel .cf-articleMeta .sep:nth-child(n+2) { display: none; }   /* only the date on phones */
   .cf-carousel .crNav .af-button.small { min-width: 34px; height: 28px; }
   .cf-carousel .crDot { width: 12px; height: 12px; }
 }

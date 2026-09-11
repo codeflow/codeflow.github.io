@@ -11,10 +11,10 @@
   var MAX = 10, INTERVAL = 6000;
   var items = ARTICLES.filter(function (a) { return !a.stub; })
     .sort(function (a, b) { return a.iso < b.iso ? 1 : a.iso > b.iso ? -1 : 0; }).slice(0, MAX);
-  if (items.length < 2) { box.hidden = true; return; }
+  if (items.length < 2) { box.hidden = true; var h0 = document.getElementById('latestHeading'); if (h0) h0.hidden = true; return; }
 
   var stage = document.getElementById('crStage'), caption = document.getElementById('crCaption');
-  var dots = document.getElementById('crDots'), count = document.getElementById('crCount');
+  var dots = document.getElementById('crDots');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var n = items.length, idx = 0, timer = null, paused = false;
 
@@ -49,14 +49,10 @@
     caption.classList.remove('in'); void caption.offsetWidth;
     caption.innerHTML =
       '<div class="crTitle"><a href="' + a.href + '">' + esc(a.title) + '</a></div>' +
-      '<div class="cf-articleMeta"><span class="item">' + t('published_on') + ' <b>' + a.date + '</b></span><span class="sep">·</span> ' +
-        '<span class="item"><b>' + esc(label(a.cat)) + '</b></span><span class="sep">·</span> ' +
-        '<span class="item">' + t('reading_time') + ' <b>' + a.min + ' ' + t('min') + '</b></span></div>' +
       '<p class="crExcerpt">' + esc(a.excerpt) + '</p>' +
       '<a class="readMore" href="' + a.href + '">' + t('read_more') + ' ▸</a>';
     caption.classList.add('in');
     Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle('on', i === idx); });
-    count.textContent = t('carousel_of', { n: idx + 1, total: n });
     layout();
     if (user) restart();
   }
@@ -90,7 +86,7 @@
 
   /* the list below hides the carousel while a filter is active (shell.js calls this from render()) */
   window.cfCarouselSync = function (filtering) {
-    box.hidden = !!filtering;
+    box.hidden = !!filtering; var h = document.getElementById('latestHeading'); if (h) h.hidden = !!filtering;
     if (filtering) { if (timer) clearInterval(timer); timer = null; } else { layout(); if (!timer) restart(); }
   };
 
