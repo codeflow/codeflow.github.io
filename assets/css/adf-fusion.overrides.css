@@ -547,7 +547,7 @@ body.cf-resizing .af-panelMain { pointer-events: none; }
   }
   .cf-menuBtn:hover, .cf-menuBtn:active { background: none; border: 0; box-shadow: none; color: #cfe2f7; }
   .cf-menuBtn:focus-visible { outline: 1px dotted rgba(255, 255, 255, .7); outline-offset: 2px; }
-  .cf-menuBtn .bars { display: block; width: 24px; height: 20px; }   /* três traços desenhados em SVG: centram no botão sem depender da métrica da fonte */
+  .cf-menuBtn .bars { display: block; width: 20px; height: 20px; }   /* três traços desenhados em SVG: centram no botão sem depender da métrica da fonte */
 
   /* --- shell empilhado: sem splitter, painel principal ocupa tudo --- */
   .af-shell { display: block; min-height: 0; }
